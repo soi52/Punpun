@@ -5,8 +5,7 @@ function Router() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* 메인 페이지 */}
-        <Route path='/' element={<MainPage />} />
+        <Route path="/">{/* 메인컴포넌트 넣기 */}</Route>
       </Routes>
     </BrowserRouter>
   );
