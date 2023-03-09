@@ -1,18 +1,15 @@
-import React, { StrictMode } from 'react';
+import React from 'react';
+import ReactDOM from 'react-dom/client';
 import { RecoilRoot } from 'recoil';
-import ReactDOM from 'react-dom';
 import App from './App';
-import { ThemeProvider } from 'styled-components';
-import { theme } from './theme';
 
-ReactDOM.render(
-  <StrictMode>
+const root = ReactDOM.createRoot(
+  document.getElementById('root') as HTMLElement
+);
+root.render(
+  <React.StrictMode>
     <RecoilRoot>
-      {/* RecoilRoot provider를 이용하여 recoil을 사용가능하도록 설정해줍니다. */}
-      <ThemeProvider theme={theme}>
-        <App />
-      </ThemeProvider>
+      <App />
     </RecoilRoot>
-  </StrictMode>,
-  document.getElementById('root')
+  </React.StrictMode>
 );
