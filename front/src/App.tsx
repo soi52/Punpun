@@ -1,8 +1,9 @@
-import React from 'react';
-import Router from './Router'
+import { ThemeProvider } from 'styled-components';
+import Router from './Router';
+import { theme } from './theme';
 
 function App() {
-  return <Router/>;
+  return <div></div>;
 }
 
 export default App;
