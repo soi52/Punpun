@@ -1,9 +1,10 @@
 import React from 'react';
+import Login from '../auth/Login';
 
 const LoginPage: React.FC = () => {
   return (
     <div>
-        <h1>메인 페이지</h1>
+        <h1><Login/></h1>
     </div>
   )
 }
