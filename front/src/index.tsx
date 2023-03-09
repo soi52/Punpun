@@ -1,16 +1,17 @@
 import React, { StrictMode } from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 import ReactDOM from 'react-dom';
 import App from './App';
+import { ThemeProvider } from 'styled-components';
+import { theme } from './theme';
 
 ReactDOM.render(
   <StrictMode>
     <RecoilRoot>
       {/* RecoilRoot provider를 이용하여 recoil을 사용가능하도록 설정해줍니다. */}
-      <Router>
+      <ThemeProvider theme={theme}>
         <App />
-      </Router>
+      </ThemeProvider>
     </RecoilRoot>
   </StrictMode>,
   document.getElementById('root')
