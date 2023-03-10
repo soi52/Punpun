@@ -1,10 +1,19 @@
 import React from 'react';
+import styled from 'styled-components';
+import Header from '../../components/ui/Header';
+import MainComponent from '../../components/ui/MainComponent';
 
-function StoreRegisterPage () {
+const Wrapper = styled.div`
+  padding-top: 80px;
+`;
+
+function StoreRegisterPage() {
   return (
-    <div>
+    <Wrapper>
+      <Header />
       <h1>StoreRegisterPage</h1>
-    </div>
-  )
+      <MainComponent width={80} />
+    </Wrapper>
+  );
 }
 export default StoreRegisterPage;
