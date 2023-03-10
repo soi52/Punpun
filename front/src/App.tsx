@@ -3,7 +3,13 @@ import Router from './Router';
 import { theme } from './theme';
 
 function App() {
-  return <div></div>;
+  return (
+    <>
+      <ThemeProvider theme={theme}>
+        <Router />
+      </ThemeProvider>
+    </>
+  );
 }
 
 export default App;
