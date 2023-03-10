@@ -3,17 +3,19 @@ import { useRecoilState } from 'recoil';
 import axios from 'axios';
 import { accessTokenState } from '../../store/atoms';
 
+const CLIENT_ID = 'f5fc41fb0dbb439ad7bfb0e9f0e341cf';
+const REDIRECT_ID = 'http://localhost:3000/login/oauth';
+
 export const handleLogin = () => {
-    const redirectUri = encodeURIComponent('http://localhost:3000/login/oauth');
-    window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${redirectUri}&response_type=code`;
-  };
+  const redirectUri = encodeURIComponent('http://localhost:3000/login/oauth');
+  window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${redirectUri}&response_type=code`;
+  console.log(localStorage.getItem("accessToken"));
+  
+};
 
 function LoginButton() {
   const [userInfo, setUserInfo] = useState<any>(null);
   const [, setAccessToken] = useRecoilState(accessTokenState);
-
-  const CLIENT_ID = 'f5fc41fb0dbb439ad7bfb0e9f0e341cf';
-  const REDIRECT_ID = 'http://localhost:3000/login/oauth';
 
   useEffect(() => {
     const urlSearchParams = new URLSearchParams(window.location.search);
@@ -53,5 +55,4 @@ function LoginButton() {
         .catch((error) => console.error(error));
     }
   }, []);
-
 }

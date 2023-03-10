@@ -1,5 +1,5 @@
 import React from 'react';
-import kakaoLoginIMG from '../resources/images/kakao_login.png';
+import kakaoLoginIMG from '../../resources/images/kakao_login.png';
 
 // kakao social login
 import { handleLogin } from './OAuth';
