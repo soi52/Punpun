@@ -1,6 +1,6 @@
 import React from 'react';
 
-const RedirectPage: React.FC = () => {
+function RedirectPage () {
   return (
     <div>
         <h1>메인 페이지</h1>

@@ -6,7 +6,7 @@ const Wrapper = styled.div`
   padding-top: 80px;
 `;
 
-const MainPage: React.FC = () => {
+function MainPage () {
   return (
     <Wrapper>
       <Header />
