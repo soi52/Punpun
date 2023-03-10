@@ -5,3 +5,8 @@ export const isDarkAtom = atom({
   key: 'isDark',
   default: true,
 });
+
+export const accessTokenState = atom<string | null>({
+  key: "accessTokenState",
+  default: null,
+});

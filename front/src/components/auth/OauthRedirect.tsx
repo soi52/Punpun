@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
-const OauthRedirect: React.FC = () => {
+const OauthRedirect = () => {
   return (
     <div>
       <h3>잠시만 기다려 주세요...</h3>
