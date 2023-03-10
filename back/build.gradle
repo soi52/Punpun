@@ -44,13 +44,13 @@ tasks.named('test') {
 
 tasks.register('copyPrivate') {
 	copy {
-		from '../../punpunConfig/main'
+		from './punpunconfig/main'
 		include "*.yml"
 		into 'src/main/resources'
 	}
 
 	copy {
-		from '../../punpunConfig/test'
+		from './punpunconfig/test'
 		include "*.yml"
 		into 'src/test/resources'
 	}
