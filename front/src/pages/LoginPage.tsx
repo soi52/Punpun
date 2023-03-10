@@ -1,7 +1,7 @@
 import React from 'react';
 import Login from '../components/auth/Login';
 
-const LoginPage: React.FC = () => {
+function LoginPage () {
   return (
     <div>
         <h1><Login/></h1>

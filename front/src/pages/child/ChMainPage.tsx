@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ChMainPage: React.FC = () => {
+function ChMainPage () {
   return (
     <div>
     </div>

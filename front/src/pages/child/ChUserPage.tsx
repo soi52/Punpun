@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ChUserPage: React.FC = () => {
+function ChUserPage () {
   return (
     <div>
     </div>

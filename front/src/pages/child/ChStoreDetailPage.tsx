@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ChStoreDetailPage: React.FC = () => {
+function ChStoreDetailPage () {
   return (
     <div>
     </div>
