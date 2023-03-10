@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
+import Logo from './Logo';
 import Dropdown from './Dropdown';
 
 const Wrapper = styled.div`
@@ -23,10 +24,6 @@ const Contents = styled.div`
   margin: 0 auto;
 `;
 
-const LogoTitle = styled.h3`
-  cursor: pointer;
-`;
-
 const NavUl = styled.ul`
   display: flex;
   list-style: none;
@@ -45,8 +42,8 @@ function Header() {
   return (
     <>
       <Wrapper>
+        <Logo />
         <Contents>
-          <LogoTitle>PUNPUN</LogoTitle>
           <nav>
             <NavUl>
               <NavLi>사업소개</NavLi>

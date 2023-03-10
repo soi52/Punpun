@@ -9,8 +9,7 @@ const REDIRECT_ID = 'http://localhost:3000/login/oauth';
 export const handleLogin = () => {
   const redirectUri = encodeURIComponent('http://localhost:3000/login/oauth');
   window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${redirectUri}&response_type=code`;
-  console.log(localStorage.getItem("accessToken"));
-  
+  console.log(localStorage.getItem('accessToken'));
 };
 
 function LoginButton() {
