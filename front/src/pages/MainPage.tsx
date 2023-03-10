@@ -1,6 +1,6 @@
 import React from 'react';
 
-const MainPage: React.FC = () => {
+function MainPage () {
   return (
     <div>
         <h1>메인 페이지</h1>
