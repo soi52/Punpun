@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import Logo from './Logo';
 import Dropdown from './Dropdown';
@@ -38,6 +39,11 @@ function Header() {
   // 드롭메뉴: 후원자 or 사장님
   const [drop, setDrop] = useState(false);
   const selectMe = () => setDrop((prev) => !prev);
+  const navigate = useNavigate();
+
+  const toLogin = () => {
+    navigate('/login');
+  }
 
   return (
     <>
@@ -48,7 +54,7 @@ function Header() {
             <NavUl>
               <NavLi>사업소개</NavLi>
               <NavLi>가게찾기</NavLi>
-              <NavLi>로그인</NavLi>
+              <NavLi onClick={toLogin}>로그인</NavLi>
               <NavLi onClick={selectMe}>
                 후원자
                 {drop ? '^' : 'v'}
