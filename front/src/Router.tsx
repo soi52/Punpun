@@ -10,6 +10,7 @@ function Router() {
         <Route path='/' element={<MainPage/>}/>
         <Route path='/login' element={<LoginPage/>}/>
         <Route path='/login/oauth' element={<RedirectPage/>}/>
+
       </Routes>
     </BrowserRouter>
   );
