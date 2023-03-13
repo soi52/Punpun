@@ -2,7 +2,7 @@
 
 const Settings = () => {
     return (
-        <h1>아동 세팅</h1>
+        <h1>선호 메뉴</h1>
     )
 }
 
