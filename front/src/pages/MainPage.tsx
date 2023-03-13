@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import alone_child from '../resources/images/alone_child.jpg';
 import Header from '../components/ui/Header';
 
-const Wrapper = styled.div`
-  padding-top: 80px;
-`;
+// const Wrapper = styled.div`
+//   padding-top: 80px;
+// `;
 
 const MainImg = styled.div`
   margin: 0;
@@ -14,8 +14,7 @@ const MainImg = styled.div`
 
 function MainPage() {
   return (
-    <Wrapper>
-      <Header />
+    <>
       <MainImg>
         <img src={alone_child} alt="child" />
       </MainImg>
@@ -31,7 +30,7 @@ function MainPage() {
         </div>
         <button>후원하기</button>
       </div>
-    </Wrapper>
+    </>
   );
 }
 

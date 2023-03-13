@@ -1,7 +1,9 @@
+import React, { ReactNode } from 'react';
 import styled from 'styled-components';
 
 type MainComponentProps = {
   width: number;
+  children: ReactNode;
 };
 
 const MainComponentStyle = styled.div<MainComponentProps>`
@@ -13,12 +15,8 @@ const MainComponentStyle = styled.div<MainComponentProps>`
   float: left;
 `;
 
-function MainComponent(props: MainComponentProps) {
-  return (
-    <MainComponentStyle width={props.width}>
-      <h1>MainComponent</h1>
-    </MainComponentStyle>
-  );
+function MainComponent({ width, children }: MainComponentProps) {
+  return <MainComponentStyle width={width}>{children}</MainComponentStyle>;
 }
 
 export default MainComponent;

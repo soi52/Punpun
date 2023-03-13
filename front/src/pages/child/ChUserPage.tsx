@@ -13,20 +13,17 @@ const menuItems = [
 function ChUserPage() {
   const [currentMenuItemIndex, setCurrentMenuItemIndex] = useState(0);
 
-
   return (
     <>
       <h1>아동 마이페이지 입니다.</h1>
       <div>
-        <Sidebar
+        {/* <Sidebar
           title="My Page"
           menuItems={menuItems}
           currentMenuItemIndex={currentMenuItemIndex}
           setCurrentMenuItemIndex={setCurrentMenuItemIndex}
-        />
-        <div>
-            {menuItems[currentMenuItemIndex].component()}
-        </div>
+        /> */}
+        {/* <div>{menuItems[currentMenuItemIndex].component()}</div> */}
       </div>
     </>
   );
