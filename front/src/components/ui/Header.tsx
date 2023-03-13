@@ -43,13 +43,17 @@ const NavLi = styled.li`
 
 function Header() {
   // 드롭메뉴: 후원자 or 사장님
-  const [isChild, setIsChild] = useState(true);
+  const [isChild, setIsChild] = useState(false);
   const [drop, setDrop] = useState(false);
   const selectMe = () => setDrop((prev) => !prev);
   const navigate = useNavigate();
 
   const toLogin = () => {
     navigate('/login');
+  };
+
+  const toMain = () => {
+    navigate('/');
   };
 
   const toMyPage = () => {
@@ -74,7 +78,7 @@ function Header() {
               </ChNav>
             ) : (
               <NavUl>
-                <NavLi>사업소개</NavLi>
+                <NavLi onClick={toMain}>사업소개</NavLi>
                 <NavLi>가게찾기</NavLi>
                 <NavLi onClick={toLogin}>로그인</NavLi>
                 <NavLi onClick={selectMe}>
