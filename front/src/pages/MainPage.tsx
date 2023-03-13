@@ -1,20 +1,66 @@
-import React from 'react';
 import styled from 'styled-components';
-import alone_child from '../resources/images/alone_child.jpg';
-import Header from '../components/ui/Header';
+import { useEffect, useState } from 'react';
 
-// const Wrapper = styled.div`
-//   padding-top: 80px;
-// `;
-
-const MainImg = styled.div`
-  margin: 0;
-  width: 1100px;
+const Base = styled.div`
+  width: 100%;
+  height: 100vh;
 `;
 
+const SliderObject = styled.div`
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+`;
+
+const TomatoBox = styled(SliderObject)`
+  background-color: lightcoral;
+`;
+
+const BlueBox = styled(SliderObject)`
+  background-color: skyblue;
+`;
+
+const GreenBox = styled(SliderObject)`
+  background-color: lightgreen;
+`;
+
+const GreyBox = styled(SliderObject)`
+  background-color: grey;
+`;
+
+const OrangeBox = styled(SliderObject)`
+  background-color: orange;
+`;
+
+interface IFullPage {
+  windowHeight: number;
+  currentPage: number;
+}
+
 function MainPage() {
+  const [pageState, setPageState] = useState<IFullPage>({
+    currentPage: 1,
+    windowHeight: window.innerHeight,
+  });
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const { scrollTop, clientHeight } = document.documentElement;
+      const currentPage = Math.ceil(scrollTop / clientHeight);
+      const windowHeight = window.innerHeight;
+      setPageState({ currentPage, windowHeight });
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
-    <>
+    <Wrapper>
+      <Header />
       <MainImg>
         <img src={alone_child} alt="child" />
       </MainImg>
@@ -30,7 +76,7 @@ function MainPage() {
         </div>
         <button>후원하기</button>
       </div>
-    </>
+    </Wrapper>
   );
 }
 
