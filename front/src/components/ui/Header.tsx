@@ -18,7 +18,7 @@ const Wrapper = styled.div`
 const Contents = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   width: 96%;
   max-width: 1100px;
   height: 100%;
@@ -31,19 +31,35 @@ const NavUl = styled.ul`
   cursor: pointer;
 `;
 
+const ChNav = styled.ul`
+  display: flex;
+  justify-content: flex-end;
+  list-style: none;
+  cursor: pointer;
+`;
+
 const NavLi = styled.li`
   margin-left: 30px;
 `;
 
 function Header() {
   // 드롭메뉴: 후원자 or 사장님
+  const [isChild, setIsChild] = useState(true);
   const [drop, setDrop] = useState(false);
   const selectMe = () => setDrop((prev) => !prev);
   const navigate = useNavigate();
 
   const toLogin = () => {
     navigate('/login');
-  }
+  };
+
+  const toMyPage = () => {
+    navigate('/chuser');
+  };
+
+  const toChMain = () => {
+    navigate('/chmain');
+  };
 
   return (
     <>
@@ -51,16 +67,24 @@ function Header() {
         <Logo />
         <Contents>
           <nav>
-            <NavUl>
-              <NavLi>사업소개</NavLi>
-              <NavLi>가게찾기</NavLi>
-              <NavLi onClick={toLogin}>로그인</NavLi>
-              <NavLi onClick={selectMe}>
-                후원자
-                {drop ? '^' : 'v'}
-                {drop && <Dropdown />}
-              </NavLi>
-            </NavUl>
+            {isChild ? (
+              <ChNav>
+                <NavLi onClick={toChMain}>가게찾기</NavLi>
+                <NavLi onClick={toMyPage}>마이페이지</NavLi>
+                <NavLi>로그아웃</NavLi>
+              </ChNav>
+            ) : (
+              <NavUl>
+                <NavLi>사업소개</NavLi>
+                <NavLi>가게찾기</NavLi>
+                <NavLi onClick={toLogin}>로그인</NavLi>
+                <NavLi onClick={selectMe}>
+                  후원자
+                  {drop ? '^' : 'v'}
+                  {drop && <Dropdown />}
+                </NavLi>
+              </NavUl>
+            )}
           </nav>
         </Contents>
       </Wrapper>
