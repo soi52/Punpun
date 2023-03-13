@@ -7,7 +7,7 @@ const LogoTitle = styled.h3`
 function Logo() {
   return (
     <>
-      <LogoTitle>PUNPUN</LogoTitle>;
+      <LogoTitle>PUNPUN</LogoTitle>
     </>
   );
 }

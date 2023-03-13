@@ -21,8 +21,9 @@ function Router() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<Layout />}>
-          <Route path="/" element={<MainPage />} />
+        <Route path="/" element={<Layout />}>
+          {/* 후원페이지 */}
+          <Route path="/sumain" element={<MainPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/login/oauth" element={<RedirectPage />} />
 

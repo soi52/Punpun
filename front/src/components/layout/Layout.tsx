@@ -15,6 +15,4 @@ function Layout() {
 
 export default Layout;
 
-const MainStyle = styled.main`
-  padding-top: 80px;
-`;
+const MainStyle = styled.main``;

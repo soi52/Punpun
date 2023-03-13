@@ -5,7 +5,8 @@ import Logo from './Logo';
 import Dropdown from './Dropdown';
 
 const Wrapper = styled.div`
-  position: fixed;
+  display: flex;
+  align-items: center;
   left: 0;
   top: 0;
   width: 100%;
@@ -17,8 +18,8 @@ const Wrapper = styled.div`
 
 const Contents = styled.div`
   display: flex;
+  justify-content: end;
   align-items: center;
-  justify-content: space-between;
   width: 96%;
   max-width: 1100px;
   height: 100%;
@@ -43,7 +44,7 @@ function Header() {
 
   const toLogin = () => {
     navigate('/login');
-  }
+  };
 
   return (
     <>
