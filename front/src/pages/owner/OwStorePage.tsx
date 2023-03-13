@@ -1,23 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import Header from '../../components/ui/Header';
 import MainComponent from '../../components/ui/MainComponent';
+import StoreManage from '../../components/owner/store/StoreManage';
+import ReviewManage from '../../components/owner/store/ReviewManage';
 import Sidebar from '../../components/ui/Sidebar';
 
 const ComponentStyle = styled.div`
+  padding: 0px 30px 0px 30px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
 `;
 
-function OwStorePage() {
+const menuItems = [
+  { title: '가게 관리', component: () => <StoreManage /> },
+  { title: '감사메세지 관리', component: () => <ReviewManage /> },
+];
+
+function OwBookingPage() {
+  const [currentMenuItemIndex, setCurrentMenuItemIndex] = useState(0);
+
   return (
-    <>
-      <Header />
-      <ComponentStyle>
-        <Sidebar />
-        <MainComponent width={50} />
-      </ComponentStyle>
-    </>
+    <ComponentStyle>
+      <Sidebar
+        title="가게 운영"
+        menuItems={menuItems}
+        currentMenuItemIndex={currentMenuItemIndex}
+        setCurrentMenuItemIndex={setCurrentMenuItemIndex}
+      />
+      <MainComponent width={70}>
+        {menuItems[currentMenuItemIndex].component()}
+      </MainComponent>
+    </ComponentStyle>
   );
 }
-export default OwStorePage;
+
+export default OwBookingPage;
