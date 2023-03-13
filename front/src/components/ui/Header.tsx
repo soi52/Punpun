@@ -19,8 +19,8 @@ const Contents = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  width: 96%;
-  max-width: 1100px;
+  // width: 96%;
+  // max-width: 1100px;
   height: 100%;
   margin: 0 auto;
 `;
@@ -33,13 +33,12 @@ const NavUl = styled.ul`
 
 const ChNav = styled.ul`
   display: flex;
-  justify-content: flex-end;
   list-style: none;
   cursor: pointer;
 `;
 
 const NavLi = styled.li`
-  margin-left: 30px;
+  margin: 30px;
 `;
 
 function Header() {
@@ -63,12 +62,12 @@ function Header() {
 
   return (
     <>
-      <Wrapper>
+      <Wrapper id="header">
         <Logo />
-        <Contents>
+        <Contents id="contents">
           <nav>
             {isChild ? (
-              <ChNav>
+              <ChNav id="chnav">
                 <NavLi onClick={toChMain}>가게찾기</NavLi>
                 <NavLi onClick={toMyPage}>마이페이지</NavLi>
                 <NavLi>로그아웃</NavLi>
