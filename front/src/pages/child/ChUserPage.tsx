@@ -3,6 +3,7 @@ import ChMain from '../../components/child/MainComponent';
 import Profile from '../../components/child/Profile';
 import Settings from '../../components/child/Setting';
 import Sidebar from '../../components/ui/Sidebar';
+import MainComponent from '../../components/ui/MainComponent';
 
 const menuItems = [
   { title: '예약내역', component: () => <ChMain /> },
@@ -17,13 +18,15 @@ function ChUserPage() {
     <>
       <h1>아동 마이페이지 입니다.</h1>
       <div>
-        {/* <Sidebar
+        <Sidebar
           title="My Page"
           menuItems={menuItems}
           currentMenuItemIndex={currentMenuItemIndex}
           setCurrentMenuItemIndex={setCurrentMenuItemIndex}
-        /> */}
-        {/* <div>{menuItems[currentMenuItemIndex].component()}</div> */}
+        />
+        <MainComponent width={70}>
+          {menuItems[currentMenuItemIndex].component()}
+        </MainComponent>
       </div>
     </>
   );
