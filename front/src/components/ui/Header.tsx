@@ -5,7 +5,8 @@ import Logo from './Logo';
 import Dropdown from './Dropdown';
 
 const Wrapper = styled.div`
-  position: fixed;
+  display: flex;
+  align-items: center;
   left: 0;
   top: 0;
   width: 100%;
@@ -17,6 +18,7 @@ const Wrapper = styled.div`
 
 const Contents = styled.div`
   display: flex;
+  justify-content: end;
   align-items: center;
   justify-content: flex-end;
   // width: 96%;
@@ -50,18 +52,6 @@ function Header() {
 
   const toLogin = () => {
     navigate('/login');
-  };
-
-  const toMain = () => {
-    navigate('/');
-  };
-
-  const toMyPage = () => {
-    navigate('/chuser');
-  };
-
-  const toChMain = () => {
-    navigate('/chmain');
   };
 
   return (
