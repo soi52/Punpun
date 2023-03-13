@@ -2,7 +2,7 @@
 
 const Profile = () => {
     return (
-        <h1>아동 프로필</h1>
+        <h1>감사 메세지</h1>
     )
 }
 

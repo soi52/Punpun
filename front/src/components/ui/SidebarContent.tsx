@@ -9,7 +9,7 @@ interface SidebarContentProps {
 const SidebarContent: FC<SidebarContentProps> = ({
   menuItems,
   currentMenuItemIndex,
-  onMenuItemClick
+  onMenuItemClick,
 }) => {
   return (
     <>
