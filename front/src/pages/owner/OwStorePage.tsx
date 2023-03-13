@@ -14,7 +14,7 @@ function OwStorePage() {
     <>
       <Header />
       <ComponentStyle>
-        <Sidebar />
+        {/* <Sidebar /> */}
         <MainComponent width={50} />
       </ComponentStyle>
     </>

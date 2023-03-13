@@ -1,3 +1,5 @@
+import React, { FC } from 'react';
+import SidebarContent from './SidebarContent';
 import Profile from './Profile';
 
 import styled from 'styled-components';
@@ -12,15 +14,32 @@ const SidebarStyle = styled.div`
   margin-right: 10px;
 `;
 
-function Sidebar() {
+interface SidebarProps {
+  title: string;
+  menuItems: { title: string; component: FC }[];
+  currentMenuItemIndex: number;
+  setCurrentMenuItemIndex: (index: number) => void;
+}
+
+const Sidebar: FC<SidebarProps> = ({ title, menuItems, currentMenuItemIndex, setCurrentMenuItemIndex }) => {
+
+  const handleMenuItemClick = (index: number) => {
+    setCurrentMenuItemIndex(index);
+  };
+
   return (
     <SidebarStyle>
-      <h1>Sidebar</h1>
+      <h2>{title}</h2>
       <div>
-        <Profile/>
+        <Profile />
       </div>
+      <SidebarContent
+        menuItems={menuItems}
+        currentMenuItemIndex={currentMenuItemIndex}
+        onMenuItemClick={handleMenuItemClick}
+      />
     </SidebarStyle>
   );
-}
+};
 
 export default Sidebar;
