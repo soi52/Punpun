@@ -1,3 +1,5 @@
+import Profile from './Profile';
+
 import styled from 'styled-components';
 
 const SidebarStyle = styled.div`
@@ -14,6 +16,9 @@ function Sidebar() {
   return (
     <SidebarStyle>
       <h1>Sidebar</h1>
+      <div>
+        <Profile/>
+      </div>
     </SidebarStyle>
   );
 }
