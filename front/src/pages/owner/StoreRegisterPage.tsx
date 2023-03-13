@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import Header from '../../components/ui/Header';
 import MainComponent from '../../components/ui/MainComponent';
 
 const ContentsStyle = styled.div`
+  padding: 0px 10px 0px 10px;
   display: flex;
   justify-content: center;
 `;
@@ -11,11 +11,7 @@ const ContentsStyle = styled.div`
 function StoreRegisterPage() {
   return (
     <>
-      <Header />
-      <ContentsStyle>
-        <h1>StoreRegisterPage</h1>
-        <MainComponent width={80} />
-      </ContentsStyle>
+      <ContentsStyle>{/* <MainComponent width={80} /> */}</ContentsStyle>
     </>
   );
 }
