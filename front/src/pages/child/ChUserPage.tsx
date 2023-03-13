@@ -23,7 +23,7 @@ function ChUserPage() {
           currentMenuItemIndex={currentMenuItemIndex}
           setCurrentMenuItemIndex={setCurrentMenuItemIndex}
         /> */}
-        <div>{menuItems[currentMenuItemIndex].component()}</div>
+        {/* <div>{menuItems[currentMenuItemIndex].component()}</div> */}
       </div>
     </>
   );
