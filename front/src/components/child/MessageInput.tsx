@@ -82,17 +82,22 @@ const MessageInput: React.FC<MessageInputProps> = ({ onAddMessage }) => {
     }
   };
 
+  const handleButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const buttonValue = event.currentTarget.innerText;
+    setInputValue(inputValue + ' ' + buttonValue);
+  };
+
   return (
     <MessageDiv>
         <form onSubmit={handleAddMessage}>
             <MessageButtonDiv id="buttondiv">
-                <MessageButton1>🥰 감사해요</MessageButton1>
-                <MessageButton1>😋 맛있어요</MessageButton1>
-                <MessageButton1>⚡ 음식이 빨리 나와요</MessageButton1>
-                <MessageButton1>✨ 청결해요</MessageButton1>
-                <MessageButton1>😊 친절해요</MessageButton1>
-                <MessageButton1>👍 최고예요</MessageButton1>
-                <MessageButton1>❤ 편히 먹을 수 있어요</MessageButton1>
+                <MessageButton1 onClick={handleButtonClick}>🥰 감사해요</MessageButton1>
+                <MessageButton1 onClick={handleButtonClick}>😋 맛있어요</MessageButton1>
+                <MessageButton1 onClick={handleButtonClick}>⚡ 음식이 빨리 나와요</MessageButton1>
+                <MessageButton1 onClick={handleButtonClick}>✨ 청결해요</MessageButton1>
+                <MessageButton1 onClick={handleButtonClick}>😊 친절해요</MessageButton1>
+                <MessageButton1 onClick={handleButtonClick}>👍 최고예요</MessageButton1>
+                <MessageButton1 onClick={handleButtonClick}>🤍 편히 먹을 수 있어요</MessageButton1>
             </MessageButtonDiv>
             <InputBoxDiv>
                 <Input
