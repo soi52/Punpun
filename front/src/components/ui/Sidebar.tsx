@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { useNavigate } from 'react-router';
 import SidebarContent from './SidebarContent';
 import Profile from './Profile';
 import styled from 'styled-components';
@@ -10,7 +11,7 @@ const SidebarStyle = styled.div`
   height: 35rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   float: left;
-  margin-right: 10px;
+  margin-right: 20px;
 `;
 
 interface SidebarProps {
@@ -26,13 +27,18 @@ const Sidebar: FC<SidebarProps> = ({
   currentMenuItemIndex,
   setCurrentMenuItemIndex,
 }) => {
+  const navigate = useNavigate();
   const handleMenuItemClick = (index: number) => {
     setCurrentMenuItemIndex(index);
   };
 
+  const toMain = () => {
+    navigate('/chuser');
+  };
+
   return (
     <SidebarStyle>
-      <h2>{title}</h2>
+      <h2 onClick={toMain}>{title}</h2>
       <div>
         <Profile />
       </div>
