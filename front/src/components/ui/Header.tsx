@@ -14,6 +14,7 @@ const Wrapper = styled.div`
   border-bottom: solid;
   border-bottom-width: 2px;
   border-bottom-color: #dcdde1;
+  // position: fixed;
 `;
 
 const Contents = styled.div`
@@ -45,7 +46,7 @@ const NavLi = styled.li`
 
 function Header() {
   // 드롭메뉴: 후원자 or 사장님
-  const [isChild, setIsChild] = useState(true);
+  const [isChild, setIsChild] = useState(false);
   const [drop, setDrop] = useState(false);
   const selectMe = () => setDrop((prev) => !prev);
   const navigate = useNavigate();

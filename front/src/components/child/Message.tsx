@@ -5,8 +5,9 @@ import MessageList from './MessageList';
 
 const ThanksMessage = styled.div`
   display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+  flex-wrap: nowrap;
 `;
 
 const Message: React.FC = () => {
