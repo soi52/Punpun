@@ -14,6 +14,7 @@ const Wrapper = styled.div`
   border-bottom: solid;
   border-bottom-width: 2px;
   border-bottom-color: #dcdde1;
+  justify-content: space-between;
 `;
 
 const Contents = styled.div`
@@ -52,6 +53,18 @@ function Header() {
 
   const toLogin = () => {
     navigate('/login');
+  };
+
+  const toChMain = () => {
+    navigate('/chmain');
+  };
+
+  const toMyPage = () => {
+    navigate('/chuser');
+  };
+
+  const toMain = () => {
+    navigate('/');
   };
 
   return (
