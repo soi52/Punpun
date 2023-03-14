@@ -16,7 +16,7 @@ import OwBookingPage from './pages/owner/OwBookingPage';
 import OwManagePage from './pages/owner/OwManagePage';
 import StoreRegisterPage from './pages/owner/StoreRegisterPage';
 
-import DebuggingPage from './pages/DebuggingPage';
+import DebuggingPage from './pages/owner/DebuggingPage';
 import Layout from './components/layout/Layout';
 
 function Router() {
