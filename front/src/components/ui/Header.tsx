@@ -54,6 +54,18 @@ function Header() {
     navigate('/login');
   };
 
+  const toChMain = () => {
+    navigate('/chmain');
+  };
+
+  const toMyPage = () => {
+    navigate('/chuser');
+  };
+
+  const toMain = () => {
+    navigate('/');
+  };
+
   return (
     <>
       <Wrapper id="header">
