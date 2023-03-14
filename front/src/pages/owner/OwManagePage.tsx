@@ -1,10 +1,20 @@
 import React from 'react';
+import styled from 'styled-components';
+import StoreList from '../../components/owner/store/StoreList';
+import MainComponent from '../../components/ui/MainComponent';
+
+const ComponentStyle = styled.div`
+  padding: 15px 30px 0px 30px;
+  display: flex;
+  justify-content: center;
+`;
 
 function OwManagePage() {
   return (
-    <div>
-      <h1>OwManagePage</h1>
-    </div>
+    <ComponentStyle>
+      <MainComponent width={80}>{<StoreList />}</MainComponent>
+    </ComponentStyle>
   );
 }
+
 export default OwManagePage;

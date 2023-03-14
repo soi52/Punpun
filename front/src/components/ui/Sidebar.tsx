@@ -2,7 +2,6 @@ import React, { FC } from 'react';
 import { useNavigate } from 'react-router';
 import SidebarContent from './SidebarContent';
 import Profile from './Profile';
-
 import styled from 'styled-components';
 
 const SidebarStyle = styled.div`

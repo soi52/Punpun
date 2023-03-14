@@ -9,7 +9,6 @@ const MainImg = styled.div``;
 function MainPage() {
   return (
     <Wrapper>
-      <Header />
       <MainImg>
         <img src={alone_child} alt="child" />
       </MainImg>

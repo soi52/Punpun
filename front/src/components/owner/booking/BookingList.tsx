@@ -1,4 +1,4 @@
 function BookingList() {
-  return <h1>BookingList</h1>;
+  return <h1>예약 목록</h1>;
 }
 export default BookingList;

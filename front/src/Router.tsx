@@ -1,7 +1,9 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+//후원자페이지
 import MainPage from './pages/MainPage';
 import LoginPage from './pages/LoginPage';
 import RedirectPage from './pages/RedirectPage';
+import SuUserPage from './pages/supporter/SuUserPage';
 
 // 아동페이지
 import ChMainPage from './pages/child/ChMainPage';
@@ -14,7 +16,7 @@ import OwBookingPage from './pages/owner/OwBookingPage';
 import OwManagePage from './pages/owner/OwManagePage';
 import StoreRegisterPage from './pages/owner/StoreRegisterPage';
 
-import DebuggingPage from './pages/DebuggingPage';
+import DebuggingPage from './pages/owner/DebuggingPage';
 import Layout from './components/layout/Layout';
 
 function Router() {
@@ -24,6 +26,7 @@ function Router() {
         <Route path="/" element={<Layout />}>
           {/* 후원페이지 */}
           <Route path="/sumain" element={<MainPage />} />
+          <Route path="/suuser" element={<SuUserPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/login/oauth" element={<RedirectPage />} />
 

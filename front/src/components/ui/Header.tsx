@@ -14,7 +14,7 @@ const Wrapper = styled.div`
   border-bottom: solid;
   border-bottom-width: 2px;
   border-bottom-color: #dcdde1;
-  // position: fixed;
+  justify-content: space-between;
 `;
 
 const Contents = styled.div`

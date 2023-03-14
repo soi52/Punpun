@@ -1,6 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
-import Header from '../components/ui/Header';
 import { useNavigate } from 'react-router-dom';
 
 function DebuggingPage() {
@@ -8,7 +6,6 @@ function DebuggingPage() {
 
   return (
     <>
-      <Header />
       <h1>디버깅 페이지</h1>
       <button onClick={() => navigate('/owstore/0')}>사장님-가게</button>
       <button onClick={() => navigate('/owstore/0/booking')}>
