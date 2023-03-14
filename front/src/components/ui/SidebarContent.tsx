@@ -1,4 +1,11 @@
 import React, { FC } from 'react';
+import styled from 'styled-components';
+
+const StyledLi = styled.li`
+  list-style-type: none;
+  display: flex;
+  justify-content: center;
+`;
 
 interface SidebarContentProps {
   menuItems: { title: string; component: FC }[];
@@ -15,7 +22,7 @@ const SidebarContent: FC<SidebarContentProps> = ({
     <>
       <ul>
         {menuItems.map((menuItem, index) => (
-          <li
+          <StyledLi
             key={index}
             onClick={() => onMenuItemClick(index)}
             style={{
@@ -24,7 +31,7 @@ const SidebarContent: FC<SidebarContentProps> = ({
             }}
           >
             {menuItem.title}
-          </li>
+          </StyledLi>
         ))}
       </ul>
     </>
