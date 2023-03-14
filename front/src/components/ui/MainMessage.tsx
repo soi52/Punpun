@@ -5,19 +5,19 @@ const Triangle = styled.div`
   height: 0;
   border-style: solid;
   border-width: 0 10px 10px 10px;
-  border-color: transparent transparent #6fbced transparent;
-  margin-left: 15px;
+  border-color: transparent transparent #ffffff transparent;
+  margin-left: 30px;
 `;
 
 const Message = styled.div`
-  padding: 13px;
-  color: #fff;
+  padding: 10px;
+  color: black;
   line-height: 25px;
   width: 70%;
   display: inline-block;
   text-align: left;
-  border-radius: 5px;
-  background-color: #6fbced;
+  border-radius: 10px;
+  background-color: #ffffff;
 `;
 
 function MainMessage(props: { message: string }) {
