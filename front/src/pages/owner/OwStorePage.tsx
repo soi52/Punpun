@@ -6,7 +6,7 @@ import ReviewManage from '../../components/owner/store/ReviewManage';
 import Sidebar from '../../components/ui/Sidebar';
 
 const ComponentStyle = styled.div`
-  padding: 0px 30px 0px 30px;
+  padding: 15px 30px 0px 30px;
   display: flex;
   justify-content: center;
 `;
