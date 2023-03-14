@@ -1,4 +1,4 @@
 function Share() {
-  return <h1>Share</h1>;
+  return <h1>나눔 등록</h1>;
 }
 export default Share;

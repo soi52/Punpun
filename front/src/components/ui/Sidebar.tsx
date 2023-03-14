@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 import SidebarContent from './SidebarContent';
 import Profile from './Profile';
-
 import styled from 'styled-components';
 
 const SidebarStyle = styled.div`
