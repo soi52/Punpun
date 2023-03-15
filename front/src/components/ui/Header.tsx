@@ -25,7 +25,6 @@ const Contents = styled.div`
   // width: 96%;
   // max-width: 1100px;
   height: 100%;
-  margin: 0 auto;
 `;
 
 const NavUl = styled.ul`
@@ -43,6 +42,7 @@ type HeaderProps = {
 };
 
 function Header(props: HeaderProps) {
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [isChild, setIsChild] = useState(false);
   const [isOwner, setIsOwner] = useState(false);
   const [selectedItem, setSelectedItem] = useState('후원자');
@@ -53,6 +53,10 @@ function Header(props: HeaderProps) {
     navigate('/login');
   };
 
+  const toMain = () => {
+    navigate('/sumain');
+  };
+
   const toChMain = () => {
     navigate('/chmain');
   };
@@ -61,59 +65,119 @@ function Header(props: HeaderProps) {
     navigate('/chuser');
   };
 
-  const toMain = () => {
-    navigate('/');
+  const toOwStore = () => {
+    navigate('/owstore/:store_id');
+  };
+  const toOwBooking = () => {
+    navigate('/owstore/:store_id/booking');
   };
 
   const onSelect = (item: string) => {
     setSelectedItem(item);
     if (item === '사장님') {
       setIsOwner(true);
-      setIsChild(false);
+      navigate('/owstore/:store_id');
     } else if (item === '후원자') {
-      setIsChild(false);
       setIsOwner(false);
+      navigate('/sumain');
     }
+  };
+
+  const onLogout = () => {
+    setIsLoggedIn(false);
   };
 
   const selectMe = () => setDrop((prev) => !prev);
 
+  const renderNav = () => {
+    if (isLoggedIn) {
+      if (isChild) {
+        return (
+          <NavUl id="chnav">
+            <NavLi onClick={toChMain}>가게찾기</NavLi>
+            <NavLi onClick={toMyPage}>마이페이지</NavLi>
+            <NavLi onClick={onLogout}>로그아웃</NavLi>
+          </NavUl>
+        );
+      } else if (isOwner) {
+        return (
+          <NavUl id="ownav">
+            <NavLi onClick={toOwStore}>가게운영</NavLi>
+            <NavLi onClick={toOwBooking}>예약관리</NavLi>
+            <NavLi onClick={onLogout}>로그아웃</NavLi>
+            <NavLi onClick={selectMe}>
+              {selectedItem}
+              {drop && <Dropdown onSelect={onSelect} />}
+            </NavLi>
+          </NavUl>
+        );
+      } else {
+        return (
+          <NavUl>
+            <NavLi onClick={toMain}>사업소개</NavLi>
+            <NavLi>가게찾기</NavLi>
+            <NavLi onClick={onLogout}>로그아웃</NavLi>
+            <NavLi onClick={selectMe}>
+              {selectedItem}
+              {drop && <Dropdown onSelect={onSelect} />}
+            </NavLi>
+          </NavUl>
+        );
+      }
+    } else {
+      return (
+        <NavUl>
+          <NavLi onClick={toMain}>사업소개</NavLi>
+          <NavLi>가게찾기</NavLi>
+          <NavLi onClick={toLogin}>로그인</NavLi>
+        </NavUl>
+      );
+    }
+  };
   return (
-    <Wrapper id="header">
+    <Wrapper>
       <Logo />
-      <Contents id="contents">
-        <nav>
-          {isChild ? (
-            <NavUl id="chnav">
-              <NavLi onClick={toChMain}>가게찾기</NavLi>
-              <NavLi onClick={toMyPage}>마이페이지</NavLi>
-              <NavLi>로그아웃</NavLi>
-            </NavUl>
-          ) : isOwner ? (
-            <NavUl id="ownav">
-              <NavLi onClick={toChMain}>가게운영</NavLi>
-              <NavLi onClick={toMyPage}>예약관리</NavLi>
-              <NavLi>로그아웃</NavLi>
-              <NavLi onClick={selectMe}>
-                {selectedItem}
-                {drop && <Dropdown onSelect={onSelect} />}
-              </NavLi>
-            </NavUl>
-          ) : (
-            <NavUl>
-              <NavLi onClick={toMain}>사업소개</NavLi>
-              <NavLi>가게찾기</NavLi>
-              <NavLi onClick={toLogin}>로그인</NavLi>
-              <NavLi onClick={selectMe}>
-                {selectedItem}
-                {drop && <Dropdown onSelect={onSelect} />}
-              </NavLi>
-            </NavUl>
-          )}
-        </nav>
+      <Contents>
+        <nav>{renderNav()}</nav>
       </Contents>
     </Wrapper>
   );
 }
+//   <Wrapper>
+//     <Logo />
+//     <Contents>
+//       <nav>
+//         {isChild ? (
+//           <NavUl>
+//             <NavLi onClick={toChMain}>가게찾기</NavLi>
+//             <NavLi onClick={toMyPage}>마이페이지</NavLi>
+//             <NavLi>로그아웃</NavLi>
+//           </NavUl>
+//         ) : isOwner ? (
+//           <NavUl>
+//             <NavLi onClick={toOwStore}>가게운영</NavLi>
+//             <NavLi onClick={toOwBooking}>예약관리</NavLi>
+//             <NavLi onClick={toMain}>로그아웃</NavLi>
+//             <NavLi onClick={selectMe}>
+//               {selectedItem}
+//               {drop && <Dropdown onSelect={onSelect} />}
+//             </NavLi>
+//           </NavUl>
+//         ) : (
+//           <NavUl>
+//             <NavLi onClick={toMain}>사업소개</NavLi>
+//             <NavLi>가게찾기</NavLi>
+//             <NavLi onClick={toLogin}>로그아웃</NavLi>
+//             <NavLi onClick={selectMe}>
+//               {selectedItem}
+//               {drop && <Dropdown onSelect={onSelect} />}
+//             </NavLi>
+//           </NavUl>
+//         )}
+//       </nav>
+//     </Contents>
+//   </Wrapper>
+// );
+// }
 
 export default Header;

@@ -26,6 +26,7 @@
 import styled from 'styled-components';
 
 const List = styled.ul`
+  position: absolute;
   list-style: none;
   padding: 0;
   margin: 0;
@@ -40,21 +41,21 @@ const Item = styled.li`
   }
 `;
 
-const Box = styled.div`
-  position: absolute;
-`;
+// const Box = styled.div`
+//   position: absolute;
+// `;
 
 interface DropdownProps {
   onSelect: (item: string) => void;
 }
 function Dropdown(props: DropdownProps) {
   return (
-    <Box>
+    <>
       <List>
         <Item onClick={() => props.onSelect('사장님')}>사장님</Item>
         <Item onClick={() => props.onSelect('후원자')}>후원자</Item>
       </List>
-    </Box>
+    </>
   );
 }
 
