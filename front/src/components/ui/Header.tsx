@@ -52,7 +52,7 @@ function Header(props: HeaderProps) {
   };
 
   const toMain = () => {
-    navigate('/sumain');
+    navigate('/');
   };
 
   const toChMain = () => {
@@ -70,29 +70,31 @@ function Header(props: HeaderProps) {
     navigate('/owstore/:store_id/booking');
   };
 
+  const onLogout = () => {
+    setIsLoggedIn(false);
+    toMain();
+  };
+
   const onSelect = (item: string) => {
     setSelectedItem(item);
     if (item === '사장님') {
       setIsOwner(true);
-      navigate('/owstore/:store_id');
+      toOwStore();
     } else if (item === '후원자') {
       setIsOwner(false);
-      navigate('/sumain');
+      toMain();
     }
   };
 
-  const onLogout = () => {
-    setIsLoggedIn(false);
-    navigate('/sumain');
+  const selectMe = () => {
+    setDrop(!drop);
   };
-
-  const selectMe = () => setDrop((prev) => !prev);
 
   const renderNav = () => {
     if (isLoggedIn) {
       if (isChild) {
         return (
-          <NavUl id="chnav">
+          <NavUl>
             <NavLi onClick={toChMain}>가게찾기</NavLi>
             <NavLi onClick={toMyPage}>마이페이지</NavLi>
             <NavLi onClick={onLogout}>로그아웃</NavLi>
@@ -100,13 +102,19 @@ function Header(props: HeaderProps) {
         );
       } else if (isOwner) {
         return (
-          <NavUl id="ownav">
+          <NavUl>
             <NavLi onClick={toOwStore}>가게운영</NavLi>
             <NavLi onClick={toOwBooking}>예약관리</NavLi>
             <NavLi onClick={onLogout}>로그아웃</NavLi>
             <NavLi onClick={selectMe}>
-              {selectedItem}
-              {drop && <Dropdown onSelect={onSelect} />}
+              {selectedItem}{' '}
+              {drop && (
+                <Dropdown
+                  onSelect={onSelect}
+                  items={isOwner ? ['후원자'] : ['사장님']}
+                  selectedItem={selectedItem}
+                />
+              )}
             </NavLi>
           </NavUl>
         );
@@ -117,8 +125,14 @@ function Header(props: HeaderProps) {
             <NavLi>가게찾기</NavLi>
             <NavLi onClick={onLogout}>로그아웃</NavLi>
             <NavLi onClick={selectMe}>
-              {selectedItem}
-              {drop && <Dropdown onSelect={onSelect} />}
+              {selectedItem}{' '}
+              {drop && (
+                <Dropdown
+                  onSelect={onSelect}
+                  items={isOwner ? ['후원자'] : ['사장님']}
+                  selectedItem={selectedItem}
+                />
+              )}
             </NavLi>
           </NavUl>
         );
