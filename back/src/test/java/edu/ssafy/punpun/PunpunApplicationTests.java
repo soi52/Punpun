@@ -8,6 +8,7 @@ class PunpunApplicationTests {
 
 	@Test
 	void contextLoads() {
+		PunpunApplication.main(new String[]{});
 	}
 
 }
