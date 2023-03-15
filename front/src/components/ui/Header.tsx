@@ -5,6 +5,7 @@ import Logo from './Logo';
 import Dropdown from './Dropdown';
 
 const Wrapper = styled.div`
+  position: absolute;
   display: flex;
   align-items: center;
   left: 0;
@@ -22,9 +23,6 @@ const Contents = styled.div`
   justify-content: end;
   align-items: center;
   justify-content: flex-end;
-  // width: 96%;
-  // max-width: 1100px;
-  height: 100%;
 `;
 
 const NavUl = styled.ul`
@@ -85,6 +83,7 @@ function Header(props: HeaderProps) {
 
   const onLogout = () => {
     setIsLoggedIn(false);
+    navigate('/sumain');
   };
 
   const selectMe = () => setDrop((prev) => !prev);
@@ -143,41 +142,5 @@ function Header(props: HeaderProps) {
     </Wrapper>
   );
 }
-//   <Wrapper>
-//     <Logo />
-//     <Contents>
-//       <nav>
-//         {isChild ? (
-//           <NavUl>
-//             <NavLi onClick={toChMain}>가게찾기</NavLi>
-//             <NavLi onClick={toMyPage}>마이페이지</NavLi>
-//             <NavLi>로그아웃</NavLi>
-//           </NavUl>
-//         ) : isOwner ? (
-//           <NavUl>
-//             <NavLi onClick={toOwStore}>가게운영</NavLi>
-//             <NavLi onClick={toOwBooking}>예약관리</NavLi>
-//             <NavLi onClick={toMain}>로그아웃</NavLi>
-//             <NavLi onClick={selectMe}>
-//               {selectedItem}
-//               {drop && <Dropdown onSelect={onSelect} />}
-//             </NavLi>
-//           </NavUl>
-//         ) : (
-//           <NavUl>
-//             <NavLi onClick={toMain}>사업소개</NavLi>
-//             <NavLi>가게찾기</NavLi>
-//             <NavLi onClick={toLogin}>로그아웃</NavLi>
-//             <NavLi onClick={selectMe}>
-//               {selectedItem}
-//               {drop && <Dropdown onSelect={onSelect} />}
-//             </NavLi>
-//           </NavUl>
-//         )}
-//       </nav>
-//     </Contents>
-//   </Wrapper>
-// );
-// }
 
 export default Header;
