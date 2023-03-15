@@ -25,7 +25,6 @@ const Contents = styled.div`
   // width: 96%;
   // max-width: 1100px;
   height: 100%;
-  margin: 0 auto;
 `;
 
 const NavUl = styled.ul`
@@ -46,7 +45,7 @@ const NavLi = styled.li`
 
 function Header() {
   // 드롭메뉴: 후원자 or 사장님
-  const [isChild, setIsChild] = useState(false);
+  const [isChild, setIsChild] = useState(true);
   const [drop, setDrop] = useState(false);
   const selectMe = () => setDrop((prev) => !prev);
   const navigate = useNavigate();

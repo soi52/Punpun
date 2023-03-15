@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
+
+
 const MessageDiv = styled.div`
-    width: 700px;
+    width: 40rem;
     display: flex;
     justify-content: center;
 `;
@@ -43,6 +45,7 @@ const Input = styled.input`
 const InputBoxDiv = styled.div`
     display: flex;
     justify-content: center;
+    padding: 10px;
 `;
 
 const Button = styled.button`
@@ -68,9 +71,15 @@ interface MessageInputProps {
 
 const MessageInput: React.FC<MessageInputProps> = ({ onAddMessage }) => {
   const [inputValue, setInputValue] = useState('');
+  const [selectedButtons, setSelectedButtons] = useState<string[]>([]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
+  };
+
+  const handleButtonSelect = (value: string) => {
+    setSelectedButtons([...selectedButtons, value]);
+    setInputValue(`${inputValue} ${value}`);
   };
 
   const handleAddMessage = (event: React.FormEvent<HTMLFormElement>) => {
@@ -79,25 +88,21 @@ const MessageInput: React.FC<MessageInputProps> = ({ onAddMessage }) => {
     if (inputValue.trim() !== '') {
       onAddMessage(inputValue);
       setInputValue('');
+      setSelectedButtons([]);
     }
-  };
-
-  const handleButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    const buttonValue = event.currentTarget.innerText;
-    setInputValue(inputValue + ' ' + buttonValue);
   };
 
   return (
     <MessageDiv>
         <form onSubmit={handleAddMessage}>
             <MessageButtonDiv id="buttondiv">
-                <MessageButton1 onClick={handleButtonClick}>🥰 감사해요</MessageButton1>
-                <MessageButton1 onClick={handleButtonClick}>😋 맛있어요</MessageButton1>
-                <MessageButton1 onClick={handleButtonClick}>⚡ 음식이 빨리 나와요</MessageButton1>
-                <MessageButton1 onClick={handleButtonClick}>✨ 청결해요</MessageButton1>
-                <MessageButton1 onClick={handleButtonClick}>😊 친절해요</MessageButton1>
-                <MessageButton1 onClick={handleButtonClick}>👍 최고예요</MessageButton1>
-                <MessageButton1 onClick={handleButtonClick}>🤍 편히 먹을 수 있어요</MessageButton1>
+                <MessageButton1 onClick={() => handleButtonSelect('🥰 감사해요')}>🥰 감사해요</MessageButton1>
+                <MessageButton1 onClick={() => handleButtonSelect('😋 맛있어요')}>😋 맛있어요</MessageButton1>
+                <MessageButton1 onClick={() => handleButtonSelect('⚡ 음식이 빨리 나와요')}>⚡ 음식이 빨리 나와요</MessageButton1>
+                <MessageButton1 onClick={() => handleButtonSelect('✨ 청결해요')}>✨ 청결해요</MessageButton1>
+                <MessageButton1 onClick={() => handleButtonSelect('😊 친절해요')}>😊 친절해요</MessageButton1>
+                <MessageButton1 onClick={() => handleButtonSelect('👍 최고예요')}>👍 최고예요</MessageButton1>
+                <MessageButton1 onClick={() => handleButtonSelect('❤ 편히 먹을 수 있어요')}>❤ 편히 먹을 수 있어요</MessageButton1>
             </MessageButtonDiv>
             <InputBoxDiv>
                 <Input
