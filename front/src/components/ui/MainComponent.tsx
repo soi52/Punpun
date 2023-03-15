@@ -13,6 +13,7 @@ const MainComponentStyle = styled.div<MainComponentProps>`
   height: 35rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   float: left;
+  overflow-y: auto;
 `;
 
 function MainComponent({ width, children }: MainComponentProps) {

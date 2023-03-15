@@ -41,7 +41,7 @@ type HeaderProps = {
 
 function Header(props: HeaderProps) {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
-  const [isChild, setIsChild] = useState(false);
+  const [isChild, setIsChild] = useState(true);
   const [isOwner, setIsOwner] = useState(false);
   const [selectedItem, setSelectedItem] = useState('후원자');
   const [drop, setDrop] = useState(false);
