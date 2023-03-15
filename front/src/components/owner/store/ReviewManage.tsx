@@ -2,19 +2,13 @@ import styled from 'styled-components';
 import MainMessage from '../../ui/MainMessage';
 import MainTitle from '../../ui/MainTitle';
 import ReviewItem from '../../ui/ReviewItem';
+import StoreInfo from '../StoreInfo';
 
 const Wrapper = styled.div`
   padding: 20px;
 `;
 
 function ReviewManage() {
-  const storeInfo = {
-    title: '따뜻한 사랑과 건강한 식사를 나눠주시는',
-    ownerName: '김싸피 사장님',
-    message: '어느새 10번의 식사 나눔을 하셨네요!',
-    name: '싸피식당',
-  };
-
   const reviews = [
     {
       id: 1,
@@ -41,10 +35,7 @@ function ReviewManage() {
 
   return (
     <Wrapper>
-      <h2>
-        <MainTitle title={`${storeInfo.title} ${storeInfo.name}`} />
-      </h2>
-      <MainMessage message={`${storeInfo.ownerName}, ${storeInfo.message}`} />
+      <StoreInfo />
       <h2>감사인사 목록</h2>
       <ReviewItem reviews={reviews} />
     </Wrapper>
