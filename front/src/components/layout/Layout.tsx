@@ -1,11 +1,16 @@
 import { Outlet } from 'react-router-dom';
 import styled from 'styled-components';
-import MainNavigation from '../ui/Header';
+import Header from '../ui/Header';
 
 function Layout() {
+  const onSelect = (item: string) => {
+    console.log(item);
+    // item에 따른 동작 처리
+  };
+
   return (
     <div>
-      <MainNavigation />
+      <Header onSelect={onSelect} />
       <MainStyle>
         <Outlet />
       </MainStyle>
