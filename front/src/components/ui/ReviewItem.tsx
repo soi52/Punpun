@@ -4,7 +4,7 @@ const Review = styled.div`
   display: flex;
   align-items: center;
   margin: 10px;
-  padding: 15px;
+  padding: 10px;
   background-color: #ffffff;
   border-radius: 20px;
 `;
@@ -25,47 +25,27 @@ const ReviewText = styled.p`
   font-size: 16px;
 `;
 
-function ReviewItem() {
-  return (
-    <div>
-      <Review>
-        <UserImage
-          src="https://img2.daumcdn.net/thumb/R658x0.q70/?fname=https://t1.daumcdn.net/news/202105/22/koreadognews/20210522152933617uzcd.png"
-          alt="User Image"
-        />
-        <div>
-          <UserName>익명의 너구리</UserName>
-          <ReviewText>
-            후원자님 덕분에 너무 맛있게 식사했습니다. 감사합니다!
-          </ReviewText>
-        </div>
-      </Review>
-      <Review>
-        <UserImage
-          src="https://img2.daumcdn.net/thumb/R658x0.q70/?fname=https://t1.daumcdn.net/news/202105/22/koreadognews/20210522152933617uzcd.png"
-          alt="User Image"
-        />
-        <div>
-          <UserName>익명의 다람쥐</UserName>
-          <ReviewText>
-            눈치보지 않고 따듯한 식사를 할 수 있어서 너무 좋았습니다.
-          </ReviewText>
-        </div>
-      </Review>
-      <Review>
-        <UserImage
-          src="https://img2.daumcdn.net/thumb/R658x0.q70/?fname=https://t1.daumcdn.net/news/202105/22/koreadognews/20210522152933617uzcd.png"
-          alt="User Image"
-        />
-        <div>
-          <UserName>익명의 다람쥐</UserName>
-          <ReviewText>
-            눈치보지 않고 따듯한 식사를 할 수 있어서 너무 좋았습니다.
-          </ReviewText>
-        </div>
-      </Review>
-    </div>
-  );
+interface ReviewItemProps {
+  reviews: {
+    id: number;
+    userImage: string;
+    userName: string;
+    reviewText: string;
+  }[];
+}
+
+function ReviewItem({ reviews }: ReviewItemProps) {
+  const reviewList = reviews.map((review) => (
+    <Review key={review.id}>
+      <UserImage src={review.userImage} alt="User Image" />
+      <div>
+        <UserName>{review.userName}</UserName>
+        <ReviewText>{review.reviewText}</ReviewText>
+      </div>
+    </Review>
+  ));
+
+  return <>{reviewList}</>;
 }
 
 export default ReviewItem;
