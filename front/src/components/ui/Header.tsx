@@ -5,6 +5,7 @@ import Logo from './Logo';
 import Dropdown from './Dropdown';
 
 const Wrapper = styled.div`
+  position: absolute;
   display: flex;
   align-items: center;
   left: 0;
@@ -22,18 +23,9 @@ const Contents = styled.div`
   justify-content: end;
   align-items: center;
   justify-content: flex-end;
-  // width: 96%;
-  // max-width: 1100px;
-  height: 100%;
 `;
 
 const NavUl = styled.ul`
-  display: flex;
-  list-style: none;
-  cursor: pointer;
-`;
-
-const ChNav = styled.ul`
   display: flex;
   list-style: none;
   cursor: pointer;
@@ -43,15 +35,24 @@ const NavLi = styled.li`
   margin: 30px;
 `;
 
-function Header() {
-  // 드롭메뉴: 후원자 or 사장님
-  const [isChild, setIsChild] = useState(true);
+type HeaderProps = {
+  onSelect: (item: string) => void;
+};
+
+function Header(props: HeaderProps) {
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isChild, setIsChild] = useState(false);
+  const [isOwner, setIsOwner] = useState(false);
+  const [selectedItem, setSelectedItem] = useState('후원자');
   const [drop, setDrop] = useState(false);
-  const selectMe = () => setDrop((prev) => !prev);
   const navigate = useNavigate();
 
   const toLogin = () => {
     navigate('/login');
+  };
+
+  const toMain = () => {
+    navigate('/sumain');
   };
 
   const toChMain = () => {
@@ -62,38 +63,83 @@ function Header() {
     navigate('/chuser');
   };
 
-  const toMain = () => {
-    navigate('/');
+  const toOwStore = () => {
+    navigate('/owstore/:store_id');
+  };
+  const toOwBooking = () => {
+    navigate('/owstore/:store_id/booking');
   };
 
+  const onSelect = (item: string) => {
+    setSelectedItem(item);
+    if (item === '사장님') {
+      setIsOwner(true);
+      navigate('/owstore/:store_id');
+    } else if (item === '후원자') {
+      setIsOwner(false);
+      navigate('/sumain');
+    }
+  };
+
+  const onLogout = () => {
+    setIsLoggedIn(false);
+    navigate('/sumain');
+  };
+
+  const selectMe = () => setDrop((prev) => !prev);
+
+  const renderNav = () => {
+    if (isLoggedIn) {
+      if (isChild) {
+        return (
+          <NavUl id="chnav">
+            <NavLi onClick={toChMain}>가게찾기</NavLi>
+            <NavLi onClick={toMyPage}>마이페이지</NavLi>
+            <NavLi onClick={onLogout}>로그아웃</NavLi>
+          </NavUl>
+        );
+      } else if (isOwner) {
+        return (
+          <NavUl id="ownav">
+            <NavLi onClick={toOwStore}>가게운영</NavLi>
+            <NavLi onClick={toOwBooking}>예약관리</NavLi>
+            <NavLi onClick={onLogout}>로그아웃</NavLi>
+            <NavLi onClick={selectMe}>
+              {selectedItem}
+              {drop && <Dropdown onSelect={onSelect} />}
+            </NavLi>
+          </NavUl>
+        );
+      } else {
+        return (
+          <NavUl>
+            <NavLi onClick={toMain}>사업소개</NavLi>
+            <NavLi>가게찾기</NavLi>
+            <NavLi onClick={onLogout}>로그아웃</NavLi>
+            <NavLi onClick={selectMe}>
+              {selectedItem}
+              {drop && <Dropdown onSelect={onSelect} />}
+            </NavLi>
+          </NavUl>
+        );
+      }
+    } else {
+      return (
+        <NavUl>
+          <NavLi onClick={toMain}>사업소개</NavLi>
+          <NavLi>가게찾기</NavLi>
+          <NavLi onClick={toLogin}>로그인</NavLi>
+        </NavUl>
+      );
+    }
+  };
   return (
-    <>
-      <Wrapper id="header">
-        <Logo />
-        <Contents id="contents">
-          <nav>
-            {isChild ? (
-              <ChNav id="chnav">
-                <NavLi onClick={toChMain}>가게찾기</NavLi>
-                <NavLi onClick={toMyPage}>마이페이지</NavLi>
-                <NavLi>로그아웃</NavLi>
-              </ChNav>
-            ) : (
-              <NavUl>
-                <NavLi onClick={toMain}>사업소개</NavLi>
-                <NavLi>가게찾기</NavLi>
-                <NavLi onClick={toLogin}>로그인</NavLi>
-                <NavLi onClick={selectMe}>
-                  후원자
-                  {drop ? '^' : 'v'}
-                  {drop && <Dropdown />}
-                </NavLi>
-              </NavUl>
-            )}
-          </nav>
-        </Contents>
-      </Wrapper>
-    </>
+    <Wrapper>
+      <Logo />
+      <Contents>
+        <nav>{renderNav()}</nav>
+      </Contents>
+    </Wrapper>
   );
 }
 

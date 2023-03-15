@@ -1,17 +1,20 @@
 import styled from 'styled-components';
-import Header from '../components/ui/Header';
 import alone_child from '../resources/images/alone_child.jpg';
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  height: 100vh;
+`;
 
-const MainImg = styled.div``;
+const MainImg = styled.div`
+  height: calc(100% - 80px);
+  background-size: cover;
+  background-image: url(${alone_child});
+`;
 
 function MainPage() {
   return (
     <Wrapper>
-      <MainImg>
-        <img src={alone_child} alt="child" />
-      </MainImg>
+      <MainImg />
       <div>
         <div>우리나라에 결식 아동이 아직 있나요?</div>
         <div>
