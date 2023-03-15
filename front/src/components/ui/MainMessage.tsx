@@ -24,7 +24,7 @@ function MainMessage(props: { message: string }) {
   return (
     <>
       <Triangle></Triangle>
-      <Message>{props.message}</Message>
+      <Message>　{props.message}</Message>
     </>
   );
 }

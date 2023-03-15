@@ -14,6 +14,15 @@ const SidebarStyle = styled.div`
   margin-right: 20px;
 `;
 
+const HrDIv = styled.hr`
+  width: 11rem;
+  margin: 20px;
+`;
+
+const H2 = styled.h2`
+  padding: 0px 20px;
+`;
+
 interface SidebarProps {
   title: string;
   menuItems: { title: string; component: FC }[];
@@ -32,21 +41,19 @@ const Sidebar: FC<SidebarProps> = ({
     setCurrentMenuItemIndex(index);
   };
 
-  const toMain = () => {
-    navigate('/chuser');
-  };
-
   return (
     <SidebarStyle>
-      <h2 onClick={toMain}>{title}</h2>
+      <H2>{title}</H2>
       <div>
         <Profile />
       </div>
+      <HrDIv></HrDIv>
       <SidebarContent
         menuItems={menuItems}
         currentMenuItemIndex={currentMenuItemIndex}
         onMenuItemClick={handleMenuItemClick}
       />
+      <HrDIv></HrDIv>
     </SidebarStyle>
   );
 };
