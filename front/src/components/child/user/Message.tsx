@@ -1,7 +1,15 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+
+import MainTitle from '../../ui/MainTitle';
+import MainMessage from '../../ui/MainMessage';
+
 import MessageInput from './MessageInput';
 import MessageList from './MessageList';
+
+const ComponentStyle = styled.div`
+  padding: 20px;
+`;
 
 const ThanksMessage = styled.div`
   display: flex;
@@ -24,7 +32,7 @@ const Message: React.FC = () => {
   };
 
   return (
-    <div>
+    <ComponentStyle>
       <ThanksMessage id="thanksmessage">
         <MessageInput onAddMessage={handleAddMessage} />
         <MessageList
@@ -32,7 +40,7 @@ const Message: React.FC = () => {
           onDeleteMessage={handleDeleteMessage}
         />
       </ThanksMessage>
-    </div>
+    </ComponentStyle>
   );
 };
 
