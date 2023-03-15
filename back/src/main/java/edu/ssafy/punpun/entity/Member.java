@@ -25,6 +25,9 @@ public class Member extends BaseEntity {
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<Store> stores;
+    @OneToMany
+    @ToString.Exclude
+    private List<Support> supports;
 
     public Long chargePoint(Long point) {
         this.remainPoint += point;
