@@ -4,6 +4,7 @@ import MainPage from './pages/MainPage';
 import LoginPage from './pages/LoginPage';
 import RedirectPage from './pages/RedirectPage';
 import SuUserPage from './pages/supporter/SuUserPage';
+import SuSearchStore from './pages/supporter/SuSearchStore';
 
 // 아동페이지
 import ChMainPage from './pages/child/ChMainPage';
@@ -25,8 +26,9 @@ function Router() {
       <Routes>
         <Route path="/" element={<Layout />}>
           {/* 후원페이지 */}
-          <Route path="/" element={<MainPage />} />
+          <Route path="/sumain" element={<MainPage />} />
           <Route path="/suuser" element={<SuUserPage />} />
+          <Route path="/susearch" element={<SuSearchStore />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/login/oauth" element={<RedirectPage />} />
 
