@@ -13,7 +13,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class KeywordServiceImpl implements KeywordService {
     private final KeywordRepository keywordRepository;
-
     @Override
     public List<Keyword> findAllKeyword() {
         return keywordRepository.findAll();
