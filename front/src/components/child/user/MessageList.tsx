@@ -11,7 +11,7 @@ const Div = styled.div`
 
 const StyledLi = styled.li`
   display: flex;
-  justify-content: space-between
+  justify-content: space-between;
 `;
 
 const Button = styled.button`

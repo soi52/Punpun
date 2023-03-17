@@ -1,11 +1,11 @@
-import StoreBanner from "./Storebanner";
+import StoreBanner from './Storebanner';
 
 const StoreThanksMessage = () => {
-    return(
-        <>
-            <StoreBanner/>
-        </>
-    )
+  return (
+    <>
+      <StoreBanner />
+    </>
+  );
 };
 
 export default StoreThanksMessage;

@@ -19,7 +19,6 @@ const BannerText = styled.div`
 `;
 
 const StoreBanner = () => {
-
   return (
     <>
       <BannerDiv>
