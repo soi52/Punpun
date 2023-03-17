@@ -17,7 +17,7 @@ public class Store extends BaseEntity {
     private Long id;
     private String licenseNumber;
     private String name;
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Image image;
     private boolean openState;
     private String openTime;
