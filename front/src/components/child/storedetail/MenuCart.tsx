@@ -9,9 +9,9 @@ type CartItem = {
 };
 
 type MenuCartProps = {
-    cartItems: CartItem[];
-    onAddToCart: (item: CartItem) => void;
-  };
+  cartItems: CartItem[];
+  onAddToCart: (item: CartItem) => void;
+};
 
 const CartContainer = styled.div`
   width: 30%;

@@ -13,12 +13,11 @@ const MenuListContainer = styled.div`
 `;
 
 type Menu = {
-  id: number,
+  id: number;
   title: string;
   image: string;
   price: number;
 };
-
 
 const data: Menu[] = [
   {
@@ -66,9 +65,9 @@ const MenuList: React.FC = () => {
     setCartItems([...cartItems, menu]);
   };
 
-//   const handleRemoveFromCart = (newCartItems: Menu[]) => {
-//     setCartItems(newCartItems);
-//   };
+  //   const handleRemoveFromCart = (newCartItems: Menu[]) => {
+  //     setCartItems(newCartItems);
+  //   };
 
   return (
     <>
@@ -83,7 +82,9 @@ const MenuList: React.FC = () => {
             onAddToCart={handleAddToCart}
           />
         ))}
-        {cartItems.length > 0 && <MenuCart cartItems={cartItems} onAddToCart={handleAddToCart}/>}
+        {cartItems.length > 0 && (
+          <MenuCart cartItems={cartItems} onAddToCart={handleAddToCart} />
+        )}
       </MenuListContainer>
     </>
   );

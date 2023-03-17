@@ -41,7 +41,7 @@ type HeaderProps = {
 
 function Header(props: HeaderProps) {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
-  const [isChild, setIsChild] = useState(true);
+  const [isChild, setIsChild] = useState(false);
   const [isOwner, setIsOwner] = useState(false);
   const [selectedItem, setSelectedItem] = useState('후원자');
   const [drop, setDrop] = useState(false);
@@ -52,7 +52,7 @@ function Header(props: HeaderProps) {
   };
 
   const toMain = () => {
-    navigate('/');
+    navigate('/sumain');
   };
 
   const toChMain = () => {
@@ -88,6 +88,11 @@ function Header(props: HeaderProps) {
 
   const selectMe = () => {
     setDrop(!drop);
+  };
+
+  const seleteChild = () => {
+    setIsChild(!isChild);
+    toChMain();
   };
 
   const renderNav = () => {
@@ -150,6 +155,7 @@ function Header(props: HeaderProps) {
   return (
     <Wrapper>
       <Logo />
+      <button onClick={seleteChild}>{isChild ? '어린이' : '일반'}</button>
       <Contents>
         <nav>{renderNav()}</nav>
       </Contents>

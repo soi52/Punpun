@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import styled from "styled-components";
+import React, { useState } from 'react';
+import styled from 'styled-components';
 
 type MenuCardProps = {
   id: number;
@@ -45,7 +45,13 @@ const MenuCardPrice = styled.div`
   color: #666666;
 `;
 
-const MenuCard: React.FC<MenuCardProps> = ({ id, title, image, price, onAddToCart }) => {
+const MenuCard: React.FC<MenuCardProps> = ({
+  id,
+  title,
+  image,
+  price,
+  onAddToCart,
+}) => {
   const [isSelected, setIsSelected] = useState(false);
 
   const handleClick = () => {
