@@ -1,73 +1,61 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-
+interface MessageInputProps {
+  onAddMessage: (message: string, selectedButtons: string[]) => void;
+}
 
 const MessageDiv = styled.div`
-    width: 40rem;
-    display: flex;
-    justify-content: center;
-`;
-
-const MessageButtonDiv = styled.div`
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    padding: 10px;
-`;
-
-const MessageButton1 = styled.button`
-  border: none;
-  border-radius: 15px;
-  text-align: center;
-  padding: 7px;
-  color: #fff;
-  font-size: 1em;
-  font-weight: 500;
-  transition: 0.3s;
-  //   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-  //   display: block;
-  margin: 5px;
-  background-color: purple;
-  text-align: center;
-  white-space: nowrap;
-`;
-
-const Input = styled.input`
-  border: none;
-  border-radius: 25px;
-//   background-color: hsl(0, 0%, 90%);
-  padding: 10px;
-  font-size: medium;
-  width: 20rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const InputBoxDiv = styled.div`
-    display: flex;
-    justify-content: center;
-    padding: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+`;
+
+const Input = styled.input`
+  width: 400px;
+  height: 40px;
+  padding: 10px;
+  font-size: 18px;
+  border-radius: 5px;
+  border: 1px solid #bdbdbd;
+  margin-right: 10px;
 `;
 
 const Button = styled.button`
+  width: 80px;
+  height: 40px;
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  border-radius: 5px;
   border: none;
-  border-radius: 15px;
-  text-align: center;
-  padding: 7px;
-  color: #fff;
-  font-size: 1em;
-  font-weight: 500;
-  transition: 0.3s;
-  //   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-  //   display: block;
-  margin: 5px;
-  background-color: blue;
+  background-color: #00adb5;
 `;
 
-
-
-interface MessageInputProps {
-  onAddMessage: (message: string) => void;
-}
+const MessageButtonDiv = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 20px;
+`;
+const Btndiv = styled.div<{ selected: boolean }>`
+  display: inline-block;
+  background-color: ${(props) => (props.selected ? '#f1c40f' : '#fff')};
+  color: ${(props) => (props.selected ? '#fff' : '#f1c40f')};
+  font-size: 14px;
+  padding: 5px 10px;
+  border-radius: 20px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+`;
 
 const MessageInput: React.FC<MessageInputProps> = ({ onAddMessage }) => {
   const [inputValue, setInputValue] = useState('');
@@ -78,15 +66,21 @@ const MessageInput: React.FC<MessageInputProps> = ({ onAddMessage }) => {
   };
 
   const handleButtonSelect = (value: string) => {
-    setSelectedButtons([...selectedButtons, value]);
-    setInputValue(`${inputValue} ${value}`);
+    if (selectedButtons.includes(value)) {
+      // 이미 선택된 버튼일 경우
+      setSelectedButtons(selectedButtons.filter((button) => button !== value));
+    } else {
+      // 선택되지 않은 버튼일 경우
+      setSelectedButtons([...selectedButtons, value]);
+    }
   };
 
   const handleAddMessage = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (inputValue.trim() !== '') {
-      onAddMessage(inputValue);
+      const message = inputValue + ' ' + selectedButtons.join(' ');
+      onAddMessage(message, selectedButtons);
       setInputValue('');
       setSelectedButtons([]);
     }
@@ -94,26 +88,61 @@ const MessageInput: React.FC<MessageInputProps> = ({ onAddMessage }) => {
 
   return (
     <MessageDiv>
-        <form onSubmit={handleAddMessage}>
-            <MessageButtonDiv id="buttondiv">
-                <MessageButton1 onClick={() => handleButtonSelect('🥰 감사해요')}>🥰 감사해요</MessageButton1>
-                <MessageButton1 onClick={() => handleButtonSelect('😋 맛있어요')}>😋 맛있어요</MessageButton1>
-                <MessageButton1 onClick={() => handleButtonSelect('⚡ 음식이 빨리 나와요')}>⚡ 음식이 빨리 나와요</MessageButton1>
-                <MessageButton1 onClick={() => handleButtonSelect('✨ 청결해요')}>✨ 청결해요</MessageButton1>
-                <MessageButton1 onClick={() => handleButtonSelect('😊 친절해요')}>😊 친절해요</MessageButton1>
-                <MessageButton1 onClick={() => handleButtonSelect('👍 최고예요')}>👍 최고예요</MessageButton1>
-                <MessageButton1 onClick={() => handleButtonSelect('❤ 편히 먹을 수 있어요')}>❤ 편히 먹을 수 있어요</MessageButton1>
-            </MessageButtonDiv>
-            <InputBoxDiv>
-                <Input
-                    type="text"
-                    placeholder="감사 메세지를 남겨보세요 :)"
-                    value={inputValue}
-                    onChange={handleInputChange}
-                />
-                <Button type="submit">입력</Button>
-            </InputBoxDiv>
-        </form>
+      <form onSubmit={handleAddMessage}>
+        <MessageButtonDiv id="buttondiv">
+          <Btndiv
+            selected={selectedButtons.includes('🥰 감사해요')}
+            onClick={() => handleButtonSelect('🥰 감사해요')}
+          >
+            🥰 감사해요
+          </Btndiv>
+          <Btndiv
+            selected={selectedButtons.includes('😋 맛있어요')}
+            onClick={() => handleButtonSelect('😋 맛있어요')}
+          >
+            😋 맛있어요
+          </Btndiv>
+          <Btndiv
+            selected={selectedButtons.includes('⚡ 음식이 빨리 나와요')}
+            onClick={() => handleButtonSelect('⚡ 음식이 빨리 나와요')}
+          >
+            ⚡ 음식이 빨리 나와요
+          </Btndiv>
+          <Btndiv
+            selected={selectedButtons.includes('✨ 청결해요')}
+            onClick={() => handleButtonSelect('✨ 청결해요')}
+          >
+            ✨ 청결해요
+          </Btndiv>
+          <Btndiv
+            selected={selectedButtons.includes('😊 친절해요')}
+            onClick={() => handleButtonSelect('😊 친절해요')}
+          >
+            😊 친절해요
+          </Btndiv>
+          <Btndiv
+            selected={selectedButtons.includes('👍 최고예요')}
+            onClick={() => handleButtonSelect('👍 최고예요')}
+          >
+            👍 최고예요
+          </Btndiv>
+          <Btndiv
+            selected={selectedButtons.includes('💛 편히 먹을 수 있어요')}
+            onClick={() => handleButtonSelect('💛 편히 먹을 수 있어요')}
+          >
+            💛 편히 먹을 수 있어요
+          </Btndiv>
+        </MessageButtonDiv>
+        <InputBoxDiv>
+          <Input
+            type="text"
+            placeholder="감사 메세지를 남겨보세요 :)"
+            value={inputValue}
+            onChange={handleInputChange}
+          />
+          <Button type="submit">입력</Button>
+        </InputBoxDiv>
+      </form>
     </MessageDiv>
   );
 };

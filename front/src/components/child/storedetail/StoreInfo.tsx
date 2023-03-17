@@ -1,14 +1,13 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import StoreBanner from "./Storebanner";
-
+import StoreBanner from './Storebanner';
 
 const StoreInfo = () => {
-    return(
-        <>
-            <StoreBanner/>
-        </>
-    )
+  return (
+    <>
+      <StoreBanner />
+    </>
+  );
 };
 
 export default StoreInfo;
