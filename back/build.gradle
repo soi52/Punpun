@@ -45,6 +45,10 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
+tasks.named('compileJava') {
+	dependsOn 'copyPrivate'
+}
+
 tasks.register('copyPrivate') {
 	copy {
 		from './punpunconfig/main'
