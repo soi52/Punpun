@@ -1,29 +1,30 @@
-package edu.ssafy.punpun.repository;
+package edu.ssafy.punpun.service;
 
-import edu.ssafy.punpun.entity.Image;
 import edu.ssafy.punpun.entity.Menu;
 import edu.ssafy.punpun.entity.Store;
+import edu.ssafy.punpun.repository.MenuRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
-import java.util.Optional;
 
-@DataJpaTest
-public class MenuRepositoryTest {
+@ExtendWith(MockitoExtension.class)
+public class MenuServiceImplTest {
 
-    @Autowired
+    @Mock
     private MenuRepository menuRepository;
-    @Autowired
-    private StoreRepository storeRepository;
+    @InjectMocks
+    private MenuServiceImpl menuService;
 
     @Test
-    @DisplayName("test for Store Detail Dto - Menu")
+    @DisplayName("test for Menu Service Impl findByStore")
     void findByStore() {
-
         // given
         Store store1 = Store.builder().build();
         Menu menu1 = Menu.builder()
@@ -42,6 +43,8 @@ public class MenuRepositoryTest {
         menuRepository.save(menu1);
         menuRepository.save(menu2);
 
+        Mockito.doReturn(List.of(menu1, menu2)).when(menuRepository).findByStore(store1);
+
         // when
         List<Menu> results = menuRepository.findByStore(store1);
 
@@ -54,5 +57,6 @@ public class MenuRepositoryTest {
         Assertions.assertThat(results.get(1).getPrice()).isEqualTo(menu2.getPrice());
         Assertions.assertThat(results.get(1).getSponsoredCount()).isEqualTo(menu2.getSponsoredCount());
         Assertions.assertThat(results.get(1).getStore()).isEqualTo(menu2.getStore());
+
     }
 }

@@ -30,7 +30,7 @@ public class Store extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member owner;
-    @OneToMany(mappedBy = "store")
+    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<Menu> menus;
     @OneToMany(mappedBy = "store")

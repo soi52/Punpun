@@ -15,7 +15,7 @@ public class StoreServiceImpl implements StoreService {
 
     @Override
     public Store findById(Long id) {
-        return storeRepository.findById(id).orElseThrow(IllegalAccessError::new);
+        return storeRepository.findById(id).orElseThrow(IllegalArgumentException::new);
     }
 
     @Override

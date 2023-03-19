@@ -26,14 +26,13 @@ public class StoreController {
     @ResponseStatus(code = HttpStatus.OK)
     public StoreDetailDTO getStoreDetail(@PathVariable("storeId") Long id) {
         Store store = storeService.findById(id);
-        List<Menu> menus = menuService.findByStore_Id(id);
         List<MenuDTO> menuDTOList = new ArrayList<>();
-        for (Menu menu : menus) {
-            MenuDTO menuDTO = new MenuDTO(menu);
-            menuDTOList.add(menuDTO);
+        List<Menu> menuList = menuService.findByStore(store);
+
+        for (Menu menu : menuList) {
+            menuDTOList.add(new MenuDTO(menu));
         }
 
-        StoreDetailDTO storeDetailDTO = new StoreDetailDTO(store, menuDTOList);
-        return storeDetailDTO;
+        return new StoreDetailDTO(store, menuDTOList);
     }
 }

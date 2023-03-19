@@ -24,7 +24,7 @@ public class Menu extends BaseEntity {
     @OneToMany(fetch = FetchType.LAZY)
     @ToString.Exclude
     private List<Support> supports;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "store_id")
     private Store store;
     @OneToOne(fetch = FetchType.LAZY)
