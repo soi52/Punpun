@@ -14,7 +14,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 public class ReviewKeyword extends BaseEntity {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "review_keyword_id")
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY)

@@ -12,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 public class Review extends BaseEntity {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "review_id")
     private Long id;
     private String content;

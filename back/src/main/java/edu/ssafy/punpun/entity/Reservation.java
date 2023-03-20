@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class Reservation extends BaseEntity{
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "reservation_id")
     private Long id;
     private LocalDateTime reservationTime;
