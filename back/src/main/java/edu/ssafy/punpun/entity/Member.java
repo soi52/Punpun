@@ -22,10 +22,10 @@ public class Member extends BaseEntity {
     private UserRole role;
     private Long supportedPoint;
     private Long remainPoint;
-    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "owner", cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
     @ToString.Exclude
     private List<Store> stores;
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
     @ToString.Exclude
     private List<Support> supports;
 

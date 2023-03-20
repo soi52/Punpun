@@ -16,7 +16,4 @@ public class Keyword extends BaseEntity {
     @Column(name = "keyword_id")
     private Long id;
     private String content;
-    @OneToMany(mappedBy = "keyword")
-    @ToString.Exclude
-    private List<ReviewKeyword> reviewKeywords;
 }
