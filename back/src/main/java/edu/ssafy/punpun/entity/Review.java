@@ -26,7 +26,7 @@ public class Review extends BaseEntity {
     @ManyToOne(targetEntity = Child.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "child_id")
     private Child child;
-    @OneToMany(mappedBy = "review")
+    @OneToMany(mappedBy = "review", cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<ReviewKeyword> reviewKeywords;
 }

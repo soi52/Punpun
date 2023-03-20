@@ -20,13 +20,13 @@ public class Child extends BaseEntity {
     @JoinColumn(name = "image_id")
     private Image profile;
     private String area;
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
     @ToString.Exclude
     private List<Review> reviews;
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
     @ToString.Exclude
     private List<Reservation> reservations;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<FavoriteMenu> favoriteMenus;
 }

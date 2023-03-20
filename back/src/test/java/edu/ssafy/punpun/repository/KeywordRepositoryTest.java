@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import java.util.Arrays;
 import java.util.List;
 
 @DataJpaTest
@@ -34,5 +35,6 @@ class KeywordRepositoryTest {
         Assertions.assertThat(result.get(0).getContent()).isEqualTo(keyword1.getContent());
         Assertions.assertThat(result.get(1).getId()).isEqualTo(keyword2.getId());
         Assertions.assertThat(result.get(1).getContent()).isEqualTo(keyword2.getContent());
+
     }
 }
