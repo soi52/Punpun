@@ -1,11 +1,9 @@
 package edu.ssafy.punpun.repository;
 
 import edu.ssafy.punpun.entity.Image;
-import edu.ssafy.punpun.entity.Keyword;
-import edu.ssafy.punpun.entity.Menu;
 import edu.ssafy.punpun.entity.Store;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +16,11 @@ import java.util.Optional;
 public class StoreRepositoryTest {
     @Autowired
     private StoreRepository storeRepository;
+
+    @AfterEach
+    void afterEach(){
+        storeRepository.deleteAll();
+    }
 
     @Test
     @DisplayName("test for Store Detail Dto")
@@ -42,7 +45,7 @@ public class StoreRepositoryTest {
         storeRepository.save(store1);
 
         // when
-        Optional<Store> result = storeRepository.findById(1L);
+        Optional<Store> result = storeRepository.findById(store1.getId());
         //then
         Assertions.assertThat(result.get().getId()).isEqualTo(store1.getId());
         Assertions.assertThat(result.get().getName()).isEqualTo(store1.getName());
