@@ -19,4 +19,9 @@ public class SupportServiceImpl implements SupportService{
     public List<Support> findSupport(Member supporter) {
         return supportRepository.findBySupporter(supporter);
     }
+
+    @Override
+    public void saveSupport(Support support) {
+        supportRepository.save(support);
+    }
 }
