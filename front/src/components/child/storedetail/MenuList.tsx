@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import MenuCard from './MenuCard';
-import MenuCart from './MenuCart';
 
 const MenuListContainer = styled.div`
   width: 70%;
@@ -62,28 +61,19 @@ const data: Menu[] = [
 const MenuList: React.FC = () => {
   const [cartItems, setCartItems] = useState<Menu[]>([]);
 
-  const handleAddToCart = (menu: Menu) => {
-    setCartItems([...cartItems, menu]);
-  };
-
-//   const handleRemoveFromCart = (newCartItems: Menu[]) => {
-//     setCartItems(newCartItems);
-//   };
-
   return (
     <>
       <MenuListContainer>
         {data.map((data, index) => (
           <MenuCard
-            key={index}
-            id={data.id}
-            title={data.title}
-            image={data.image}
-            price={data.price}
-            onAddToCart={handleAddToCart}
-          />
+          key={index}
+          id={data.id}
+          title={data.title}
+          image={data.image}
+          price={data.price}
+        />
         ))}
-        {cartItems.length > 0 && <MenuCart cartItems={cartItems} onAddToCart={handleAddToCart}/>}
+
       </MenuListContainer>
     </>
   );
