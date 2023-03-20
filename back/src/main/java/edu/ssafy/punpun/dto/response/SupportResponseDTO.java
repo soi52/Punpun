@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @AllArgsConstructor
-public class SupportDTO {
+public class SupportResponseDTO {
     private Long supportId;
     private SupportState supportState;
     private LocalDateTime supportCreationDate;
@@ -19,7 +19,7 @@ public class SupportDTO {
     private String menuName;
     private Long menuPrice;
 
-    public SupportDTO(Support support){
+    public SupportResponseDTO(Support support){
         this.supportId=support.getId();
         this.supportState=support.getSupportState();
         this.supportCreationDate=support.getCreatedDateTime();
