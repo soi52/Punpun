@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
+import React, { useState } from "react";
+import styled from "styled-components";
+import BookingModal from "./BookingModal";
 
-type MenuCardProps = {
+interface MenuCardProps {
+  key: number;
   id: number;
   title: string;
   image: string;
   price: number;
-  onAddToCart: (menu: Menu) => void;
-};
+}
 
 type Menu = {
   id: number;
@@ -45,30 +46,29 @@ const MenuCardPrice = styled.div`
   color: #666666;
 `;
 
-const MenuCard: React.FC<MenuCardProps> = ({
-  id,
-  title,
-  image,
-  price,
-  onAddToCart,
-}) => {
-  const [isSelected, setIsSelected] = useState(false);
-
-  const handleClick = () => {
-    const menu: Menu = { id, title, image, price };
-    onAddToCart(menu);
-    setIsSelected(true);
+const MenuCard: React.FC<MenuCardProps> = ({ id, title, image, price }) => {
+  const [showModal, setShowModal] = useState(false);
+  
+  const bookingButton = () => {
+    setShowModal(true);
   };
 
+  const onClose = () => {
+    setShowModal(false);
+  }
+
+
   return (
-    <MenuCardContainer onClick={handleClick}>
-      <MenuCardImage src={image} alt={title} />
-      <div>
-        <MenuCardTitle>{title}</MenuCardTitle>
-        <MenuCardPrice>{price}원</MenuCardPrice>
-      </div>
-      {isSelected && <div>선택됨</div>}
-    </MenuCardContainer>
+    <>
+      <MenuCardContainer onClick={bookingButton}>
+        <MenuCardImage src={image} alt={title} />
+        <div>
+          <MenuCardTitle>{title}</MenuCardTitle>
+          <MenuCardPrice>{price}원</MenuCardPrice>
+        </div>
+      </MenuCardContainer>
+      {showModal && (<BookingModal onClose={onClose}/>)}
+    </>
   );
 };
 
