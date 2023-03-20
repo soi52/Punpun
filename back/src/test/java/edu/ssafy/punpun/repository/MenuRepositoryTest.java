@@ -39,6 +39,7 @@ public class MenuRepositoryTest {
                 .store(store1)
                 .build();
 
+        storeRepository.save(store1);
         menuRepository.save(menu1);
         menuRepository.save(menu2);
 
