@@ -33,4 +33,8 @@ public class Menu extends BaseEntity {
     @OneToMany(mappedBy = "menu", cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
     @ToString.Exclude
     private List<Reservation> reservations;
+
+    public void support() {
+        this.sponsoredCount+=1;
+    }
 }
