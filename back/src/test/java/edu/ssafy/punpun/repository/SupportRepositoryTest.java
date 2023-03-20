@@ -20,6 +20,15 @@ public class SupportRepositoryTest {
     @Autowired
     private SupportRepository supportRepository;
 
+    @Autowired
+    private MemberRepository memberRepository;
+
+    @Autowired
+    private StoreRepository storeRepository;
+
+    @Autowired
+    private MenuRepository menuRepository;
+
     private static Member member;
 
     @BeforeAll
@@ -30,29 +39,40 @@ public class SupportRepositoryTest {
     @Test
     @DisplayName("후원자의 모든 후원 내역 찾아오기")
     void findSupport(){
+        Store store1= Store.builder()
+                .name("test1")
+                .build();
+        Store store2= Store.builder()
+                .name("test2")
+                .build();
+        Menu menu1= Menu.builder()
+                .name("menuTest1")
+                .price(7500L)
+                .build();
+        Menu menu2= Menu.builder()
+                .name("menuTest2")
+                .price(8000L)
+                .build();
+
         Support support1=Support.builder()
                 .supportState(SupportState.SUPPORT)
                 .supporter(member)
-                .store(Store.builder()
-                        .name("test1")
-                        .build())
-                .menu(Menu.builder()
-                        .name("menuTest1")
-                        .price(7500L)
-                        .build())
+                .store(store1)
+                .menu(menu1)
                 .build();
 
         Support support2=Support.builder()
                 .supportState(SupportState.SUPPORT)
                 .supporter(member)
-                .store(Store.builder()
-                        .name("test2")
-                        .build())
-                .menu(Menu.builder()
-                        .name("menuTest2")
-                        .price(8000L)
-                        .build())
+                .store(store2)
+                .menu(menu2)
                 .build();
+
+        memberRepository.save(member);
+        storeRepository.save(store1);
+        storeRepository.save(store2);
+        menuRepository.save(menu1);
+        menuRepository.save(menu2);
 
         supportRepository.save(support1);
         supportRepository.save(support2);
