@@ -26,6 +26,7 @@ function Router() {
       <Routes>
         <Route path="/" element={<Layout />}>
           {/* 후원페이지 */}
+          <Route path="/" element={<MainPage />} />
           <Route path="/sumain" element={<MainPage />} />
           <Route path="/suuser" element={<SuUserPage />} />
           <Route path="/susearch" element={<SuSearchStore />} />

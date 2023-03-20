@@ -12,12 +12,11 @@ const MenuListContainer = styled.div`
 `;
 
 type Menu = {
-  id: number,
+  id: number;
   title: string;
   image: string;
   price: number;
 };
-
 
 const data: Menu[] = [
   {
@@ -59,7 +58,6 @@ const data: Menu[] = [
 ];
 
 const MenuList: React.FC = () => {
-  const [cartItems, setCartItems] = useState<Menu[]>([]);
 
   return (
     <>
@@ -73,7 +71,6 @@ const MenuList: React.FC = () => {
           price={data.price}
         />
         ))}
-
       </MenuListContainer>
     </>
   );
