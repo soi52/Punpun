@@ -67,10 +67,8 @@ const MessageInput: React.FC<MessageInputProps> = ({ onAddMessage }) => {
 
   const handleButtonSelect = (value: string) => {
     if (selectedButtons.includes(value)) {
-      // 이미 선택된 버튼일 경우
       setSelectedButtons(selectedButtons.filter((button) => button !== value));
     } else {
-      // 선택되지 않은 버튼일 경우
       setSelectedButtons([...selectedButtons, value]);
     }
   };
@@ -78,7 +76,10 @@ const MessageInput: React.FC<MessageInputProps> = ({ onAddMessage }) => {
   const handleAddMessage = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (inputValue.trim() !== '') {
+    if (
+      selectedButtons.length > 0 ||
+      (selectedButtons.length === 0 && inputValue.trim() !== '')
+    ) {
       const message = inputValue + ' ' + selectedButtons.join(' ');
       onAddMessage(message, selectedButtons);
       setInputValue('');
