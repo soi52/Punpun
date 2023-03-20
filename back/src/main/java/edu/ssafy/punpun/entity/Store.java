@@ -17,7 +17,7 @@ public class Store extends BaseEntity {
     private Long id;
     private String licenseNumber;
     private String name;
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Image image;
     private boolean openState;
     private String openTime;
@@ -30,7 +30,7 @@ public class Store extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member owner;
-    @OneToMany(mappedBy = "store")
+    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<Menu> menus;
     @OneToMany(mappedBy = "store")
