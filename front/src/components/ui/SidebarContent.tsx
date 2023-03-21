@@ -20,18 +20,22 @@ const SidebarContent: FC<SidebarContentProps> = ({
 }) => {
   return (
     <>
-      {menuItems.map((menuItem, index) => (
-        <StyledLi
-          key={index}
-          onClick={() => onMenuItemClick(index)}
-          style={{
-            fontWeight: currentMenuItemIndex === index ? 'bold' : 'normal',
-            cursor: 'pointer',
-          }}
-        >
-          {menuItem.title}
-        </StyledLi>
-      ))}
+      {menuItems.map((menuItem, index) =>
+        index !== 3 ? (
+          <StyledLi
+            key={index}
+            onClick={() => onMenuItemClick(index)}
+            style={{
+              fontWeight: currentMenuItemIndex === index ? 'bold' : 'normal',
+              cursor: 'pointer',
+            }}
+          >
+            {menuItem.title}
+          </StyledLi>
+        ) : (
+          ''
+        )
+      )}
     </>
   );
 };
