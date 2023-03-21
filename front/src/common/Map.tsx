@@ -1,7 +1,34 @@
-import { useEffect } from 'react';
-
-import styled from 'styled-components';
+import { MutableRefObject, useEffect, useRef } from 'react';
 import useGeolocation from './useGeolocation';
+import styled from 'styled-components';
+
+// const Div = styled.div`
+//   width: 500px;
+//   height: 400px;
+//   margin: 0px 20px;
+// `;
+
+// declare global {
+//   interface Window {
+//     kakao: any;
+//   }
+// }
+
+// const Map = () => {
+//   const location: any = useGeolocation();
+
+//   useEffect(() => {
+//     const container = document.getElementById('map');
+//     const options = {
+//       center: new kakao.maps.LatLng(location.latitude, location.longitude),
+//       level: 5,
+//     };
+//     let map = new kakao.maps.Map(container as HTMLElement, options); //지도 생성 및 객체 리턴
+//   }, []);
+//   return <Div id="map" />;
+// };
+
+// export default Map;
 
 const Div = styled.div`
   width: 500px;
@@ -9,26 +36,46 @@ const Div = styled.div`
   margin: 0px 20px;
 `;
 
-declare global {
-  interface Window {
-    kakao: any;
-  }
-}
-
 const Map = () => {
-  const location = useGeolocation();
+  const mapRef = useRef<HTMLElement | null>(null);
+  const location: any = useGeolocation();
+
+  const initMap = () => {
+    if (typeof location !== 'string') {
+      const container = document.getElementById('map');
+      const options = {
+        center: new kakao.maps.LatLng(location.latitude, location.longitude),
+        level: 2,
+      };
+
+      const map = new kakao.maps.Map(container as HTMLElement, options);
+      const markerPosition = new kakao.maps.LatLng(
+        location.latitude,
+        location.longitude
+      );
+      const marker = new kakao.maps.Marker({
+        position: markerPosition,
+      });
+
+      marker.setMap(map);
+      (mapRef as MutableRefObject<any>).current = map;
+    }
+  };
 
   useEffect(() => {
-    let container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
-    let options = {
-      //지도를 생성할 때 필요한 기본 옵션
-      center: new window.kakao.maps.LatLng(36.1071535, 128.4112384), //지도의 중심좌표.
-      level: 5, //지도의 레벨(확대, 축소 정도)
-    };
+    kakao.maps.load(() => initMap());
+  }, [mapRef, location]);
 
-    let map = new window.kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
-  }, []);
-  return <Div id="map" />;
+  return (
+    <>
+      <Div id="map" />
+      <button
+        style={{ position: 'relative', zIndex: '3' }}
+        onClick={() => initMap()}
+      >
+        위치
+      </button>
+    </>
+  );
 };
-
 export default Map;
