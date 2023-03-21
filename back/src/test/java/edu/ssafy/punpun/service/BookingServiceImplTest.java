@@ -18,6 +18,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.PageRequest;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -75,7 +76,6 @@ class BookingServiceImplTest {
         assertThat(reservation.getState()).isEqualTo(ReservationState.BOOKING);
     }
 
-
     @Test
     @DisplayName("없는 메뉴를 조회할 때")
     void bookingNoMenu() {
@@ -122,6 +122,15 @@ class BookingServiceImplTest {
         verify(supportReservationRepository, never()).save(any());
         verify(reservationRepository, never()).save(any());
         verify(publisher, never()).publish(any());
+    }
+
+    @Test
+    @DisplayName("날짜 검색 호출")
+    void findByDate() {
+        doReturn(null).when(reservationRepository).findAllByDate(null, null, 0);
+        bookingService.findReservations(null,null,0);
+
+        verify(reservationRepository, times(1)).findAllByDate(null, null, 0);
     }
 
     private static Support getSupport(Long id, SupportState state, Menu menu) {
