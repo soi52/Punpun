@@ -7,11 +7,11 @@ type MainComponentProps = {
 };
 
 const MainComponentStyle = styled.div<MainComponentProps>`
-  background-color: #eff3f8;
+  background-color: white;
   border-radius: 1rem;
   width: ${(props) => props.width + 'rem'};
   height: 35rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  // box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   float: left;
   overflow-y: auto;
 `;
