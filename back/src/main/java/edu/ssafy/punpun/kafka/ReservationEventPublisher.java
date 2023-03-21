@@ -17,17 +17,17 @@ import org.springframework.util.concurrent.ListenableFutureCallback;
 public class ReservationEventPublisher {
     private final KafkaTemplate<String, ReservationEvent> template;
 
-    void publish(Reservation reservation) {
+    public void publish(Reservation reservation) {
         ListenableFuture<SendResult<String, ReservationEvent>> future = template.send("alarm", ReservationEvent.entityToEvent(reservation));
-        future.addCallback(new ListenableFutureCallback<SendResult<String, ReservationEvent>>() {
+        future.addCallback(new ListenableFutureCallback<>() {
             @Override
             public void onSuccess(SendResult<String, ReservationEvent> result) {
-                log.info("[{}] Alarm Event Sent", reservation.getId());
+                log.info("[Reservation ID = {}] Alarm Event Sent", reservation.getId());
             }
 
             @Override
             public void onFailure(Throwable ex) {
-                log.warn("[{}] Alarm Event Send Fail", reservation.getId());
+                log.warn("[Reservation ID = {}] Alarm Event Send Fail", reservation.getId());
             }
         });
     }
