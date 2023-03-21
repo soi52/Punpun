@@ -1,49 +1,36 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 
-interface locationType {
-  loaded: boolean;
-  coordinates?: { lat: number; lng: number };
-  error?: { code: number; message: string };
-}
+// interface locationType {
+//   loaded: boolean;
+//   coordinates?: { lat: number; lng: number };
+//   error?: { code: number; message: string };
+// }
 
 const useGeolocation = () => {
-  const [location, setLocation] = useState<locationType>({
-    loaded: false,
-    coordinates: { lat: 0, lng: 0 },
-  });
+  const [location, setLocation] = useState<
+    { latitude: number; longitude: number } | string
+  >('');
 
-  // 성공에 대한 로직
-  const onSuccess = (location: {
-    coords: { latitude: number; longitude: number };
-  }) => {
-    setLocation({
-      loaded: true,
-      coordinates: {
-        lat: location.coords.latitude,
-        lng: location.coords.longitude,
-      },
-    });
-  };
+  useMemo(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(success, error);
+    }
 
-  // 에러에 대한 로직
-  const onError = (error: { code: number; message: string }) => {
-    setLocation({
-      loaded: true,
-      error,
-    });
-  };
-
-  useEffect(() => {
-    // navigator 객체 안에 geolocation이 없다면
-    // 위치 정보가 없는 것.
-    if (!('geolocation' in navigator)) {
-      onError({
-        code: 0,
-        message: 'Geolocation not supported',
+    function success(position: any) {
+      setLocation({
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude,
       });
     }
-    navigator.geolocation.getCurrentPosition(onSuccess, onError);
-  }, []);
+
+    function error() {
+      setLocation({
+        latitude: 37.483034,
+        longitude: 126.902435,
+      });
+      console.log('위치 받기 실패');
+    }
+  }, [navigator.geolocation.getCurrentPosition]);
 
   return location;
 };

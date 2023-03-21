@@ -54,6 +54,12 @@ function Header(props: HeaderProps) {
   const toMain = () => {
     navigate('/sumain');
   };
+  const toSuSearch = () => {
+    navigate('/susearch');
+  };
+  const toSuMypage = () => {
+    navigate('/suuser');
+  };
 
   const toChMain = () => {
     navigate('/chmain');
@@ -127,7 +133,8 @@ function Header(props: HeaderProps) {
         return (
           <NavUl>
             <NavLi onClick={toMain}>사업소개</NavLi>
-            <NavLi>가게찾기</NavLi>
+            <NavLi onClick={toSuSearch}>가게찾기</NavLi>
+            <NavLi onClick={toSuMypage}>마이페이지</NavLi>
             <NavLi onClick={onLogout}>로그아웃</NavLi>
             <NavLi onClick={selectMe}>
               {selectedItem}{' '}
