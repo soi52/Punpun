@@ -25,13 +25,14 @@ function Router() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
-          {/* 후원페이지 */}
           <Route path="/" element={<MainPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/login/oauth" element={<RedirectPage />} />
+
+          {/* 후원페이지 */}
           <Route path="/sumain" element={<MainPage />} />
           <Route path="/suuser" element={<SuUserPage />} />
           <Route path="/susearch" element={<SuSearchStore />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/login/oauth" element={<RedirectPage />} />
 
           {/* 아동페이지 */}
           <Route path="/chmain" element={<ChMainPage />} />
