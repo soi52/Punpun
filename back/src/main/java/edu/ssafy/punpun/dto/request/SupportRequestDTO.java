@@ -13,5 +13,4 @@ public class SupportRequestDTO {
     private List<Long> menuId;
     private List<Long> menuCount;
     private Long StoreId;
-    private SupportType supportType;
 }

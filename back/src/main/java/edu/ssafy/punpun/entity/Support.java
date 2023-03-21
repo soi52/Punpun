@@ -32,4 +32,8 @@ public class Support extends BaseEntity {
     @OneToMany(mappedBy = "support", cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<SupportReservation> supportReservations;
+
+    public void setSupportType(SupportType supportType) {
+        this.supportType = supportType;
+    }
 }
