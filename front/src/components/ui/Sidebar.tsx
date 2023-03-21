@@ -1,6 +1,7 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { useNavigate } from 'react-router';
 import SidebarContent from './SidebarContent';
+import SuSidebarContent from './SuSidebarContent';
 import Profile from './Profile';
 import styled from 'styled-components';
 
@@ -8,19 +9,29 @@ const SidebarStyle = styled.div`
   background-color: white;
   border-radius: 1rem;
   width: 13rem;
-  height: 35rem;
+  height: 38rem;
   // box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   float: left;
   margin-right: 20px;
+  display: block;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const ProfileDiv = styled.div`
+  padding-top: 20px;
 `;
 
 const HrDIv = styled.hr`
   width: 11rem;
-  margin: 20px;
+  margin-top: 50px;
+  margin-bottom: 20px;
 `;
 
-const H2 = styled.h2`
-  padding: 0px 20px;
+const HrDIv2 = styled.hr`
+  width: 11rem;
+  margin-top: 20px;
+  margin-bottom: 50px;
 `;
 
 interface SidebarProps {
@@ -36,25 +47,40 @@ const Sidebar: FC<SidebarProps> = ({
   currentMenuItemIndex,
   setCurrentMenuItemIndex,
 }) => {
+  const [isSupporter, SetIsSupporter] = useState(true);
+
   const navigate = useNavigate();
+
+  // 사이드메뉴 hr 안
   const handleMenuItemClick = (index: number) => {
     setCurrentMenuItemIndex(index);
   };
 
+  // 사이드메뉴 충전하기 클릭
+
   return (
-    <SidebarStyle>
-      <H2>{title}</H2>
-      <div>
-        <Profile />
-      </div>
-      <HrDIv></HrDIv>
-      <SidebarContent
-        menuItems={menuItems}
-        currentMenuItemIndex={currentMenuItemIndex}
-        onMenuItemClick={handleMenuItemClick}
-      />
-      <HrDIv></HrDIv>
-    </SidebarStyle>
+    <>
+      <SidebarStyle>
+        {/* <H2>{title}</H2> */}
+        <ProfileDiv>
+          <Profile />
+        </ProfileDiv>
+        <HrDIv />
+        <SidebarContent
+          menuItems={menuItems}
+          currentMenuItemIndex={currentMenuItemIndex}
+          onMenuItemClick={handleMenuItemClick}
+        />
+        <HrDIv2 />
+        {isSupporter ? (
+          <SuSidebarContent
+            menuItems={menuItems}
+            currentMenuItemIndex={currentMenuItemIndex}
+            onMenuItemClick={handleMenuItemClick}
+          />
+        ) : null}
+      </SidebarStyle>
+    </>
   );
 };
 
