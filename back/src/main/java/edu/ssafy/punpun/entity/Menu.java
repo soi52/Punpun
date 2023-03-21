@@ -34,7 +34,7 @@ public class Menu extends BaseEntity {
     @ToString.Exclude
     private List<Reservation> reservations;
 
-    public void support() {
-        this.sponsoredCount+=1;
+    public void support(Long menuCount) {
+        this.sponsoredCount+=menuCount;
     }
 }

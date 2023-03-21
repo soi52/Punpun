@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface MenuService {
     List<Menu> findByStore(Store store);
-    void findMenuId(Long id);
+    void findMenuId(Long id, Long menuCount);
 }

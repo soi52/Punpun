@@ -24,7 +24,6 @@ import java.util.stream.Collectors;
 @RequestMapping("/supports")
 public class SupportController {
     private final SupportService supportService;
-    private final MenuService menuService;
 
     @GetMapping
     @ResponseStatus(code = HttpStatus.OK)
@@ -37,19 +36,20 @@ public class SupportController {
 
     @PostMapping("/payment")
     @ResponseStatus(code= HttpStatus.OK)
-    public void SupportPayment (@AuthenticationPrincipal Member supporter, @RequestBody SupportRequestDTO SupportDTO){
-        // menu sponsored count +1
-        menuService.findMenuId(SupportDTO.getMenuId());
+    public void SupportPayment (@AuthenticationPrincipal Member supporter, @RequestBody SupportRequestDTO supportRequestDTO){
         // supporter use point
-        supporter.support(SupportDTO.getUsePoint());
-        // save support table
-        Support support= Support.builder()
-                .supportType(SupportDTO.getSupportType())
-                .supportState(SupportState.SUPPORT)
-                .supporter(supporter)
-                .menu(Menu.builder().id(SupportDTO.getMenuId()).build())
-                .store(Store.builder().id(SupportDTO.getStoreId()).build())
-                .build();
-        supportService.saveSupport(support);
+        supporter.support(supportRequestDTO.getUsePoint());
+
+        // add menu sponsored count and save support table
+        for(int i=0; i<supportRequestDTO.getMenuId().size(); i++) {
+            Support support = Support.builder()
+                    .supportType(supportRequestDTO.getSupportType())
+                    .supportState(SupportState.SUPPORT)
+                    .supporter(supporter)
+                    .menu(Menu.builder().id(supportRequestDTO.getMenuId().get(i)).build())
+                    .store(Store.builder().id(supportRequestDTO.getStoreId()).build())
+                    .build();
+            supportService.SupportPayment(support, supportRequestDTO.getMenuId().get(i), supportRequestDTO.getMenuCount().get(i));
+        }
     }
 }

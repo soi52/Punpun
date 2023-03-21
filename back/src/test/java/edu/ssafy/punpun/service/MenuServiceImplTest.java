@@ -77,13 +77,13 @@ public class MenuServiceImplTest {
         Mockito.doReturn(Optional.of(menu)).when(menuRepository).findById(menu.getId());
 
         // when
-        menuService.findMenuId(menu.getId());
+        menuService.findMenuId(menu.getId(), 2L);
 
         //then
         Assertions.assertThat(menu.getId()).isEqualTo(menu.getId());
         Assertions.assertThat(menu.getName()).isEqualTo(menu.getName());
         Assertions.assertThat(menu.getPrice()).isEqualTo(menu.getPrice());
-        Assertions.assertThat(menu.getSponsoredCount()).isEqualTo(2L);
+        Assertions.assertThat(menu.getSponsoredCount()).isEqualTo(3L);
         Assertions.assertThat(menu.getStore()).isEqualTo(menu.getStore());
     }
 }

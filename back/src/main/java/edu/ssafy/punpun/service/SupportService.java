@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface SupportService {
     List<Support> findSupport(Member supporter);
-    void saveSupport(Support support);
+    void SupportPayment(Support support, Long menuId, Long menuCount);
 }
