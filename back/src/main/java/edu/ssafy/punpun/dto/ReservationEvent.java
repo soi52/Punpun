@@ -1,16 +1,17 @@
 package edu.ssafy.punpun.dto;
 
 import edu.ssafy.punpun.entity.Reservation;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
+@ToString
 @Builder
 @AllArgsConstructor
-public class ReservationEvent {
+@NoArgsConstructor
+public class ReservationEvent{
     private Long storeOwnerId;
     private Long menuId;
     private LocalDateTime reservationTime;
