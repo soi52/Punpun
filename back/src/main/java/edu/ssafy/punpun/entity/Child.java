@@ -12,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 public class Child extends BaseEntity {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "child_id")
     private Long id;
     private String name;

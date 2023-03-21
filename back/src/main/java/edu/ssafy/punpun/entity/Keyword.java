@@ -12,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 public class Keyword extends BaseEntity {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "keyword_id")
     private Long id;
     private String content;

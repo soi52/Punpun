@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 public class Support extends BaseEntity {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "support_id")
     private Long id;
     private SupportType supportType;
