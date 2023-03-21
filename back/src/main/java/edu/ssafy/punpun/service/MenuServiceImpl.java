@@ -21,7 +21,7 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     @Transactional
-    public void findMenuId(Long id, Long menuCount) {
+    public void addSponsoredCount(Long id, Long menuCount) {
         Menu menu = menuRepository.findById(id)
                 .orElseThrow(()->new IllegalArgumentException("없는 메뉴 번호입니다."));
         menu.support(menuCount);

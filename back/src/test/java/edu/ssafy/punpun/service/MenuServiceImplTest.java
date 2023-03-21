@@ -63,7 +63,7 @@ public class MenuServiceImplTest {
 
     @Test
     @DisplayName("메뉴 id로 메뉴 가져오기 - 서비스")
-    void findMenuId(){
+    void addSponsoredCount(){
         // given
         Store store = Store.builder().build();
         Menu menu = Menu.builder()
@@ -77,7 +77,7 @@ public class MenuServiceImplTest {
         Mockito.doReturn(Optional.of(menu)).when(menuRepository).findById(menu.getId());
 
         // when
-        menuService.findMenuId(menu.getId(), 2L);
+        menuService.addSponsoredCount(menu.getId(), 2L);
 
         //then
         Assertions.assertThat(menu.getId()).isEqualTo(menu.getId());

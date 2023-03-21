@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,10 +38,8 @@ public class SupportController {
     @PostMapping("/payment")
     @ResponseStatus(code= HttpStatus.OK)
     public void SupportPayment (@AuthenticationPrincipal Member supporter, @RequestBody SupportRequestDTO supportRequestDTO){
-        // supporter use point
-        supporter.support(supportRequestDTO.getUsePoint());
 
-        // add menu sponsored count and save support table
+        List<Support> supportList= new LinkedList<>();
         for(int i=0; i<supportRequestDTO.getMenuId().size(); i++) {
             Support support = Support.builder()
                     .supportType(supportRequestDTO.getSupportType())
@@ -49,7 +48,8 @@ public class SupportController {
                     .menu(Menu.builder().id(supportRequestDTO.getMenuId().get(i)).build())
                     .store(Store.builder().id(supportRequestDTO.getStoreId()).build())
                     .build();
-            supportService.SupportPayment(support, supportRequestDTO.getMenuId().get(i), supportRequestDTO.getMenuCount().get(i));
+            supportList.add(support);
         }
+        supportService.supportPayment(supportList, supportRequestDTO.getMenuId(), supportRequestDTO.getMenuCount(), supporter, supportRequestDTO.getUsePoint());
     }
 }

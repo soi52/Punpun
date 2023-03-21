@@ -25,10 +25,17 @@ public class SupportServiceImpl implements SupportService{
 
     @Override
     @Transactional
-    public void SupportPayment(Support support, Long menuId, Long menuCount) {
-        // add menu sponsored count
-        menuService.findMenuId(menuId, menuCount);
-        // save support table
-        supportRepository.save(support);
+    public void supportPayment(List<Support> supportList, List<Long> menuId , List<Long> menuCount, Member supporter, Long usePoint) {
+        // supporter use point
+        supporter.support(usePoint);
+
+        for(int i=0; i<supportList.size(); i++){
+            // add menu sponsored count
+            menuService.addSponsoredCount(menuId.get(i), menuCount.get(i));
+            // save support table
+            for(int j=0; j<menuCount.get(i); j++) {
+                supportRepository.save(supportList.get(i));
+            }
+        }
     }
 }
