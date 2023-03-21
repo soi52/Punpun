@@ -7,7 +7,7 @@ import edu.ssafy.punpun.entity.Menu;
 import edu.ssafy.punpun.entity.Store;
 import edu.ssafy.punpun.entity.Support;
 import edu.ssafy.punpun.entity.enumurate.SupportState;
-import edu.ssafy.punpun.service.MenuService;
+import edu.ssafy.punpun.entity.enumurate.SupportType;
 import edu.ssafy.punpun.service.SupportService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,19 +37,32 @@ public class SupportController {
 
     @PostMapping("/payment")
     @ResponseStatus(code= HttpStatus.OK)
-    public void SupportPayment (@AuthenticationPrincipal Member supporter, @RequestBody SupportRequestDTO supportRequestDTO){
+    public void supportPayment (@AuthenticationPrincipal Member supporter, @RequestBody SupportRequestDTO supportRequestDTO){
+        List<Support> supports=dtoToEntity(supporter, supportRequestDTO, 0);
+        supportService.saveSupport(supports, supportRequestDTO.getMenuId(), supportRequestDTO.getMenuCount(), supporter, supportRequestDTO.getUsePoint());
+    }
 
-        List<Support> supportList= new LinkedList<>();
+    @PostMapping("/share")
+    @ResponseStatus(code= HttpStatus.OK)
+    public void ownerShare(@AuthenticationPrincipal Member owner, @RequestBody SupportRequestDTO supportRequestDTO){
+        List<Support> supports=dtoToEntity(owner, supportRequestDTO, 1);
+        supportService.saveSupport(supports, supportRequestDTO.getMenuId(), supportRequestDTO.getMenuCount(), owner, 0L);
+    }
+
+    public List<Support> dtoToEntity(Member member, SupportRequestDTO supportRequestDTO, int type){
+        List<Support> supports=new LinkedList<>();
         for(int i=0; i<supportRequestDTO.getMenuId().size(); i++) {
             Support support = Support.builder()
-                    .supportType(supportRequestDTO.getSupportType())
                     .supportState(SupportState.SUPPORT)
-                    .supporter(supporter)
+                    .supporter(member)
                     .menu(Menu.builder().id(supportRequestDTO.getMenuId().get(i)).build())
                     .store(Store.builder().id(supportRequestDTO.getStoreId()).build())
                     .build();
-            supportList.add(support);
+            if(type == 0) support.setSupportType(SupportType.SUPPORT);
+            else support.setSupportType(SupportType.SHARE);
+
+            supports.add(support);
         }
-        supportService.supportPayment(supportList, supportRequestDTO.getMenuId(), supportRequestDTO.getMenuCount(), supporter, supportRequestDTO.getUsePoint());
+        return supports;
     }
 }
