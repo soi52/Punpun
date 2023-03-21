@@ -11,6 +11,7 @@ import edu.ssafy.punpun.repository.ReservationRepository;
 import edu.ssafy.punpun.repository.SupportRepository;
 import edu.ssafy.punpun.repository.SupportReservationRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -52,5 +53,10 @@ public class BookingServiceImpl implements BookingService {
 
         publisher.publish(reservation);
         return reservation;
+    }
+
+    @Override
+    public Page<Reservation> findReservations(Child child, LocalDateTime localDateTime, int page) {
+        return reservationRepository.findAllByDate(child, localDateTime, page);
     }
 }
