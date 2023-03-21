@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface MenuService {
     List<Menu> findByStore(Store store);
+    void addSponsoredCount(Long id, Long menuCount);
 }

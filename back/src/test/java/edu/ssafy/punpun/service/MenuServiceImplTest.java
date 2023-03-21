@@ -13,6 +13,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
+import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
 public class MenuServiceImplTest {
@@ -58,5 +59,31 @@ public class MenuServiceImplTest {
         Assertions.assertThat(results.get(1).getSponsoredCount()).isEqualTo(menu2.getSponsoredCount());
         Assertions.assertThat(results.get(1).getStore()).isEqualTo(menu2.getStore());
 
+    }
+
+    @Test
+    @DisplayName("메뉴 id로 메뉴 가져오기 - 서비스")
+    void addSponsoredCount(){
+        // given
+        Store store = Store.builder().build();
+        Menu menu = Menu.builder()
+                .id(1L)
+                .name("test1")
+                .price(8000L)
+                .sponsoredCount(1L)
+                .store(store)
+                .build();
+
+        Mockito.doReturn(Optional.of(menu)).when(menuRepository).findById(menu.getId());
+
+        // when
+        menuService.addSponsoredCount(menu.getId(), 2L);
+
+        //then
+        Assertions.assertThat(menu.getId()).isEqualTo(menu.getId());
+        Assertions.assertThat(menu.getName()).isEqualTo(menu.getName());
+        Assertions.assertThat(menu.getPrice()).isEqualTo(menu.getPrice());
+        Assertions.assertThat(menu.getSponsoredCount()).isEqualTo(3L);
+        Assertions.assertThat(menu.getStore()).isEqualTo(menu.getStore());
     }
 }

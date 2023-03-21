@@ -6,6 +6,7 @@ import edu.ssafy.punpun.repository.MenuRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -16,5 +17,13 @@ public class MenuServiceImpl implements MenuService {
     @Override
     public List<Menu> findByStore(Store store) {
         return menuRepository.findByStore(store);
+    }
+
+    @Override
+    @Transactional
+    public void addSponsoredCount(Long id, Long menuCount) {
+        Menu menu = menuRepository.findById(id)
+                .orElseThrow(()->new IllegalArgumentException("없는 메뉴 번호입니다."));
+        menu.support(menuCount);
     }
 }
