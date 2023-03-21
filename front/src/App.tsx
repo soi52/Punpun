@@ -1,13 +1,15 @@
 import { ThemeProvider } from 'styled-components';
+import GlobalStyle from './GlobalStyle';
 import Router from './Router';
-import { theme } from './theme';
+import theme from './theme';
 
 function App() {
   return (
     <>
-      <ThemeProvider theme={theme}>
-        <Router />
-      </ThemeProvider>
+      <GlobalStyle/>
+        <ThemeProvider theme={theme}>
+          <Router />
+        </ThemeProvider>
     </>
   );
 }

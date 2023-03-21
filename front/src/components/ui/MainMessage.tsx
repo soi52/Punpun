@@ -5,7 +5,7 @@ const Triangle = styled.div`
   height: 0;
   border-style: solid;
   border-width: 0 10px 10px 10px;
-  border-color: transparent transparent #ffffff transparent;
+  border-color: transparent transparent #E7E6F2 transparent;
   margin-left: 30px;
 `;
 
@@ -17,7 +17,7 @@ const Message = styled.div`
   display: inline-block;
   text-align: left;
   border-radius: 10px;
-  background-color: #ffffff;
+  background-color: #E7E6F2;
 `;
 
 function MainMessage(props: { message: string }) {
