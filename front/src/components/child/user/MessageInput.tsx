@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useRecoilState } from 'recoil';
+import { messageState } from '../../../store/atoms';
+import { useRecoilValue } from 'recoil';
 
 interface MessageInputProps {
   onAddMessage: (message: string, selectedButtons: string[]) => void;
@@ -60,6 +63,8 @@ const Btndiv = styled.div<{ selected: boolean }>`
 const MessageInput: React.FC<MessageInputProps> = ({ onAddMessage }) => {
   const [inputValue, setInputValue] = useState('');
   const [selectedButtons, setSelectedButtons] = useState<string[]>([]);
+  const [message, setMessage] = useRecoilState(messageState);
+
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
@@ -80,12 +85,16 @@ const MessageInput: React.FC<MessageInputProps> = ({ onAddMessage }) => {
       selectedButtons.length > 0 ||
       (selectedButtons.length === 0 && inputValue.trim() !== '')
     ) {
-      const message = inputValue + ' ' + selectedButtons.join(' ');
-      onAddMessage(message, selectedButtons);
+      const newMessage = inputValue + ' ' + selectedButtons.join(' ');
+      onAddMessage(newMessage, selectedButtons);
       setInputValue('');
       setSelectedButtons([]);
+      setMessage(newMessage); // Update the message state in Recoil
+      console.log(messageState);
     }
   };
+
+  
 
   return (
     <MessageDiv>
