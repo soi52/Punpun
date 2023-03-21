@@ -15,7 +15,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 public class SupportReservation extends BaseEntity {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "support_review_id")
     private Long id;
     private SupportReservationState state;

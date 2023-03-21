@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 public class Store extends BaseEntity {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String licenseNumber;
     private String name;
