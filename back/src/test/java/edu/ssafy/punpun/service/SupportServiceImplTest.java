@@ -90,7 +90,7 @@ public class SupportServiceImplTest {
 
     @Test
     @DisplayName("후원 결제 - 서비스")
-    void supportPayment(){
+    void saveSupport(){
         Menu menu1=Menu.builder()
                 .id(1L)
                 .name("menuTest1")
@@ -131,7 +131,7 @@ public class SupportServiceImplTest {
         List<Long> menuCount=new LinkedList<>(Arrays.asList(2L, 1L));
         Long usePoint = 23000L;
 
-        supportService.supportPayment(supports, menuId, menuCount, member, usePoint);
+        supportService.saveSupport(supports, menuId, menuCount, member, usePoint);
 
         Assertions.assertEquals(member.getRemainPoint(), 2000L);
         Assertions.assertEquals(member.getSupportedPoint(), usePoint);

@@ -25,7 +25,7 @@ public class SupportServiceImpl implements SupportService{
 
     @Override
     @Transactional
-    public void supportPayment(List<Support> supportList, List<Long> menuId , List<Long> menuCount, Member supporter, Long usePoint) {
+    public void saveSupport(List<Support> supportList, List<Long> menuId , List<Long> menuCount, Member supporter, Long usePoint) {
         // supporter use point
         // TODO: 영속성 확인
         supporter.support(usePoint);
