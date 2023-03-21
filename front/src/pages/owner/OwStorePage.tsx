@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import MainComponent from '../../components/ui/MainComponent';
 import StoreManage from '../../components/owner/store/StoreManage';
-import ReviewManage from '../../components/owner/store/ReviewManage';
+import ReviewList from '../../components/owner/store/ReviewList';
 import Sidebar from '../../components/ui/Sidebar';
 
 const ComponentStyle = styled.div`
@@ -13,7 +13,7 @@ const ComponentStyle = styled.div`
 
 const menuItems = [
   { title: '가게 관리', component: () => <StoreManage /> },
-  { title: '감사메세지 관리', component: () => <ReviewManage /> },
+  { title: '감사메세지 관리', component: () => <ReviewList /> },
 ];
 
 function OwBookingPage() {

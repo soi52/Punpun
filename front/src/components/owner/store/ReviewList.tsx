@@ -1,6 +1,4 @@
 import styled from 'styled-components';
-import MainMessage from '../../ui/MainMessage';
-import MainTitle from '../../ui/MainTitle';
 import ReviewItem from '../../ui/ReviewItem';
 import StoreInfo from '../StoreInfo';
 
@@ -8,7 +6,7 @@ const Wrapper = styled.div`
   padding: 20px;
 `;
 
-function ReviewManage() {
+function ReviewList() {
   const reviews = [
     {
       id: 1,
@@ -42,4 +40,4 @@ function ReviewManage() {
   );
 }
 
-export default ReviewManage;
+export default ReviewList;

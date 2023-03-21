@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import MainComponent from '../../components/ui/MainComponent';
+import BookingList from '../../components/owner/booking/BookingList';
 
 import BookingToday from '../../components/owner/booking/BookingToday';
-import BookingList from '../../components/owner/booking/BookingList';
 import Share from '../../components/owner/booking/Share';
 import ShareList from '../../components/owner/booking/ShareList';
 import Sidebar from '../../components/ui/Sidebar';
@@ -14,16 +14,18 @@ const ComponentStyle = styled.div`
   justify-content: center;
 `;
 
-const menuItems = [
-  { title: '오늘의 예약', component: () => <BookingToday /> },
-  { title: '예약 목록', component: () => <BookingList /> },
-  { title: '나눔 등록', component: () => <Share /> },
-  { title: '나눔 목록', component: () => <ShareList /> },
-];
-
 function OwBookingPage() {
   const [currentMenuItemIndex, setCurrentMenuItemIndex] = useState(0);
 
+  const menuItems = [
+    { title: '오늘의 예약', component: () => <BookingToday /> },
+    {
+      title: '예약 목록',
+      component: () => <BookingList />,
+    },
+    { title: '나눔 등록', component: () => <Share /> },
+    { title: '나눔 목록', component: () => <ShareList /> },
+  ];
   return (
     <ComponentStyle>
       <Sidebar
