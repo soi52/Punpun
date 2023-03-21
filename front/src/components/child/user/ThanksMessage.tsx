@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { messageState } from '../../../store/atoms';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
 import MainTitle from '../../ui/MainTitle';
@@ -17,6 +19,8 @@ const ThanksMessage = () => {
     message: '오늘도 맛있는 밥 먹어요~!',
     name: '박정은 학생',
   };
+  const messageList = useRecoilValue(messageState);
+
 
   const [messages, setMessages] = useState<string[]>([]);
   const handleDeleteMessage = (index: number) => {
@@ -36,7 +40,7 @@ const ThanksMessage = () => {
           messages={messages}
           onDeleteMessage={handleDeleteMessage}
         />
-
+      <div>{messageList}</div>
     </ComponentStyle>
   );
 };
