@@ -27,6 +27,7 @@ public class SupportServiceImpl implements SupportService{
     @Transactional
     public void supportPayment(List<Support> supportList, List<Long> menuId , List<Long> menuCount, Member supporter, Long usePoint) {
         // supporter use point
+        // TODO: 영속성 확인
         supporter.support(usePoint);
 
         for(int i=0; i<supportList.size(); i++){
