@@ -7,23 +7,26 @@ const ComponentStyle = styled.div`
   padding: 20px;
 `;
 
-function ThanksMessage() {
-
+const SuPointAdd = () => {
   const mainMessage = {
     title: '',
     ownerName: '박정은 후원자님',
     message: '어느새 후원한 금액이 10,000원 이네요!',
     name: '정은 후원자님',
   };
+
   return (
     <ComponentStyle>
       <h2>
         <MainTitle title={`${mainMessage.name} ${mainMessage.title}`} />
       </h2>
-      <MainMessage message={`${mainMessage.ownerName}, ${mainMessage.message}`} />
-      <h2>감사 메세지</h2>
+      <MainMessage
+        message={`${mainMessage.ownerName}, ${mainMessage.message}`}
+      />
+      <h2>충전 포인트</h2>
+      <h2>결제 수단</h2>
     </ComponentStyle>
   );
-}
+};
 
-export default ThanksMessage;
+export default SuPointAdd;
