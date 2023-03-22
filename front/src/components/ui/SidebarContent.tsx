@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import styled from 'styled-components';
 
 const StyledLi = styled.li`
@@ -18,9 +18,12 @@ const SidebarContent: FC<SidebarContentProps> = ({
   currentMenuItemIndex,
   onMenuItemClick,
 }) => {
+  const [isSupporter, SetIsSupporter] = useState(true);
+
   return (
     <>
       {menuItems.map((menuItem, index) =>
+      isSupporter ? (
         index !== 3 ? (
           <StyledLi
             key={index}
@@ -34,7 +37,16 @@ const SidebarContent: FC<SidebarContentProps> = ({
           </StyledLi>
         ) : (
           ''
-        )
+        )) : (<StyledLi
+          key={index}
+          onClick={() => onMenuItemClick(index)}
+          style={{
+            fontWeight: currentMenuItemIndex === index ? 'bold' : 'normal',
+            cursor: 'pointer',
+          }}
+        >
+          {menuItem.title}
+        </StyledLi>)
       )}
     </>
   );
