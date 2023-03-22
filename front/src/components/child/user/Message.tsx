@@ -23,7 +23,7 @@ type MessageBtn = {
   value: string;
 };
 
-const BtnMessage: MessageBtn[] = [
+const btnMessage: MessageBtn[] = [
   {
     id: 1,
     value: '🥰 감사해요',
@@ -78,6 +78,7 @@ const Message: React.FC = () => {
     <ComponentStyle>
       <ThanksMessage id="thanksmessage">
         <MessageInput
+          btnMessage={btnMessage}
           onAddMessage={handleAddMessage}
           setInputValue={setInputValue}
           inputValue={inputValue}
