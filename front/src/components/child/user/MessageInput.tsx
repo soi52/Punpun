@@ -3,7 +3,12 @@ import styled from 'styled-components';
 // import { useRecoilState } from 'recoil';
 // import { messageState } from '../../../store/atoms';
 
+type MessageBtn = {
+  id: number;
+  value: string;
+};
 interface MessageInputProps {
+  btnMessage: MessageBtn[];
   onAddMessage: (message: string, selectedButtons: number[]) => void;
   setInputValue: (message: string) => void;
   inputValue: string
@@ -64,43 +69,11 @@ const BtnDiv = styled.div<{ selected: boolean }>`
   margin-bottom: 10px;
 `;
 
-type MessageBtn = {
-  id: number;
-  value: string;
-};
 
-const BtnMessage: MessageBtn[] = [
-  {
-    id: 1,
-    value: '🥰 감사해요',
-  },
-  {
-    id: 2,
-    value: '😋 맛있어요',
-  },
-  {
-    id: 3,
-    value: '⚡ 음식이 빨리 나와요',
-  },
-  {
-    id: 4,
-    value: '✨ 청결해요',
-  },
-  {
-    id: 5,
-    value: '😊 친절해요',
-  },
-  {
-    id: 6,
-    value: '👍 최고예요',
-  },
-  {
-    id: 7,
-    value: '💛 편히 먹을 수 있어요',
-  },
-];
+
 
 const MessageInput: React.FC<MessageInputProps> = ({
+  btnMessage,
   onAddMessage,
   setInputValue,
   inputValue,
@@ -139,13 +112,13 @@ const MessageInput: React.FC<MessageInputProps> = ({
     <MessageDiv>
       <form onSubmit={handleAddMessage}>
         <MessageButtonDiv id="buttondiv">
-          {BtnMessage.map((BtnMessage, index) => (
+          {btnMessage.map((btnMessage, index) => (
             <BtnDiv
               key={index}
-              selected={selectedButtons.includes(BtnMessage.id)}
-              onClick={() => handleButtonSelect(BtnMessage.id)}
+              selected={selectedButtons.includes(btnMessage.id)}
+              onClick={() => handleButtonSelect(btnMessage.id)}
             >
-              {BtnMessage.value}
+              {btnMessage.value}
             </BtnDiv>
           ))}
         </MessageButtonDiv>
