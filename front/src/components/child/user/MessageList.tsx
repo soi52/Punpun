@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const Div = styled.div`
   display: flex;
   flex-direction: column;
-  width: 20rem;
+  width: 50rem;
   justify-content: flex-start;
   padding: 20px;
 `;
@@ -12,6 +12,10 @@ const Div = styled.div`
 const StyledLi = styled.li`
   display: flex;
   justify-content: space-between;
+`;
+
+const ListContent = styled.div`
+  display: flex;
 `;
 
 const Button = styled.button`
@@ -29,9 +33,17 @@ const Button = styled.button`
   background-color: blue;
 `;
 
+const MessageButton = styled.button`
+  border: none;
+  border-radius: 15px;
+  text-align: center;
+  padding: 7px;
+  background-color: #E7E6F2;
+`;
+
 type MessageSet = {
   inputValue: string;
-  selectedButtons: number[];
+  selectedButtons: string[];
 };
 
 interface MessageListProps {
@@ -51,8 +63,12 @@ const MessageList: React.FC<MessageListProps> = ({
     <Div>
       {messages.map((messages, index) => (
         <StyledLi key={index}>
-          {messages.inputValue}
-          {messages.selectedButtons}
+          <ListContent>
+            {messages.inputValue}
+            {(messages.selectedButtons).map((selectedButtons, index) => (
+              <MessageButton key={index}>{selectedButtons}</MessageButton>
+            ))}
+          </ListContent>
           <Button onClick={() => handleDeleteMessage(index)}>Delete</Button>
         </StyledLi>
       ))}
