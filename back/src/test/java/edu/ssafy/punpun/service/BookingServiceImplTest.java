@@ -1,5 +1,6 @@
 package edu.ssafy.punpun.service;
 
+import edu.ssafy.punpun.dto.ApproveState;
 import edu.ssafy.punpun.dto.BookingStoreSearchParamDTO;
 import edu.ssafy.punpun.entity.*;
 import edu.ssafy.punpun.entity.enumurate.ReservationState;
@@ -174,6 +175,110 @@ class BookingServiceImplTest {
         bookingService.findAllByStore(owner, params);
 
         verify(reservationRepository, times(1)).findAllByStore(params);
+    }
+
+    @Test
+    @DisplayName("예약을 수락하기")
+    void reservationAccept() {
+        Member owner = Member.builder()
+                .id(1L)
+                .build();
+        Store store1 = Store.builder()
+                .id(1L)
+                .owner(owner)
+                .build();
+        Menu menu = Menu.builder()
+                .id(1L)
+                .store(store1)
+                .build();
+        Reservation reservation = Reservation.builder()
+                .id(1L)
+                .state(ReservationState.BOOKING)
+                .menu(menu)
+                .build();
+        doReturn(Optional.of(reservation)).when(reservationRepository).findById(1L);
+        bookingService.reservationApprove(1L, owner, ApproveState.OK);
+
+        assertThat(reservation.getState()).isEqualTo(ReservationState.END);
+    }
+
+    @Test
+    @DisplayName("예약을 거절하기")
+    void reservationDenied() {
+        Member owner = Member.builder()
+                .id(1L)
+                .build();
+        Store store1 = Store.builder()
+                .id(1L)
+                .owner(owner)
+                .build();
+        Menu menu = Menu.builder()
+                .id(1L)
+                .store(store1)
+                .build();
+        Reservation reservation = Reservation.builder()
+                .id(1L)
+                .state(ReservationState.BOOKING)
+                .menu(menu)
+                .build();
+        doReturn(Optional.of(reservation)).when(reservationRepository).findById(1L);
+        bookingService.reservationApprove(1L, owner, ApproveState.NO);
+
+        assertThat(reservation.getState()).isEqualTo(ReservationState.CANCEL);
+    }
+
+    @Test
+    @DisplayName("가게의 주인이 아님")
+    void notStoreOwner() {
+        Member owner = Member.builder()
+                .id(1L)
+                .build();
+        Member member = Member.builder()
+                .id(2L)
+                .build();
+        Store store1 = Store.builder()
+                .id(1L)
+                .owner(owner)
+                .build();
+        Menu menu = Menu.builder()
+                .id(1L)
+                .store(store1)
+                .build();
+        Reservation reservation = Reservation.builder()
+                .id(1L)
+                .state(ReservationState.BOOKING)
+                .menu(menu)
+                .build();
+
+        doReturn(Optional.of(reservation)).when(reservationRepository).findById(1L);
+        assertThatThrownBy(() -> bookingService.reservationApprove(1L, member, ApproveState.OK))
+                .isInstanceOf(NotStoreOwnerException.class);
+
+    }
+
+    @Test
+    @DisplayName("없는 예약 번호로 예약하기")
+    void reservationIdNotExist() {
+        Member owner = Member.builder()
+                .id(1L)
+                .build();
+        Store store1 = Store.builder()
+                .id(1L)
+                .owner(owner)
+                .build();
+        Menu menu = Menu.builder()
+                .id(1L)
+                .store(store1)
+                .build();
+        Reservation reservation = Reservation.builder()
+                .id(1L)
+                .state(ReservationState.BOOKING)
+                .menu(menu)
+                .build();
+
+        doReturn(Optional.empty()).when(reservationRepository).findById(2L);
+        assertThatThrownBy(() -> bookingService.reservationApprove(2L, owner, ApproveState.OK))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     private static Support getSupport(Long id, SupportState state, Menu menu) {

@@ -1,6 +1,7 @@
 package edu.ssafy.punpun.controller;
 
 import edu.ssafy.punpun.dto.BookingStoreSearchParamDTO;
+import edu.ssafy.punpun.dto.request.BookingProcessRequestDTO;
 import edu.ssafy.punpun.dto.request.BookingRequestDTO;
 import edu.ssafy.punpun.dto.response.BookingChildResponseDTO;
 import edu.ssafy.punpun.dto.response.BookingStoreResponseDTO;
@@ -41,11 +42,11 @@ public class BookingController {
 
     @GetMapping("/store/{storeId}")
     @ResponseStatus(HttpStatus.OK)
-    public Page<?> getBookingsByStore(@AuthenticationPrincipal Member member,
-                                      @PathVariable("storeId") long storeId,
-                                      @RequestParam(required = false, defaultValue = "0") int page,
-                                      @RequestParam(required = false) LocalDateTime reservationDate,
-                                      @RequestParam(required = false) ReservationState state) {
+    public Page<BookingStoreResponseDTO> getBookingsByStore(@AuthenticationPrincipal Member member,
+                                                            @PathVariable("storeId") long storeId,
+                                                            @RequestParam(required = false, defaultValue = "0") int page,
+                                                            @RequestParam(required = false) LocalDateTime reservationDate,
+                                                            @RequestParam(required = false) ReservationState state) {
         BookingStoreSearchParamDTO params = BookingStoreSearchParamDTO.builder()
                 .storeId(storeId)
                 .page(page)
@@ -54,5 +55,12 @@ public class BookingController {
                 .build();
         return bookingService.findAllByStore(member, params)
                 .map(BookingStoreResponseDTO::entityToDTO);
+    }
+
+    @PostMapping("/today")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void processReservation(@AuthenticationPrincipal Member owner,
+                                   @RequestBody BookingProcessRequestDTO bookingProcess) {
+        bookingService.reservationApprove(bookingProcess.getBookingId(), owner, bookingProcess.getApproveState());
     }
 }
