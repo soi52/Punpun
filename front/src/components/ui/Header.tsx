@@ -98,7 +98,7 @@ function Header(props: HeaderProps) {
 
   const seleteChild = () => {
     setIsChild(!isChild);
-    toChMain();
+    isOwner ? toChMain() : toMain();
   };
 
   const renderNav = () => {

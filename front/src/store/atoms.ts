@@ -7,7 +7,7 @@ export const isDarkAtom = atom({
 });
 
 export const accessTokenState = atom<string | null>({
-  key: "accessTokenState",
+  key: 'accessTokenState',
   default: null,
 });
 
