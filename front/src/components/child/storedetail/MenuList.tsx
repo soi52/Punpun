@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { storeState } from '../../../store/atoms';
-import MenuCard from './MenuCard';
+import MenuCard from '../../ui/MenuCard';
 
 const MenuListContainer = styled.div`
   width: 70%;

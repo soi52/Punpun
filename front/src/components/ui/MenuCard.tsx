@@ -3,7 +3,9 @@ import axios from 'axios';
 import { DetailedHTMLProps, ImgHTMLAttributes } from 'react';
 
 import styled from 'styled-components';
-import BookingModal from './BookingModal';
+import BookingModal from '../child/storedetail/BookingModal';
+import { useRecoilValue } from 'recoil';
+import { isChildState } from '../../store/atoms';
 
 interface MenuCardProps {
   key: number;
@@ -68,15 +70,10 @@ const HeartButtonWrapper = styled.div`
   cursor: pointer;
 `;
 
-const HeartButton = styled.div``;
-
 const MenuCard: React.FC<MenuCardProps> = ({ id, title, image, price }) => {
   const [showModal, setShowModal] = useState(false);
+  const isChild = useRecoilValue(isChildState);
   const [liked, setLiked] = useState(false);
-
-  const bookingButton = () => {
-    setShowModal(true);
-  };
 
   const onClose = () => {
     setShowModal(false);
@@ -97,14 +94,26 @@ const MenuCard: React.FC<MenuCardProps> = ({ id, title, image, price }) => {
       });
   };
 
+  const handleClick = () => {
+    if (isChild) {
+      // 어린이 회원일 때 클릭 이벤트
+      setShowModal(true);
+    } else {
+      // 어른 회원일 때 클릭 이벤트
+      console.log('Clicked as an adult');
+    }
+  };
+
   return (
     <>
       <MenuCardContainer>
-        <div onClick={bookingButton}>
+        <div onClick={handleClick}>
           <MenuCardImage image={image}>
-            <HeartButtonWrapper>
-              <button onClick={toggleLike}>{liked ? '💖' : '🖤'}</button>
-            </HeartButtonWrapper>
+            {isChild && (
+              <HeartButtonWrapper>
+                <button onClick={toggleLike}>{liked ? '💖' : '🖤'}</button>
+              </HeartButtonWrapper>
+            )}
           </MenuCardImage>
           <div>
             <MenuCardTitle>{title}</MenuCardTitle>
@@ -112,7 +121,7 @@ const MenuCard: React.FC<MenuCardProps> = ({ id, title, image, price }) => {
           </div>
         </div>
       </MenuCardContainer>
-      {showModal && (
+      {showModal && isChild && (
         <BookingModal menu={{ id, title, image, price }} onClose={onClose} />
       )}
     </>

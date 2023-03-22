@@ -4,6 +4,8 @@ import SidebarContent from './SidebarContent';
 import SuSidebarContent from './SuSidebarContent';
 import Profile from './Profile';
 import styled from 'styled-components';
+import { useRecoilValue } from 'recoil';
+import { isSupporterState } from '../../store/atoms';
 
 const SidebarStyle = styled.div`
   background-color: white;
@@ -47,7 +49,7 @@ const Sidebar: FC<SidebarProps> = ({
   currentMenuItemIndex,
   setCurrentMenuItemIndex,
 }) => {
-  const [isSupporter, SetIsSupporter] = useState(true);
+  const isSupporter = useRecoilValue(isSupporterState);
 
   const navigate = useNavigate();
 
