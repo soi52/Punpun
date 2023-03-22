@@ -29,8 +29,13 @@ const Button = styled.button`
   background-color: blue;
 `;
 
+type MessageSet = {
+  inputValue: string;
+  selectedButtons: number[];
+};
+
 interface MessageListProps {
-  messages: string[];
+  messages: MessageSet[];
   onDeleteMessage: (index: number) => void;
 }
 
@@ -44,9 +49,10 @@ const MessageList: React.FC<MessageListProps> = ({
 
   return (
     <Div>
-      {messages.map((message, index) => (
+      {messages.map((messages, index) => (
         <StyledLi key={index}>
-          {message}
+          {messages.inputValue}
+          {messages.selectedButtons}
           <Button onClick={() => handleDeleteMessage(index)}>Delete</Button>
         </StyledLi>
       ))}

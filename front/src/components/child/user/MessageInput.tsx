@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useRecoilState } from 'recoil';
-import { messageState } from '../../../store/atoms';
+// import { useRecoilState } from 'recoil';
+// import { messageState } from '../../../store/atoms';
 
 interface MessageInputProps {
-  onAddMessage: (message: string, selectedButtons: string[]) => void;
+  onAddMessage: (message: string, selectedButtons: number[]) => void;
+  setInputValue: (message: string) => void;
+  inputValue: string
+  setSelectedButtons: (selectedButtons: number[]) => void;
+  selectedButtons: number[]
 }
 
 const MessageDiv = styled.div`
@@ -48,7 +52,7 @@ const MessageButtonDiv = styled.div`
   justify-content: center;
   margin-top: 20px;
 `;
-const Btndiv = styled.div<{ selected: boolean }>`
+const BtnDiv = styled.div<{ selected: boolean }>`
   display: inline-block;
   background-color: ${(props) => (props.selected ? '#f1c40f' : '#fff')};
   color: ${(props) => (props.selected ? '#fff' : '#f1c40f')};
@@ -60,21 +64,60 @@ const Btndiv = styled.div<{ selected: boolean }>`
   margin-bottom: 10px;
 `;
 
-const MessageInput: React.FC<MessageInputProps> = ({ onAddMessage }) => {
-  const [inputValue, setInputValue] = useState('');
-  const [selectedButtons, setSelectedButtons] = useState<string[]>([]);
-  const [message, setMessage] = useRecoilState(messageState);
+type MessageBtn = {
+  id: number;
+  value: string;
+};
 
+const BtnMessage: MessageBtn[] = [
+  {
+    id: 1,
+    value: '🥰 감사해요',
+  },
+  {
+    id: 2,
+    value: '😋 맛있어요',
+  },
+  {
+    id: 3,
+    value: '⚡ 음식이 빨리 나와요',
+  },
+  {
+    id: 4,
+    value: '✨ 청결해요',
+  },
+  {
+    id: 5,
+    value: '😊 친절해요',
+  },
+  {
+    id: 6,
+    value: '👍 최고예요',
+  },
+  {
+    id: 7,
+    value: '💛 편히 먹을 수 있어요',
+  },
+];
+
+const MessageInput: React.FC<MessageInputProps> = ({
+  onAddMessage,
+  setInputValue,
+  inputValue,
+  setSelectedButtons,
+  selectedButtons,
+}) => {
+  // const [message, setMessage] = useRecoilState(messageState);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
   };
 
-  const handleButtonSelect = (value: string) => {
-    if (selectedButtons.includes(value)) {
-      setSelectedButtons(selectedButtons.filter((button) => button !== value));
+  const handleButtonSelect = (id: number) => {
+    if (selectedButtons.includes(id)) {
+      setSelectedButtons(selectedButtons.filter((button) => button !== id));
     } else {
-      setSelectedButtons([...selectedButtons, value]);
+      setSelectedButtons([...selectedButtons, id]);
     }
   };
 
@@ -85,63 +128,26 @@ const MessageInput: React.FC<MessageInputProps> = ({ onAddMessage }) => {
       selectedButtons.length > 0 ||
       (selectedButtons.length === 0 && inputValue.trim() !== '')
     ) {
-      const newMessage = inputValue + ' ' + selectedButtons.join(' ');
-      onAddMessage(newMessage, selectedButtons);
+      onAddMessage(inputValue, selectedButtons);
       setInputValue('');
       setSelectedButtons([]);
-      setMessage(newMessage); // Update the message state in Recoil
-      console.log(messageState);
+      // setMessage(newMessage); // Update the message state in Recoil
     }
   };
-
-  
 
   return (
     <MessageDiv>
       <form onSubmit={handleAddMessage}>
         <MessageButtonDiv id="buttondiv">
-          <Btndiv
-            selected={selectedButtons.includes('🥰 감사해요')}
-            onClick={() => handleButtonSelect('🥰 감사해요')}
-          >
-            🥰 감사해요
-          </Btndiv>
-          <Btndiv
-            selected={selectedButtons.includes('😋 맛있어요')}
-            onClick={() => handleButtonSelect('😋 맛있어요')}
-          >
-            😋 맛있어요
-          </Btndiv>
-          <Btndiv
-            selected={selectedButtons.includes('⚡ 음식이 빨리 나와요')}
-            onClick={() => handleButtonSelect('⚡ 음식이 빨리 나와요')}
-          >
-            ⚡ 음식이 빨리 나와요
-          </Btndiv>
-          <Btndiv
-            selected={selectedButtons.includes('✨ 청결해요')}
-            onClick={() => handleButtonSelect('✨ 청결해요')}
-          >
-            ✨ 청결해요
-          </Btndiv>
-          <Btndiv
-            selected={selectedButtons.includes('😊 친절해요')}
-            onClick={() => handleButtonSelect('😊 친절해요')}
-          >
-            😊 친절해요
-          </Btndiv>
-          <Btndiv
-            selected={selectedButtons.includes('👍 최고예요')}
-            onClick={() => handleButtonSelect('👍 최고예요')}
-          >
-            👍 최고예요
-          </Btndiv>
-          <Btndiv
-            selected={selectedButtons.includes('💛 편히 먹을 수 있어요')}
-            onClick={() => handleButtonSelect('💛 편히 먹을 수 있어요')}
-          >
-            💛 편히 먹을 수 있어요
-          </Btndiv>
+          {BtnMessage.map((BtnMessage, index) => (
+            <BtnDiv
+              key={index}
+              selected={selectedButtons.includes(BtnMessage.id)}
+              onClick={() => handleButtonSelect(BtnMessage.id)}
+            >
+              {BtnMessage.value}
+            </BtnDiv>
+          ))}
         </MessageButtonDiv>
         <InputBoxDiv>
           <Input

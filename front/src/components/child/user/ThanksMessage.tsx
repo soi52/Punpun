@@ -36,10 +36,10 @@ const ThanksMessage = () => {
       </h2>
       <MainMessage message={`${storeInfo.ownerName}, ${storeInfo.message}`} />
       <h2>내가 남긴 감사메세지</h2>
-      <MessageList
+      {/* <MessageList
           messages={messages}
           onDeleteMessage={handleDeleteMessage}
-        />
+        /> */}
       <div>{messageList}</div>
     </ComponentStyle>
   );
