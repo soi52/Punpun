@@ -36,7 +36,7 @@ function Router() {
 
           {/* 아동페이지 */}
           <Route path="/chmain" element={<ChMainPage />} />
-          <Route path="/chstore" element={<ChStoreDetailPage />} />
+          <Route path="/chstore/:storeId" element={<ChStoreDetailPage />} />
           <Route path="/chuser" element={<ChUserPage />} />
 
           {/* 사장님페이지 */}

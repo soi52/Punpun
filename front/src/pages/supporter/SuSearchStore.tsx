@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import SearchStore from '../../components/child/search/SearchStore';
+import SearchStore from '../../common/SearchStore';
 
 const ComponentDiv = styled.div`
   display: flex;
