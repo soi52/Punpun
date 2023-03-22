@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
 import { messageState } from '../../../store/atoms';
-import { useRecoilValue } from 'recoil';
 
 interface MessageInputProps {
   onAddMessage: (message: string, selectedButtons: string[]) => void;
@@ -27,7 +26,7 @@ const Input = styled.input`
   height: 40px;
   padding: 10px;
   font-size: 18px;
-  border-radius: 5px;
+  border-radius: 25px;
   border: 1px solid #bdbdbd;
   margin-right: 10px;
 `;
@@ -38,7 +37,7 @@ const Button = styled.button`
   font-size: 18px;
   font-weight: bold;
   color: white;
-  border-radius: 5px;
+  border-radius: 25px;
   border: none;
   background-color: #00adb5;
 `;
@@ -55,6 +54,7 @@ const Btndiv = styled.div<{ selected: boolean }>`
   color: ${(props) => (props.selected ? '#fff' : '#f1c40f')};
   font-size: 14px;
   padding: 5px 10px;
+  border: 1px solid #f1c40f;
   border-radius: 20px;
   margin-right: 10px;
   margin-bottom: 10px;
