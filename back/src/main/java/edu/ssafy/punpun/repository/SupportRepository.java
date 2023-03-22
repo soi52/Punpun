@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface SupportRepository extends JpaRepository<Support, Long> {
+public interface SupportRepository extends JpaRepository<Support, Long>, SupportCustomRepository {
     List<Support> findBySupporter(Member supporter);
     List<Support> findAllByMenu(Menu menu);
 }
