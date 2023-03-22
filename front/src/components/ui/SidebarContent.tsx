@@ -1,5 +1,7 @@
 import React, { FC, useState } from 'react';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
+import { isSupporterState } from '../../store/atoms';
 
 const StyledLi = styled.li`
   list-style-type: none;
@@ -18,13 +20,27 @@ const SidebarContent: FC<SidebarContentProps> = ({
   currentMenuItemIndex,
   onMenuItemClick,
 }) => {
-  const [isSupporter, SetIsSupporter] = useState(true);
+  const isSupporter = useRecoilValue(isSupporterState);
 
   return (
     <>
       {menuItems.map((menuItem, index) =>
-      isSupporter ? (
-        index !== 3 ? (
+        isSupporter ? (
+          index !== 3 ? (
+            <StyledLi
+              key={index}
+              onClick={() => onMenuItemClick(index)}
+              style={{
+                fontWeight: currentMenuItemIndex === index ? 'bold' : 'normal',
+                cursor: 'pointer',
+              }}
+            >
+              {menuItem.title}
+            </StyledLi>
+          ) : (
+            ''
+          )
+        ) : (
           <StyledLi
             key={index}
             onClick={() => onMenuItemClick(index)}
@@ -35,18 +51,7 @@ const SidebarContent: FC<SidebarContentProps> = ({
           >
             {menuItem.title}
           </StyledLi>
-        ) : (
-          ''
-        )) : (<StyledLi
-          key={index}
-          onClick={() => onMenuItemClick(index)}
-          style={{
-            fontWeight: currentMenuItemIndex === index ? 'bold' : 'normal',
-            cursor: 'pointer',
-          }}
-        >
-          {menuItem.title}
-        </StyledLi>)
+        )
       )}
     </>
   );
