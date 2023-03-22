@@ -11,12 +11,14 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class Member extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
     private Long id;
     private String name;
+    private String email;
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Image profile;
     private UserRole role;

@@ -16,6 +16,7 @@ public class Child extends BaseEntity {
     @Column(name = "child_id")
     private Long id;
     private String name;
+    private String email;
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "image_id")
     private Image profile;
