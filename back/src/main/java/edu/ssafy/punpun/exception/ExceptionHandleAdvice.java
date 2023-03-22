@@ -36,4 +36,15 @@ public class ExceptionHandleAdvice {
 
         return new ErrorDTO(e.getClass().getName(), e.getMessage());
     }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(value = {NotStoreOwnerException.class})
+    public ErrorDTO notStoreOwnerException(HttpServletRequest request, Exception e) {
+        String UUID = (String) request.getAttribute("uuid");
+        String uri = request.getRequestURI();
+        String method = request.getMethod();
+        log.error("[{}][{}][{}] error = {}", UUID, uri, method, e.getClass().getName());
+
+        return new ErrorDTO(e.getClass().getName(), e.getMessage());
+    }
 }

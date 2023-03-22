@@ -1,12 +1,11 @@
 package edu.ssafy.punpun.service;
 
-import edu.ssafy.punpun.entity.Child;
-import edu.ssafy.punpun.entity.Menu;
-import edu.ssafy.punpun.entity.Reservation;
-import edu.ssafy.punpun.entity.Support;
+import edu.ssafy.punpun.dto.BookingStoreSearchParamDTO;
+import edu.ssafy.punpun.entity.*;
 import edu.ssafy.punpun.entity.enumurate.ReservationState;
 import edu.ssafy.punpun.entity.enumurate.SupportState;
 import edu.ssafy.punpun.exception.AlreadyEndException;
+import edu.ssafy.punpun.exception.NotStoreOwnerException;
 import edu.ssafy.punpun.kafka.ReservationEventPublisher;
 import edu.ssafy.punpun.repository.MenuRepository;
 import edu.ssafy.punpun.repository.ReservationRepository;
@@ -18,7 +17,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.domain.PageRequest;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -28,6 +26,7 @@ import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
+@DisplayName("예약 서비스")
 class BookingServiceImplTest {
     @Mock
     private SupportReservationRepository supportReservationRepository;
@@ -128,9 +127,53 @@ class BookingServiceImplTest {
     @DisplayName("날짜 검색 호출")
     void findByDate() {
         doReturn(null).when(reservationRepository).findAllByDate(null, null, 0);
-        bookingService.findReservations(null,null,0);
+        bookingService.findReservations(null, null, 0);
 
         verify(reservationRepository, times(1)).findAllByDate(null, null, 0);
+    }
+
+    @Test
+    @DisplayName("자기가 가게의 주인이 아닌데 요청을 보냈을 때")
+    void findByStoreNotOwner() {
+        Store store1 = Store.builder()
+                .id(1L)
+                .build();
+        Store store2 = Store.builder()
+                .id(2L)
+                .build();
+        Member owner = Member.builder()
+                .stores(List.of(store1, store2))
+                .build();
+        BookingStoreSearchParamDTO params = BookingStoreSearchParamDTO.builder()
+                .storeId(3L)
+                .page(0)
+                .build();
+
+        assertThatThrownBy(() -> bookingService.findAllByStore(owner, params))
+                .isInstanceOf(NotStoreOwnerException.class);
+    }
+
+    @Test
+    @DisplayName("가게 주인이 정상 요청을 보냈을 때")
+    void findByStore() {
+        Store store1 = Store.builder()
+                .id(1L)
+                .build();
+        Store store2 = Store.builder()
+                .id(2L)
+                .build();
+        Member owner = Member.builder()
+                .stores(List.of(store1, store2))
+                .build();
+        BookingStoreSearchParamDTO params = BookingStoreSearchParamDTO.builder()
+                .storeId(2L)
+                .page(0)
+                .build();
+
+        doReturn(null).when(reservationRepository).findAllByStore(params);
+        bookingService.findAllByStore(owner, params);
+
+        verify(reservationRepository, times(1)).findAllByStore(params);
     }
 
     private static Support getSupport(Long id, SupportState state, Menu menu) {
