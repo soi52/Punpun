@@ -1,5 +1,7 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import styled from 'styled-components';
+import { useRecoilValue } from 'recoil';
+import { pointState } from '../../store/atoms';
 
 const StyledLi = styled.li`
   list-style-type: none;
@@ -39,12 +41,15 @@ const SuSidebarContent: FC<SuSidebarContentProps> = ({
   currentMenuItemIndex,
   onMenuItemClick,
 }) => {
+  const point = useRecoilValue(pointState);
+  const formattedPoint = point.toLocaleString();
+
   return (
     <>
       <PointDiv>
         <h3>현재 포인트</h3>
         <PointDetail>
-          <span>10,000 P</span>
+          <span>{formattedPoint} P</span>
           {menuItems.map((menuItem, index) =>
             index === 3 ? (
               <StyledLi

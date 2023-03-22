@@ -15,3 +15,9 @@ export const messageState = atom<string>({
   key: 'messageState',
   default: '',
 });
+
+// 포인트 atom
+export const pointState = atom<number>({
+  key: 'pointState',
+  default: 0,
+});

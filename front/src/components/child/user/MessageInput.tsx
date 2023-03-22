@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
 import { messageState } from '../../../store/atoms';
-import { useRecoilValue } from 'recoil';
 
 interface MessageInputProps {
   onAddMessage: (message: string, selectedButtons: string[]) => void;
