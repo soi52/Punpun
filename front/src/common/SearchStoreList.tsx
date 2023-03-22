@@ -34,7 +34,14 @@ const TabButton = styled.button<{ isActive: boolean }>`
   }
 `;
 
-const SearchStoreListParent = ({ list }: { list: string[] }) => {
+interface Store {
+  storeId: number;
+  name: string;
+  latitude: number;
+  longitude: number;
+}
+
+const SearchStoreList = ({ stores }: { stores: Store[] }) => {
   const [keyword, setKeyword] = useState('');
   const [activeTab, setActiveTab] = useState('asc');
 
@@ -42,13 +49,13 @@ const SearchStoreListParent = ({ list }: { list: string[] }) => {
     setKeyword(event.target.value);
   };
 
-  const filteredList = list
-    .filter((item) => item.includes(keyword))
+  const filteredList = stores
+    .filter((item) => item.name.includes(keyword))
     .sort((a, b) => {
       if (activeTab === 'asc') {
-        return a.localeCompare(b);
+        return a.name.localeCompare(b.name);
       } else if (activeTab === 'desc') {
-        return b.localeCompare(a);
+        return b.name.localeCompare(a.name);
       } else {
         return 0;
       }
@@ -71,9 +78,9 @@ const SearchStoreListParent = ({ list }: { list: string[] }) => {
         </TabButton>
       </TabList>
       <SearchBar value={keyword} onChange={handleInputChange} />
-      <FilteredList list={filteredList} keyword={keyword} />
+      <FilteredList stores={filteredList} keyword={keyword} />
     </ComponentDiv>
   );
 };
 
-export default SearchStoreListParent;
+export default SearchStoreList;

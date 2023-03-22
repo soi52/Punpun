@@ -15,7 +15,6 @@ type SearchBarProps = {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-
 const SearchBar = ({ value, onChange }: SearchBarProps) => (
   <Input
     type="text"

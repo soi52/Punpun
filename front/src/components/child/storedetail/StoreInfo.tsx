@@ -8,7 +8,7 @@ const StoreInfo = () => {
     <>
       <StoreBanner />
       <h2>가게 정보</h2>
-      <Map/>
+      <Map latitude={36.1083353} longitude={128.4181418} />
     </>
   );
 };

@@ -1,6 +1,5 @@
 import React, { useRef, useEffect, MutableRefObject } from 'react';
 import styled from 'styled-components';
-import useGeolocation from './useGeolocation';
 
 const Div = styled.div`
   width: 500px;
@@ -18,107 +17,44 @@ const Button = styled.button`
   background-color: transparent;
 `;
 
-// const Map = () => {
-//   const mapRef = useRef<kakao.maps.Map | null>(null);
-//   const location: any = useGeolocation();
+type MapProps = {
+  latitude: number;
+  longitude: number;
+};
 
-//   const initMap = () => {
-//     const handleZoomChanged = () => {
-//       const map = mapRef.current;
-
-//       if (map) {
-//         const level = map.getLevel();
-//         console.log('zoom level changed to ' + level);
-//       }
-//     };
-//     if (typeof location !== 'string') {
-//       // 이전 지도 인스턴스의 이벤트 리스너를 제거
-//       if (mapRef.current) {
-//         kakao.maps.event.removeListener(
-//           mapRef.current,
-//           'zoom_changed',
-//           handleZoomChanged
-//         );
-//       }
-
-//       const container = document.getElementById('map');
-//       const options = {
-//         center: new kakao.maps.LatLng(location.latitude, location.longitude),
-//         level: 2,
-//       };
-
-//       const map = new kakao.maps.Map(container as HTMLElement, options);
-//       const markerPosition = new kakao.maps.LatLng(
-//         location.latitude,
-//         location.longitude
-//       );
-//       const marker = new kakao.maps.Marker({
-//         position: markerPosition,
-//       });
-
-//       marker.setMap(map);
-//       (mapRef as MutableRefObject<any>).current = map;
-//       // 새로운 지도 인스턴스에 이벤트 리스너 등록
-//       kakao.maps.event.addListener(map, 'zoom_changed', handleZoomChanged);
-//     }
-//   };
-
-//   useEffect(() => {
-//     kakao.maps.load(() => initMap());
-//   }, [mapRef, location]);
-
-//   return (
-//     <Div id="map">
-//       <Button onClick={() => initMap()}>현재 위치로</Button>
-//     </Div>
-//   );
-// };
-// export default Map;
-const Map = () => {
+const Map = ({ latitude, longitude }: MapProps) => {
   const mapRef = useRef<kakao.maps.Map | null>(null);
-  const location: any = useGeolocation();
 
   const initMap = () => {
-    if (typeof location !== 'string') {
-      if (mapRef.current === null) {
-        const container = document.getElementById('map');
-        const options = {
-          center: new kakao.maps.LatLng(location.latitude, location.longitude),
-          level: 4,
-        };
-        const map = new kakao.maps.Map(container as HTMLElement, options);
-        const markerPosition = new kakao.maps.LatLng(
-          location.latitude,
-          location.longitude
-        );
-        const marker = new kakao.maps.Marker({
-          position: markerPosition,
-        });
-        marker.setMap(map);
-        mapRef.current = map;
-      } else {
-        const center = new kakao.maps.LatLng(
-          location.latitude,
-          location.longitude
-        );
-        (mapRef.current as kakao.maps.Map).setCenter(center);
-        (mapRef.current as kakao.maps.Map).setLevel(4); // 레벨 값을 2로 변경
-      }
+    if (latitude && longitude && mapRef.current === null) {
+      const container = document.getElementById('map');
+      const options = {
+        center: new kakao.maps.LatLng(latitude, longitude),
+        level: 4,
+      };
+      const map = new kakao.maps.Map(container as HTMLElement, options);
+      const markerPosition = new kakao.maps.LatLng(latitude, longitude);
+      const marker = new kakao.maps.Marker({
+        position: markerPosition,
+      });
+      marker.setMap(map);
+      mapRef.current = map;
+    } else if (latitude && longitude && mapRef.current !== null) {
+      const center = new kakao.maps.LatLng(latitude, longitude);
+      (mapRef.current as kakao.maps.Map).setCenter(center);
+      (mapRef.current as kakao.maps.Map).setLevel(4);
     }
   };
 
   useEffect(() => {
-    kakao.maps.load(() => initMap());
-  }, [mapRef, location]);
+    if (latitude && longitude) {
+      kakao.maps.load(() => initMap());
+    }
+  }, [latitude, longitude]);
 
   return (
     <Div id="map">
-      <button
-        style={{ position: 'relative', zIndex: '3' }}
-        onClick={() => initMap()}
-      >
-        현재 위치로
-      </button>
+      <Button onClick={() => initMap()}>현재 위치로</Button>
     </Div>
   );
 };
