@@ -3,6 +3,12 @@ import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import Logo from './Logo';
 import Dropdown from './Dropdown';
+import { useRecoilState } from 'recoil';
+import {
+  isChildState,
+  isOwnerState,
+  isSupporterState,
+} from '../../store/atoms';
 
 const Wrapper = styled.div`
   position: absolute;
@@ -41,8 +47,9 @@ type HeaderProps = {
 
 function Header(props: HeaderProps) {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
-  const [isChild, setIsChild] = useState(false);
-  const [isOwner, setIsOwner] = useState(false);
+  const [isChild, setIsChild] = useRecoilState(isChildState);
+  const [isOwner, setIsOwner] = useRecoilState(isOwnerState);
+  const [isSupporter, setIsSupporter] = useRecoilState(isSupporterState);
   const [selectedItem, setSelectedItem] = useState('후원자');
   const [drop, setDrop] = useState(false);
   const navigate = useNavigate();
@@ -85,8 +92,10 @@ function Header(props: HeaderProps) {
     setSelectedItem(item);
     if (item === '사장님') {
       setIsOwner(true);
+      setIsSupporter(false);
       toOwStore();
     } else if (item === '후원자') {
+      setIsSupporter(true);
       setIsOwner(false);
       toMain();
     }
