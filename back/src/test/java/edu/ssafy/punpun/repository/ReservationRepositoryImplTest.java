@@ -1,7 +1,6 @@
 package edu.ssafy.punpun.repository;
 
-import edu.ssafy.punpun.dto.BookingSearchParamDTO;
-import edu.ssafy.punpun.dto.response.BookingStoreResponseDTO;
+import edu.ssafy.punpun.dto.BookingStoreSearchParamDTO;
 import edu.ssafy.punpun.entity.*;
 import edu.ssafy.punpun.entity.enumurate.ReservationState;
 import org.junit.jupiter.api.*;
@@ -188,7 +187,7 @@ class ReservationRepositoryImplTest {
         @Test
         @DisplayName("나의 가계에 모든 예약을 검색")
         void findAllResOnStore() {
-            BookingSearchParamDTO params = BookingSearchParamDTO.builder()
+            BookingStoreSearchParamDTO params = BookingStoreSearchParamDTO.builder()
                     .storeId(store1.getId())
                     .page(0)
                     .build();
@@ -201,7 +200,7 @@ class ReservationRepositoryImplTest {
         @Test
         @DisplayName("나의 가게의 특정 날짜의 예약 검색")
         void findNotOwner() {
-            BookingSearchParamDTO params = BookingSearchParamDTO.builder()
+            BookingStoreSearchParamDTO params = BookingStoreSearchParamDTO.builder()
                     .storeId(store1.getId())
                     .page(0)
                     .reservationDate(now)
@@ -215,7 +214,7 @@ class ReservationRepositoryImplTest {
         @Test
         @DisplayName("예약 상태로 검색하기 - 결과 있음")
         void findByStoreAndStateExist() {
-            BookingSearchParamDTO params = BookingSearchParamDTO.builder()
+            BookingStoreSearchParamDTO params = BookingStoreSearchParamDTO.builder()
                     .storeId(store1.getId())
                     .state(ReservationState.BOOKING)
                     .page(0)
@@ -229,7 +228,7 @@ class ReservationRepositoryImplTest {
         @Test
         @DisplayName("예약 상태로 검색하기 - 결과 없음")
         void findByStoreAndStateNotExist() {
-            BookingSearchParamDTO params = BookingSearchParamDTO.builder()
+            BookingStoreSearchParamDTO params = BookingStoreSearchParamDTO.builder()
                     .storeId(store1.getId())
                     .state(ReservationState.END)
                     .page(0)

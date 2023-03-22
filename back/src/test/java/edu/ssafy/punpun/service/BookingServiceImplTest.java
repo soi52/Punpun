@@ -1,6 +1,6 @@
 package edu.ssafy.punpun.service;
 
-import edu.ssafy.punpun.dto.BookingSearchParamDTO;
+import edu.ssafy.punpun.dto.BookingStoreSearchParamDTO;
 import edu.ssafy.punpun.entity.*;
 import edu.ssafy.punpun.entity.enumurate.ReservationState;
 import edu.ssafy.punpun.entity.enumurate.SupportState;
@@ -144,7 +144,7 @@ class BookingServiceImplTest {
         Member owner = Member.builder()
                 .stores(List.of(store1, store2))
                 .build();
-        BookingSearchParamDTO params = BookingSearchParamDTO.builder()
+        BookingStoreSearchParamDTO params = BookingStoreSearchParamDTO.builder()
                 .storeId(3L)
                 .page(0)
                 .build();
@@ -165,7 +165,7 @@ class BookingServiceImplTest {
         Member owner = Member.builder()
                 .stores(List.of(store1, store2))
                 .build();
-        BookingSearchParamDTO params = BookingSearchParamDTO.builder()
+        BookingStoreSearchParamDTO params = BookingStoreSearchParamDTO.builder()
                 .storeId(2L)
                 .page(0)
                 .build();

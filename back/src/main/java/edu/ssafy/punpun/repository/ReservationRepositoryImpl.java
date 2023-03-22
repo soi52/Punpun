@@ -2,9 +2,8 @@ package edu.ssafy.punpun.repository;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import edu.ssafy.punpun.dto.BookingSearchParamDTO;
+import edu.ssafy.punpun.dto.BookingStoreSearchParamDTO;
 import edu.ssafy.punpun.entity.Child;
-import edu.ssafy.punpun.entity.Member;
 import edu.ssafy.punpun.entity.Reservation;
 import edu.ssafy.punpun.entity.enumurate.ReservationState;
 import org.springframework.data.domain.Page;
@@ -46,7 +45,7 @@ public class ReservationRepositoryImpl implements ReservationCustomRepository {
     }
 
     @Override
-    public Page<Reservation> findAllByStore(BookingSearchParamDTO params) {
+    public Page<Reservation> findAllByStore(BookingStoreSearchParamDTO params) {
         PageRequest pageable = PageRequest.of(params.getPage(), PAGE_SIZE);
 
         long totalCount = queryFactory

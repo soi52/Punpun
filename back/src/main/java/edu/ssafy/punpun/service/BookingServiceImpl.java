@@ -1,6 +1,6 @@
 package edu.ssafy.punpun.service;
 
-import edu.ssafy.punpun.dto.BookingSearchParamDTO;
+import edu.ssafy.punpun.dto.BookingStoreSearchParamDTO;
 import edu.ssafy.punpun.entity.*;
 import edu.ssafy.punpun.entity.enumurate.ReservationState;
 import edu.ssafy.punpun.entity.enumurate.SupportReservationState;
@@ -16,7 +16,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
-import javax.sql.rowset.RowSetWarning;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 
@@ -64,7 +63,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public Page<Reservation> findAllByStore(Member owner, BookingSearchParamDTO params) {
+    public Page<Reservation> findAllByStore(Member owner, BookingStoreSearchParamDTO params) {
         owner.getStores().stream()
                 .filter(store -> store.getId().equals(params.getStoreId()))
                 .findFirst()
