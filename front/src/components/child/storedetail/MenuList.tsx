@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
+import { storeState } from '../../../store/atoms';
 import MenuCard from './MenuCard';
 
 const MenuListContainer = styled.div`
@@ -58,18 +60,17 @@ const data: Menu[] = [
 ];
 
 const MenuList: React.FC = () => {
-
   return (
     <>
       <MenuListContainer>
         {data.map((data, index) => (
           <MenuCard
-          key={index}
-          id={data.id}
-          title={data.title}
-          image={data.image}
-          price={data.price}
-        />
+            key={index}
+            id={data.id}
+            title={data.title}
+            image={data.image}
+            price={data.price}
+          />
         ))}
       </MenuListContainer>
     </>
