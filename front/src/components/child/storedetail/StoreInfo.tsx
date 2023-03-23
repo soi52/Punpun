@@ -7,10 +7,11 @@ import { storeState } from '../../../store/atoms';
 import StoreBanner from './Storebanner';
 
 const StoreInfo = () => {
-  const { store } = useParams<{ store: string }>();
+  const { storeId } = useParams<{ storeId: string }>();
   const stores = useRecoilValue(storeState);
-  const currentStore = stores.find((s) => s.storeId === Number(store));
+  const currentStore = stores.find((s) => s.storeId === Number(storeId));
 
+  console.log(storeId);
   return (
     <>
       <StoreBanner />
@@ -22,7 +23,7 @@ const StoreInfo = () => {
           stores={[currentStore]} // 수정된 부분
         />
       ) : (
-        <p>가게를 찾을 수 없습니다.</p>
+        <Map latitude={36.1083353} longitude={128.4181418} stores={[]} />
       )}
     </>
   );
