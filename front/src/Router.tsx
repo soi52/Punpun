@@ -8,7 +8,7 @@ import SuSearchStore from './pages/supporter/SuSearchStore';
 
 // 아동페이지
 import ChMainPage from './pages/child/ChMainPage';
-import ChStoreDetailPage from './pages/child/ChStoreDetailPage';
+import ChStoreDetailPage from './pages/ChStoreDetailPage';
 import ChUserPage from './pages/child/ChUserPage';
 
 // 사장님페이지
@@ -34,7 +34,6 @@ function Router() {
 
           {/* 아동페이지 */}
           <Route path="/chmain" element={<ChMainPage />} />
-          <Route path="/chstore/:storeId" element={<ChStoreDetailPage />} />
           <Route path="/chuser" element={<ChUserPage />} />
 
           {/* 사장님페이지 */}
@@ -45,6 +44,9 @@ function Router() {
           />
           <Route path="/owstorelist" element={<OwManagePage />} />
           <Route path="/owregister" element={<StoreRegisterPage />} />
+
+          {/* 공통페이지 (식당상세) */}
+          <Route path="/store/:storeId" element={<ChStoreDetailPage />} />
 
           {/* 디버깅페이지 */}
           <Route path="/debug" element={<DebuggingPage />} />
