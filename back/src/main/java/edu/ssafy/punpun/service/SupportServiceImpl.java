@@ -7,12 +7,11 @@ import edu.ssafy.punpun.entity.enumurate.SupportType;
 import edu.ssafy.punpun.repository.SupportRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.awt.print.Pageable;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 
 @Slf4j
@@ -47,8 +46,7 @@ public class SupportServiceImpl implements SupportService{
     }
 
     @Override
-    public List<ShareResponseDTO> findShareList(Long storeId, SupportType supportType, Pageable page, LocalDate date) {
-//        return supportRepository.findShareList(storeId, supportType, date.atStartOfDay(), date.atTime(LocalTime.MAX) , page );
-        return null;
+    public Page<ShareResponseDTO> findShareList(Long storeId, SupportType supportType, int page, LocalDate date) {
+        return supportRepository.findShareList(storeId, supportType, page , date );
     }
 }
