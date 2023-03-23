@@ -1,6 +1,7 @@
 package edu.ssafy.punpun.controller;
 
 import edu.ssafy.punpun.dto.request.SupportRequestDTO;
+import edu.ssafy.punpun.dto.response.ShareResponseDTO;
 import edu.ssafy.punpun.dto.response.SupportResponseDTO;
 import edu.ssafy.punpun.entity.Member;
 import edu.ssafy.punpun.entity.Menu;
@@ -11,10 +12,12 @@ import edu.ssafy.punpun.entity.enumurate.SupportType;
 import edu.ssafy.punpun.service.SupportService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -64,5 +67,14 @@ public class SupportController {
             supports.add(support);
         }
         return supports;
+    }
+
+    @GetMapping("/{storeId}")
+    @ResponseStatus(code= HttpStatus.OK)
+    public Page<ShareResponseDTO> findShareList(@PathVariable("storeId") Long storeId ,
+                                                  @RequestParam(name="type") SupportType type,
+                                                  @RequestParam(name="page", required = false, defaultValue = "0") int page,
+                                                  @RequestParam(name="date", required = false) LocalDate date){
+        return supportService.findShareList(storeId, type, page, date);
     }
 }
