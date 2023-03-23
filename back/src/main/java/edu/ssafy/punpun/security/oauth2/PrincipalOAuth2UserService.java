@@ -1,20 +1,18 @@
 package edu.ssafy.punpun.security.oauth2;
 
-import java.util.Collections;
 import java.util.Optional;
 
-import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
+import edu.ssafy.punpun.entity.Child;
 import edu.ssafy.punpun.entity.Member;
 import edu.ssafy.punpun.entity.enumurate.UserRole;
+import edu.ssafy.punpun.repository.ChildRepository;
 import edu.ssafy.punpun.repository.MemberRepository;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
-import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +24,7 @@ import lombok.RequiredArgsConstructor;
 public class PrincipalOAuth2UserService extends DefaultOAuth2UserService {
 
     private final MemberRepository memberRepository;
-    private final HttpSession httpSession;
+    private final ChildRepository childRepository;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
@@ -39,31 +37,37 @@ public class PrincipalOAuth2UserService extends DefaultOAuth2UserService {
 
         OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
 
-        Member user = saveOrUpdate(attributes);
-        httpSession.setAttribute("user", new SessionUser(user));
-        System.out.println(user.toString());
-        // userPrincipal return
-        return new DefaultOAuth2User(Collections.singleton(new SimpleGrantedAuthority(user.getRole().toString())),
-                attributes.getAttributes(),
-                attributes.getNameAttributeKey());
-    }
+        Optional<Member> member = memberRepository.findByEmail(attributes.getEmail());
+        Member resultMember = null;
+        Optional<Child> child = childRepository.findByEmail(attributes.getEmail());
+        Child resultChild = null;
 
-    private Member saveOrUpdate(OAuthAttributes attributes){
-        Optional<Member> user = memberRepository.findByEmail(attributes.getEmail());
-        Member member = null;
-
-        if (user.isEmpty()) {
-            member = Member.builder()
-                    .name(attributes.getName())
-                    .email(attributes.getEmail())
-                    .role(UserRole.SUPPORTER)
-                    .build();
-            memberRepository.save(member);
+        if (child.isEmpty()) {
+            // 학생이 아닌 경우
+            if (member.isEmpty()) {
+                // 멤버로 처음 가입하는 경우
+                resultMember = Member.builder()
+                        .name(attributes.getName())
+                        .email(attributes.getEmail())
+                        .role(UserRole.SUPPORTER)
+                        .build();
+                memberRepository.save(resultMember);
+            } else {
+                // 기존 회원인 경우
+                resultMember = member.get();
+            }
+            // userPrincipal return
+            return new PrincipalMemberDetail(resultMember, attributes);
         } else {
-            member = user.get();
+            // 학생인 경우
+            resultChild = child.get();
+            // userPrincipal return
+            return new PrincipalChildDetail(resultChild, attributes);
         }
 
-        return member;
+//        return new DefaultOAuth2User(Collections.singleton(new SimpleGrantedAuthority(user.getRole().toString())),
+//                attributes.getAttributes(),
+//                attributes.getNameAttributeKey());
     }
 
 }

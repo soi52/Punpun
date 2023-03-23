@@ -1,13 +1,16 @@
 package edu.ssafy.punpun.security.oauth2;
 
+import edu.ssafy.punpun.entity.Child;
 import edu.ssafy.punpun.entity.Member;
 import edu.ssafy.punpun.entity.enumurate.UserRole;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 
 import java.util.Map;
 
 @Getter
+@ToString
 public class OAuthAttributes {
     // OAuth2UserService를 통해 가져온 카카오 OAuth2User의 attributes를 담을 클래스
 
@@ -45,11 +48,19 @@ public class OAuthAttributes {
                 .build();
     }
 
-    public Member toEntity(){
-        return Member.builder()
-                .name(name)
-                .email(email)
-                .role(UserRole.SUPPORTER)
-                .build();
-    }
+//    public Member toEntity(){
+//        return Member.builder()
+//                .name(name)
+//                .email(email)
+//                .role(UserRole.SUPPORTER)
+//                .build();
+//    }
+//
+//    public Child toEntity() {
+//        return Child.builder()
+//                .name(name)
+//                .email(email)
+//                .role(UserRole.Child)
+//                .build();
+//    }
 }
