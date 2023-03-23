@@ -1,10 +1,13 @@
 package edu.ssafy.punpun.service;
 
+import edu.ssafy.punpun.dto.ApproveState;
+import edu.ssafy.punpun.dto.BookingStoreSearchParamDTO;
 import edu.ssafy.punpun.entity.*;
 import edu.ssafy.punpun.entity.enumurate.ReservationState;
 import edu.ssafy.punpun.entity.enumurate.SupportReservationState;
 import edu.ssafy.punpun.entity.enumurate.SupportState;
 import edu.ssafy.punpun.exception.AlreadyEndException;
+import edu.ssafy.punpun.exception.NotStoreOwnerException;
 import edu.ssafy.punpun.kafka.ReservationEventPublisher;
 import edu.ssafy.punpun.repository.MenuRepository;
 import edu.ssafy.punpun.repository.ReservationRepository;
@@ -58,5 +61,31 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public Page<Reservation> findReservations(Child child, LocalDateTime localDateTime, int page) {
         return reservationRepository.findAllByDate(child, localDateTime, page);
+    }
+
+    @Override
+    public Page<Reservation> findAllByStore(Member owner, BookingStoreSearchParamDTO params) {
+        owner.getStores().stream()
+                .filter(store -> store.getId().equals(params.getStoreId()))
+                .findFirst()
+                .orElseThrow(() -> new NotStoreOwnerException("가게의 주인이 아닙니다."));
+        return reservationRepository.findAllByStore(params);
+    }
+
+    @Override
+    public void reservationApprove(Long reservationId, Member owner, ApproveState state) {
+        Reservation reservation = reservationRepository.findById(reservationId)
+                .orElseThrow(() -> new IllegalArgumentException("없는 예약 번호입니다."));
+
+        if (!reservation.getMenu().getStore().getOwner().getId().equals(owner.getId())) {
+            throw new NotStoreOwnerException("가게의 주인이 아닙니다.");
+        }
+
+        if (state == ApproveState.OK) {
+            reservation.changeState(ReservationState.END);
+        } else if (state == ApproveState.NO) {
+            reservation.changeState(ReservationState.CANCEL);
+        }
+        // TODO : 예약 관련 이벤트 발급하기
     }
 }

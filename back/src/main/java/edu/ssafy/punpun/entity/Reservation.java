@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Reservation extends BaseEntity{
+public class Reservation extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "reservation_id")
@@ -34,4 +34,11 @@ public class Reservation extends BaseEntity{
     @JoinColumn(name = "menu_id")
     private Menu menu;
 
+    public void changeState(ReservationState state) {
+        this.state = state;
+    }
+
+    public void setSupportReservation(SupportReservation supportReservation) {
+        this.supportReservation = supportReservation;
+    }
 }
