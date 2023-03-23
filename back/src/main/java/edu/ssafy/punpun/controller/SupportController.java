@@ -71,7 +71,7 @@ public class SupportController {
 
     @GetMapping("/{storeId}")
     @ResponseStatus(code= HttpStatus.OK)
-    public Page<ShareResponseDTO> findSupportList(@PathVariable("storeId") Long storeId ,
+    public Page<ShareResponseDTO> findShareList(@PathVariable("storeId") Long storeId ,
                                                   @RequestParam(name="type") SupportType type,
                                                   @RequestParam(name="page", required = false, defaultValue = "0") int page,
                                                   @RequestParam(name="date", required = false) LocalDate date){
