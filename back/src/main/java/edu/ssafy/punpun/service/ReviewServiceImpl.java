@@ -3,10 +3,7 @@ package edu.ssafy.punpun.service;
 import edu.ssafy.punpun.entity.*;
 import edu.ssafy.punpun.entity.enumurate.ReservationState;
 import edu.ssafy.punpun.exception.NotMatchChildException;
-import edu.ssafy.punpun.repository.KeywordRepository;
-import edu.ssafy.punpun.repository.ReservationRepository;
-import edu.ssafy.punpun.repository.ReviewKeywordRepository;
-import edu.ssafy.punpun.repository.ReviewRepository;
+import edu.ssafy.punpun.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,6 +18,7 @@ public class ReviewServiceImpl implements ReviewService {
     private final ReviewRepository reviewRepository;
     private final ReviewKeywordRepository reviewKeywordRepository;
     private final ReservationRepository reservationRepository;
+    private final StoreRepository storeRepository;
 
     @Override
     public Review postReview(Child child, Long reservationId, String content, String keywordStr) {
@@ -65,5 +63,14 @@ public class ReviewServiceImpl implements ReviewService {
     public Page<Review> findAllBySupporter(Member supporter, int page) {
         PageRequest pageable = PageRequest.of(page, PAGE_SIZE);
         return reviewRepository.findAllBySupporter(supporter, pageable);
+    }
+
+    @Override
+    public Page<Review> findAllByStore(Long storeId, int page) {
+        Store store = storeRepository.findById(storeId)
+                .orElseThrow(() -> new IllegalArgumentException("없는 가게 번호입니다."));
+        PageRequest pageable = PageRequest.of(page, PAGE_SIZE);
+
+        return reviewRepository.findAllByStore(store, pageable);
     }
 }

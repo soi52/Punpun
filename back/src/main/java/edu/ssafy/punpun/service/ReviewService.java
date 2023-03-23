@@ -10,5 +10,8 @@ public interface ReviewService {
     Review postReview(Child child, Long reservationId, String content, String keywordStr);
 
     Page<Review> findAllByChild(Child child, int page);
+
     Page<Review> findAllBySupporter(Member supporter, int page);
+
+    Page<Review> findAllByStore(Long storeId, int page);
 }
