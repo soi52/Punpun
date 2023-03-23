@@ -4,14 +4,15 @@ import styled from 'styled-components';
 const Container = styled.div`
     display: flex;
     flex-direction: column;
+    width: 50%;
 `;
 
 const FormStyle = styled.form`
   display: flex;
   flex-direction: column;
   align-items: start;
-  justify-content: center;
   margin-top: 50px;
+  padding: auto;
 `;
 
 const InputBox = styled.div`
@@ -27,7 +28,7 @@ const InputLabel = styled.label`
 `;
 
 const InputField = styled.input`
-  width: 300px;
+  width: 40vw;
   height: 30px;
   border-radius: 5px;
   border: 1px solid gray;
@@ -63,16 +64,20 @@ const ImgBox = styled.div`
   margin: 10px;
 `;
 
+const CheckBoxBox = styled.div`
+    display: flex;
+`;
+
 const SubmitBox = styled.div`
   display: flex;
-  justify-content: end;
+  justify-content: center;
 `;
 
 const SubmitButton = styled.button`
   width: 100px;
-  height: 30px;
-  background-color: #ffb347;
-  border-radius: 5px;
+  height: 40px;
+  background-color: #000000;
+  border-radius: 25px;
   border: none;
   color: white;
   font-weight: bold;
@@ -121,8 +126,8 @@ const StoreRegisterForm = () => {
   };
 
   return (
-    <Container>
-      <FormStyle onSubmit={handleSubmit}>
+    <Container id='container'>
+      <FormStyle id='form' onSubmit={handleSubmit}>
         <InputBox>
           <ImgBox>
             {formValues.image ? (
@@ -161,6 +166,16 @@ const StoreRegisterForm = () => {
             required
           />
         </InputBox>
+        <CheckBoxBox>
+          <InputLabel>항상 나눔하고 싶어요</InputLabel>
+          <InputField
+            type="checkbox"
+            name="businessCertificate"
+            accept="image/*"
+            required
+          />
+        </CheckBoxBox>
+        <span>결식아동들이 항상 예약을 요청할 수 있어요.</span>
       </FormStyle>
       <SubmitBox>
         <SubmitButton type="submit">등록하기</SubmitButton>
