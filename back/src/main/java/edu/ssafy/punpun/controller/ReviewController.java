@@ -2,7 +2,7 @@ package edu.ssafy.punpun.controller;
 
 import edu.ssafy.punpun.dto.request.ReviewPostDTO;
 import edu.ssafy.punpun.dto.response.ReviewChildResponseDTO;
-import edu.ssafy.punpun.dto.response.ReviewSupporterResponseDTO;
+import edu.ssafy.punpun.dto.response.ReviewResponseDTO;
 import edu.ssafy.punpun.entity.Child;
 import edu.ssafy.punpun.entity.Member;
 import edu.ssafy.punpun.service.ReviewService;
@@ -37,9 +37,17 @@ public class ReviewController {
 
     @GetMapping("/supporter")
     @ResponseStatus(HttpStatus.OK)
-    public Page<ReviewSupporterResponseDTO> getAllSupporterReceiveReview(@AuthenticationPrincipal Member supporter,
-                                                                         @RequestParam(defaultValue = "0", required = false) int page) {
+    public Page<ReviewResponseDTO> getAllSupporterReceiveReview(@AuthenticationPrincipal Member supporter,
+                                                                @RequestParam(defaultValue = "0", required = false) int page) {
         return reviewService.findAllBySupporter(supporter, page)
-                .map(ReviewSupporterResponseDTO::entityToDto);
+                .map(ReviewResponseDTO::entityToDto);
+    }
+
+    @GetMapping("/stores/{storeId}")
+    @ResponseStatus(HttpStatus.OK)
+    public Page<ReviewResponseDTO> getAllReviewByStore(@PathVariable Long storeId,
+                                                       @RequestParam(defaultValue = "0", required = false) int page) {
+        return reviewService.findAllByStore(storeId, page)
+                .map(ReviewResponseDTO::entityToDto);
     }
 }
