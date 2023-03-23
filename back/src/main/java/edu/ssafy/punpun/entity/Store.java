@@ -3,6 +3,7 @@ package edu.ssafy.punpun.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -40,4 +41,8 @@ public class Store extends BaseEntity {
     @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<Review> reviews;
+
+    public void appendReview(Review review) {
+        this.reviews.add(review);
+    }
 }
