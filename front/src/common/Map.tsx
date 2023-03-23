@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, MutableRefObject } from 'react';
+import React, { useRef, useEffect } from 'react';
 import styled from 'styled-components';
 
 const Div = styled.div`
@@ -41,6 +41,16 @@ const Map = ({ latitude, longitude, stores }: MapProps) => {
         level: 4,
       };
       const map = new kakao.maps.Map(container as HTMLElement, options);
+
+      // 현재 위치에 마커를 찍는 로직 추가
+      const currentLocationPosition = new kakao.maps.LatLng(
+        latitude,
+        longitude
+      );
+      const currentLocationMarker = new kakao.maps.Marker({
+        position: currentLocationPosition,
+      });
+      currentLocationMarker.setMap(map);
 
       // 각 가게들의 위치에 마커를 찍는 로직 추가
       stores.forEach((store) => {
