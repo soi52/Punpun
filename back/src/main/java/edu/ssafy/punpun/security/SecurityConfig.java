@@ -9,6 +9,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.List;
 
 @Slf4j
 @EnableWebSecurity
@@ -17,6 +22,7 @@ public class SecurityConfig {
 
     private final PrincipalOAuth2UserService principalOAuth2UserService;
     private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
+
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         //임시로 처리
@@ -30,7 +36,7 @@ public class SecurityConfig {
         http.formLogin().disable();
         http.httpBasic().disable();
         http.csrf().disable();
-        http.cors().disable();
+        http.cors();    // CORS는 HttpSecurity의 cors() 메소드로 설정
         http.headers()
                 .frameOptions()
                 .sameOrigin();
@@ -49,5 +55,22 @@ public class SecurityConfig {
 
 
         return http.build();
+    }
+
+    // CorsConfigurationSource를 통해 CORS의 속성을 정의
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
+        // setAllowedOrigins : A list of origins for which cross-origin requests are allowed.
+        corsConfiguration.setAllowedOrigins(List.of("http://localhost:3000", "https://j8d109.p.ssafy.io/"));
+        // setAllowedMethods : Set the HTTP methods to allow
+        corsConfiguration.setAllowedMethods(List.of("GET", "POST", "FETCH", "PUT", "DELETE"));
+        // setAllowedHeaders : Set the list of headers that a pre-flight request can list as allowed for use during an actual request.
+        corsConfiguration.setAllowedHeaders(List.of("Accept", "Accept-Language", "Authorization", "Content-Language", "Content-Type"));
+        // setAllowedCredentials : Whether user credentials are supported.
+        corsConfiguration.setAllowCredentials(true);
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", corsConfiguration);
+        return source;
     }
 }
