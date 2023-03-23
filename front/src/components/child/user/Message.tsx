@@ -56,15 +56,15 @@ const btnMessage: MessageBtn[] = [
 
 type MessageSet = {
     inputValue: string;
-    selectedButtons: number[];
+    selectedButtons: string[];
   };
 
 const Message: React.FC = () => {
   const [messages, setMessages] = useState<MessageSet[]>([]);
   const [inputValue, setInputValue] = useState('');
-  const [selectedButtons, setSelectedButtons] = useState<number[]>([]);
+  const [selectedButtons, setSelectedButtons] = useState<string[]>([]);
 
-  const handleAddMessage = (inputValue: string, selectedButtons: number[]) => {
+  const handleAddMessage = (inputValue: string, selectedButtons: string[]) => {
     setMessages([{inputValue: inputValue, selectedButtons: selectedButtons}, ...messages]);
   };
 
