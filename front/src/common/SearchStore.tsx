@@ -20,7 +20,7 @@ const SearchStore = () => {
 
   return (
     <Wrapper>
-      <Map latitude={latitude} longitude={longitude} />
+      <Map latitude={latitude} longitude={longitude} stores={stores} />
       <SearchStoreList stores={stores} />
     </Wrapper>
   );

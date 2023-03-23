@@ -51,7 +51,7 @@ const FilteredList = ({ stores, keyword }: FilteredListProps) => {
     <List>
       {filteredList.map((store, index) => (
         <ListItem key={index}>
-          <StyledLink to={`/chstore/${store.storeId}`}>
+          <StyledLink to={`/store/${store.storeId}`}>
             <StoreName>{store.name}</StoreName>
           </StyledLink>
         </ListItem>
