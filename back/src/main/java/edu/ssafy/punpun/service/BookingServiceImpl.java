@@ -86,5 +86,6 @@ public class BookingServiceImpl implements BookingService {
         } else if (state == ApproveState.NO) {
             reservation.changeState(ReservationState.CANCEL);
         }
+        // TODO : 예약 관련 이벤트 발급하기
     }
 }
