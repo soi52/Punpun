@@ -7,13 +7,14 @@ type MessageBtn = {
   id: number;
   value: string;
 };
+
 interface MessageInputProps {
   btnMessage: MessageBtn[];
-  onAddMessage: (message: string, selectedButtons: number[]) => void;
+  onAddMessage: (message: string, selectedButtons: string[]) => void;
   setInputValue: (message: string) => void;
   inputValue: string
-  setSelectedButtons: (selectedButtons: number[]) => void;
-  selectedButtons: number[]
+  setSelectedButtons: (selectedButtons: string[]) => void;
+  selectedButtons: string[]
 }
 
 const MessageDiv = styled.div`
@@ -57,6 +58,7 @@ const MessageButtonDiv = styled.div`
   justify-content: center;
   margin-top: 20px;
 `;
+
 const BtnDiv = styled.div<{ selected: boolean }>`
   display: inline-block;
   background-color: ${(props) => (props.selected ? '#f1c40f' : '#fff')};
@@ -86,11 +88,11 @@ const MessageInput: React.FC<MessageInputProps> = ({
     setInputValue(event.target.value);
   };
 
-  const handleButtonSelect = (id: number) => {
-    if (selectedButtons.includes(id)) {
-      setSelectedButtons(selectedButtons.filter((button) => button !== id));
+  const handleButtonSelect = (value: string) => {
+    if (selectedButtons.includes(value)) {
+      setSelectedButtons(selectedButtons.filter((button) => button !== value));
     } else {
-      setSelectedButtons([...selectedButtons, id]);
+      setSelectedButtons([...selectedButtons, value]);
     }
   };
 
@@ -115,8 +117,8 @@ const MessageInput: React.FC<MessageInputProps> = ({
           {btnMessage.map((btnMessage, index) => (
             <BtnDiv
               key={index}
-              selected={selectedButtons.includes(btnMessage.id)}
-              onClick={() => handleButtonSelect(btnMessage.id)}
+              selected={selectedButtons.includes(btnMessage.value)}
+              onClick={() => handleButtonSelect(btnMessage.value)}
             >
               {btnMessage.value}
             </BtnDiv>
