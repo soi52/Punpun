@@ -3,6 +3,7 @@ package edu.ssafy.punpun.repository;
 import edu.ssafy.punpun.entity.Child;
 import edu.ssafy.punpun.entity.Member;
 import edu.ssafy.punpun.entity.Review;
+import edu.ssafy.punpun.entity.Store;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,4 +19,6 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
             "inner join res.supportReservation sr " +
             "inner join sr.support sup where sup.supporter = ?1")
     Page<Review> findAllBySupporter(Member supporter, Pageable pageable);
+
+    Page<Review> findAllByStore(Store store, Pageable pageable);
 }

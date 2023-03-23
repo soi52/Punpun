@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 @Getter
 @AllArgsConstructor
-public class ReviewSupporterResponseDTO {
+public class ReviewResponseDTO {
     private Long reviewId;
     private String reviewContent;
     private List<Keyword> keywords;
@@ -19,7 +19,7 @@ public class ReviewSupporterResponseDTO {
     private String childName;
     private String childProfileUrl;
 
-    public static ReviewSupporterResponseDTO entityToDto(Review review) {
+    public static ReviewResponseDTO entityToDto(Review review) {
         Long reviewId = review.getId();
         String reviewContent = review.getContent();
         List<Keyword> keywords = review.getReviewKeywords().stream()
@@ -28,6 +28,6 @@ public class ReviewSupporterResponseDTO {
         Long childId = review.getChild().getId();
         String childName = review.getChild().getName();
         String childProfileUrl = review.getChild().getProfile().getUrl();
-        return new ReviewSupporterResponseDTO(reviewId, reviewContent, keywords, childId, childName, childProfileUrl);
+        return new ReviewResponseDTO(reviewId, reviewContent, keywords, childId, childName, childProfileUrl);
     }
 }

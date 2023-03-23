@@ -11,6 +11,8 @@ import org.springframework.data.domain.PageRequest;
 
 import javax.transaction.Transactional;
 
+import java.util.ArrayList;
+
 import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
@@ -27,8 +29,11 @@ public class ReviewRepositoryTest {
     private SupportReservationRepository supportReservationRepository;
     @Autowired
     private ReviewRepository reviewRepository;
+    @Autowired
+    private StoreRepository storeRepository;
     private Member member1;
     private Member member2;
+    private Store store;
 
     @BeforeEach
     void init() {
@@ -41,6 +46,12 @@ public class ReviewRepositoryTest {
                 .build();
         memberRepository.save(member1);
         memberRepository.save(member2);
+
+        store = Store.builder()
+                .owner(member1)
+                .reviews(new ArrayList<>())
+                .build();
+        storeRepository.save(store);
 
         //후원
         Support support1 = Support.builder()
@@ -115,18 +126,23 @@ public class ReviewRepositoryTest {
 
         //리뷰
         Review review1 = Review.builder()
+                .store(store)
                 .reservation(reservation1)
                 .build();
         Review review2 = Review.builder()
+                .store(store)
                 .reservation(reservation2)
                 .build();
         Review review3 = Review.builder()
+                .store(store)
                 .reservation(reservation3)
                 .build();
         Review review4 = Review.builder()
+                .store(store)
                 .reservation(reservation4)
                 .build();
         Review review5 = Review.builder()
+                .store(store)
                 .reservation(reservation5)
                 .build();
         reviewRepository.save(review1);
@@ -134,6 +150,12 @@ public class ReviewRepositoryTest {
         reviewRepository.save(review3);
         reviewRepository.save(review4);
         reviewRepository.save(review5);
+
+        store.appendReview(review1);
+        store.appendReview(review2);
+        store.appendReview(review3);
+        store.appendReview(review4);
+        store.appendReview(review5);
     }
 
     @Test
@@ -145,5 +167,17 @@ public class ReviewRepositoryTest {
         assertThat(reviews.getContent().size()).isEqualTo(3);
         assertThat(reviews.getTotalPages()).isEqualTo(1);
         assertThat(reviews.getTotalElements()).isEqualTo(3);
+    }
+
+    @Test
+    @DisplayName("리뷰를 가게별로 검색")
+    void findAllByStore() {
+        PageRequest pageable = PageRequest.of(0, 10);
+
+        Page<Review> reviews = reviewRepository.findAllByStore(store, pageable);
+
+        assertThat(reviews.getContent().size()).isEqualTo(5);
+        assertThat(reviews.getTotalPages()).isEqualTo(1);
+        assertThat(reviews.getTotalElements()).isEqualTo(5);
     }
 }
