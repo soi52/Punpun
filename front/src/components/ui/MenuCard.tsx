@@ -9,7 +9,6 @@ import { isChildState } from '../../store/atoms';
 
 interface MenuCardProps extends Menu {
   key: number;
-
   addToCart: (Item: Menu) => void;
 }
 
@@ -18,6 +17,7 @@ type Menu = {
   title: string;
   image: string;
   price: number;
+  quantity: number;
 };
 
 interface MenuCardImageProps
@@ -68,7 +68,7 @@ const HeartButtonWrapper = styled.div`
   cursor: pointer;
 `;
 
-const MenuCard: React.FC<MenuCardProps> = ({ id, title, image, price, addToCart }) => {
+const MenuCard: React.FC<MenuCardProps> = ({ id, title, image, price, quantity, addToCart }) => {
   const [showModal, setShowModal] = useState(false);
   const isChild = useRecoilValue(isChildState);
   const [liked, setLiked] = useState(false);
@@ -98,7 +98,7 @@ const MenuCard: React.FC<MenuCardProps> = ({ id, title, image, price, addToCart 
       setShowModal(true);
     } else {
       // 어른 회원일 때 클릭 이벤트
-      addToCart({ id, title, image, price });
+      addToCart({ id, title, image, price, quantity });
       console.log('Clicked as an adult');
     }
   };
