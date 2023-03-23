@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 import StoreInfo from '../StoreInfo';
-import MenuList from './MenuList';
+import MenuDropdown from './MenuDropdown';
+import SelectedMenuList from './SelectedMenuList';
 
 const Wrapper = styled.div`
   padding: 20px;
@@ -13,7 +15,35 @@ type Menu = {
   price: number;
 };
 
+type SelectedMenuProps = Menu & {
+  quantity: number;
+  onQuantityChange: (menu: Menu, quantity: number) => void;
+  onDelete: (menu: Menu) => void;
+};
+
 function Share() {
+  const [selectedMenu, setSelectedMenu] = useState<Menu | null>(null);
+  const [selectedMenus, setSelectedMenus] = useState<SelectedMenuProps[]>([]);
+
+  const handleMenuSelect = (menu: Menu) => {
+    setSelectedMenu(menu);
+  };
+
+  const handleQuantityChange = (menu: Menu, quantity: number) => {
+    setSelectedMenus((prevSelectedMenus) =>
+      prevSelectedMenus.map((prevMenu) => {
+        if (prevMenu.id === menu.id) {
+          return { ...prevMenu, quantity };
+        }
+        return prevMenu;
+      })
+    );
+  };
+
+  const handleClearClick = () => {
+    setSelectedMenus([]);
+  };
+
   const menuList: Menu[] = [
     {
       id: 1,
@@ -56,10 +86,17 @@ function Share() {
     <Wrapper>
       <StoreInfo />
       <h2>오늘의 나눔</h2>
-      <MenuList menuList={menuList} />
-      <input placeholder="퍈하게 와서 먹고가세요!"></input>
+      <MenuDropdown menuList={menuList} onMenuSelect={handleMenuSelect} />
+      {/* <SelectedMenuList
+        selectedMenus={selectedMenus}
+        onQuantityChange={handleQuantityChange}
+        onClearClick={handleClearClick}
+      /> */}
+      <input placeholder="퍈하게 와서 먹고가세요!" />
+      <button onClick={() => alert('나눔 등록이 완료되었습니다!')}>
+        등록하기
+      </button>
     </Wrapper>
   );
 }
-
 export default Share;

@@ -1,6 +1,43 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import SelectedMenu, { SelectedMenuProps } from './SelectedMenu';
+import SelectedMenuList from './SelectedMenuList';
+
+const Select = styled.select`
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  appearance: none;
+  background-color: #fff;
+  background-image: linear-gradient(to bottom, #fff, #f2f2f2);
+  background-repeat: no-repeat;
+  background-position: center right 10px;
+  cursor: pointer;
+  outline: none;
+  font-size: 16px;
+
+  /* 드롭다운 화살표 스타일 변경 */
+  &::-ms-expand {
+    display: none;
+  }
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    border: solid #333;
+    border-width: 0 2px 2px 0;
+    display: inline-block;
+    padding: 3px;
+  }
+
+  /* 드롭다운 목록 스타일 변경 */
+  option {
+    font-size: 16px;
+    color: #333;
+  }
+`;
 
 interface Menu {
   id: number;
@@ -9,66 +46,22 @@ interface Menu {
   price: number;
 }
 
-type MenuListProps = {
+type MenuDropdownProps = {
   menuList: Menu[];
+  onMenuSelect: (menu: Menu) => void;
 };
 
-type SelectedMenuListProps = {
-  selectedMenus: SelectedMenuProps[];
-  onQuantityChange: (id: number, quantity: number) => void;
-  onClearClick: () => void;
-};
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 20px;
-`;
-
-const Select = styled.select`
-  margin-bottom: 10px;
-`;
-
-const SelectedMenuList = styled.ul`
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-`;
-
-const SelectedMenuListItem = styled.li`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-`;
-
-const MenuDropdown = (
-  props: MenuListProps,
-  { selectedMenus, onQuantityChange, onClearClick }: SelectedMenuListProps
-) => {
-  const { menuList } = props;
-  const [selectedMenus, setSelectedMenus] = useState<Menu[]>([]);
-
+const MenuDropdown = ({ menuList, onMenuSelect }: MenuDropdownProps) => {
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedId = parseInt(event.target.value);
     const selectedMenu = menuList.find((menu) => menu.id === selectedId);
     if (selectedMenu) {
-      setSelectedMenus((prev) => [...prev, { ...selectedMenu, quantity: 1 }]);
+      onMenuSelect(selectedMenu);
     }
   };
 
-  const handleRemoveClick = (menu: Menu) => {
-    setSelectedMenus((prev) => prev.filter((item) => item.id !== menu.id));
-  };
-
-  const handleQuantityChange = (id: number, quantity: number) => {
-    setSelectedMenus((prev) =>
-      prev.map((item) => (item.id === id ? { ...item, quantity } : item))
-    );
-  };
-
   return (
-    <Wrapper>
+    <>
       <label>Menu List</label>
       <Select onChange={handleSelectChange}>
         <option value="" disabled selected hidden>
@@ -80,20 +73,7 @@ const MenuDropdown = (
           </option>
         ))}
       </Select>
-      <SelectedMenuList>
-        {selectedMenus.map((menu) => (
-          <SelectedMenu
-            key={menu.id}
-            id={menu.id}
-            title={menu.title}
-            price={menu.price}
-            quantity={menu.quantity}
-            onQuantityChange={handleQuantityChange}
-            onDelete={() => handleRemoveClick(menu)}
-          />
-        ))}
-      </SelectedMenuList>
-    </Wrapper>
+    </>
   );
 };
 
