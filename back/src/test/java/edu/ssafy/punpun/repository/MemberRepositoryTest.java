@@ -38,6 +38,10 @@ public class MemberRepositoryTest {
         Assertions.assertThat(result.get().getName()).isEqualTo(member1.getName());
         Assertions.assertThat(result.get().getEmail()).isEqualTo(member1.getEmail());
         Assertions.assertThat(result.get().getRole()).isEqualTo(member1.getRole());
+        Assertions.assertThat(result.get().getSupportedPoint()).isEqualTo(member1.getSupportedPoint());
+        Assertions.assertThat(result.get().getSupportedPoint()).isEqualTo(0L);
+        Assertions.assertThat(result.get().getRemainPoint()).isEqualTo(member1.getRemainPoint());
+        Assertions.assertThat(result.get().getRemainPoint()).isEqualTo(0L);
 
     }
 }

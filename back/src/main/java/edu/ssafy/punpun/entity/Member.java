@@ -22,8 +22,10 @@ public class Member extends BaseEntity {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Image profile;
     private UserRole role;
-    private Long supportedPoint;
-    private Long remainPoint;
+    @Builder.Default
+    private Long supportedPoint = 0L;
+    @Builder.Default
+    private Long remainPoint = 0L;
     @OneToMany(mappedBy = "owner", cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
     @ToString.Exclude
     private List<Store> stores;
