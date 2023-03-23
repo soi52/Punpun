@@ -14,12 +14,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class SupportServiceImplTest {
@@ -67,7 +68,7 @@ public class SupportServiceImplTest {
                         .price(8000L)
                         .build())
                 .build();
-        Mockito.doReturn(List.of(support1,support2)).when(supportRepository).findBySupporter(member);
+        doReturn(List.of(support1,support2)).when(supportRepository).findBySupporter(member);
 
         List<Support> supportList=supportService.findSupport(member);
 
@@ -135,7 +136,14 @@ public class SupportServiceImplTest {
 
         Assertions.assertEquals(member.getRemainPoint(), 2000L);
         Assertions.assertEquals(member.getSupportedPoint(), usePoint);
-        Mockito.verify(menuService, Mockito.times(supports.size())).addSponsoredCount(Mockito.anyLong(), Mockito.anyLong());
-        Mockito.verify(supportRepository, Mockito.times(3)).save(Mockito.any(Support.class));
+        verify(menuService, times(supports.size())).addSponsoredCount(anyLong(), anyLong());
+        verify(supportRepository, times(3)).save(any(Support.class));
+    }
+
+    @Test
+    @DisplayName("나눔 리스트 - 서비스")
+    void findShareList(){
+        supportService.findShareList(null, null, 0, null);
+        verify(supportRepository, times(1)).findShareList(null, null, 0, null);
     }
 }
