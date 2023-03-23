@@ -37,4 +37,8 @@ public class Reservation extends BaseEntity {
     public void changeState(ReservationState state) {
         this.state = state;
     }
+
+    public void setSupportReservation(SupportReservation supportReservation) {
+        this.supportReservation = supportReservation;
+    }
 }

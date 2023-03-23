@@ -60,4 +60,10 @@ public class ReviewServiceImpl implements ReviewService {
         PageRequest pageable = PageRequest.of(page, PAGE_SIZE);
         return reviewRepository.findAllByChild(child, pageable);
     }
+
+    @Override
+    public Page<Review> findAllBySupporter(Member supporter, int page) {
+        PageRequest pageable = PageRequest.of(page, PAGE_SIZE);
+        return reviewRepository.findAllBySupporter(supporter, pageable);
+    }
 }
