@@ -13,6 +13,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.Optional;
 
@@ -141,5 +143,19 @@ class ReviewServiceImplTest {
         assertThatThrownBy(() ->
                 reviewService.postReview(child, 1L, "content test1", "test1"))
                 .isInstanceOf(NotMatchChildException.class);
+    }
+
+    @Test
+    @DisplayName("리뷰 모두 찾기 - 아동")
+    void findAllByChild() {
+        Child child = Child.builder()
+                .id(1L)
+                .name("test1")
+                .build();
+
+        doReturn(null).when(reviewRepository).findAllByChild(child, PageRequest.of(0, 10));
+        reviewService.findAllByChild(child, 0);
+
+        verify(reviewRepository, times(1)).findAllByChild(child, PageRequest.of(0, 10));
     }
 }

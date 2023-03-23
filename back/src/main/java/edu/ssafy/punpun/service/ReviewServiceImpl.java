@@ -8,11 +8,15 @@ import edu.ssafy.punpun.repository.ReservationRepository;
 import edu.ssafy.punpun.repository.ReviewKeywordRepository;
 import edu.ssafy.punpun.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class ReviewServiceImpl implements ReviewService {
+    private static final int PAGE_SIZE = 10;
     private final KeywordRepository keywordRepository;
     private final ReviewRepository reviewRepository;
     private final ReviewKeywordRepository reviewKeywordRepository;
@@ -49,5 +53,11 @@ public class ReviewServiceImpl implements ReviewService {
         reviewKeywordRepository.save(reviewKeyword);
 
         return review;
+    }
+
+    @Override
+    public Page<Review> findAllByChild(Child child, int page) {
+        PageRequest pageable = PageRequest.of(page, PAGE_SIZE);
+        return reviewRepository.findAllByChild(child, pageable);
     }
 }
