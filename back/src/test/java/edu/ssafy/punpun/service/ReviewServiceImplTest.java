@@ -158,4 +158,17 @@ class ReviewServiceImplTest {
 
         verify(reviewRepository, times(1)).findAllByChild(child, PageRequest.of(0, 10));
     }
+
+    @Test
+    @DisplayName("리뷰 모두 찾기 - 후원자")
+    void findAllBySupporter() {
+        Member supporter = Member.builder()
+                .id(1L)
+                .build();
+
+        doReturn(null).when(reviewRepository).findAllBySupporter(supporter, PageRequest.of(0, 10));
+        reviewService.findAllBySupporter(supporter, 0);
+
+        verify(reviewRepository, times(1)).findAllBySupporter(supporter, PageRequest.of(0, 10));
+    }
 }
