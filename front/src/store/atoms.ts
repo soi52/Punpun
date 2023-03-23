@@ -53,8 +53,8 @@ export const storeState = atom<Store[]>({
     {
       storeId: 0,
       name: '싸피자',
-      latitude: 37.497175,
-      longitude: 127.027926,
+      latitude: 36.10732937535936,
+      longitude: 128.4179093795968,
       hours: {
         weekday: '10:00 - 22:00',
         weekend: '11:00 - 23:00',
@@ -81,8 +81,8 @@ export const storeState = atom<Store[]>({
     {
       storeId: 1,
       name: '싸피식당',
-      latitude: 37.497732,
-      longitude: 127.028981,
+      latitude: 36.1073142218962,
+      longitude: 128.41956929817755,
       hours: {
         weekday: '08:00 - 21:00',
         weekend: '09:00 - 22:00',
@@ -109,8 +109,8 @@ export const storeState = atom<Store[]>({
     {
       storeId: 2,
       name: '싸피햄버거',
-      latitude: 37.497419,
-      longitude: 127.027166,
+      latitude: 36.106694002740824,
+      longitude: 128.41848651676423,
       hours: {
         weekday: '11:00 - 23:00',
         weekend: '11:00 - 23:00',
@@ -137,8 +137,8 @@ export const storeState = atom<Store[]>({
     {
       storeId: 3,
       name: '싸이버거',
-      latitude: 37.497289,
-      longitude: 127.027721,
+      latitude: 36.10772768548825,
+      longitude: 128.41908811854606,
       hours: {
         weekday: '10:00 - 22:00',
         weekend: '11:00 - 23:00',
@@ -165,8 +165,8 @@ export const storeState = atom<Store[]>({
     {
       storeId: 4,
       name: '정은치킨',
-      latitude: 37.496556,
-      longitude: 127.028533,
+      latitude: 36.10828527784215,
+      longitude: 128.41804038999774,
       hours: {
         weekday: '11:00 - 22:00',
         weekend: '11:30 - 22:30',
@@ -193,8 +193,8 @@ export const storeState = atom<Store[]>({
     {
       storeId: 5,
       name: '햇살카페',
-      latitude: 37.496951,
-      longitude: 127.029369,
+      latitude: 36.10788451067159,
+      longitude: 128.4185912133032,
       hours: {
         weekday: '08:00 - 22:00',
         weekend: '09:00 - 23:00',
