@@ -3,10 +3,7 @@ package edu.ssafy.punpun.service;
 import edu.ssafy.punpun.entity.*;
 import edu.ssafy.punpun.entity.enumurate.ReservationState;
 import edu.ssafy.punpun.exception.NotMatchChildException;
-import edu.ssafy.punpun.repository.KeywordRepository;
-import edu.ssafy.punpun.repository.ReservationRepository;
-import edu.ssafy.punpun.repository.ReviewKeywordRepository;
-import edu.ssafy.punpun.repository.ReviewRepository;
+import edu.ssafy.punpun.repository.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -34,6 +31,8 @@ class ReviewServiceImplTest {
     public ReviewKeywordRepository reviewKeywordRepository;
     @Mock
     public ReservationRepository reservationRepository;
+    @Mock
+    public StoreRepository storeRepository;
 
     @Test
     @DisplayName("리뷰 남기기 - 정상작동")
@@ -170,5 +169,29 @@ class ReviewServiceImplTest {
         reviewService.findAllBySupporter(supporter, 0);
 
         verify(reviewRepository, times(1)).findAllBySupporter(supporter, PageRequest.of(0, 10));
+    }
+
+    @Test
+    @DisplayName("리뷰 모두 찾기 - 가게")
+    void findAllByStore() {
+        Store store = Store.builder()
+                .id(1L)
+                .build();
+
+        doReturn(null).when(reviewRepository).findAllByStore(store, PageRequest.of(0, 10));
+        doReturn(Optional.of(store)).when(storeRepository).findById(1L);
+
+        reviewService.findAllByStore(1L, 0);
+
+        verify(reviewRepository, times(1)).findAllByStore(store, PageRequest.of(0, 10));
+    }
+
+    @Test
+    @DisplayName("리뷰 모두 찾기 - 가게, 없는 가게 검색")
+    void findAllByNoStore() {
+        doReturn(Optional.empty()).when(storeRepository).findById(1L);
+
+        assertThatThrownBy(()->reviewService.findAllByStore(1L, 0))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }
