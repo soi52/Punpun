@@ -1,10 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
-
-// interface locationType {
-//   loaded: boolean;
-//   coordinates?: { lat: number; lng: number };
-//   error?: { code: number; message: string };
-// }
+import { useState, useMemo } from 'react';
 
 const useGeolocation = () => {
   const [location, setLocation] = useState<

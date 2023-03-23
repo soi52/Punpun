@@ -20,13 +20,11 @@ const BannerText = styled.div`
 
 const StoreBanner = () => {
   return (
-    <>
-      <BannerDiv>
-        <BannerText>
-          <h1>정은 치킨</h1>
-        </BannerText>
-      </BannerDiv>
-    </>
+    <BannerDiv>
+      <BannerText>
+        <h1>정은 치킨</h1>
+      </BannerText>
+    </BannerDiv>
   );
 };
 
