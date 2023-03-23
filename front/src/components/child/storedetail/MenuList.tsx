@@ -3,6 +3,14 @@ import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { storeState } from '../../../store/atoms';
 import MenuCard from '../../ui/MenuCard';
+import MenuCart from '../../supporter/MenuCart';
+
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
 const MenuListContainer = styled.div`
   width: 70%;
@@ -59,9 +67,24 @@ const data: Menu[] = [
   },
 ];
 
+interface CartItem {
+  id: number;
+  title: string;
+  image: string;
+  price: number;
+  // quantity: number;
+}
+
 const MenuList: React.FC = () => {
+
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  
+  const addToCart = (item: CartItem) => {
+    setCartItems([...cartItems, item]);
+  }
+
   return (
-    <>
+    <Container>
       <MenuListContainer>
         {data.map((data, index) => (
           <MenuCard
@@ -70,10 +93,12 @@ const MenuList: React.FC = () => {
             title={data.title}
             image={data.image}
             price={data.price}
+            addToCart={addToCart}
           />
         ))}
       </MenuListContainer>
-    </>
+        <MenuCart cartItems={cartItems}/>
+    </Container>
   );
 };
 

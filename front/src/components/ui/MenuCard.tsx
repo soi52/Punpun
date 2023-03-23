@@ -7,12 +7,10 @@ import BookingModal from '../child/storedetail/BookingModal';
 import { useRecoilValue } from 'recoil';
 import { isChildState } from '../../store/atoms';
 
-interface MenuCardProps {
+interface MenuCardProps extends Menu {
   key: number;
-  id: number;
-  title: string;
-  image: string;
-  price: number;
+
+  addToCart: (Item: Menu) => void;
 }
 
 type Menu = {
@@ -70,7 +68,7 @@ const HeartButtonWrapper = styled.div`
   cursor: pointer;
 `;
 
-const MenuCard: React.FC<MenuCardProps> = ({ id, title, image, price }) => {
+const MenuCard: React.FC<MenuCardProps> = ({ id, title, image, price, addToCart }) => {
   const [showModal, setShowModal] = useState(false);
   const isChild = useRecoilValue(isChildState);
   const [liked, setLiked] = useState(false);
@@ -100,6 +98,7 @@ const MenuCard: React.FC<MenuCardProps> = ({ id, title, image, price }) => {
       setShowModal(true);
     } else {
       // 어른 회원일 때 클릭 이벤트
+      addToCart({ id, title, image, price });
       console.log('Clicked as an adult');
     }
   };
