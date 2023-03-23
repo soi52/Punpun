@@ -12,11 +12,11 @@ import edu.ssafy.punpun.entity.enumurate.SupportType;
 import edu.ssafy.punpun.service.SupportService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import java.awt.print.Pageable;
 import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
@@ -71,7 +71,10 @@ public class SupportController {
 
     @GetMapping("/{storeId}")
     @ResponseStatus(code= HttpStatus.OK)
-    public List<ShareResponseDTO> findSupportList(@PathVariable("storeId") Long storeId , @RequestParam(name="type") SupportType type, @RequestParam(name="page", required = false) Pageable page, @RequestParam(name="date", required = false) LocalDate date){
+    public Page<ShareResponseDTO> findSupportList(@PathVariable("storeId") Long storeId ,
+                                                  @RequestParam(name="type") SupportType type,
+                                                  @RequestParam(name="page", required = false, defaultValue = "0") int page,
+                                                  @RequestParam(name="date", required = false) LocalDate date){
         return supportService.findShareList(storeId, type, page, date);
     }
 }
