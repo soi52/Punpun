@@ -20,9 +20,17 @@ const Button = styled.button`
 type MapProps = {
   latitude: number;
   longitude: number;
+  stores: Store[];
 };
 
-const Map = ({ latitude, longitude }: MapProps) => {
+interface Store {
+  storeId: number;
+  name: string;
+  latitude: number;
+  longitude: number;
+}
+
+const Map = ({ latitude, longitude, stores }: MapProps) => {
   const mapRef = useRef<kakao.maps.Map | null>(null);
 
   const initMap = () => {
@@ -33,11 +41,19 @@ const Map = ({ latitude, longitude }: MapProps) => {
         level: 4,
       };
       const map = new kakao.maps.Map(container as HTMLElement, options);
-      const markerPosition = new kakao.maps.LatLng(latitude, longitude);
-      const marker = new kakao.maps.Marker({
-        position: markerPosition,
+
+      // 각 가게들의 위치에 마커를 찍는 로직 추가
+      stores.forEach((store) => {
+        const markerPosition = new kakao.maps.LatLng(
+          store.latitude,
+          store.longitude
+        );
+        const marker = new kakao.maps.Marker({
+          position: markerPosition,
+        });
+        marker.setMap(map);
       });
-      marker.setMap(map);
+
       mapRef.current = map;
     } else if (latitude && longitude && mapRef.current !== null) {
       const center = new kakao.maps.LatLng(latitude, longitude);
