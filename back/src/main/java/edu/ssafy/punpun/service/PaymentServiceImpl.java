@@ -1,11 +1,13 @@
 package edu.ssafy.punpun.service;
 
-import edu.ssafy.punpun.entity.Member;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
+@Slf4j
+@Service
+@RequiredArgsConstructor
 public class PaymentServiceImpl implements PaymentService {
-    @Override
-    public Long getPoints(Member member) {
-        // member repository 호출
-        return null;
-    }
+
+
 }
