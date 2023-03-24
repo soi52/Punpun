@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import SelectedMenuList from './SelectedMenuList';
+
+const Wrapper = styled.div`
+  padding: 20px 0px 10px 0px;
+`;
 
 const Select = styled.select`
   width: 100%;
@@ -61,10 +64,9 @@ const MenuDropdown = ({ menuList, onMenuSelect }: MenuDropdownProps) => {
   };
 
   return (
-    <>
-      <label>Menu List</label>
-      <Select onChange={handleSelectChange}>
-        <option value="" disabled selected hidden>
+    <Wrapper>
+      <Select onChange={handleSelectChange} defaultValue="">
+        <option value="" disabled hidden>
           메뉴를 선택하세요.
         </option>
         {menuList.map((menu) => (
@@ -73,7 +75,7 @@ const MenuDropdown = ({ menuList, onMenuSelect }: MenuDropdownProps) => {
           </option>
         ))}
       </Select>
-    </>
+    </Wrapper>
   );
 };
 

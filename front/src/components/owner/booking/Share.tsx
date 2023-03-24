@@ -1,49 +1,24 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import StoreInfo from '../StoreInfo';
+
 import MenuDropdown from './MenuDropdown';
+import { SelectedMenuProps } from './SelectedMenu';
 import SelectedMenuList from './SelectedMenuList';
 
 const Wrapper = styled.div`
   padding: 20px;
 `;
 
-type Menu = {
+interface Menu {
   id: number;
   title: string;
   image: string;
   price: number;
-};
+}
 
-type SelectedMenuProps = Menu & {
-  quantity: number;
-  onQuantityChange: (menu: Menu, quantity: number) => void;
-  onDelete: (menu: Menu) => void;
-};
-
-function Share() {
-  const [selectedMenu, setSelectedMenu] = useState<Menu | null>(null);
+const Share: React.FC = () => {
   const [selectedMenus, setSelectedMenus] = useState<SelectedMenuProps[]>([]);
-
-  const handleMenuSelect = (menu: Menu) => {
-    setSelectedMenu(menu);
-  };
-
-  const handleQuantityChange = (menu: Menu, quantity: number) => {
-    setSelectedMenus((prevSelectedMenus) =>
-      prevSelectedMenus.map((prevMenu) => {
-        if (prevMenu.id === menu.id) {
-          return { ...prevMenu, quantity };
-        }
-        return prevMenu;
-      })
-    );
-  };
-
-  const handleClearClick = () => {
-    setSelectedMenus([]);
-  };
-
   const menuList: Menu[] = [
     {
       id: 1,
@@ -82,21 +57,54 @@ function Share() {
       price: 9000,
     },
   ];
+
+  const handleMenuSelect = (menu: Menu) => {
+    const existingMenu = selectedMenus.find(
+      (selectedMenu) => selectedMenu.id === menu.id
+    );
+    if (existingMenu) {
+      const updatedSelectedMenus = selectedMenus.map((selectedMenu) =>
+        selectedMenu.id === menu.id
+          ? { ...selectedMenu, quantity: selectedMenu.quantity + 1 }
+          : selectedMenu
+      );
+      setSelectedMenus(updatedSelectedMenus);
+    } else {
+      const newSelectedMenu: SelectedMenuProps = {
+        ...menu,
+        quantity: 1,
+        onQuantityChange: handleQuantityChange,
+        onDelete: () => handleClearClick(menu.id),
+      };
+      setSelectedMenus([...selectedMenus, newSelectedMenu]);
+    }
+  };
+
+  const handleQuantityChange = (id: number, quantity: number) => {
+    const updatedSelectedMenus = selectedMenus.map((selectedMenu) =>
+      selectedMenu.id === id ? { ...selectedMenu, quantity } : selectedMenu
+    );
+    setSelectedMenus(updatedSelectedMenus);
+  };
+
+  const handleClearClick = (id: number) => {
+    const updatedSelectedMenus = selectedMenus.filter(
+      (selectedMenu) => selectedMenu.id !== id
+    );
+    setSelectedMenus(updatedSelectedMenus);
+  };
+
   return (
     <Wrapper>
       <StoreInfo />
-      <h2>오늘의 나눔</h2>
       <MenuDropdown menuList={menuList} onMenuSelect={handleMenuSelect} />
-      {/* <SelectedMenuList
+      <SelectedMenuList
         selectedMenus={selectedMenus}
         onQuantityChange={handleQuantityChange}
         onClearClick={handleClearClick}
-      /> */}
-      <input placeholder="퍈하게 와서 먹고가세요!" />
-      <button onClick={() => alert('나눔 등록이 완료되었습니다!')}>
-        등록하기
-      </button>
+      />
     </Wrapper>
   );
-}
+};
+
 export default Share;
