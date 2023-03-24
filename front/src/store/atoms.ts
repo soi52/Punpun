@@ -47,6 +47,78 @@ export interface Store {
   menu: { image: string; name: string; price: number }[];
 }
 
+export const owStoreState = atom<Store[]>({
+  key: 'owStoreState',
+  default: [
+    {
+      storeId: 0,
+      name: '정은치킨',
+      latitude: 36.10828527784215,
+      longitude: 128.41804038999774,
+      hours: {
+        weekday: '11:00 - 22:00',
+        weekend: '11:30 - 22:30',
+      },
+      phone: '02-123-4569',
+      menu: [
+        {
+          image: 'https://example.com/food.jpg',
+          name: '후라이드치킨',
+          price: 15000,
+        },
+        {
+          image: 'https://example.com/food.jpg',
+          name: '양념치킨',
+          price: 17000,
+        },
+        {
+          image: 'https://example.com/food.jpg',
+          name: '간장치킨',
+          price: 18000,
+        },
+      ],
+    },
+    {
+      storeId: 1,
+      name: '햇살카페',
+      latitude: 36.10788451067159,
+      longitude: 128.4185912133032,
+      hours: {
+        weekday: '08:00 - 22:00',
+        weekend: '09:00 - 23:00',
+      },
+      phone: '02-111-1111',
+      menu: [
+        {
+          image: 'https://example.com/food.jpg',
+          name: '아메리카노',
+          price: 3500,
+        },
+        {
+          image: 'https://example.com/food.jpg',
+          name: '카페라떼',
+          price: 4000,
+        },
+        {
+          image: 'https://example.com/food.jpg',
+          name: '카푸치노',
+          price: 4000,
+        },
+        {
+          image: 'https://example.com/food.jpg',
+          name: '과일주스',
+          price: 5000,
+        },
+        {
+          image: 'https://example.com/food.jpg',
+          name: '치즈케이크',
+          price: 6000,
+        },
+      ],
+    },
+  ],
+});
+
 export const storeState = atom<Store[]>({
   key: 'storeState',
   default: [
