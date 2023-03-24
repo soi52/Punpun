@@ -7,10 +7,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
 
 @Slf4j
 @RestController
@@ -25,5 +24,10 @@ public class PaymentController {
         return new PointResponseDTO(member.getId(), member.getRemainPoint());
     }
 
+    @PostMapping
+    @ResponseStatus(code = HttpStatus.OK)
+    public void savePoints(@AuthenticationPrincipal Member member, @RequestBody HashMap<String, Long> map){
+        paymentService.updatePoints(member, map.get("point"));
+    }
 
 }
