@@ -27,7 +27,7 @@ public class PrincipalMemberDetail implements OAuth2User, UserDetails {
      */
     @Override
     public String getPassword() {
-        return "";
+        return oAuthAttributes.getEmail();
     }
     /**
      * UserDetails 구현

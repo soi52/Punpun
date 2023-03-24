@@ -36,7 +36,8 @@ public class SecurityConfig {
         http.formLogin().disable();
         http.httpBasic().disable();
         http.csrf().disable();
-        http.cors();    // CORS는 HttpSecurity의 cors() 메소드로 설정
+        http.cors().configurationSource(corsConfigurationSource());    // CORS는 HttpSecurity의 cors() 메소드로 설정
+
         http.headers()
                 .frameOptions()
                 .sameOrigin();
@@ -52,7 +53,6 @@ public class SecurityConfig {
                 .and()
                 .successHandler(oAuth2AuthenticationSuccessHandler);
 //                .failureHandler();
-
 
         return http.build();
     }
