@@ -10,7 +10,6 @@ const MainStyle = styled.main`
   left: 0;
   right: 0;
   overflow-y: auto;
-
 `;
 
 function Layout() {
