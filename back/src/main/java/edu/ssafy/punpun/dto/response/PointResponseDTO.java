@@ -7,5 +7,5 @@ import lombok.Getter;
 @AllArgsConstructor
 public class PointResponseDTO {
     Long memberId;
-    Long memberRemainPoint;
+    Long memberPoint;
 }
