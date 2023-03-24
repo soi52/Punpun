@@ -2,9 +2,10 @@ import React, { useRef, useEffect } from 'react';
 import styled from 'styled-components';
 
 const Div = styled.div`
-  width: 500px;
+  width: 400px;
   height: 400px;
   margin: 0px 20px;
+  border-radius: 25px;
 `;
 
 const Button = styled.button`

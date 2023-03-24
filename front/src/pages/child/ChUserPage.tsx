@@ -33,7 +33,7 @@ function ChUserPage() {
         currentMenuItemIndex={currentMenuItemIndex}
         setCurrentMenuItemIndex={setCurrentMenuItemIndex}
       />
-      <MainComponent width={70}>
+      <MainComponent width={51.2}>
         {menuItems[currentMenuItemIndex].component()}
       </MainComponent>
     </ComponentStyle>

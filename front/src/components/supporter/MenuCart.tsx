@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { pointState } from '../../store/atoms';
 
@@ -81,16 +82,32 @@ const MenuCart: React.FC<MenuCartProps> = ({
     0
   );
 
-  const handleDonateClick = () => {
+  const handleDonateClick = async () => {
     if (totalPrice > point) {
       alert('포인트가 부족합니다. 포인트를 충전해주세요.');
-    //   window.location.href = '/charge';
+      //   window.location.href = '/charge';
     } else {
-      setPoint(point - totalPrice);
-      alert(`${totalPrice.toLocaleString()}원이 후원되었습니다. 감사합니다!`);
-      deleteCart(-1);
+      try {
+        const menuIds = cartItems.map(item => item.id);
+        const menuCounts = cartItems.map(item => item.quantity);
+        // const storeId = cartItems[0].storeId;
+        const requestBody = {
+          usePoint: totalPrice,
+          menuId: menuIds,
+          menuCount: menuCounts,
+          // storeId: storeId
+        };
+        await axios.post('/supports/payment', requestBody);
+        setPoint(point - totalPrice);
+        alert(`${totalPrice.toLocaleString()}원이 후원되었습니다. 감사합니다!`);
+        deleteCart(-1);
+      } catch (error) {
+        console.error(error);
+        alert('결제 도중 오류가 발생했습니다.');
+      }
     }
   };
+  
 
   return (
     <Box>
