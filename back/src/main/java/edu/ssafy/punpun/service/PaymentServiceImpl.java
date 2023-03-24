@@ -17,7 +17,8 @@ public class PaymentServiceImpl implements PaymentService {
     @Transactional
     @Override
     public void updatePoints(Member member, Long point) {
-        Member user=memberRepository.findById(member.getId()).orElseThrow(IllegalArgumentException::new);
+        Member user=memberRepository.findById(member.getId())
+                .orElseThrow(IllegalArgumentException::new);
         user.chargePoint(point);
     }
 }

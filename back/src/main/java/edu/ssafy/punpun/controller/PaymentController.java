@@ -1,5 +1,6 @@
 package edu.ssafy.punpun.controller;
 
+import edu.ssafy.punpun.dto.request.PointRequestDTO;
 import edu.ssafy.punpun.dto.response.PointResponseDTO;
 import edu.ssafy.punpun.entity.Member;
 import edu.ssafy.punpun.service.PaymentService;
@@ -9,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 
 @Slf4j
 @RestController
@@ -26,8 +26,8 @@ public class PaymentController {
 
     @PostMapping
     @ResponseStatus(code = HttpStatus.OK)
-    public void savePoints(@AuthenticationPrincipal Member member, @RequestBody HashMap<String, Long> map){
-        paymentService.updatePoints(member, map.get("point"));
+    public void savePoints(@AuthenticationPrincipal Member member, @RequestBody PointRequestDTO pointRequestDTO){
+        paymentService.updatePoints(member, pointRequestDTO.getPoint());
     }
 
 }
