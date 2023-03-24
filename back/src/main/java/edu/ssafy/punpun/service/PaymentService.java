@@ -1,5 +1,7 @@
 package edu.ssafy.punpun.service;
 
-public interface PaymentService {
+import edu.ssafy.punpun.entity.Member;
 
+public interface PaymentService {
+    void updatePoints(Member member, Long point);
 }
