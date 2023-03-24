@@ -27,7 +27,8 @@ function Router() {
         <Route path="/" element={<Layout />}>
           {/* 후원페이지 */}
           <Route path="/" element={<MainPage />} />
-          <Route path="/" element={<MainPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/kakaoLogin" element={<RedirectPage />} />
           <Route path="/sumain" element={<MainPage />} />
           <Route path="/suuser" element={<SuUserPage />} />
           <Route path="/susearch" element={<SuSearchStore />} />

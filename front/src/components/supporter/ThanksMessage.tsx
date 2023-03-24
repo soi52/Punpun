@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 import MainTitle from '../ui/MainTitle';
 import MainMessage from '../ui/MainMessage';
+import MessageForSupport from './MessageForSupport';
 
 const ComponentStyle = styled.div`
   padding: 20px;
@@ -22,6 +23,7 @@ function ThanksMessage() {
       </h2>
       <MainMessage message={`${mainMessage.ownerName}, ${mainMessage.message}`} />
       <h2>감사 메세지</h2>
+      <MessageForSupport/>
     </ComponentStyle>
   );
 }

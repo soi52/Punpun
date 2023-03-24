@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import MainTitle from '../../ui/MainTitle';
 import MainMessage from '../../ui/MainMessage';
 
+import LikedMenu from './LikedMenu';
+
 const ComponentStyle = styled.div`
   padding: 20px;
 `;
@@ -22,6 +24,7 @@ const Preference = () => {
       </h2>
       <MainMessage message={`${storeInfo.ownerName}, ${storeInfo.message}`} />
       <h2>선호 메뉴</h2>
+      <LikedMenu/>
     </ComponentStyle>
   );
 };

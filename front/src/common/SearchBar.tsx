@@ -7,7 +7,7 @@ const Input = styled.input`
   background-color: hsl(0, 0%, 90%);
   padding: 10px;
   font-size: medium;
-  width: 15rem;
+  width: 300px;
 `;
 
 type SearchBarProps = {
