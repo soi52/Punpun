@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import Logo from './Logo';
@@ -8,6 +8,7 @@ import {
   isChildState,
   isOwnerState,
   isSupporterState,
+  owStoreState,
 } from '../../store/atoms';
 
 const Wrapper = styled.div`
@@ -22,6 +23,7 @@ const Wrapper = styled.div`
   border-bottom-width: 2px;
   border-bottom-color: #dcdde1;
   justify-content: space-between;
+  z-index: 5;
 `;
 
 const Contents = styled.div`
@@ -41,6 +43,35 @@ const NavLi = styled.li`
   margin: 30px;
 `;
 
+const StoreDropdown = styled.ul<{ show: boolean }>`
+  display: none;
+  position: absolute;
+  left: 75%;
+  transform: translateX(-50%);
+  width: 200px;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+  z-index: 1;
+  padding: 10px;
+
+  ${({ show }) =>
+    show &&
+    `
+    display: block;
+  `}
+`;
+
+const StoreDropdownItem = styled.li`
+  cursor: pointer;
+  list-style: none;
+
+  &:hover {
+    color: white;
+    background-color: #3f51b5;
+  }
+`;
+
 type HeaderProps = {
   onSelect: (item: string) => void;
 };
@@ -52,7 +83,38 @@ function Header(props: HeaderProps) {
   const [isSupporter, setIsSupporter] = useRecoilState(isSupporterState);
   const [selectedItem, setSelectedItem] = useState('후원자');
   const [drop, setDrop] = useState(false);
+  const [storeDrop, setStoreDrop] = useState(false);
   const navigate = useNavigate();
+  const [selectedStore, setSelectedStore] = useState<Store | null>(null);
+
+  interface Store {
+    id: number;
+    storeName: string;
+    storeText: string;
+  }
+
+  const stores: Store[] = [
+    {
+      id: 1,
+      storeName: '스테이크 팩토리1',
+      storeText: '항상 후원',
+    },
+    {
+      id: 2,
+      storeName: '스테이크 팩토리2',
+      storeText: '항상 후원',
+    },
+    {
+      id: 3,
+      storeName: '스테이크 팩토리3',
+      storeText: '항상 후원',
+    },
+  ];
+
+  const selectStore = (store: Store) => {
+    setSelectedStore(store);
+    setStoreDrop(true);
+  };
 
   const toLogin = () => {
     navigate('/login');
@@ -124,6 +186,21 @@ function Header(props: HeaderProps) {
         return (
           <NavUl>
             <NavLi onClick={toOwStore}>가게운영</NavLi>
+            <NavLi onClick={() => setStoreDrop(!storeDrop)}>
+              가게선택
+              {storeDrop && (
+                <StoreDropdown show={storeDrop}>
+                  {stores.map((store) => (
+                    <StoreDropdownItem
+                      key={store.id}
+                      onClick={() => selectStore(store)}
+                    >
+                      {store.storeName}
+                    </StoreDropdownItem>
+                  ))}
+                </StoreDropdown>
+              )}
+            </NavLi>
             <NavLi onClick={toOwBooking}>예약관리</NavLi>
             <NavLi onClick={onLogout}>로그아웃</NavLi>
             <NavLi onClick={selectMe}>
