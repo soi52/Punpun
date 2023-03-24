@@ -30,4 +30,10 @@ public class PaymentController {
         paymentService.updatePoints(member, pointRequestDTO.getPoint());
     }
 
+    @GetMapping("/total")
+    @ResponseStatus(code = HttpStatus.OK)
+    public PointResponseDTO getTotalSupport(@AuthenticationPrincipal Member member){
+        return new PointResponseDTO(member.getId(), member.getSupportedPoint());
+    }
+
 }
