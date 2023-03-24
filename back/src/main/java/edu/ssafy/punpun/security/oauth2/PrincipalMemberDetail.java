@@ -15,9 +15,9 @@ import java.util.Map;
 @ToString
 public class PrincipalMemberDetail implements OAuth2User, UserDetails {
     private Member member;
-    private OAuthAttributes oAuthAttributes;
+    private OAuth2Attributes oAuthAttributes;
 
-    public PrincipalMemberDetail(Member member, OAuthAttributes oAuthAttributes) {
+    public PrincipalMemberDetail(Member member, OAuth2Attributes oAuthAttributes) {
         this.member = member;
         this.oAuthAttributes = oAuthAttributes;
     }
@@ -106,6 +106,6 @@ public class PrincipalMemberDetail implements OAuth2User, UserDetails {
      */
     @Override
     public String getName() {
-        return member.getName();
+        return oAuthAttributes.getAttributeId();
     }
 }

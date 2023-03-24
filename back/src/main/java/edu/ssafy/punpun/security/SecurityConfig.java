@@ -48,9 +48,9 @@ public class SecurityConfig {
         http.oauth2Login()
                 .userInfoEndpoint()
                 // 	userInfoEndpoint()로 가져온 사용자 정보를 처리할 때 사용
-                .userService(principalOAuth2UserService);
-//                .and()
-//                .successHandler()
+                .userService(principalOAuth2UserService)
+                .and()
+                .successHandler(oAuth2AuthenticationSuccessHandler);
 //                .failureHandler();
 
 

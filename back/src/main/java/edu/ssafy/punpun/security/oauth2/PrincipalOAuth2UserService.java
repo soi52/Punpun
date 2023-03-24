@@ -35,7 +35,7 @@ public class PrincipalOAuth2UserService extends DefaultOAuth2UserService {
         String registrationId = userRequest.getClientRegistration().getRegistrationId(); // 소셜 정보 가져옴
         String userNameAttributeName = userRequest.getClientRegistration().getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
 
-        OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
+        OAuth2Attributes attributes = OAuth2Attributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
 
         Optional<Member> member = memberRepository.findByEmail(attributes.getEmail());
         Member resultMember = null;
@@ -57,11 +57,15 @@ public class PrincipalOAuth2UserService extends DefaultOAuth2UserService {
                 resultMember = member.get();
             }
             // userPrincipal return
+//            System.out.println(resultMember.toString());
+//            System.out.println(attributes.toString());
             return new PrincipalMemberDetail(resultMember, attributes);
         } else {
             // 학생인 경우
             resultChild = child.get();
             // userPrincipal return
+//            System.out.println(resultChild.toString());
+//            System.out.println(attributes.toString());
             return new PrincipalChildDetail(resultChild, attributes);
         }
 

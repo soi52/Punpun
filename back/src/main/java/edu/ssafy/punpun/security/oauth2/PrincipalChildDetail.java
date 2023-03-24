@@ -15,9 +15,9 @@ import java.util.Map;
 @ToString
 public class PrincipalChildDetail implements OAuth2User, UserDetails {
     private Child child;
-    private OAuthAttributes oAuthAttributes;
+    private OAuth2Attributes oAuthAttributes;
 
-    public PrincipalChildDetail(Child child, OAuthAttributes oAuthAttributes) {
+    public PrincipalChildDetail(Child child, OAuth2Attributes oAuthAttributes) {
         this.child = child;
         this.oAuthAttributes = oAuthAttributes;
     }
