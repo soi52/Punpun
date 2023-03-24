@@ -4,6 +4,7 @@ import edu.ssafy.punpun.entity.Member;
 import edu.ssafy.punpun.repository.ChildRepository;
 import edu.ssafy.punpun.repository.MemberRepository;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.Date;
@@ -67,4 +69,20 @@ public class JwtTokenProvider {
 //        return info;
 //    }
 
+    public String resolveToken(HttpServletRequest request) {
+        log.info("[resolveToken] HTTP 헤더에서 Token 값 추출");
+        return request.getHeader("Authorization");
+    }
+
+    public boolean validateToken(String token) {
+        log.info("[validateToken] 토큰 유효 체크 시작");
+        try {
+            Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+
+            return !claims.getBody().getExpiration().before(new Date());
+        } catch (Exception e) {
+            log.info("[validateToken] 토큰 유효 체크 예외 발생");
+            return false;
+        }
+    }
 }

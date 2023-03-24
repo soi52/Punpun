@@ -34,7 +34,6 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         if (authentication.getPrincipal() instanceof PrincipalMemberDetail) {
             // 학생이 아닌 경우,멤버인 경우
 
-            System.out.println(authentication.getPrincipal());
             PrincipalMemberDetail principalMemberDetail = (PrincipalMemberDetail) authentication.getPrincipal();
             // getPassword에 Email 저장되어있음
             Optional<Member> optionalMember = memberRepository.findByEmail(principalMemberDetail.getPassword());
@@ -48,18 +47,11 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 //            cookie.setSecure(true);
 //            cookie.setHttpOnly(true);
 
-            System.out.println(cookie);
-//            response.addCookie(cookie);
-//            response.setStatus(302);
-//            response.setHeader("Location", "http://192.168.100.138:3000/");
+            response.addCookie(cookie);
+            response.setStatus(302);
+//            response.setHeader("Location", "/");
 //            response.setHeader("Set-Cookie", cookie.toString());
-
-            String targetUrl = UriComponentsBuilder.fromHttpUrl("https://192.168.100.138:3000/kakaoLogin")
-//        String targetUrl = UriComponentsBuilder.fromUriString("/kakaoLogin")
-                    .queryParam("accessToken", token)
-                    .build().toUriString();
-
-            getRedirectStrategy().sendRedirect(request, response, targetUrl);
+            response.setHeader("Location", "/kakaoLogin?token=" + token);
 
         } else {
             // 학생인 경우

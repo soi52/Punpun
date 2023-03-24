@@ -57,15 +57,11 @@ public class PrincipalOAuth2UserService extends DefaultOAuth2UserService {
                 resultMember = member.get();
             }
             // userPrincipal return
-//            System.out.println(resultMember.toString());
-//            System.out.println(attributes.toString());
             return new PrincipalMemberDetail(resultMember, attributes);
         } else {
             // 학생인 경우
             resultChild = child.get();
             // userPrincipal return
-//            System.out.println(resultChild.toString());
-//            System.out.println(attributes.toString());
             return new PrincipalChildDetail(resultChild, attributes);
         }
 
