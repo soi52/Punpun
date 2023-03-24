@@ -1,5 +1,6 @@
 package edu.ssafy.punpun.controller;
 
+import edu.ssafy.punpun.dto.response.PointResponseDTO;
 import edu.ssafy.punpun.entity.Member;
 import edu.ssafy.punpun.service.PaymentService;
 import lombok.RequiredArgsConstructor;
@@ -20,8 +21,9 @@ public class PaymentController {
 
     @GetMapping
     @ResponseStatus(code = HttpStatus.OK)
-    public Long getPoints(@AuthenticationPrincipal Member member){
-        return paymentService.getPoints(member);
+    public PointResponseDTO getPoints(@AuthenticationPrincipal Member member){
+        return new PointResponseDTO(member.getId(), member.getRemainPoint());
     }
+
 
 }
