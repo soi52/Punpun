@@ -15,6 +15,7 @@ const SearchStore = () => {
   const stores = useRecoilValue(storeState);
 
   const location = useGeolocation();
+  console.log(location);
   const { latitude = 0, longitude = 0 } =
     typeof location === 'object' ? location : {};
 
