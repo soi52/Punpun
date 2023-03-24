@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 import MainTitle from '../../ui/MainTitle';
 import MainMessage from '../../ui/MainMessage';
+import PrevBookings from './PrevBookings';
 
 const ComponentStyle = styled.div`
   padding: 20px;
@@ -22,6 +23,7 @@ const BookingList = () => {
       </h2>
       <MainMessage message={`${storeInfo.ownerName}, ${storeInfo.message}`} />
       <h2>이전 예약 내역</h2>
+      <PrevBookings/>
     </ComponentStyle>
   );
 };

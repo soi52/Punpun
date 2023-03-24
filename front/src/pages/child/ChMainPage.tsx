@@ -3,6 +3,12 @@ import styled from 'styled-components';
 
 import SearchStore from '../../common/SearchStore';
 
+const SearchStoreDiv = styled.div`
+  font-size: 32px;
+  font-weight: bold;
+  padding-top: 20px;
+`;
+
 const ComponentDiv = styled.div`
   display: flex;
   align-items: center;
@@ -10,7 +16,7 @@ const ComponentDiv = styled.div`
 `;
 
 const ContentDiv = styled.div`
-  padding: 20px;
+  // padding: 20px;
 `;
 
 const BoxDiv = styled.div`
@@ -31,7 +37,7 @@ function ChMainPage() {
   return (
     <ComponentDiv>
       <BoxDiv>
-        <h1>가게 찾기</h1>
+        <SearchStoreDiv>가게 찾기</SearchStoreDiv>
         <h3>내 근처의 식당을 찾아보세요.</h3>
         <ContentDiv>
           <SearchStore />

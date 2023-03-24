@@ -3,12 +3,19 @@ import styled from 'styled-components';
 import SearchBar from './SearchBar';
 import FilteredList from './FilteredList';
 
-const ComponentDiv = styled.div``;
+const ComponentDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 400px;
+  height: 63vh;
+`;
 
 const TabList = styled.div`
   display: flex;
   justify-content: space-around;
   margin-bottom: 20px;
+  width: 100%;
 `;
 
 const TabButton = styled.button<{ isActive: boolean }>`
@@ -32,6 +39,10 @@ const TabButton = styled.button<{ isActive: boolean }>`
     font-size: 10px;
     transform: translateX(-50%);
   }
+`;
+
+const SearchBarDiv = styled.div`
+  padding-bottom: 10px;
 `;
 
 interface Store {
@@ -77,7 +88,9 @@ const SearchStoreList = ({ stores }: { stores: Store[] }) => {
           내림차순
         </TabButton>
       </TabList>
-      <SearchBar value={keyword} onChange={handleInputChange} />
+      <SearchBarDiv>
+        <SearchBar value={keyword} onChange={handleInputChange} />
+      </SearchBarDiv>
       <FilteredList stores={filteredList} keyword={keyword} />
     </ComponentDiv>
   );

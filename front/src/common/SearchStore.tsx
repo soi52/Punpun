@@ -9,6 +9,12 @@ import useGeolocation from './useGeolocation';
 const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
+  max-height: 100%; /* 컴포넌트의 최대 높이 */
+  overflow-y: auto; /* 세로 스크롤바만 보이게 합니다. */
+`;
+
+const MapDiv = styled.div`
+  margin: auto;
 `;
 
 const SearchStore = () => {
@@ -20,7 +26,9 @@ const SearchStore = () => {
 
   return (
     <Wrapper>
-      <Map latitude={latitude} longitude={longitude} stores={stores} />
+      <MapDiv>
+        <Map latitude={latitude} longitude={longitude} stores={stores} />
+      </MapDiv>
       <SearchStoreList stores={stores} />
     </Wrapper>
   );

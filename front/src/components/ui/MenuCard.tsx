@@ -83,7 +83,7 @@ const MenuCard: React.FC<MenuCardProps> = ({ id, title, image, price, quantity, 
     console.log('liked: ' + liked);
 
     const method = liked ? 'delete' : 'post';
-    axios[method]('favors' + id)
+    axios[method]('favors/' + id)
       .then((response) => {
         console.log(response.data);
       })
@@ -96,6 +96,8 @@ const MenuCard: React.FC<MenuCardProps> = ({ id, title, image, price, quantity, 
     if (isChild) {
       // 어린이 회원일 때 클릭 이벤트
       setShowModal(true);
+      console.log(isChild);
+      
     } else {
       // 어른 회원일 때 클릭 이벤트
       addToCart({ id, title, image, price, quantity });

@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 import MainTitle from '../ui/MainTitle';
 import MainMessage from '../ui/MainMessage';
+import SupportHistory from './SupportHistroy';
 
 const ComponentStyle = styled.div`
   padding: 20px;
@@ -22,6 +23,7 @@ function SuDetail() {
       </h2>
       <MainMessage message={`${mainMessage.ownerName}, ${mainMessage.message}`} />
       <h2>후원내역</h2>
+      <SupportHistory/>
     </ComponentStyle>
   );
 }

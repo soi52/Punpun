@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import styled from 'styled-components';
-
-import MainTitle from '../../ui/MainTitle';
-import MainMessage from '../../ui/MainMessage';
 
 import MessageInput from './MessageInput';
 import MessageList from './MessageList';
@@ -65,7 +63,21 @@ const Message: React.FC = () => {
   const [selectedButtons, setSelectedButtons] = useState<string[]>([]);
 
   const handleAddMessage = (inputValue: string, selectedButtons: string[]) => {
-    setMessages([{inputValue: inputValue, selectedButtons: selectedButtons}, ...messages]);
+    const message = {
+      keyword: selectedButtons,
+      content: inputValue,
+      reservationId: 'your_reservation_id_here',
+    };
+
+    axios.post('/reviews', message)
+    .then((response) => {
+      console.log('Message sent:', response.data);
+      setMessages([{inputValue: inputValue, selectedButtons: selectedButtons}, ...messages]);
+    })
+    .catch((error) => {
+      console.error('Error sending message:', error);
+    });
+
   };
 
   const handleDeleteMessage = (index: number) => {
