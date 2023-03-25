@@ -1,5 +1,6 @@
 package edu.ssafy.punpun.security.jwt;
 
+import edu.ssafy.punpun.entity.Child;
 import edu.ssafy.punpun.entity.Member;
 import edu.ssafy.punpun.repository.ChildRepository;
 import edu.ssafy.punpun.repository.MemberRepository;
@@ -17,6 +18,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
@@ -47,8 +49,7 @@ public class JwtTokenProvider {
 //    }
 
     public String createTokenMember(Member member) {
-        log.info("[createToken] 토큰 생성 시작");
-        Date now = new Date();
+        log.info("[createToken] Member 토큰 생성 시작");
         Claims claims = Jwts.claims()
                 .setSubject(member.getName());
         claims.put("id", member.getId());
@@ -56,6 +57,7 @@ public class JwtTokenProvider {
         claims.put("email", member.getEmail());
         claims.put("role", member.getRole());
 
+        Date now = new Date();
         String token = Jwts.builder()
                 .setClaims(claims)
                 .setIssuedAt(now)
@@ -63,19 +65,61 @@ public class JwtTokenProvider {
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
 
-        log.info("[createToken] 토큰 생성 완료");
+        log.info("[createToken] Member 토큰 생성 완료");
         return token;
     }
 
-    public String resolveToken(HttpServletRequest request) {
-        log.info("[resolveToken] HTTP 헤더에서 Token 값 추출");
-        return request.getHeader("Authorization");
+    public String createTokenChild(Child child) {
+        log.info("[createToken] Child 토큰 생성 시작");
+        Claims claims = Jwts.claims()
+                .setSubject(child.getName());
+        claims.put("id", child.getId());
+        claims.put("name", child.getName());
+        claims.put("email", child.getEmail());
+        claims.put("role", child.getRole());
+
+        Date now = new Date();
+        String token = Jwts.builder()
+                .setClaims(claims)
+                .setIssuer("punpun")
+                .setIssuedAt(now)
+                .setExpiration(new Date(now.getTime() + accessTokenExpiredTime))
+                .signWith(SignatureAlgorithm.HS256, secretKey)
+                .compact();
+
+        log.info("[createToken] Child 토큰 생성 완료");
+        return token;
+    }
+
+    public String createRefreshToken() {
+        Date now = new Date();
+        String token = Jwts.builder()
+                .setIssuer("punpun")
+                .setIssuedAt(now)
+                .setExpiration(new Date(now.getTime() + refreshTokenExpiredTime))
+                .signWith(SignatureAlgorithm.HS256, secretKey)
+                .compact();
+        return token;
+    }
+
+    public String resolveToken(HttpServletRequest request, String tokenType) {
+//        log.info("[resolveToken] HTTP 헤더에서 Token 값 추출");
+        log.info("[resolveToken] Cookie에서 Token 값 추출");
+        Cookie[] cookies = request.getCookies();
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals(tokenType)) {
+                return cookie.getValue();
+            }
+        }
+//        return request.getHeader("Authorization");
+        return null;
     }
 
     public boolean validateToken(String token) {
         log.info("[validateToken] 토큰 유효 체크 시작");
         try {
             Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+            log.info("[validateToken] 토큰 유효 체크 완료");
 
             return !claims.getBody().getExpiration().before(new Date());
         } catch (Exception e) {
@@ -97,6 +141,5 @@ public class JwtTokenProvider {
         String info = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().get("email").toString();
         log.info("[getUserEmail] 토큰 기반 회원 구별 정보 추출 완료, info : {}", info);
         return info;
-
     }
 }

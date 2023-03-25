@@ -23,13 +23,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String token = jwtTokenProvider.resolveToken(request);
-        log.info("[doFilterInternal] token 값 추출 완료. token : {}", token);
+        String accessToken = jwtTokenProvider.resolveToken(request, "accessToken");
+        String refreshToken = jwtTokenProvider.resolveToken(request, "refreshToken");
+        log.info("[doFilterInternal] token 값 추출 완료. token : {}", accessToken);
 
         log.info("[doFilterInternal] token 값 유효성 체크 시작");
-        if (token != null && jwtTokenProvider.validateToken(token)) {
-            System.out.println(token);
-            Authentication authentication = jwtTokenProvider.getAuthentication(token);
+        if (accessToken != null && jwtTokenProvider.validateToken(accessToken)) {
+            Authentication authentication = jwtTokenProvider.getAuthentication(accessToken);
             SecurityContextHolder.getContext().setAuthentication(authentication);
             log.info("[doFilterInternal] token 값 유효성 체크 완료");
         }

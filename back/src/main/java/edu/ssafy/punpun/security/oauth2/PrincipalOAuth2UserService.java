@@ -79,9 +79,10 @@ public class PrincipalOAuth2UserService extends DefaultOAuth2UserService impleme
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         String userEmail = username;
+
         Optional<Member> member = memberRepository.findByEmail(userEmail);
-        Optional<Child> child = childRepository.findByEmail(userEmail);
         Member resultMember = null;
+        Optional<Child> child = childRepository.findByEmail(userEmail);
         Child resultChild = null;
 
         if (child.isEmpty()) {

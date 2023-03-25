@@ -26,10 +26,13 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     private final ChildRepository childRepository;
     private final JwtTokenProvider jwtTokenProvider;
 
+    private final int cookieExpiredTime = 1000 * 60 * 60 * 24;  // 24시간, 1일
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
 
         String accessToken = "";
+        String refreshToken = "";
 
         if (authentication.getPrincipal() instanceof PrincipalMemberDetail) {
             // 학생이 아닌 경우,멤버인 경우
@@ -39,28 +42,36 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
             Optional<Member> optionalMember = memberRepository.findByEmail(principalMemberDetail.getPassword());
             Member resultMember = null;
             resultMember = optionalMember.get();
-            String token = jwtTokenProvider.createTokenMember(resultMember);
-
-            Cookie cookie = new Cookie("accessToken", token);
-            cookie.setPath("/");
-//            cookie.setMaxAge();
-//            cookie.setSecure(true);
-//            cookie.setHttpOnly(true);
-
-            response.addCookie(cookie);
-            response.setStatus(302);
-//            response.setHeader("Location", "/");
-//            response.setHeader("Set-Cookie", cookie.toString());
-            response.setHeader("Location", "/kakaoLogin?token=" + token);
-
+            accessToken = jwtTokenProvider.createTokenMember(resultMember);
         } else {
             // 학생인 경우
+
             PrincipalChildDetail principalChildDetail = (PrincipalChildDetail) authentication.getPrincipal();
             // getPassword에 Email 저장되어있음
             Optional<Child> optionalChild = childRepository.findByEmail(principalChildDetail.getPassword());
             Child resultChild = null;
             resultChild = optionalChild.get();
+            accessToken = jwtTokenProvider.createTokenChild(resultChild);
         }
+
+        refreshToken = jwtTokenProvider.createRefreshToken();
+
+        Cookie cookieAccess = new Cookie("accessToken", accessToken);
+        cookieAccess.setPath("/");
+        cookieAccess.setMaxAge(cookieExpiredTime);
+
+        Cookie cookieRefresh = new Cookie("refreshToken", refreshToken);
+        cookieRefresh.setPath("/");
+        cookieRefresh.setMaxAge(cookieExpiredTime);
+        cookieRefresh.setSecure(true);
+        cookieRefresh.setHttpOnly(true);
+
+        response.addCookie(cookieAccess);
+        response.addCookie(cookieRefresh);
+        response.setStatus(302);
+//            response.setHeader("Location", "/");
+//            response.setHeader("Set-Cookie", cookie.toString());
+        response.setHeader("Location", "/kakaoLogin?token=" + accessToken);
     }
 
 }

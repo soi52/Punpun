@@ -1,5 +1,7 @@
 package edu.ssafy.punpun.security;
 
+import edu.ssafy.punpun.security.exception.CustomAccessDeniedHandler;
+import edu.ssafy.punpun.security.exception.CustomAuthenticationEntryPoint;
 import edu.ssafy.punpun.security.jwt.JwtAuthenticationFilter;
 import edu.ssafy.punpun.security.jwt.JwtTokenProvider;
 import edu.ssafy.punpun.security.oauth2.OAuth2AuthenticationSuccessHandler;
@@ -26,16 +28,19 @@ public class SecurityConfig {
     private final PrincipalOAuth2UserService principalOAuth2UserService;
     private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
     private final JwtTokenProvider jwtTokenProvider;
+    private final CustomAccessDeniedHandler customAccessDeniedHandler;
+    private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
 
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         //임시로 처리
         http.authorizeRequests()
-                .antMatchers("/**")
-                .permitAll();
+//                .antMatchers("/stores/test")
+//                .authenticated()
+                .antMatchers("/api/login**").permitAll()
 //                .and()
 //                //설정된 값 이외의 나머지 URL, 인증된 사용자, 로그인한 사용자만 볼 수 있음;
-//                .anyRequest().authenticated();
+                .anyRequest().authenticated();
 
         http.formLogin().disable();
         http.httpBasic().disable();
@@ -58,6 +63,13 @@ public class SecurityConfig {
                 .successHandler(oAuth2AuthenticationSuccessHandler);
 //                .failureHandler();
 
+        http.exceptionHandling()
+                // 권한을 확인하는 과정에서 통과하지 못하는 예외가 발생할 경우 예외를 전달
+                .accessDeniedHandler(customAccessDeniedHandler)
+                // 인증 과정에서 예외가 발생할 경우 예외 전달
+                .authenticationEntryPoint(customAuthenticationEntryPoint);
+
+        // JWT Filter 추가
         JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(principalOAuth2UserService, jwtTokenProvider);
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
