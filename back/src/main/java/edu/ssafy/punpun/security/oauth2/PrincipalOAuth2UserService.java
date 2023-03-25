@@ -9,21 +9,25 @@ import edu.ssafy.punpun.entity.Member;
 import edu.ssafy.punpun.entity.enumurate.UserRole;
 import edu.ssafy.punpun.repository.ChildRepository;
 import edu.ssafy.punpun.repository.MemberRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 
+@Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class PrincipalOAuth2UserService extends DefaultOAuth2UserService {
+public class PrincipalOAuth2UserService extends DefaultOAuth2UserService implements UserDetailsService {
 
     private final MemberRepository memberRepository;
     private final ChildRepository childRepository;
@@ -72,7 +76,9 @@ public class PrincipalOAuth2UserService extends DefaultOAuth2UserService {
 //                attributes.getNameAttributeKey());
     }
 
-    public UserDetails loadUserByUserEmail(String userEmail) throws UsernameNotFoundException {
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        String userEmail = username;
         Optional<Member> member = memberRepository.findByEmail(userEmail);
         Optional<Child> child = childRepository.findByEmail(userEmail);
         Member resultMember = null;
@@ -94,5 +100,4 @@ public class PrincipalOAuth2UserService extends DefaultOAuth2UserService {
             return new PrincipalChildDetail(resultChild);
         }
     }
-
 }

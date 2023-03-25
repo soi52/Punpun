@@ -86,7 +86,8 @@ public class JwtTokenProvider {
 
     public Authentication getAuthentication(String token) {
         log.info("[getAuthentication] 토큰 인증 정보 조회 시작");
-        UserDetails userDetails = principalOAuth2UserService.loadUserByUserEmail(token);
+        String userEmail = this.getUserEmail(token);
+        UserDetails userDetails = principalOAuth2UserService.loadUserByUsername(userEmail);
         log.info("[getAuthentication] 토큰 인증 정보 조회 완료, UserDetail userEmail: {}", userDetails.getPassword());
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
