@@ -17,6 +17,10 @@ public class PrincipalMemberDetail implements OAuth2User, UserDetails {
     private Member member;
     private OAuth2Attributes oAuthAttributes;
 
+    public PrincipalMemberDetail(Member member) {
+        this.member = member;
+    }
+
     public PrincipalMemberDetail(Member member, OAuth2Attributes oAuthAttributes) {
         this.member = member;
         this.oAuthAttributes = oAuthAttributes;

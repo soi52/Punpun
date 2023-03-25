@@ -9,6 +9,8 @@ import edu.ssafy.punpun.entity.Member;
 import edu.ssafy.punpun.entity.enumurate.UserRole;
 import edu.ssafy.punpun.repository.ChildRepository;
 import edu.ssafy.punpun.repository.MemberRepository;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
@@ -68,6 +70,29 @@ public class PrincipalOAuth2UserService extends DefaultOAuth2UserService {
 //        return new DefaultOAuth2User(Collections.singleton(new SimpleGrantedAuthority(user.getRole().toString())),
 //                attributes.getAttributes(),
 //                attributes.getNameAttributeKey());
+    }
+
+    public UserDetails loadUserByUserEmail(String userEmail) throws UsernameNotFoundException {
+        Optional<Member> member = memberRepository.findByEmail(userEmail);
+        Optional<Child> child = childRepository.findByEmail(userEmail);
+        Member resultMember = null;
+        Child resultChild = null;
+
+        if (child.isEmpty()) {
+            // 학생이 아닌 경우
+            if (member.isEmpty()) {
+                // 학생도 멤버도 아닌 경우
+                throw new UsernameNotFoundException("user not Found");
+            } else {
+                // 멤버인 경우
+                resultMember = member.get();
+                return new PrincipalMemberDetail(resultMember);
+            }
+        } else {
+            // 학생인 경우
+            resultChild = child.get();
+            return new PrincipalChildDetail(resultChild);
+        }
     }
 
 }

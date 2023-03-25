@@ -1,7 +1,9 @@
 package edu.ssafy.punpun.security.oauth2;
 
 import edu.ssafy.punpun.entity.Child;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,6 +19,10 @@ public class PrincipalChildDetail implements OAuth2User, UserDetails {
     private Child child;
     private OAuth2Attributes oAuthAttributes;
 
+    public PrincipalChildDetail(Child child) {
+        this.child = child;
+    }
+
     public PrincipalChildDetail(Child child, OAuth2Attributes oAuthAttributes) {
         this.child = child;
         this.oAuthAttributes = oAuthAttributes;
@@ -27,7 +33,7 @@ public class PrincipalChildDetail implements OAuth2User, UserDetails {
      */
     @Override
     public String getPassword() {
-        return "";
+        return child.getEmail();
     }
     /**
      * UserDetails 구현

@@ -3,6 +3,7 @@ package edu.ssafy.punpun.security.jwt;
 import edu.ssafy.punpun.entity.Member;
 import edu.ssafy.punpun.repository.ChildRepository;
 import edu.ssafy.punpun.repository.MemberRepository;
+import edu.ssafy.punpun.security.oauth2.PrincipalOAuth2UserService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -10,7 +11,9 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -33,6 +36,8 @@ public class JwtTokenProvider {
 
     private final MemberRepository memberRepository;
     private final ChildRepository childRepository;
+
+    private final PrincipalOAuth2UserService principalOAuth2UserService;
 
 //    @PostConstruct
 //    protected void init() {
@@ -62,13 +67,6 @@ public class JwtTokenProvider {
         return token;
     }
 
-//    public Authentication getAuthentication(String token) {
-//        log.info("[getAuthentication] 토큰 인증 정보 조회 시작");
-//        Optional<Member> member = memberRepository.
-//        log.info("[getAuthentication] 토큰 기반 회원 구별 정보 추출 완료, info : {}", info);
-//        return info;
-//    }
-
     public String resolveToken(HttpServletRequest request) {
         log.info("[resolveToken] HTTP 헤더에서 Token 값 추출");
         return request.getHeader("Authorization");
@@ -84,5 +82,20 @@ public class JwtTokenProvider {
             log.info("[validateToken] 토큰 유효 체크 예외 발생");
             return false;
         }
+    }
+
+    public Authentication getAuthentication(String token) {
+        log.info("[getAuthentication] 토큰 인증 정보 조회 시작");
+        UserDetails userDetails = principalOAuth2UserService.loadUserByUserEmail(token);
+        log.info("[getAuthentication] 토큰 인증 정보 조회 완료, UserDetail userEmail: {}", userDetails.getPassword());
+        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
+    }
+
+    public String getUserEmail(String token) {
+        log.info("[getUserEmail] 토큰 기반 회원 구별 정보 추출");
+        String info = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().get("email").toString();
+        log.info("[getUserEmail] 토큰 기반 회원 구별 정보 추출 완료, info : {}", info);
+        return info;
+
     }
 }
