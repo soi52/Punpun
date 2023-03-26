@@ -26,8 +26,7 @@ public class StoreController {
 
     @GetMapping("/{storeId}")
     @ResponseStatus(code = HttpStatus.OK)
-    public StoreDetailDTO getStoreDetail(@AuthenticationPrincipal Member member, @PathVariable("storeId") Long id) {
-        System.out.println(member.getEmail());
+    public StoreDetailDTO getStoreDetail(@PathVariable("storeId") Long id) {
         Store store = storeService.findById(id);
         List<MenuDTO> menuDTOList = new ArrayList<>();
         List<Menu> menuList = menuService.findByStore(store);
