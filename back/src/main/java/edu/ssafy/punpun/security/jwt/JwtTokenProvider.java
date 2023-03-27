@@ -106,17 +106,19 @@ public class JwtTokenProvider {
 //        log.info("[resolveToken] HTTP 헤더에서 Token 값 추출");
         log.info("[resolveToken] Cookie에서 Token 값 추출");
         Cookie[] cookies = request.getCookies();
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals(tokenType)) {
-                return cookie.getValue();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals(tokenType)) {
+                    return cookie.getValue();
+                }
             }
         }
-//        return request.getHeader("Authorization");
-        return null;
+        return request.getHeader("Authorization");
     }
 
     public boolean validateToken(String token) {
         log.info("[validateToken] 토큰 유효 체크 시작");
+
         try {
             Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
             log.info("[validateToken] 토큰 유효 체크 완료");
@@ -124,6 +126,7 @@ public class JwtTokenProvider {
             return !claims.getBody().getExpiration().before(new Date());
         } catch (Exception e) {
             log.info("[validateToken] 토큰 유효 체크 예외 발생");
+            // log.info(e.getMessage());
             return false;
         }
     }
