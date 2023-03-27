@@ -3,7 +3,7 @@ import kakaoLoginIMG from '../../resources/images/kakao_login.png';
 
 const Login = (props: any) => {
   const kakaoLogin =
-    'http://192.168.100.94:8888/api/oauth2/authorization/kakao';
+    'https://j8d109.p.ssafy.io/api/oauth2/authorization/kakao';
 
   return (
     <div>
