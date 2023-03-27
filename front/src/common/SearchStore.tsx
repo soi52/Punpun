@@ -6,17 +6,32 @@ import Map from './Map';
 import SearchStoreList from './SearchStoreList';
 import useGeolocation from './useGeolocation';
 
+type SearchStoreProps = {
+  message: string;
+};
+
 const Wrapper = styled.div`
   display: flex;
-  flex-direction: row;
+  align-items: center;
+  flex-direction: column;
   max-height: 100%; /* 컴포넌트의 최대 높이 */
+`;
+
+const ContentDiv = styled.div`
+  display: flex;
+`;
+
+const SearchStoreDiv = styled.div`
+  font-size: 32px;
+  font-weight: bold;
+  padding-top: 20px;
 `;
 
 const MapDiv = styled.div`
   margin: auto;
 `;
 
-const SearchStore = () => {
+const SearchStore = ({ message }: SearchStoreProps) => {
   const stores = useRecoilValue(storeState);
 
   const location = useGeolocation();
@@ -26,10 +41,14 @@ const SearchStore = () => {
 
   return (
     <Wrapper>
-      <MapDiv>
-        <Map latitude={latitude} longitude={longitude} stores={stores} />
-      </MapDiv>
-      <SearchStoreList stores={stores} />
+      <SearchStoreDiv>가게 찾기</SearchStoreDiv>
+      <h3>{message}</h3>
+      <ContentDiv>
+        <MapDiv>
+          <Map latitude={latitude} longitude={longitude} stores={stores} />
+        </MapDiv>
+        <SearchStoreList stores={stores} />
+      </ContentDiv>
     </Wrapper>
   );
 };

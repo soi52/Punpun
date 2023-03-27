@@ -1,7 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import MainComponent from '../../components/ui/MainComponent';
 import SearchStore from '../../common/SearchStore';
+
+const ComponentStyle = styled.div`
+  padding: 15px 30px 0px 30px;
+  display: flex;
+  justify-content: center;
+`;
 
 const SearchStoreDiv = styled.div`
   font-size: 32px;
@@ -25,7 +32,7 @@ const BoxDiv = styled.div`
   flex-direction: column;
   background-color: white;
   border-radius: 1rem;
-  width: 70%;
+  width: 68rem;
   margin: 30px;
   height: 70%;
   // box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
@@ -34,15 +41,9 @@ const BoxDiv = styled.div`
 
 function ChMainPage() {
   return (
-    <ComponentDiv>
-      <BoxDiv>
-        <SearchStoreDiv>가게 찾기</SearchStoreDiv>
-        <h3>내 근처의 식당을 찾아보세요.</h3>
-        <ContentDiv>
-          <SearchStore />
-        </ContentDiv>
-      </BoxDiv>
-    </ComponentDiv>
+    <ComponentStyle>
+      <MainComponent width={68}>{<SearchStore message={'내 근처의 식당을 찾아보세요.'}/>}</MainComponent>
+    </ComponentStyle>
   );
 }
 export default ChMainPage;
