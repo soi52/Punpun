@@ -17,8 +17,9 @@ import OwBookingPage from './pages/owner/OwBookingPage';
 import OwManagePage from './pages/owner/OwManagePage';
 import StoreRegisterPage from './pages/owner/StoreRegisterPage';
 
-import DebuggingPage from './pages/owner/DebuggingPage';
+import useScrollFadeInPage from './pages/owner/useScrollFadeInPage';
 import Layout from './components/layout/Layout';
+import MyComponent from './pages/owner/Mycomponent';
 
 function Router() {
   return (
@@ -50,7 +51,7 @@ function Router() {
           <Route path="/store/:storeId" element={<ChStoreDetailPage />} />
 
           {/* 디버깅페이지 */}
-          <Route path="/debug" element={<DebuggingPage />} />
+          <Route path="/debug" element={<MyComponent />} />
         </Route>
       </Routes>
     </BrowserRouter>
