@@ -41,14 +41,15 @@ public class SecurityConfig {
 //                .permitAll()
 //                .antMatchers("/api/**").authenticated()
                 .antMatchers(
-                        "/h2-console",
+                        "/h2-console**",
+                        "/h2-console/**",
                         "/v2/api-docs/",
                         "/webjars/",
                         "/swagger-resources/",
                         "/swagger-ui/",
                         "/swagger/",
                         "/sign-api/exception/",
-                        "/user/**").permitAll()
+                        "/users/**").permitAll()
 //                .and()
 //                //설정된 값 이외의 나머지 URL, 인증된 사용자, 로그인한 사용자만 볼 수 있음;
                 .anyRequest().authenticated();
