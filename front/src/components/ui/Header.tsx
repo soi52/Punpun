@@ -85,9 +85,9 @@ function Header(props: HeaderProps) {
   const [selectedItem, setSelectedItem] = useState('후원자');
   const [drop, setDrop] = useState(false);
   const [storeDrop, setStoreDrop] = useState(false);
-  const navigate = useNavigate();
   const [selectedStore, setSelectedStore] = useState<OwStore | null>(null);
   const [owStore, setOWStore] = useRecoilState(owStoreState);
+  const navigate = useNavigate();
 
   const selectStore = (store: OwStore | null) => {
     setSelectedStore(store);
