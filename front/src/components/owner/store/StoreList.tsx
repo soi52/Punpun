@@ -1,43 +1,40 @@
 import styled from 'styled-components';
 import StoreListItem from './StoreListItem';
 import { useState } from 'react';
+import { useRecoilState } from 'recoil';
+import { OwStore, owStoreState } from '../../../store/atoms';
+import { useNavigate } from 'react-router';
 
 const Wrapper = styled.div`
   padding: 20px;
 `;
 
-interface Store {
-  id: number;
-  storeName: string;
-  storeText: string;
-}
+const RegisterButton = styled.button`
+  font-size: 15px;
+  color: #fff;
+  background-color: #5d5a88;
+  border: none;
+  border-radius: 15px;
+  padding: 8px 16px;
+  cursor: pointer;
+  margin-left: auto;
+`;
 
 interface StoreItemProps {
-  stores: Store[];
+  stores: OwStore[];
   onDelete: (id: number) => void;
 }
 
 function StoreList() {
-  const [stores, setStores] = useState<Store[]>([
-    {
-      id: 1,
-      storeName: '스테이크 팩토리1',
-      storeText: '항상 후원',
-    },
-    {
-      id: 2,
-      storeName: '스테이크 팩토리2',
-      storeText: '항상 후원',
-    },
-    {
-      id: 3,
-      storeName: '스테이크 팩토리3',
-      storeText: '항상 후원',
-    },
-  ]);
+  const [stores, setStores] = useRecoilState(owStoreState);
+  const navigate = useNavigate();
+
+  const toStoreRegister = () => {
+    navigate('/owregister');
+  };
 
   const handleDelete = (id: number) => {
-    const updatedStores = stores.filter((store: Store) => store.id !== id);
+    const updatedStores = stores.filter((store: OwStore) => store.id !== id);
     setStores(updatedStores);
   };
 
@@ -45,6 +42,7 @@ function StoreList() {
     <Wrapper>
       <h1>가맹점 목록</h1>
       <StoreListItem stores={stores} onDelete={handleDelete} />
+      <RegisterButton onClick={toStoreRegister}>가맹점 등록</RegisterButton>
     </Wrapper>
   );
 }
