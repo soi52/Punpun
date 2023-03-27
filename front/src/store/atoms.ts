@@ -422,3 +422,8 @@ export const storeState = atom<Store[]>({
     },
   ],
 });
+
+export const tokenState = atom<String>({
+  key: 'tokenState',
+  default: ''
+});
