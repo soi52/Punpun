@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import kakaoLoginIMG from '../../resources/images/kakao_login.png';
 
-const Login = (props: any) => {
+const Login = () => {
   const kakaoLogin =
-    'https://j8d109.p.ssafy.io/api/oauth2/authorization/kakao';
+    'http://172.30.1.43:8888/api/oauth2/authorization/kakao';
 
   return (
     <div>
