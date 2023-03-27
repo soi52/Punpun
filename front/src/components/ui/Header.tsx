@@ -171,7 +171,7 @@ function Header(props: HeaderProps) {
           <NavUl>
             <NavLi onClick={toOwStore}>가게운영</NavLi>
             <NavLi onClick={() => setStoreDrop(!storeDrop)}>
-              가게선택
+              {selectedStore?.storeName ?? '가게 선택'}
               {storeDrop && (
                 <StoreDropdown show={storeDrop}>
                   {owStore.map((store) => (
