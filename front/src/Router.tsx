@@ -20,6 +20,7 @@ import StoreRegisterPage from './pages/owner/StoreRegisterPage';
 import useScrollFadeInPage from './pages/owner/useScrollFadeInPage';
 import Layout from './components/layout/Layout';
 import MyComponent from './pages/owner/Mycomponent';
+import FullPage from './pages/fullpage/Fullpage';
 
 import TestPage from './pages/Test';
 
@@ -27,6 +28,7 @@ function Router() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/full" element={<FullPage />} />
         <Route path="/" element={<Layout />}>
           {/* 후원페이지 */}
           <Route path="/" element={<MainPage />} />
