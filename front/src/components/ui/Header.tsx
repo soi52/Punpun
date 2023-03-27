@@ -13,7 +13,6 @@ import {
 } from '../../store/atoms';
 import logoIMG from '../../resources/images/128.png';
 
-
 const Wrapper = styled.div`
   position: absolute;
   display: flex;

@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import ReactPageScroller, { SectionContainer } from 'react-page-scroller';
 import { Pager } from 'react-bootstrap';
-import './Fullpage.css';
 
 import FirstComponent from './FirstComponent';
 import SecondComponent from './SecondComponent';
 import ThirdComponent from './ThirdComponent';
 import FourthComponent from './FourthComponent';
 import FifthComponent from './FifthComponent';
+import useScrollFadeInPage from '../owner/useScrollFadeInPage';
 
 type FullPageState = {
   currentPage: number | null;
@@ -24,21 +24,21 @@ const FullPage = () => {
     console.log(number);
   };
 
-  const getPagesNumbers = () => {
-    const pageNumbers = [];
+  // const getPagesNumbers = () => {
+  //   const pageNumbers = [];
 
-    for (let i = 1; i <= 5; i++) {
-      pageNumbers.push(
-        <Pager.Item key={i} eventKey={i - 1} onSelect={handlePageChange}>
-          {i}
-        </Pager.Item>
-      );
-    }
+  //   for (let i = 1; i <= 5; i++) {
+  //     pageNumbers.push(
+  //       <Pager.Item key={i} eventKey={i - 1} onSelect={handlePageChange}>
+  //         {i}
+  //       </Pager.Item>
+  //     );
+  //   }
 
-    return [...pageNumbers];
-  };
+  //   return [...pageNumbers];
+  // };
 
-  const pagesNumbers = getPagesNumbers();
+  // const pagesNumbers = getPagesNumbers();
 
   return (
     <>
@@ -55,9 +55,6 @@ const FullPage = () => {
         <FourthComponent />
         <FifthComponent />
       </ReactPageScroller>
-      {/* <Pager className="pagination-additional-class" bsSize="large">
-        {pagesNumbers}
-      </Pager> */}
     </>
   );
 };
