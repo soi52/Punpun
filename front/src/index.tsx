@@ -5,7 +5,7 @@ import App from './App';
 import axios from 'axios';
 import './index.css';
 
-axios.defaults.baseURL = "https://j8d109.p.ssafy.io/";
+// axios.defaults.baseURL = "https://j8d109.p.ssafy.io/";
 axios.defaults.withCredentials = true;
 
 const root = ReactDOM.createRoot(

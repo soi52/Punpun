@@ -1,4 +1,13 @@
 import { atom } from 'recoil';
+import { recoilPersist } from 'recoil-persist';
+
+const { persistAtom } = recoilPersist();
+
+export const LoginState = atom<boolean>({
+  key: 'LoginState',
+  default: false,
+  effects_UNSTABLE: [persistAtom],
+});
 
 // 오류 방지용 예시 - 다크 모드 예시
 export const isDarkAtom = atom({
