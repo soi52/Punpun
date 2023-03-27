@@ -21,6 +21,8 @@ import useScrollFadeInPage from './pages/owner/useScrollFadeInPage';
 import Layout from './components/layout/Layout';
 import MyComponent from './pages/owner/Mycomponent';
 
+import TestPage from './pages/Test';
+
 function Router() {
   return (
     <BrowserRouter>
@@ -52,6 +54,7 @@ function Router() {
 
           {/* 디버깅페이지 */}
           <Route path="/debug" element={<MyComponent />} />
+          <Route path="/test" element={<TestPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
