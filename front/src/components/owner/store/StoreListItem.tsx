@@ -35,11 +35,11 @@ const StoreText = styled.p`
 `;
 
 const DeleteButton = styled.button`
-  font-size: 16px;
+  font-size: 14px;
   color: #fff;
-  background-color: #f44336;
+  background-color: #5d5a88;
   border: none;
-  border-radius: 4px;
+  border-radius: 15px;
   padding: 8px 16px;
   cursor: pointer;
 `;
@@ -49,7 +49,7 @@ function StoreListItem({ stores, onDelete }: StoreItemProps) {
     onDelete(id);
   };
 
-  const reviewList = stores.map((store) => (
+  const StoreList = stores.map((store) => (
     <StoreInfo key={store.id}>
       <div>
         <StoreName>{store.storeName}</StoreName>
@@ -59,12 +59,12 @@ function StoreListItem({ stores, onDelete }: StoreItemProps) {
         </StoreText>
       </div>
       <div>
-        <button onClick={() => handleDelete(store.id)}>삭제</button>
+        <DeleteButton onClick={() => handleDelete(store.id)}>삭제</DeleteButton>
       </div>
     </StoreInfo>
   ));
 
-  return <>{reviewList}</>;
+  return <>{StoreList}</>;
 }
 
 export default StoreListItem;
