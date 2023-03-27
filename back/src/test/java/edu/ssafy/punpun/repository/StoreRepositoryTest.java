@@ -25,6 +25,7 @@ public class StoreRepositoryTest {
     @Test
     @DisplayName("test for Store Detail Dto")
     void findById() {
+
         // given
         Image image1 = Image.builder()
                 .name("가게 1 이미지")
