@@ -1,43 +1,23 @@
 import styled from 'styled-components';
 import StoreListItem from './StoreListItem';
 import { useState } from 'react';
+import { useRecoilState } from 'recoil';
+import { OwStore, owStoreState } from '../../../store/atoms';
 
 const Wrapper = styled.div`
   padding: 20px;
 `;
 
-interface Store {
-  id: number;
-  storeName: string;
-  storeText: string;
-}
-
 interface StoreItemProps {
-  stores: Store[];
+  stores: OwStore[];
   onDelete: (id: number) => void;
 }
 
 function StoreList() {
-  const [stores, setStores] = useState<Store[]>([
-    {
-      id: 1,
-      storeName: '스테이크 팩토리1',
-      storeText: '항상 후원',
-    },
-    {
-      id: 2,
-      storeName: '스테이크 팩토리2',
-      storeText: '항상 후원',
-    },
-    {
-      id: 3,
-      storeName: '스테이크 팩토리3',
-      storeText: '항상 후원',
-    },
-  ]);
+  const [stores, setStores] = useRecoilState(owStoreState);
 
   const handleDelete = (id: number) => {
-    const updatedStores = stores.filter((store: Store) => store.id !== id);
+    const updatedStores = stores.filter((store: OwStore) => store.id !== id);
     setStores(updatedStores);
   };
 

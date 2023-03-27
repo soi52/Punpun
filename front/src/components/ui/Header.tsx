@@ -8,6 +8,7 @@ import {
   isChildState,
   isOwnerState,
   isSupporterState,
+  OwStore,
   owStoreState,
 } from '../../store/atoms';
 
@@ -85,35 +86,15 @@ function Header(props: HeaderProps) {
   const [drop, setDrop] = useState(false);
   const [storeDrop, setStoreDrop] = useState(false);
   const navigate = useNavigate();
-  const [selectedStore, setSelectedStore] = useState<Store | null>(null);
+  const [selectedStore, setSelectedStore] = useState<OwStore | null>(null);
+  const [owStore, setOWStore] = useRecoilState(owStoreState);
 
-  interface Store {
-    id: number;
-    storeName: string;
-    storeText: string;
-  }
-
-  const stores: Store[] = [
-    {
-      id: 1,
-      storeName: '스테이크 팩토리1',
-      storeText: '항상 후원',
-    },
-    {
-      id: 2,
-      storeName: '스테이크 팩토리2',
-      storeText: '항상 후원',
-    },
-    {
-      id: 3,
-      storeName: '스테이크 팩토리3',
-      storeText: '항상 후원',
-    },
-  ];
-
-  const selectStore = (store: Store) => {
+  const selectStore = (store: OwStore | null) => {
     setSelectedStore(store);
     setStoreDrop(true);
+    if (!store) {
+      navigate('/stores');
+    }
   };
 
   const toLogin = () => {
@@ -143,6 +124,9 @@ function Header(props: HeaderProps) {
   };
   const toOwBooking = () => {
     navigate('/owstore/:store_id/booking');
+  };
+  const toOwStoreList = () => {
+    navigate('/owstorelist');
   };
 
   const onLogout = () => {
@@ -190,7 +174,7 @@ function Header(props: HeaderProps) {
               가게선택
               {storeDrop && (
                 <StoreDropdown show={storeDrop}>
-                  {stores.map((store) => (
+                  {owStore.map((store) => (
                     <StoreDropdownItem
                       key={store.id}
                       onClick={() => selectStore(store)}
@@ -198,6 +182,9 @@ function Header(props: HeaderProps) {
                       {store.storeName}
                     </StoreDropdownItem>
                   ))}
+                  <StoreDropdownItem onClick={() => navigate('/owstorelist')}>
+                    전체 가게 관리
+                  </StoreDropdownItem>
                 </StoreDropdown>
               )}
             </NavLi>

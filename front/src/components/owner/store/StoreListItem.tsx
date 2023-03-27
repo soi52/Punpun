@@ -49,7 +49,7 @@ function StoreListItem({ stores, onDelete }: StoreItemProps) {
     onDelete(id);
   };
 
-  const reviewList = stores.map((store) => (
+  const StoreList = stores.map((store) => (
     <StoreInfo key={store.id}>
       <div>
         <StoreName>{store.storeName}</StoreName>
@@ -64,7 +64,7 @@ function StoreListItem({ stores, onDelete }: StoreItemProps) {
     </StoreInfo>
   ));
 
-  return <>{reviewList}</>;
+  return <>{StoreList}</>;
 }
 
 export default StoreListItem;
