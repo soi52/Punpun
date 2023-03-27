@@ -35,9 +35,21 @@ public class SecurityConfig {
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         //임시로 처리
         http.authorizeRequests()
-//                .antMatchers("/stores/test")
-//                .authenticated()
-                .antMatchers("/api/login**").permitAll()
+//                .antMatchers(HttpMethod.GET,
+//                        "/api/h2-console/**", "/api/swagger-ui/**",
+//                        "/api/user/oauth2/kakao", "/api/user/**", "/api/user**", "/api/user/oauth2/**")
+//                .permitAll()
+//                .antMatchers("/api/**").authenticated()
+                .antMatchers(
+                        "/h2-console**",
+                        "/h2-console/**",
+                        "/v2/api-docs/",
+                        "/webjars/",
+                        "/swagger-resources/",
+                        "/swagger-ui/",
+                        "/swagger/",
+                        "/sign-api/exception/",
+                        "/users/**").permitAll()
 //                .and()
 //                //설정된 값 이외의 나머지 URL, 인증된 사용자, 로그인한 사용자만 볼 수 있음;
                 .anyRequest().authenticated();
@@ -81,7 +93,7 @@ public class SecurityConfig {
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         // setAllowedOrigins : A list of origins for which cross-origin requests are allowed.
-        corsConfiguration.setAllowedOrigins(List.of("http://localhost:3000", "https://j8d109.p.ssafy.io/"));
+        corsConfiguration.setAllowedOrigins(List.of("http://localhost:3000", "https://j8d109.p.ssafy.io/", "http://192.168.100.94:8888"));
         // setAllowedMethods : Set the HTTP methods to allow
         corsConfiguration.setAllowedMethods(List.of("GET", "POST", "FETCH", "PUT", "DELETE"));
         // setAllowedHeaders : Set the list of headers that a pre-flight request can list as allowed for use during an actual request.
