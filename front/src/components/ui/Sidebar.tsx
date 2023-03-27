@@ -14,7 +14,7 @@ const SidebarStyle = styled.div`
   height: 38rem;
   // box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   float: left;
-  margin-right: 20px;
+  margin-right: 1.3rem;
   display: block;
   flex-direction: column;
   align-items: center;
