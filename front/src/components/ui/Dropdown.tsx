@@ -5,14 +5,20 @@ const List = styled.ul`
   list-style: none;
   padding: 0;
   margin: 0;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+  z-index: 1;
+  padding: 10px;
 `;
 
 const Item = styled.li`
-  padding: 5px 10px;
   cursor: pointer;
+  list-style: none;
 
   &:hover {
-    background-color: #f2f2f2;
+    color: white;
+    background-color: #3f51b5;
   }
 `;
 

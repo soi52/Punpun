@@ -47,8 +47,8 @@ const NavLi = styled.li`
 const StoreDropdown = styled.ul<{ show: boolean }>`
   display: none;
   position: absolute;
-  left: 75%;
-  transform: translateX(-50%);
+  //left: 75%;
+  //transform: translateX(-50%);
   width: 200px;
   background-color: white;
   border-radius: 5px;
