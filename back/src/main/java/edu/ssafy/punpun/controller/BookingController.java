@@ -8,6 +8,8 @@ import edu.ssafy.punpun.dto.response.BookingStoreResponseDTO;
 import edu.ssafy.punpun.entity.Child;
 import edu.ssafy.punpun.entity.Member;
 import edu.ssafy.punpun.entity.enumurate.ReservationState;
+import edu.ssafy.punpun.security.oauth2.PrincipalChildDetail;
+import edu.ssafy.punpun.security.oauth2.PrincipalMemberDetail;
 import edu.ssafy.punpun.service.BookingService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,30 +29,36 @@ public class BookingController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void booking(@AuthenticationPrincipal Child child, @RequestBody BookingRequestDTO requestDTO) {
-        bookingService.reservation(child, requestDTO.getMenuId(), requestDTO.getReservationTime());
+    public void booking(@AuthenticationPrincipal PrincipalChildDetail childDetail, @RequestBody BookingRequestDTO requestDTO) {
+        LocalDateTime reservationTime = LocalDateTime.parse(requestDTO.getReservationTime());
+        bookingService.reservation(childDetail.getChild(), requestDTO.getMenuId(), reservationTime);
     }
 
     @GetMapping("/child")
     @ResponseStatus(HttpStatus.OK)
-    public Page<BookingChildResponseDTO> getBookings(@AuthenticationPrincipal Child child,
+    public Page<BookingChildResponseDTO> getBookings(@AuthenticationPrincipal PrincipalChildDetail childDetail,
                                                      @RequestParam(required = false, defaultValue = "0") int page,
-                                                     @RequestParam(required = false) LocalDateTime localDateTime) {
-        return bookingService.findReservations(child, localDateTime, page)
+                                                     @RequestParam(required = false) String localDateTime) {
+        Child child = childDetail.getChild();
+        LocalDateTime date = LocalDateTime.parse(localDateTime);
+        return bookingService.findReservations(child, date, page)
                 .map(BookingChildResponseDTO::entityToDto);
     }
 
     @GetMapping("/store/{storeId}")
     @ResponseStatus(HttpStatus.OK)
-    public Page<BookingStoreResponseDTO> getBookingsByStore(@AuthenticationPrincipal Member member,
+    public Page<BookingStoreResponseDTO> getBookingsByStore(@AuthenticationPrincipal PrincipalMemberDetail memberDetail,
                                                             @PathVariable("storeId") long storeId,
                                                             @RequestParam(required = false, defaultValue = "0") int page,
-                                                            @RequestParam(required = false) LocalDateTime reservationDate,
+                                                            @RequestParam(required = false) String reservationDate,
                                                             @RequestParam(required = false) ReservationState state) {
+        Member member = memberDetail.getMember();
+        LocalDateTime date = LocalDateTime.parse(reservationDate);
+
         BookingStoreSearchParamDTO params = BookingStoreSearchParamDTO.builder()
                 .storeId(storeId)
                 .page(page)
-                .reservationDate(reservationDate)
+                .reservationDate(date)
                 .state(state)
                 .build();
         return bookingService.findAllByStore(member, params)
@@ -59,8 +67,9 @@ public class BookingController {
 
     @PostMapping("/today")
     @ResponseStatus(HttpStatus.CREATED)
-    public void processReservation(@AuthenticationPrincipal Member owner,
+    public void processReservation(@AuthenticationPrincipal PrincipalMemberDetail memberDetail,
                                    @RequestBody BookingProcessRequestDTO bookingProcess) {
+        Member owner = memberDetail.getMember();
         bookingService.reservationApprove(bookingProcess.getBookingId(), owner, bookingProcess.getApproveState());
     }
 }
