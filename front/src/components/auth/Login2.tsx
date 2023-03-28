@@ -1,12 +1,10 @@
 import Swal from 'sweetalert2';
 import axios from 'axios';
-import { useNavigate } from 'react-router';
 import { getCookie } from './Cookie';
 
 const JWT_EXPIRY_TIME = 24 * 3600 * 1000; // 만료 시간 (24시간 밀리 초로 표현)
 
 export function onLogin() {
-  const navigate = useNavigate();
 
   const accessToken = getCookie('accessToken');
 
