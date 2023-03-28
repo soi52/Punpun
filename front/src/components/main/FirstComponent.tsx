@@ -1,6 +1,6 @@
 import styled from 'styled-components';
+import useScrollFadeInPage from '../../pages/owner/useScrollFadeInPage';
 import first from '../../resources/images/1.jpg';
-import useScrollFadeInPage from '../owner/useScrollFadeInPage';
 
 const ComponentStyle = styled.div`
   background: url(${first}) no-repeat center;

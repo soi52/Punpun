@@ -21,9 +21,9 @@ const Wrapper = styled.div`
   top: 0;
   width: 100%;
   height: 80px;
-  border-bottom: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #dcdde1;
+  // border-bottom: solid;
+  // border-bottom-width: 2px;
+  // border-bottom-color: #dcdde1;
   justify-content: space-between;
   z-index: 5;
 `;
