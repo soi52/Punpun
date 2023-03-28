@@ -4,21 +4,20 @@ import API from '../store/API';
 const Test_copy = () => {
   const apiClient = API();
 
-  useEffect(() => {
+  const apiRequest = () => {
     apiClient
       .get('api/stores/test')
-      .then((response) => {
+      .then((response: any) => {
         console.log(response.data);
       })
-      .catch((error) => {
+      .catch((error: any) => {
         console.error(error);
       });
-  }, []);
+  };
 
   return (
     <>
-      {/* <button onClick={apiRequest}>버튼</button> */}
-      <div>테스트페이지</div>
+      <button onClick={apiRequest}>버튼</button>
     </>
   );
 };

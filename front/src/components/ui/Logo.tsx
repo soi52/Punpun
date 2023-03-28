@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import logoIMG from '../../resources/images/handshake.png';
+import logoIMG from '../../resources/images/logo.png';
 // import logoIMG from '../../resources/images/thumb.png';
 
 // const LogoTitle = styled.h3`
@@ -17,9 +17,12 @@ const LogoImg = styled.div`
 function Logo() {
   return (
     <>
-      {/* <LogoTitle>PUNPUN</LogoTitle> */}
-      {/* <LogoImg /> */}
-      <img src={logoIMG} alt="logo" width="80px" />
+      <img
+        src={logoIMG}
+        alt="logo"
+        width="100px"
+        style={{ marginLeft: '10px' }}
+      />
     </>
   );
 }

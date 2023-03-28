@@ -21,6 +21,7 @@ import Layout from './components/layout/Layout';
 import FullPage from './pages/Fullpage';
 
 import TestPage from './pages/Test';
+import Test_copy from './pages/Test_copy';
 
 function Router() {
   return (
@@ -54,6 +55,7 @@ function Router() {
 
           {/* 디버깅페이지 */}
           <Route path="/test" element={<TestPage />} />
+          <Route path="/test1" element={<Test_copy />} />
         </Route>
       </Routes>
     </BrowserRouter>
