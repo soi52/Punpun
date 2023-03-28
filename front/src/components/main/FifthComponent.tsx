@@ -1,19 +1,23 @@
 import React from 'react';
 import styled from 'styled-components';
-import useScrollFadeInPage from '../../pages/owner/useScrollFadeInPage';
 import fifth from '../../resources/images/5.jpg';
+import icon4 from '../../resources/images/4remove.png';
+import icon5 from '../../resources/images/5remove.png';
+import thumb from '../../resources/images/thumb.png';
+import { Fade } from 'react-awesome-reveal';
 
 const ComponentStyle = styled.div`
-  background: url(${fifth}) no-repeat center;
-  background-size: cover;
-  background-color: purple;
+  // background: url(${fifth}) no-repeat center;
+  // background-size: cover;
+  background-color: #efcee1;
   height: 100%;
   width: 100%;
   display: flex;
 `;
-const TitleStyle = styled.h2`
+const ContentStyle = styled.div`
   margin: auto;
   text-align: center;
+  display: flex;
 `;
 const ThumbImage = styled.img`
   background: url(${fifth}) no-repeat center
@@ -22,16 +26,27 @@ const ThumbImage = styled.img`
 `;
 
 function FifthComponent() {
-  const { ref: ref4, style: style4 } = useScrollFadeInPage({
-    direction: 'up',
-    duration: 1,
-    delay: 0,
-  });
   return (
     <ComponentStyle>
-      <div ref={ref4} style={{ ...style4, opacity: 1 }}>
-        <TitleStyle>Fifth Component</TitleStyle>
-      </div>
+      <ContentStyle>
+        <Fade duration={2000} direction={'up'}>
+          <img
+            src={icon4}
+            alt="icon4"
+            style={{ width: '100%', height: '100%' }}
+          />
+          <img
+            src={icon5}
+            alt="icon5"
+            style={{ width: '100%', height: '100%' }}
+          />
+          <img
+            src={thumb}
+            alt="thumb"
+            style={{ width: '100%', height: '100%' }}
+          />
+        </Fade>
+      </ContentStyle>
     </ComponentStyle>
   );
 }

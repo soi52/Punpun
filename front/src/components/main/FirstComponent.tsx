@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import useScrollFadeInPage from '../../pages/owner/useScrollFadeInPage';
 import first from '../../resources/images/1.jpg';
+import { Fade } from 'react-awesome-reveal';
 
 const ComponentStyle = styled.div`
   background: url(${first}) no-repeat center;
@@ -17,16 +17,11 @@ const TitleStyle = styled.h2`
 `;
 
 function FirstComponent() {
-  const { ref: ref1, style: style1 } = useScrollFadeInPage({
-    direction: 'up',
-    duration: 1,
-    delay: 0,
-  });
   return (
     <ComponentStyle>
-      <div ref={ref1} style={{ ...style1, opacity: 1 }}>
+      <Fade duration={1000}>
         <TitleStyle>First Component</TitleStyle>
-      </div>
+      </Fade>
     </ComponentStyle>
   );
 }
