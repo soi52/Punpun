@@ -50,7 +50,7 @@ const Oauth = () => {
 
     if (decodedToken.role === 'SUPPORTER') {
       if (!decodedToken.number) {
-        navigate('/AddNumberPage');
+        navigate('/addnumber');
       } else {
         navigate('/')
       }
