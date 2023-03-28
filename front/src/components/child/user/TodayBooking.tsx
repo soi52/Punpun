@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { useEffect } from 'react';
 import styled from 'styled-components';
+import Cookies from 'js-cookie';
+import API from '../../../store/API';
 
 type Booking = {
   reservationId: number;
@@ -66,14 +68,18 @@ const HrDiv = styled.hr`
 `;
 
 const TodayBooking = () => {
+  const apiClient = API();
+
   const today = new Date();
   const formattedDate = `${today.getFullYear()}-${
     today.getMonth() + 1
   }-${today.getDate()}`;
+  
+  const accessToken = Cookies.get('access_token');
 
   useEffect(() => {
-    axios
-      .get(`/bookings/child?date=${formattedDate}`)
+    apiClient
+      .get(`api/bookings/child?date=${formattedDate}`)
       .then((response) => {
         console.log("Today's bookings:", response.data);
         const bookings = response.data.map((booking: Booking) => ({

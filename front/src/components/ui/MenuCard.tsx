@@ -2,10 +2,15 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { DetailedHTMLProps, ImgHTMLAttributes } from 'react';
 
+// 로컬용 테스트 import (나중에 삭제)
+import Cookies from 'js-cookie';
+import jwt_decode from 'jwt-decode';
+
 import styled from 'styled-components';
 import BookingModal from '../child/storedetail/BookingModal';
 import { useRecoilValue } from 'recoil';
 import { isChildState } from '../../store/atoms';
+import { useRecoilState } from 'recoil';
 
 interface MenuCardProps extends Menu {
   key: number;
@@ -68,10 +73,21 @@ const HeartButtonWrapper = styled.div`
   cursor: pointer;
 `;
 
+
+
 const MenuCard: React.FC<MenuCardProps> = ({ id, title, image, price, quantity, addToCart }) => {
   const [showModal, setShowModal] = useState(false);
-  const isChild = useRecoilValue(isChildState);
+  // const isChild = useRecoilValue(isChildState);
+  const [isChild, setIsChild] = useRecoilState(isChildState);
   const [liked, setLiked] = useState(false);
+
+  
+  // 로컬용 테스트 코드
+  const accessToken:any = Cookies.get('accessToken')
+  const decodedToken: any = jwt_decode(accessToken);
+  if ((decodedToken.role) === 'CHILD') {
+    setIsChild(true)
+  }
 
   const onClose = () => {
     setShowModal(false);
