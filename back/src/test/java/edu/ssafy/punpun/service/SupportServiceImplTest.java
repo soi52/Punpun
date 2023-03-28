@@ -6,6 +6,7 @@ import edu.ssafy.punpun.entity.Store;
 import edu.ssafy.punpun.entity.Support;
 import edu.ssafy.punpun.entity.enumurate.SupportState;
 import edu.ssafy.punpun.entity.enumurate.SupportType;
+import edu.ssafy.punpun.repository.MemberRepository;
 import edu.ssafy.punpun.repository.SupportRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -19,6 +20,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.mockito.Mockito.*;
 
@@ -26,6 +28,8 @@ import static org.mockito.Mockito.*;
 public class SupportServiceImplTest {
     @Mock
     private SupportRepository supportRepository;
+    @Mock
+    private MemberRepository memberRepository;
 
     @InjectMocks
     private SupportServiceImpl supportService;
@@ -132,6 +136,7 @@ public class SupportServiceImplTest {
         List<Long> menuCount=new LinkedList<>(Arrays.asList(2L, 1L));
         Long usePoint = 23000L;
 
+        doReturn(Optional.of(member)).when(memberRepository).findById(member.getId());
         supportService.saveSupport(supports, menuId, menuCount, member, usePoint);
 
         Assertions.assertEquals(member.getRemainPoint(), 2000L);
