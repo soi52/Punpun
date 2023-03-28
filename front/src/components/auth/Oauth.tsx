@@ -57,8 +57,10 @@ const Oauth = () => {
 
     const decodedToken:any = jwt_decode(accessToken)
     console.log(decodedToken);
+    console.log(decodedToken.role);
+    console.log(decodedToken['role']);
 
-    if (decodedToken.role === 'SUPPORTER') {
+    if (decodedToken['role'] === 'SUPPORTER') {
       if (!decodedToken.number) {
         navigate('/addnumber');
       } else {
