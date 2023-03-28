@@ -1,13 +1,11 @@
 package edu.ssafy.punpun.controller;
 
 import edu.ssafy.punpun.dto.request.StoreUpdateDTO;
-import edu.ssafy.punpun.dto.response.MenuDTO;
-import edu.ssafy.punpun.dto.response.StoreDetailDTO;
-import edu.ssafy.punpun.dto.response.StoreInfoDTO;
-import edu.ssafy.punpun.entity.Member;
-import edu.ssafy.punpun.entity.Menu;
-import edu.ssafy.punpun.entity.Store;
+import edu.ssafy.punpun.dto.response.*;
+import edu.ssafy.punpun.entity.*;
+import edu.ssafy.punpun.security.oauth2.PrincipalChildDetail;
 import edu.ssafy.punpun.security.oauth2.PrincipalMemberDetail;
+import edu.ssafy.punpun.service.FavoriteMenuService;
 import edu.ssafy.punpun.service.MenuService;
 import edu.ssafy.punpun.service.StoreService;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +26,7 @@ import java.util.List;
 public class StoreController {
     private final StoreService storeService;
     private final MenuService menuService;
+    private final FavoriteMenuService favoriteMenuService;
 
     @GetMapping("/test")
     @ResponseStatus(code = HttpStatus.OK)
@@ -62,6 +62,33 @@ public class StoreController {
 
         return storeInfoDTOList;
     }
+
+//    @GetMapping("/child/{storeId}")
+//    @ResponseStatus(code = HttpStatus.OK)
+//    public StoreDetailChildDTO getStoreDetailChild(@AuthenticationPrincipal PrincipalChildDetail principalChildDetail, @PathVariable("storeId") Long storeId) {
+//        Child child = principalChildDetail.getChild();
+//
+//        Store store = storeService.findById(storeId);
+//        List<Menu> menuList = menuService.findByStore(store);
+//        List<FavoriteMenu> favoriteMenuList = favoriteMenuService.findByChildAndMenu_Store(child, store);
+//        List<FavoriteMenuDTO> favoriteMenuDTOList = new ArrayList<>();
+//
+//        if (favoriteMenuList.isEmpty()) {
+//            for (Menu menu : menuList) {
+//                for (FavoriteMenu favoriteMenu : favoriteMenuList) {
+//                    if (menu.getId() == favoriteMenu.getMenu().getId())
+//                        favoriteMenuDTOList.add(new FavoriteMenuDTO(menu, true));
+//                }
+//
+//            }
+//        } else {
+//            for (Menu menu : menuList) {
+//                favoriteMenuDTOList.add(new FavoriteMenuDTO(menu, false));
+//            }
+//        }
+//        return new StoreDetailChildDTO(store, favoriteMenuDTOList);
+//    }
+
 
     @GetMapping("/list")
     @ResponseStatus(code = HttpStatus.OK)
