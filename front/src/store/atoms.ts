@@ -15,6 +15,11 @@ export const refreshTokenState = atom({
   default: Cookies.get('refresh_token') || '',
 });
 
+export const isLoggedInState = atom({
+  key: 'isLoggedInState',
+  default: Cookies.get('access_token') !== undefined,
+});
+
 // export const userInfoState = atom({
 //   key: 'userInfoState',
 //   default: JSON.parse(localStorage.getItem('USER')) || {},

@@ -6,12 +6,12 @@ import Dropdown from './Dropdown';
 import { useRecoilState } from 'recoil';
 import {
   isChildState,
+  isLoggedInState,
   isOwnerState,
   isSupporterState,
   OwStore,
   owStoreState,
 } from '../../store/atoms';
-import logoIMG from '../../resources/images/128.png';
 
 const Wrapper = styled.div`
   position: absolute;
@@ -79,7 +79,7 @@ type HeaderProps = {
 };
 
 function Header(props: HeaderProps) {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLoggedInState);
   const [isChild, setIsChild] = useRecoilState(isChildState);
   const [isOwner, setIsOwner] = useRecoilState(isOwnerState);
   const [isSupporter, setIsSupporter] = useRecoilState(isSupporterState);
