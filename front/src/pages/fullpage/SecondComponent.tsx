@@ -10,9 +10,14 @@ const ComponentStyle = styled.div`
   display: flex;
 `;
 
-const TitleStyle = styled.h2`
-  margin: auto;
+const ContentStyle = styled.h3`
+  margin-top: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
+  height: 100%;
 `;
 
 function SecondComponent() {
@@ -24,7 +29,7 @@ function SecondComponent() {
   return (
     <ComponentStyle>
       <div ref={ref2} style={{ ...style2, opacity: 1 }}>
-        <div>
+        <ContentStyle>
           <div>우리나라에 결식 아동이 아직 있나요?</div>
           <div>
             현재, 전국 결식 우려 아동은
@@ -35,7 +40,7 @@ function SecondComponent() {
             더 이상 아이들이 먹는 것에 눈치보지 않도록 많은 후원 부탁드립니다.
           </div>
           <button>후원하기</button>
-        </div>
+        </ContentStyle>
       </div>
     </ComponentStyle>
   );
