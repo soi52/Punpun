@@ -19,6 +19,7 @@ const TestCopy = () => {
   return (
     <>
       <button onClick={apiRequest}>버튼</button>
+      <div>테스트페이지</div>
     </>
   );
 };
