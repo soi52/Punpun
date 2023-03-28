@@ -62,8 +62,12 @@ public class SupportController {
                     .menu(Menu.builder().id(supportRequestDTO.getMenuId().get(i)).build())
                     .store(Store.builder().id(supportRequestDTO.getStoreId()).build())
                     .build();
-            if(type == 0) support.setSupportType(SupportType.SUPPORT);
-            else support.setSupportType(SupportType.SHARE);
+            if(type == 0) {
+                support.setSupportType(SupportType.SUPPORT);
+            }
+            else{
+                support.setSupportType(SupportType.SHARE);
+            }
 
             supports.add(support);
         }
