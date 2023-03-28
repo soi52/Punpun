@@ -28,6 +28,7 @@ public class StoreController {
 
     @GetMapping("/test")
     @ResponseStatus(code = HttpStatus.OK)
+//    public ResponseEntity<?> testforAuthenticationPrincipal(@ApiIgnore @AuthenticationPrincipal PrincipalMemberDetail principalMemberDetail) {
     public ResponseEntity<?> testforAuthenticationPrincipal(@AuthenticationPrincipal PrincipalMemberDetail principalMemberDetail) {
         Member member = principalMemberDetail.getMember();
         return new ResponseEntity<String>(member.getEmail(), HttpStatus.OK);
