@@ -13,6 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
     @GetMapping("/oauth2/kakao")
     public void kakaoLogin() {
-        log.info("[antMatchers Test] : user/oauth2/kakao Login controller / token 없이 접근 확인용");
+        log.debug("[antMatchers Test] : user/oauth2/kakao Login controller / token 없이 접근 확인용");
     }
 }

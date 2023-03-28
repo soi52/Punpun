@@ -16,6 +16,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.Cookie;
@@ -32,7 +33,7 @@ import java.util.Optional;
 public class JwtTokenProvider {
 
     @Value("${jwt.secret}")
-    private final String secretKey = "secretKey";
+    private String secretKey = "secretKey";
     private final Long accessTokenExpiredTime = 1000L * 60 * 60;    // 1시간
     private final Long refreshTokenExpiredTime = 1000L * 60 * 60 * 24;  // 24시간, 1일
 
@@ -41,15 +42,15 @@ public class JwtTokenProvider {
 
     private final PrincipalOAuth2UserService principalOAuth2UserService;
 
-//    @PostConstruct
-//    protected void init() {
-//        log.debug("[jwt init] JWTTokenprovider 내 secretKey 초기화 시작");
-//        secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes(StandardCharsets.UTF_8));
-//        log.debug("[jwt init] JWTTokenprovider 내 secretKey 초기화 완료");
-//    }
+    @PostConstruct
+    protected void init() {
+        log.debug("[jwt init] JWTTokenprovider 내 secretKey 초기화 시작");
+        secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes(StandardCharsets.UTF_8));
+        log.debug("[jwt init] JWTTokenprovider 내 secretKey 초기화 완료");
+    }
 
     public String createTokenMember(Member member) {
-        log.info("[createToken] Member 토큰 생성 시작");
+        log.debug("[createToken] Member 토큰 생성 시작");
         Claims claims = Jwts.claims()
                 .setSubject(member.getName());
         claims.put("id", member.getId());
@@ -65,12 +66,12 @@ public class JwtTokenProvider {
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
 
-        log.info("[createToken] Member 토큰 생성 완료");
+        log.debug("[createToken] Member 토큰 생성 완료");
         return token;
     }
 
     public String createTokenChild(Child child) {
-        log.info("[createToken] Child 토큰 생성 시작");
+        log.debug("[createToken] Child 토큰 생성 시작");
         Claims claims = Jwts.claims()
                 .setSubject(child.getName());
         claims.put("id", child.getId());
@@ -87,7 +88,7 @@ public class JwtTokenProvider {
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
 
-        log.info("[createToken] Child 토큰 생성 완료");
+        log.debug("[createToken] Child 토큰 생성 완료");
         return token;
     }
 
@@ -104,7 +105,7 @@ public class JwtTokenProvider {
 
     public String resolveToken(HttpServletRequest request, String tokenType) {
 //        log.info("[resolveToken] HTTP 헤더에서 Token 값 추출");
-        log.info("[resolveToken] Cookie에서 Token 값 추출");
+        log.debug("[resolveToken] Cookie에서 Token 값 추출");
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
@@ -113,36 +114,42 @@ public class JwtTokenProvider {
                 }
             }
         }
-        return request.getHeader("Authorization");
+        // Http 요청의 헤더를 파싱해 Bearer 토큰을 리턴함
+        String bearerToken = request.getHeader("Authorization");
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
+            return bearerToken.substring(7);
+        } else {
+            return request.getHeader("Authorization");
+        }
     }
 
     public boolean validateToken(String token) {
-        log.info("[validateToken] 토큰 유효 체크 시작");
+        log.debug("[validateToken] 토큰 유효 체크 시작");
 
         try {
             Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
-            log.info("[validateToken] 토큰 유효 체크 완료");
+            log.debug("[validateToken] 토큰 유효 체크 완료");
 
             return !claims.getBody().getExpiration().before(new Date());
         } catch (Exception e) {
-            log.info("[validateToken] 토큰 유효 체크 예외 발생");
+            log.debug("[validateToken] 토큰 유효 체크 예외 발생");
             // log.info(e.getMessage());
             return false;
         }
     }
 
     public Authentication getAuthentication(String token) {
-        log.info("[getAuthentication] 토큰 인증 정보 조회 시작");
+        log.debug("[getAuthentication] 토큰 인증 정보 조회 시작");
         String userEmail = this.getUserEmail(token);
         UserDetails userDetails = principalOAuth2UserService.loadUserByUsername(userEmail);
-        log.info("[getAuthentication] 토큰 인증 정보 조회 완료, UserDetail userEmail: {}", userDetails.getPassword());
+        log.debug("[getAuthentication] 토큰 인증 정보 조회 완료, UserDetail userEmail: {}", userDetails.getPassword());
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
     public String getUserEmail(String token) {
-        log.info("[getUserEmail] 토큰 기반 회원 구별 정보 추출");
+        log.debug("[getUserEmail] 토큰 기반 회원 구별 정보 추출");
         String info = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().get("email").toString();
-        log.info("[getUserEmail] 토큰 기반 회원 구별 정보 추출 완료, info : {}", info);
+        log.debug("[getUserEmail] 토큰 기반 회원 구별 정보 추출 완료, info : {}", info);
         return info;
     }
 }
