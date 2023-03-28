@@ -99,6 +99,7 @@ function API(): AxiosInstance {
     // Listen for changes to access_token cookie and update the state accordingly
     const handleAccessTokenChange = () => {
       setAccessToken(Cookies.get('access_token'));
+      console.log('안녕');
     };
     window.addEventListener('access_token_change', handleAccessTokenChange);
     return () => {
