@@ -17,7 +17,7 @@ public class StoreInfoDTO {
     private String storeImageName;
     private String storeImage;
 
-    public StoreInfoDTO(Store store, List<MenuDTO> menuList) {
+    public StoreInfoDTO(Store store) {
         this.storeId = store.getId();
         this.storeName = store.getName();
         this.storeInfo = store.getInfo();

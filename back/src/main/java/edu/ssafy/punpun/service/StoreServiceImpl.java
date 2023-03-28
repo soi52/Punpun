@@ -1,5 +1,6 @@
 package edu.ssafy.punpun.service;
 
+import edu.ssafy.punpun.entity.Member;
 import edu.ssafy.punpun.entity.Store;
 import edu.ssafy.punpun.repository.StoreRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,5 +22,10 @@ public class StoreServiceImpl implements StoreService {
     @Override
     public List<Store> findByNameContaining(String name) {
         return storeRepository.findByNameContaining(name);
+    }
+
+    @Override
+    public List<Store> findByOwner(Member member) {
+        return storeRepository.findByOwner(member);
     }
 }

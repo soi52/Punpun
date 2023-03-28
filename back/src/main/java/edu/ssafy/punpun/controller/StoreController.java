@@ -2,6 +2,7 @@ package edu.ssafy.punpun.controller;
 
 import edu.ssafy.punpun.dto.response.MenuDTO;
 import edu.ssafy.punpun.dto.response.StoreDetailDTO;
+import edu.ssafy.punpun.dto.response.StoreInfoDTO;
 import edu.ssafy.punpun.entity.Member;
 import edu.ssafy.punpun.entity.Menu;
 import edu.ssafy.punpun.entity.Store;
@@ -47,4 +48,23 @@ public class StoreController {
 
         return new StoreDetailDTO(store, menuDTOList);
     }
+
+    @GetMapping("/list")
+    @ResponseStatus(code = HttpStatus.OK)
+    public List<StoreInfoDTO> getStoreList(@AuthenticationPrincipal PrincipalMemberDetail principalMemberDetail) {
+        Member member = principalMemberDetail.getMember();
+
+        List<Store> storeList = storeService.findByOwner(member);
+        List<StoreInfoDTO> storeInfoDTOList = new ArrayList<>();
+
+        for (Store store : storeList) {
+            storeInfoDTOList.add(new StoreInfoDTO(store));
+        }
+
+        return storeInfoDTOList;
+    }
+
+//    @GetMapping("/search")
+//    @ResponseStatus(code = HttpStatus.OK)
+//    public
 }
