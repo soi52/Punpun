@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import first from '../../resources/images/1.jpg';
+import first from '../../resources/images/main1.jpg';
 import { Fade } from 'react-awesome-reveal';
 
 const ComponentStyle = styled.div`
