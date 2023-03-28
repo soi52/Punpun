@@ -7,17 +7,17 @@ const { persistAtom } = recoilPersist();
 // token
 export const accessTokenState = atom({
   key: 'accessTokenState',
-  default: Cookies.get('access_token') || '',
+  default: Cookies.get('accessToken') || '',
 });
 
 export const refreshTokenState = atom({
   key: 'refreshTokenState',
-  default: Cookies.get('refresh_token') || '',
+  default: Cookies.get('refreshToken') || '',
 });
 
 export const isLoggedInState = atom({
   key: 'isLoggedInState',
-  default: Cookies.get('access_token') !== undefined,
+  default: Cookies.get('accessToken') !== undefined,
 });
 
 // export const userInfoState = atom({

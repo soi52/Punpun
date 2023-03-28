@@ -9,7 +9,6 @@ const TestCopy = () => {
       .get('api/stores/test')
       .then((response: any) => {
         console.log(response.data);
-        console.log('성공');
       })
       .catch((error: any) => {
         console.error(error);
