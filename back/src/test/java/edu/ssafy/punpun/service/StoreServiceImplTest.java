@@ -68,6 +68,59 @@ public class StoreServiceImplTest {
     }
 
     @Test
+    @DisplayName("Service: test for find Store by Name Containing")
+    void findByNameContaining() {
+        // given
+        Store store1 = Store.builder()
+                .name("store1")
+                .openState(true)
+                .info("가게 1 테스트용")
+                .openTime("24시 운영")
+                .address("상북도 구미시 옥계북로 27, 삼구트리니엔 108동 1층 108호 (옥계동)")
+                .lon(128.41848477014165)
+                .lat(36.13917919014956)
+                .alwaysShare(true)
+                .build();
+        Store store2 = Store.builder()
+                .name("store2")
+                .openState(true)
+                .info("가게 2 테스트용")
+                .openTime("24시 운영")
+                .address("경북 구미시 인동중앙로1길 12")
+                .lon(128.419606)
+                .lat(36.107291)
+                .alwaysShare(true)
+                .build();
+
+        doReturn(List.of(store1, store2)).when(storeRepository).findByNameContaining("store");
+
+        // when
+        List<Store> results = storeService.findByNameContaining("store");
+        //then 1
+        Assertions.assertThat(results.get(0).getId()).isEqualTo(store1.getId());
+        Assertions.assertThat(results.get(0).getName()).isEqualTo(store1.getName());
+        Assertions.assertThat(results.get(0).getOpenTime()).isEqualTo(store1.getOpenTime());
+        Assertions.assertThat(results.get(0).getInfo()).isEqualTo(store1.getInfo());
+        Assertions.assertThat(results.get(0).getAddress()).isEqualTo(store1.getAddress());
+        Assertions.assertThat(results.get(0).getLon()).isEqualTo(store1.getLon());
+        Assertions.assertThat(results.get(0).getLat()).isEqualTo(store1.getLat());
+        Assertions.assertThat(results.get(0).getImage()).isEqualTo(store1.getImage());
+        Assertions.assertThat(results.get(0).isAlwaysShare()).isEqualTo(store1.isAlwaysShare());
+        Assertions.assertThat(results.get(0).isOpenState()).isEqualTo(store1.isOpenState());
+        //then 2
+        Assertions.assertThat(results.get(1).getId()).isEqualTo(store2.getId());
+        Assertions.assertThat(results.get(1).getName()).isEqualTo(store2.getName());
+        Assertions.assertThat(results.get(1).getOpenTime()).isEqualTo(store2.getOpenTime());
+        Assertions.assertThat(results.get(1).getInfo()).isEqualTo(store2.getInfo());
+        Assertions.assertThat(results.get(1).getAddress()).isEqualTo(store2.getAddress());
+        Assertions.assertThat(results.get(1).getLon()).isEqualTo(store2.getLon());
+        Assertions.assertThat(results.get(1).getLat()).isEqualTo(store2.getLat());
+        Assertions.assertThat(results.get(1).getImage()).isEqualTo(store2.getImage());
+        Assertions.assertThat(results.get(1).isAlwaysShare()).isEqualTo(store2.isAlwaysShare());
+        Assertions.assertThat(results.get(1).isOpenState()).isEqualTo(store2.isOpenState());
+    }
+
+    @Test
     @DisplayName("Service: test for find Store by Owner")
     void findByOwner() {
         // given

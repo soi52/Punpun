@@ -65,7 +65,7 @@ public class StoreRepositoryTest {
     }
 
     @Test
-    @DisplayName("Repository: test for find Store Name")
+    @DisplayName("Repository: test for find Store Name Containing")
     void findByNameContaining() {
         // given
         Image image1 = Image.builder()

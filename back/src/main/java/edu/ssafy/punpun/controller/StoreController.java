@@ -49,6 +49,19 @@ public class StoreController {
         return new StoreDetailDTO(store, menuDTOList);
     }
 
+    @GetMapping("/search")
+    @ResponseStatus(code = HttpStatus.OK)
+    public List<StoreInfoDTO> getStroeSearchName(@RequestParam(name = "name", required = false) String storeName) {
+        List<Store> storeList = storeService.findByNameContaining(storeName);
+        List<StoreInfoDTO> storeInfoDTOList = new ArrayList<>();
+
+        for (Store store : storeList) {
+            storeInfoDTOList.add(new StoreInfoDTO(store));
+        }
+
+        return storeInfoDTOList;
+    }
+
     @GetMapping("/list")
     @ResponseStatus(code = HttpStatus.OK)
     public List<StoreInfoDTO> getStoreList(@AuthenticationPrincipal PrincipalMemberDetail principalMemberDetail) {
@@ -64,7 +77,4 @@ public class StoreController {
         return storeInfoDTOList;
     }
 
-//    @GetMapping("/search")
-//    @ResponseStatus(code = HttpStatus.OK)
-//    public
 }
