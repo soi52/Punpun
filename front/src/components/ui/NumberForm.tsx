@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Swal from 'sweetalert2';
 import styled from 'styled-components';
 import Cookies from 'js-cookie';
 
@@ -59,25 +60,14 @@ const NumberForm = () => {
     // 유효성 검사
     if (phoneNumber.length !== 11) {
       setError('전화번호는 11자리로 입력해야 합니다.');
-      alert('전화번호는 11자리로 입력해야 합니다.');
+      Swal.fire({
+        icon: 'warning',
+        text: '전화번호는 11자리로 입력해야 합니다.',
+        width: '30%',
+      })
+    //   alert('전화번호는 11자리로 입력해야 합니다.');
       return;
-    }
-
-    // const blank_pattern = /^\s+|\s+$/g;
-    // if (phoneNumber.replace(blank_pattern, '') === '') {
-    //   console.log('공백만 입력됨!');
-    //   setError('공백은 사용할 수 없습니다.');
-    //   alert(error);
-    //   return;
-    // }
-
-    // const blank_pattern2 = /[\s]/g;
-    // if (blank_pattern2.test(phoneNumber) === true) {
-    //   console.log('공백이 포함됨!');
-    //   setError('공백은 사용할 수 없습니다.');
-    //   alert(error);
-    //   return;
-    // }
+    };
 
     const accessToken = Cookies.get('access_token');
     if (phoneNumber) {
