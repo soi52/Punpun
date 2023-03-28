@@ -1,23 +1,23 @@
 import { useEffect } from 'react';
-// import API from '../store/API';
+import API from '../store/API';
 
 const TestCopy = () => {
-  // const apiClient = API();
+  const apiClient = API();
 
-  // const apiRequest = () => {
-  //   apiClient
-  //     .get('api/stores/test')
-  //     .then((response: any) => {
-  //       console.log(response.data);
-  //     })
-  //     .catch((error: any) => {
-  //       console.error(error);
-  //     });
-  // };
+  const apiRequest = () => {
+    apiClient
+      .get('api/stores/test')
+      .then((response: any) => {
+        console.log(response.data);
+      })
+      .catch((error: any) => {
+        console.error(error);
+      });
+  };
 
   return (
     <>
-      {/* <button onClick={apiRequest}>버튼</button> */}
+      <button onClick={apiRequest}>버튼</button>
       <div>테스트페이지</div>
     </>
   );
