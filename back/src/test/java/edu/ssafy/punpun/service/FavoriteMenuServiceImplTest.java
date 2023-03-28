@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("좋아하는 메뉴 서비스")
@@ -75,4 +76,56 @@ public class FavoriteMenuServiceImplTest {
         Assertions.assertThat(results.get(1).getMenu()).isEqualTo(favoriteMenu2.getMenu());
         Assertions.assertThat(results.get(1).getChild()).isEqualTo(favoriteMenu2.getChild());
     }
+
+//    @Test
+//    @DisplayName("Service: test for favoriteMenu Insert")
+//    void insertFavoriteMenu() {
+//        // given
+//        Child child1 = Child.builder()
+//                .name("childTest")
+//                .email("childTest@email.com")
+//                .role(UserRole.CHILD)
+//                .phoneNumber("01000000000")
+//                .build();
+//        Menu menu1 = Menu.builder()
+//                .name("menu1")
+//                .price(1000L)
+//                .build();
+//
+//        //when
+//        favoriteMenuService.insertFavoriteMenu(child1.getId(), menu1.getId());
+//
+//        Optional<FavoriteMenu> favoriteMenuList = favoriteMenuRepository.findByChildAndMenu(child1,menu1);
+//
+//        //then
+//        Assertions.assertThat(favoriteMenuList.get().getChild()).isEqualTo(child1);
+//        Assertions.assertThat(favoriteMenuList.get().getMenu()).isEqualTo(menu1);
+//    }
+//
+//    @Test
+//    @DisplayName("Service: test for favoriteMenu Delete")
+//    void deleteFavoriteMenu() {
+//        // given
+//        Child child1 = Child.builder()
+//                .name("childTest")
+//                .email("childTest@email.com")
+//                .role(UserRole.CHILD)
+//                .phoneNumber("01000000000")
+//                .build();
+//        Menu menu1 = Menu.builder()
+//                .name("menu1")
+//                .price(1000L)
+//                .build();
+//        FavoriteMenu favoriteMenu1 = FavoriteMenu.builder()
+//                .child(child1)
+//                .menu(menu1)
+//                .build();
+//
+//        //when
+//        favoriteMenuService.deleteFavoriteMenu(child1.getId(), menu1.getId());
+//
+//        //then
+//        verify(favoriteMenuRepository).delete(favoriteMenu1);
+//    }
+
 }

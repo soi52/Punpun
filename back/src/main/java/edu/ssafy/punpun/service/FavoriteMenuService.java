@@ -10,4 +10,8 @@ public interface FavoriteMenuService {
     List<FavoriteMenu> findByChild(Child child);
 
     List<FavoriteMenu> findByChildAndMenu_Store(Child child, Store store);
+
+    void insertFavoriteMenu(Long childId, Long menuId);
+
+    void deleteFavoriteMenu(Long childId, Long menuId);
 }
