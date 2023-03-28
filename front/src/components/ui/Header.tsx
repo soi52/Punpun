@@ -12,6 +12,7 @@ import {
   OwStore,
   owStoreState,
 } from '../../store/atoms';
+import Cookies from 'js-cookie';
 
 const Wrapper = styled.div`
   position: absolute;
