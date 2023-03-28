@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import useScrollFadeInPage from '../../pages/owner/useScrollFadeInPage';
 import fifth from '../../resources/images/5.jpg';
-import useScrollFadeInPage from '../owner/useScrollFadeInPage';
 
 const ComponentStyle = styled.div`
   background: url(${fifth}) no-repeat center;

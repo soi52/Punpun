@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import useScrollFadeInPage from '../owner/useScrollFadeInPage';
+import useScrollFadeInPage from '../../pages/owner/useScrollFadeInPage';
 import second from '../../resources/images/2.jpg';
 
 const ComponentStyle = styled.div`

@@ -20,7 +20,7 @@ import StoreRegisterPage from './pages/owner/StoreRegisterPage';
 import useScrollFadeInPage from './pages/owner/useScrollFadeInPage';
 import Layout from './components/layout/Layout';
 import MyComponent from './pages/owner/Mycomponent';
-import FullPage from './pages/fullpage/Fullpage';
+import FullPage from './pages/Fullpage';
 
 import TestPage from './pages/Test';
 
