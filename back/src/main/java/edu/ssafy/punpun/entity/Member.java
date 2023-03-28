@@ -18,6 +18,7 @@ public class Member extends BaseEntity {
     private Long id;
     private String name;
     private String email;
+    private String phoneNumber;
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Image profile;
     private UserRole role;

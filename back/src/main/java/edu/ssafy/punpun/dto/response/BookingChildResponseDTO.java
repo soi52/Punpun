@@ -2,17 +2,18 @@ package edu.ssafy.punpun.dto.response;
 
 import edu.ssafy.punpun.entity.Reservation;
 import edu.ssafy.punpun.entity.enumurate.ReservationState;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 
-import java.time.LocalDateTime;
-
+@Getter
 @Builder
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class BookingChildResponseDTO {
     private Long reservationId;
     private ReservationState reservationState;
-    private LocalDateTime reservationTime;
+    private String reservationTime;
     private Long menuId;
     private String menuName;
     private Long storeId;
@@ -22,7 +23,7 @@ public class BookingChildResponseDTO {
         return BookingChildResponseDTO.builder()
                 .reservationId(reservation.getId())
                 .reservationState(reservation.getState())
-                .reservationTime(reservation.getReservationTime())
+                .reservationTime(reservation.getReservationTime().toString())
                 .menuId(reservation.getMenu().getId())
                 .menuName(reservation.getMenu().getName())
                 .storeId(reservation.getMenu().getStore().getId())

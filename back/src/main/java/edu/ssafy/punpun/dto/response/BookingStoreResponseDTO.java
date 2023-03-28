@@ -6,14 +6,12 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 
-import java.time.LocalDateTime;
-
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class BookingStoreResponseDTO {
     private Long reservationId;
     private ReservationState reservationSate;
-    private LocalDateTime reservationTime;
+    private String reservationTime;
     private Long menuId;
     private String menuName;
     private Long storeId;
@@ -21,11 +19,11 @@ public class BookingStoreResponseDTO {
     private Long childId;
     private String childName;
 
-    public static BookingStoreResponseDTO entityToDTO(Reservation reservation) {
+    public static BookingStoreResponseDTO entityToDto(Reservation reservation) {
         return BookingStoreResponseDTO.builder()
                 .reservationId(reservation.getId())
                 .reservationSate(reservation.getState())
-                .reservationTime(reservation.getReservationTime())
+                .reservationTime(reservation.getReservationTime().toString())
                 .menuId(reservation.getMenu().getId())
                 .menuName(reservation.getMenu().getName())
                 .storeId(reservation.getMenu().getStore().getId())
