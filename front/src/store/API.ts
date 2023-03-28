@@ -10,10 +10,8 @@ function API(): AxiosInstance {
   );
 
   useEffect(() => {
-    // Listen for changes to access_token cookie and update the state accordingly
     const handleAccessTokenChange = () => {
       setAccessToken(Cookies.get('access_token'));
-      console.log('안녕');
     };
     window.addEventListener('access_token_change', handleAccessTokenChange);
     return () => {
@@ -32,7 +30,6 @@ function API(): AxiosInstance {
     },
   });
 
-  // Interceptor to refresh the access token if it has expired
   apiClient.interceptors.response.use(
     (response) => response,
     async (error) => {
