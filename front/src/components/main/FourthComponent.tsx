@@ -1,7 +1,6 @@
 import React from 'react';
+import { Fade } from 'react-awesome-reveal';
 import styled from 'styled-components';
-import useScrollFadeInPage from '../../pages/owner/useScrollFadeInPage';
-
 import fourth from '../../resources/images/4.jpg';
 
 const ComponentStyle = styled.div`
@@ -19,16 +18,11 @@ const TitleStyle = styled.h2`
 `;
 
 function FourthComponent() {
-  const { ref: ref3, style: style3 } = useScrollFadeInPage({
-    direction: 'up',
-    duration: 1,
-    delay: 0,
-  });
   return (
     <ComponentStyle>
-      <div ref={ref3} style={{ ...style3, opacity: 1 }}>
+      <Fade duration={1000} direction={'up'}>
         <TitleStyle>Fourth Component</TitleStyle>
-      </div>
+      </Fade>
     </ComponentStyle>
   );
 }
