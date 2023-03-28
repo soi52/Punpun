@@ -84,11 +84,6 @@ const Oauth = () => {
     //   sameSite: 'none',
     // });
   }, []);
-
-  useEffect(() => {
-    console.log(isChild);
-    console.log(isLoggedIn);
-  }, [isChild, isLoggedIn]);
   return <></>;
 };
 
