@@ -1,7 +1,24 @@
+import Cookies from 'js-cookie';
 import { atom } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
 
 const { persistAtom } = recoilPersist();
+
+// token
+export const accessTokenState = atom({
+  key: 'accessTokenState',
+  default: Cookies.get('access_token') || '',
+});
+
+export const refreshTokenState = atom({
+  key: 'refreshTokenState',
+  default: Cookies.get('refresh_token') || '',
+});
+
+// export const userInfoState = atom({
+//   key: 'userInfoState',
+//   default: JSON.parse(localStorage.getItem('USER')) || {},
+// });
 
 export const LoginState = atom<boolean>({
   key: 'LoginState',
@@ -15,10 +32,10 @@ export const isDarkAtom = atom({
   default: true,
 });
 
-export const accessTokenState = atom<string | null>({
-  key: 'accessTokenState',
-  default: null,
-});
+// export const accessTokenState = atom<string | null>({
+//   key: 'accessTokenState',
+//   default: null,
+// });
 
 export const messageState = atom<string>({
   key: 'messageState',
@@ -470,5 +487,5 @@ export const storeState = atom<Store[]>({
 
 export const tokenState = atom<String>({
   key: 'tokenState',
-  default: ''
+  default: '',
 });
