@@ -1,5 +1,6 @@
 package edu.ssafy.punpun.controller;
 
+import edu.ssafy.punpun.dto.request.StoreUpdateDTO;
 import edu.ssafy.punpun.dto.response.MenuDTO;
 import edu.ssafy.punpun.dto.response.StoreDetailDTO;
 import edu.ssafy.punpun.dto.response.StoreInfoDTO;
@@ -51,7 +52,7 @@ public class StoreController {
 
     @GetMapping("/search")
     @ResponseStatus(code = HttpStatus.OK)
-    public List<StoreInfoDTO> getStroeSearchName(@RequestParam(name = "name", required = false) String storeName) {
+    public List<StoreInfoDTO> getStoreSearchName(@RequestParam(name = "name", required = false) String storeName) {
         List<Store> storeList = storeService.findByNameContaining(storeName);
         List<StoreInfoDTO> storeInfoDTOList = new ArrayList<>();
 
@@ -75,6 +76,19 @@ public class StoreController {
         }
 
         return storeInfoDTOList;
+    }
+
+//    @PatchMapping("/{storeId}")
+//    @ResponseStatus(code = HttpStatus.OK)
+//    public void updateStoreDetail(@AuthenticationPrincipal PrincipalMemberDetail principalMemberDetail, @PathVariable("storeId") Long id, @RequestBody StoreUpdateDTO storeUpdateDTO) {
+//
+//    }
+
+    @DeleteMapping("/{storeId}")
+    @ResponseStatus(code = HttpStatus.OK)
+    public void deleteStore(@AuthenticationPrincipal PrincipalMemberDetail principalMemberDetail, @PathVariable("storeId") Long id) {
+        Member member = principalMemberDetail.getMember();
+        storeService.deleteStoreByMember(id, member);
     }
 
 }

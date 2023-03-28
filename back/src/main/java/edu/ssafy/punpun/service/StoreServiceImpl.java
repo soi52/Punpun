@@ -28,4 +28,12 @@ public class StoreServiceImpl implements StoreService {
     public List<Store> findByOwner(Member member) {
         return storeRepository.findByOwner(member);
     }
+
+    @Override
+    public void deleteStoreByMember(Long id, Member member) {
+        Store store = storeRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+
+        store.setOwner(null);
+        storeRepository.save(store);
+    }
 }

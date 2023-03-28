@@ -180,4 +180,45 @@ public class StoreServiceImplTest {
         Assertions.assertThat(results.get(1).isAlwaysShare()).isEqualTo(store2.isAlwaysShare());
         Assertions.assertThat(results.get(1).isOpenState()).isEqualTo(store2.isOpenState());
     }
+
+    @Test
+    @DisplayName("Service: test for deleteStoreByMember")
+    void deleteStoreByMember() {
+        // given
+        Member member = Member.builder()
+                .name("memberTest")
+                .email("memberTest@email.com")
+                .phoneNumber("01000000000")
+                .role(UserRole.OWNER)
+                .build();
+        Store store1 = Store.builder()
+                .name("store1")
+                .openState(true)
+                .info("가게 1 테스트용")
+                .openTime("24시 운영")
+                .address("상북도 구미시 옥계북로 27, 삼구트리니엔 108동 1층 108호 (옥계동)")
+                .lon(128.41848477014165)
+                .lat(36.13917919014956)
+                .alwaysShare(true)
+                .owner(member)
+                .build();
+
+        doReturn(Optional.of(store1)).when(storeRepository).findById(1L);
+
+        // when
+        storeService.deleteStoreByMember(1L, member);
+        //then
+        Assertions.assertThat(store1.getId()).isEqualTo(store1.getId());
+        Assertions.assertThat(store1.getName()).isEqualTo(store1.getName());
+        Assertions.assertThat(store1.getOpenTime()).isEqualTo(store1.getOpenTime());
+        Assertions.assertThat(store1.getInfo()).isEqualTo(store1.getInfo());
+        Assertions.assertThat(store1.getAddress()).isEqualTo(store1.getAddress());
+        Assertions.assertThat(store1.getLon()).isEqualTo(store1.getLon());
+        Assertions.assertThat(store1.getLat()).isEqualTo(store1.getLat());
+        Assertions.assertThat(store1.getImage()).isEqualTo(store1.getImage());
+        Assertions.assertThat(store1.isAlwaysShare()).isEqualTo(store1.isAlwaysShare());
+        Assertions.assertThat(store1.isOpenState()).isEqualTo(store1.isOpenState());
+        Assertions.assertThat(store1.getOwner()).isEqualTo(null);
+    }
+
 }
