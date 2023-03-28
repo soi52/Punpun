@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import useScrollFadeInPage from '../../pages/owner/useScrollFadeInPage';
-import second from '../../resources/images/2.jpg';
+import second from '../../resources/images/main2.png';
 import { Fade } from 'react-awesome-reveal';
 
 const ComponentStyle = styled.div`
@@ -11,8 +11,8 @@ const ComponentStyle = styled.div`
   display: flex;
 `;
 
-const ContentStyle = styled.h3`
-  margin-top: 150px;
+const ContentStyle = styled.h4`
+  margin-top: 75px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -39,6 +39,9 @@ function SecondComponent() {
             <button>후원하기</button>
           </ContentStyle>
         }
+      </Fade>
+      <Fade duration={2000} direction="right">
+        <img src={second} />
       </Fade>
     </ComponentStyle>
   );
