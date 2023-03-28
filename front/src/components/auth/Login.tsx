@@ -11,7 +11,7 @@ const Login = () => {
       <img
         src={kakaoLoginIMG}
         alt="kakaologin"
-        onClick={() => window.open(kakaoLogin)}
+        onClick={() => window.location.replace(kakaoLogin)}
       />
     </div>
   );
