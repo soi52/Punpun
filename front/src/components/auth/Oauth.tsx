@@ -61,12 +61,14 @@ const Oauth = () => {
     console.log(decodedToken['role']);
 
     if (decodedToken['role'] === 'SUPPORTER') {
-      if (!decodedToken.number) {
-        navigate('/addnumber');
-      } else {
-        navigate('/')
-      }
+      // if (!decodedToken.number) {
+      //   navigate('/addnumber');
+      // } else {
+      //   navigate('/')
+      // }
       setIsSupporter(true);
+      setIsLoggedIn(true);
+      navigate('/')
     } else {
       navigate('/')
       setIsChild(true);
