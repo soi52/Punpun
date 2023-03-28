@@ -11,6 +11,7 @@ import edu.ssafy.punpun.entity.enumurate.SupportState;
 import edu.ssafy.punpun.entity.enumurate.SupportType;
 import edu.ssafy.punpun.entity.enumurate.UserRole;
 import edu.ssafy.punpun.service.SupportService;
+import edu.ssafy.testutil.WIthCustomOwner;
 import edu.ssafy.testutil.WIthCustomSupporter;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -115,6 +116,31 @@ public class SupportControllerTest {
         String input=new Gson().toJson(supportRequestDTO);
 
         mockMvc.perform(post("/supports/payment")
+                .with(csrf())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(input))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
+
+    @Test
+    @WIthCustomOwner
+    @DisplayName("오늘의 나눔 등록")
+    void ownerShare() throws Exception{
+        SupportRequestDTO supportRequestDTO=new SupportRequestDTO(0L, List.of(1L, 2L), List.of(1L,1L), 1L);
+        Support support = Support.builder()
+                .supportState(SupportState.SUPPORT)
+                .supporter(Member.builder().build())
+                .supportType(SupportType.SHARE)
+                .menu(Menu.builder().id(supportRequestDTO.getMenuId().get(0)).build())
+                .store(Store.builder().id(supportRequestDTO.getStoreId()).build())
+                .build();
+        List<Support> supports=List.of(support, support);
+        doNothing().when(supportService).saveSupport(eq(supports), eq(supportRequestDTO.getMenuId()), eq(supportRequestDTO.getMenuCount()), any(Member.class), eq(0L));
+
+        String input=new Gson().toJson(supportRequestDTO);
+
+        mockMvc.perform(post("/supports/share")
                 .with(csrf())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(input))
