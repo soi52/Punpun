@@ -11,7 +11,6 @@ import {
   isSupporterState,
 } from '../../store/atoms';
 
-
 const Oauth = () => {
   const navigate = useNavigate();
   const [isChild, setIsChild] = useRecoilState(isChildState);
@@ -55,7 +54,7 @@ const Oauth = () => {
       httpOnly: true, // JavaScript를 통한 접근 방지
     });
 
-    const decodedToken:any = jwt_decode(accessToken)
+    const decodedToken: any = jwt_decode(accessToken);
     console.log(decodedToken);
     console.log(decodedToken.role);
     console.log(decodedToken['role']);
@@ -68,14 +67,13 @@ const Oauth = () => {
       // }
       setIsSupporter(true);
       setIsLoggedIn(true);
-      navigate('/')
+      navigate('/');
     } else {
-      navigate('/')
+      navigate('/');
       setIsChild(true);
       setIsLoggedIn(true);
       console.log(isChild);
       console.log(isLoggedIn);
-      
     }
 
     // window.localStorage.setItem('accessToken', accessToken);
@@ -86,6 +84,11 @@ const Oauth = () => {
     //   sameSite: 'none',
     // });
   }, []);
+
+  useEffect(() => {
+    console.log(isChild);
+    console.log(isLoggedIn);
+  }, [isChild, isLoggedIn]);
   return <></>;
 };
 
