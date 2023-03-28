@@ -21,6 +21,7 @@ import Layout from './components/layout/Layout';
 import FullPage from './pages/Fullpage';
 
 import TestPage from './pages/Test';
+import AddNumberPage from './pages/AddNumberPage';
 
 function Router() {
   return (
@@ -54,6 +55,7 @@ function Router() {
 
           {/* 디버깅페이지 */}
           <Route path="/test" element={<TestPage />} />
+          <Route path="/addnumber" element={<AddNumberPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
