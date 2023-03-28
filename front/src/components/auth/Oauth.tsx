@@ -45,14 +45,18 @@ const Oauth = () => {
       httpOnly: true, // JavaScript를 통한 접근 방지
     });
 
-    const decodedToken = jwt_decode(accessToken)
+    const decodedToken:any = jwt_decode(accessToken)
     console.log(decodedToken);
 
-    // if (role === 'member') {
-    //   navigate('/AddNumberPage');
-    // } else {
-    //   navigate('/')
-    // }
+    if (decodedToken.role === 'SUPPORTER') {
+      if (!decodedToken.number) {
+        navigate('/AddNumberPage');
+      } else {
+        navigate('/')
+      }
+    } else {
+      navigate('/')
+    }
 
     // window.localStorage.setItem('accessToken', accessToken);
     // setCookie('accessToken', accessToken, {
