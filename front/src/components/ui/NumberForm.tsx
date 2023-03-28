@@ -58,7 +58,6 @@ const NumberForm = () => {
     console.log(`전화번호: ${phoneNumber}`);
     // 유효성 검사
     if (phoneNumber.length !== 11) {
-      console.log('전화번호 11자리가 아닙니다.');
       setError('전화번호는 11자리로 입력해야 합니다.');
       alert('전화번호는 11자리로 입력해야 합니다.');
       return;
