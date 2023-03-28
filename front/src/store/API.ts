@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios, { AxiosInstance } from 'axios';
 import Cookies from 'js-cookie';
 
-const API_URL = 'https://j8d109.p.ssafy.io/';
+// const API_URL = 'https://j8d109.p.ssafy.io/';
+const API_URL = 'http://localhost:3000/';
 
 function API(): AxiosInstance {
   const [accessToken, setAccessToken] = useState<string | undefined>(

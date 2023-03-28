@@ -158,7 +158,7 @@ function Header(props: HeaderProps) {
   };
 
   const renderNav = () => {
-    console.log(isLoggedInState);
+    console.log(isLoggedIn);
     if (isLoggedIn) {
       if (isChild) {
         return (
