@@ -4,6 +4,8 @@ import edu.ssafy.punpun.dto.response.ShareResponseDTO;
 import edu.ssafy.punpun.entity.Member;
 import edu.ssafy.punpun.entity.Support;
 import edu.ssafy.punpun.entity.enumurate.SupportType;
+import edu.ssafy.punpun.exception.PointLackException;
+import edu.ssafy.punpun.repository.MemberRepository;
 import edu.ssafy.punpun.repository.SupportRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +21,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SupportServiceImpl implements SupportService{
     private final SupportRepository supportRepository;
+    private final MemberRepository memberRepository;
 
     private final MenuService menuService;
 
@@ -29,10 +32,13 @@ public class SupportServiceImpl implements SupportService{
 
     @Override
     @Transactional
-    public void saveSupport(List<Support> supportList, List<Long> menuId , List<Long> menuCount, Member supporter, Long usePoint) {
+    public void saveSupport(List<Support> supportList, List<Long> menuId , List<Long> menuCount, Member member, Long usePoint) {
         // supporter use point
-        // TODO: 영속성 확인
-        // TODO: 포인트 확인
+        Member supporter=memberRepository.findById(member.getId())
+                .orElseThrow(IllegalArgumentException::new);
+        if(supporter.getRemainPoint() < usePoint){
+            throw new PointLackException("포인트가 부족합니다.");
+        }
         supporter.support(usePoint);
 
         for(int i=0; i<supportList.size(); i++){
