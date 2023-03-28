@@ -1,12 +1,14 @@
 package edu.ssafy.punpun.controller;
 
 import com.google.gson.Gson;
+import edu.ssafy.punpun.dto.request.SupportRequestDTO;
 import edu.ssafy.punpun.dto.response.SupportResponseDTO;
 import edu.ssafy.punpun.entity.Member;
 import edu.ssafy.punpun.entity.Menu;
 import edu.ssafy.punpun.entity.Store;
 import edu.ssafy.punpun.entity.Support;
 import edu.ssafy.punpun.entity.enumurate.SupportState;
+import edu.ssafy.punpun.entity.enumurate.SupportType;
 import edu.ssafy.punpun.entity.enumurate.UserRole;
 import edu.ssafy.punpun.service.SupportService;
 import edu.ssafy.testutil.WIthCustomSupporter;
@@ -15,6 +17,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
@@ -91,6 +94,31 @@ public class SupportControllerTest {
                 .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(content().string(result))
+                .andDo(print());
+    }
+
+    @Test
+    @WIthCustomSupporter
+    @DisplayName("후원 결제")
+    void supportPayment() throws Exception{
+        SupportRequestDTO supportRequestDTO= new SupportRequestDTO(8000L, List.of(1L, 2L), List.of(1L,1L), 1L);
+        Support support = Support.builder()
+                .supportState(SupportState.SUPPORT)
+                .supporter(Member.builder().build())
+                .supportType(SupportType.SUPPORT)
+                .menu(Menu.builder().id(supportRequestDTO.getMenuId().get(0)).build())
+                .store(Store.builder().id(supportRequestDTO.getStoreId()).build())
+                .build();
+        List<Support> supports=List.of(support, support);
+        doNothing().when(supportService).saveSupport(eq(supports), eq(supportRequestDTO.getMenuId()), eq(supportRequestDTO.getMenuCount()), any(Member.class), eq(supportRequestDTO.getUsePoint()));
+
+        String input=new Gson().toJson(supportRequestDTO);
+
+        mockMvc.perform(post("/supports/payment")
+                .with(csrf())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(input))
+                .andExpect(status().isOk())
                 .andDo(print());
     }
 }
