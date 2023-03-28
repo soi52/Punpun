@@ -16,6 +16,7 @@ const Oauth = () => {
   const navigate = useNavigate();
   const [isChild, setIsChild] = useRecoilState(isChildState);
   const [isSupporter, setIsSupporter] = useRecoilState(isSupporterState);
+  const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLoggedInState);
   //   const code = new URL(window.location.href).searchParams.get('code')
   //   console.log(code);
   //   const navigate = useNavigate();
@@ -67,6 +68,10 @@ const Oauth = () => {
     } else {
       navigate('/')
       setIsChild(true);
+      setIsLoggedIn(true);
+      console.log(isChild);
+      console.log(isLoggedIn);
+      
     }
 
     // window.localStorage.setItem('accessToken', accessToken);
