@@ -3,10 +3,19 @@ import jwt_decode from 'jwt-decode';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router';
+import { useRecoilState } from 'recoil';
+import {
+  isChildState,
+  isLoggedInState,
+  isOwnerState,
+  isSupporterState,
+} from '../../store/atoms';
 
 
 const Oauth = () => {
   const navigate = useNavigate();
+  const [isChild, setIsChild] = useRecoilState(isChildState);
+  const [isSupporter, setIsSupporter] = useRecoilState(isSupporterState);
   //   const code = new URL(window.location.href).searchParams.get('code')
   //   console.log(code);
   //   const navigate = useNavigate();
@@ -50,12 +59,14 @@ const Oauth = () => {
 
     if (decodedToken.role === 'SUPPORTER') {
       if (!decodedToken.number) {
-        navigate('/AddNumberPage');
+        navigate('/addnumber');
       } else {
         navigate('/')
       }
+      setIsSupporter(true);
     } else {
       navigate('/')
+      setIsChild(true);
     }
 
     // window.localStorage.setItem('accessToken', accessToken);
