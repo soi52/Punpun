@@ -9,6 +9,7 @@ import edu.ssafy.punpun.entity.Store;
 import edu.ssafy.punpun.entity.Support;
 import edu.ssafy.punpun.entity.enumurate.SupportState;
 import edu.ssafy.punpun.entity.enumurate.SupportType;
+import edu.ssafy.punpun.security.oauth2.PrincipalMemberDetail;
 import edu.ssafy.punpun.service.SupportService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,8 +32,8 @@ public class SupportController {
 
     @GetMapping
     @ResponseStatus(code = HttpStatus.OK)
-    public List<SupportResponseDTO> findSupport(@AuthenticationPrincipal Member supporter){
-        List<Support> supportList=supportService.findSupport(supporter);
+    public List<SupportResponseDTO> findSupport(@AuthenticationPrincipal PrincipalMemberDetail memberDetail){
+        List<Support> supportList=supportService.findSupport(memberDetail.getMember());
         return supportList.stream()
                 .map(SupportResponseDTO::new)
                 .collect(Collectors.toList());
@@ -40,16 +41,16 @@ public class SupportController {
 
     @PostMapping("/payment")
     @ResponseStatus(code= HttpStatus.OK)
-    public void supportPayment (@AuthenticationPrincipal Member supporter, @RequestBody SupportRequestDTO supportRequestDTO){
-        List<Support> supports=dtoToEntity(supporter, supportRequestDTO, 0);
-        supportService.saveSupport(supports, supportRequestDTO.getMenuId(), supportRequestDTO.getMenuCount(), supporter, supportRequestDTO.getUsePoint());
+    public void supportPayment (@AuthenticationPrincipal PrincipalMemberDetail memberDetail, @RequestBody SupportRequestDTO supportRequestDTO){
+        List<Support> supports=dtoToEntity(memberDetail.getMember(), supportRequestDTO, 0);
+        supportService.saveSupport(supports, supportRequestDTO.getMenuId(), supportRequestDTO.getMenuCount(), memberDetail.getMember(), supportRequestDTO.getUsePoint());
     }
 
     @PostMapping("/share")
     @ResponseStatus(code= HttpStatus.OK)
-    public void ownerShare(@AuthenticationPrincipal Member owner, @RequestBody SupportRequestDTO supportRequestDTO){
-        List<Support> supports=dtoToEntity(owner, supportRequestDTO, 1);
-        supportService.saveSupport(supports, supportRequestDTO.getMenuId(), supportRequestDTO.getMenuCount(), owner, 0L);
+    public void ownerShare(@AuthenticationPrincipal PrincipalMemberDetail memberDetail, @RequestBody SupportRequestDTO supportRequestDTO){
+        List<Support> supports=dtoToEntity(memberDetail.getMember(), supportRequestDTO, 1);
+        supportService.saveSupport(supports, supportRequestDTO.getMenuId(), supportRequestDTO.getMenuCount(), memberDetail.getMember(), 0L);
     }
 
     public List<Support> dtoToEntity(Member member, SupportRequestDTO supportRequestDTO, int type){
