@@ -35,6 +35,20 @@ const Button = styled.button`
   }
 `;
 
+const StyledInput = styled.input`
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  height: 40px;
+  padding: 10px;
+  font-size: 18px;
+  border-radius: 25px;
+  border: 1px solid #bdbdbd;
+  margin-right: 10px;
+`;
+
 const NumberForm = () => {
   const [error, setError] = useState<string>('');
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -46,24 +60,25 @@ const NumberForm = () => {
     if (phoneNumber.length !== 11) {
       console.log('전화번호 11자리가 아닙니다.');
       setError('전화번호는 11자리로 입력해야 합니다.');
-      alert(error);
+      alert('전화번호는 11자리로 입력해야 합니다.');
       return;
     }
 
-    const blank_pattern = /^\s+|\s+$/g;
-    if (phoneNumber.replace(blank_pattern, '') === '') {
-      console.log('공백만 입력됨!');
-      setError('공백은 사용할 수 없습니다.');
-      alert(error);
-      return;
-    }
-    const blank_pattern2 = /[\s]/g;
-    if (blank_pattern2.test(phoneNumber) === true) {
-      console.log('공백이 포함됨!');
-      setError('공백은 사용할 수 없습니다.');
-      alert(error);
-      return;
-    }
+    // const blank_pattern = /^\s+|\s+$/g;
+    // if (phoneNumber.replace(blank_pattern, '') === '') {
+    //   console.log('공백만 입력됨!');
+    //   setError('공백은 사용할 수 없습니다.');
+    //   alert(error);
+    //   return;
+    // }
+
+    // const blank_pattern2 = /[\s]/g;
+    // if (blank_pattern2.test(phoneNumber) === true) {
+    //   console.log('공백이 포함됨!');
+    //   setError('공백은 사용할 수 없습니다.');
+    //   alert(error);
+    //   return;
+    // }
 
     const accessToken = Cookies.get('access_token');
     if (phoneNumber) {
@@ -100,11 +115,10 @@ const NumberForm = () => {
     <>
       <Form onSubmit={handleSubmit}>
         <InputLabel htmlFor="phone-input">전화번호 입력</InputLabel>
-        ※ 숫자만 입력해 주세요.
-        <Input
+        <StyledInput
           id="phone-input"
-          type="tel"
-          placeholder="010-1234-5678"
+          type="number"
+          placeholder="※ 숫자만 입력해 주세요."
           value={phoneNumber}
           onChange={handleChange}
           required
