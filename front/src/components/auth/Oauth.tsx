@@ -67,6 +67,8 @@ const Oauth = () => {
     } else {
       navigate('/')
       setIsChild(true);
+      console.log(isChild);
+      
     }
 
     // window.localStorage.setItem('accessToken', accessToken);
