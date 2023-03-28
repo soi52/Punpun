@@ -66,7 +66,7 @@ export const isOwnerState = atom<Boolean>({
 
 export const isSupporterState = atom<Boolean>({
   key: 'isSupporterState',
-  default: true,
+  default: false,
 });
 
 // 리뷰 atom
