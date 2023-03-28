@@ -10,9 +10,9 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.test.context.support.WithSecurityContextFactory;
 
-public class WithMockCustomOwnerSecurityContextFactory implements WithSecurityContextFactory<WIthCustomChild> {
+public class WithMockCustomOwnerSecurityContextFactory implements WithSecurityContextFactory<WIthCustomOwner> {
     @Override
-    public SecurityContext createSecurityContext(WIthCustomChild annotation) {
+    public SecurityContext createSecurityContext(WIthCustomOwner annotation) {
         SecurityContext context = SecurityContextHolder.createEmptyContext();
 
         Member member = Member.builder()

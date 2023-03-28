@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public class SupportResponseDTO {
     private Long supportId;
     private SupportState supportState;
-    private LocalDateTime supportCreationDate;
+    private String supportCreationDate;
     private Long storeId;
     private String storeName;
     private Long menuId;
@@ -22,7 +22,7 @@ public class SupportResponseDTO {
     public SupportResponseDTO(Support support){
         this.supportId=support.getId();
         this.supportState=support.getSupportState();
-        this.supportCreationDate=support.getCreatedDateTime();
+        this.supportCreationDate=support.getCreatedDateTime().toString();
         this.storeId=support.getStore().getId();
         this.storeName=support.getStore().getName();
         this.menuId=support.getMenu().getId();
