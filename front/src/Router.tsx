@@ -22,7 +22,7 @@ import FullPage from './pages/Fullpage';
 
 import TestPage from './pages/Test';
 import AddNumberPage from './pages/AddNumberPage';
-import Test_copy from './pages/Test_copy';
+import TestCopy from './pages/TestCopy';
 
 function Router() {
   return (
@@ -57,7 +57,7 @@ function Router() {
           {/* 디버깅페이지 */}
           <Route path="/test" element={<TestPage />} />
           <Route path="/addnumber" element={<AddNumberPage />} />
-          <Route path="/test1" element={<Test_copy />} />
+          <Route path="/test1" element={<TestCopy />} />
         </Route>
       </Routes>
     </BrowserRouter>

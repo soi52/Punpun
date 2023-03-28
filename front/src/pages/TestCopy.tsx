@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import API from '../store/API';
 
-const Test_copy = () => {
+const TestCopy = () => {
   const apiClient = API();
 
   const apiRequest = () => {
@@ -22,4 +22,4 @@ const Test_copy = () => {
   );
 };
 
-export default Test_copy;
+export default TestCopy;
