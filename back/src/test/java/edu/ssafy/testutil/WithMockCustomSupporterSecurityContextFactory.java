@@ -20,6 +20,7 @@ public class WithMockCustomSupporterSecurityContextFactory implements WithSecuri
                 .name("name")
                 .email("email@email.com")
                 .remainPoint(annotation.remainPoint())
+                .supportedPoint(annotation.supportedPoint())
                 .role(UserRole.SUPPORTER)
                 .build();
         OAuth2Attributes attributes = OAuth2Attributes.builder()
