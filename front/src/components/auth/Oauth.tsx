@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import jwt_decode from 'jwt-decode';
 import axios from 'axios';
 import Cookies from 'js-cookie';
@@ -12,6 +12,7 @@ import {
   userInfoState,
 } from '../../store/atoms';
 import { decode } from 'punycode';
+import useGeolocation from '../../common/useGeolocation';
 
 const Oauth = () => {
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ const Oauth = () => {
   const [isSupporter, setIsSupporter] = useRecoilState(isSupporterState);
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLoggedInState);
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+  const [address, setAddress] = useState('');
   //   const code = new URL(window.location.href).searchParams.get('code')
   //   console.log(code);
   //   const navigate = useNavigate();
@@ -36,6 +38,10 @@ const Oauth = () => {
   //       }
   //     })();
   //   }, []);
+
+  const location = useGeolocation();
+  const { latitude = 0, longitude = 0 } =
+    typeof location === 'object' ? location : {};
 
   const getUrlParameter = (name: any) => {
     // 쿼리 파라미터에서 값을 추출해주는 함수
@@ -57,19 +63,32 @@ const Oauth = () => {
       httpOnly: true, // JavaScript를 통한 접근 방지
     });
 
+    let geocoder = new kakao.maps.services.Geocoder();
+    let coord = new kakao.maps.LatLng(latitude, longitude);
+
+    let callback = function (result: any, status: any) {
+      if (status === kakao.maps.services.Status.OK) {
+        setAddress(
+          result[0].address.region_1depth_name +
+            ' ' +
+            result[0].address.region_2depth_name
+        );
+      }
+
+      geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
+    };
+
     const decodedToken: any = jwt_decode(accessToken);
     console.log(decodedToken);
     console.log(decodedToken.role);
     console.log(decodedToken['role']);
-    setUserInfo(
-      {
-        userId: decodedToken.id,
-        userName: decodedToken.name,
-        userEmail: decodedToken.email,
-        userLocation: '',
-        userRole: decodedToken.role,
-      },
-    );
+    setUserInfo({
+      userId: decodedToken.id,
+      userName: decodedToken.name,
+      userEmail: decodedToken.email,
+      userLocation: address,
+      userRole: decodedToken.role,
+    });
 
     if (decodedToken['role'] === 'SUPPORTER') {
       // if (!decodedToken.number) {
@@ -95,12 +114,11 @@ const Oauth = () => {
     //   httpOnly: true,
     //   sameSite: 'none',
     // });
-  }, []);
+  }, [address]);
 
   useEffect(() => {
     console.log(userInfo);
-    
-  }, [userInfo])
+  }, [userInfo]);
   return <></>;
 };
 
