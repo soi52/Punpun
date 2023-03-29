@@ -6,7 +6,6 @@ import lombok.*;
 
 @Getter
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class BookingStoreResponseDTO {
     private Long reservationId;
