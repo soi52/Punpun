@@ -68,7 +68,7 @@ class BookingServiceImplTest {
         //then
         verify(supportReservationRepository, times(1)).save(any());
         verify(reservationRepository, times(1)).save(any());
-        verify(publisher, times(1)).publish(any());
+        verify(publisher, times(1)).publish(any(), any());
 
         assertThat(reservation.getReservationTime()).isEqualTo(now);
         assertThat(reservation.getChild()).isEqualTo(child);
@@ -93,7 +93,7 @@ class BookingServiceImplTest {
         //then
         verify(supportReservationRepository, never()).save(any());
         verify(reservationRepository, never()).save(any());
-        verify(publisher, never()).publish(any());
+        verify(publisher, never()).publish(any(), any());
     }
 
     @Test
@@ -121,7 +121,7 @@ class BookingServiceImplTest {
         //then
         verify(supportReservationRepository, never()).save(any());
         verify(reservationRepository, never()).save(any());
-        verify(publisher, never()).publish(any());
+        verify(publisher, never()).publish(any(), any());
     }
 
     @Test

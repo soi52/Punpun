@@ -1,5 +1,6 @@
 package edu.ssafy.punpun.kafka;
 
+import edu.ssafy.punpun.event.EventType;
 import edu.ssafy.punpun.entity.Member;
 import edu.ssafy.punpun.entity.Menu;
 import edu.ssafy.punpun.entity.Reservation;
@@ -52,7 +53,7 @@ class ReservationEventPublisherTest {
                 .build();
 
         //when
-        publisher.publish(reservation);
+        publisher.publish(reservation, EventType.RESERVATION);
     }
 
 //    @Test
