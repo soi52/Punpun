@@ -17,7 +17,7 @@ public class ChildRepositoryTest {
     private ChildRepository childRepository;
 
     @Test
-    @DisplayName("test for Child findByEmail")
+    @DisplayName("학생 이메일로 찾기")
     void findByEmail() {
         //given
         Child child1 = Child.builder()

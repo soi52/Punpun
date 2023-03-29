@@ -8,6 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface ChildRepository extends JpaRepository<Child, Long> {
-    Optional<Child> findById(Long id);
     Optional<Child> findByEmail(String email);
 }

@@ -7,7 +7,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class ChildDTO {
+public class ChildResponseDTO {
     private Long id;
     private String name;
     private String email;
@@ -15,7 +15,7 @@ public class ChildDTO {
     private UserRole role;
     private String area;
 
-    public ChildDTO(Child child) {
+    public ChildResponseDTO(Child child) {
         this.id = child.getId();
         this.name = child.getName();
         this.email = child.getEmail();

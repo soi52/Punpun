@@ -4,10 +4,12 @@ import edu.ssafy.punpun.entity.Member;
 import edu.ssafy.punpun.entity.enumurate.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @AllArgsConstructor
-public class MemberDTO {
+@NoArgsConstructor
+public class MemberResponseDTO {
     private Long id;
     private String name;
     private String email;
@@ -16,7 +18,7 @@ public class MemberDTO {
     private Long supportedPoint;
     private Long remainPoint;
 
-    public MemberDTO(Member member) {
+    public MemberResponseDTO(Member member) {
         this.id = member.getId();
         this.name = member.getName();
         this.email = member.getEmail();
