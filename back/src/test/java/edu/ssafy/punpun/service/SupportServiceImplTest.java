@@ -7,6 +7,7 @@ import edu.ssafy.punpun.entity.Support;
 import edu.ssafy.punpun.entity.enumurate.SupportState;
 import edu.ssafy.punpun.entity.enumurate.SupportType;
 import edu.ssafy.punpun.repository.MemberRepository;
+import edu.ssafy.punpun.repository.MenuRepository;
 import edu.ssafy.punpun.repository.SupportRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -30,6 +31,8 @@ public class SupportServiceImplTest {
     private SupportRepository supportRepository;
     @Mock
     private MemberRepository memberRepository;
+    @Mock
+    private MenuRepository menuRepository;
 
     @InjectMocks
     private SupportServiceImpl supportService;
@@ -137,6 +140,8 @@ public class SupportServiceImplTest {
         Long usePoint = 23000L;
 
         doReturn(Optional.of(member)).when(memberRepository).findById(member.getId());
+        doReturn(Optional.of(menu1)).when(menuRepository).findById(menu1.getId());
+        doReturn(Optional.of(menu2)).when(menuRepository).findById(menu2.getId());
         supportService.saveSupport(supports, menuId, menuCount, member, usePoint);
 
         Assertions.assertEquals(member.getRemainPoint(), 2000L);
