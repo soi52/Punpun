@@ -131,7 +131,7 @@ public class StoreControllerTest {
                 .id(1L)
                 .owner(member)
                 .build();
-        doNothing().when(storeService).deleteStoreByMember(member, 1L);
+        doNothing().when(storeService).deleteStoreByMember(any(Member.class), eq(1L));
 
         mockMvc.perform(delete("/stores/1")
                         .with(csrf()))
