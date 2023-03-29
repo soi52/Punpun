@@ -2,10 +2,9 @@ import { useEffect } from 'react';
 import API from '../store/API';
 
 const TestCopy = () => {
-  const apiClient = API();
 
   const apiRequest = () => {
-    apiClient
+    API
       .get('api/stores/test')
       .then((response: any) => {
         console.log(response.data);
