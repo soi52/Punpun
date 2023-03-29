@@ -61,7 +61,7 @@ const Oauth = () => {
           arr[0].address.region_1depth_name +
           ' ' +
           arr[0].address.region_2depth_name;
-        console.log(_arr);
+        setAddress(_arr);
       }
     };
     geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
@@ -93,7 +93,7 @@ const Oauth = () => {
       userId: decodedToken.id,
       userName: decodedToken.name,
       userEmail: decodedToken.email,
-      userLocation: '',
+      userLocation: address,
       userRole: decodedToken.role,
       userNumber: decodedToken.phoneNumber,
     });
