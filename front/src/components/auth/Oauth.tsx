@@ -47,24 +47,30 @@ const Oauth = () => {
   };
 
   useEffect(() => {
-    const location = useGeolocation();
-    const { latitude = 0, longitude = 0 } =
-      typeof location === 'object' ? location : {};
+    const getLocation = () => {
+      const location = useGeolocation();
+      const { latitude = 0, longitude = 0 } =
+        typeof location === 'object' ? location : {};
 
-    let geocoder = new kakao.maps.services.Geocoder();
-    let coord = new kakao.maps.LatLng(latitude, longitude);
+      let geocoder = new kakao.maps.services.Geocoder();
+      let coord = new kakao.maps.LatLng(latitude, longitude);
 
-    let callback = function (result: any, status: any) {
-      if (status === kakao.maps.services.Status.OK) {
-        setAddress(
-          result[0].address.region_1depth_name +
-            ' ' +
-            result[0].address.region_2depth_name
-        );
-      }
+      let callback = function (result: any, status: any) {
+        if (status === kakao.maps.services.Status.OK) {
+          setAddress(
+            result[0].address.region_1depth_name +
+              ' ' +
+              result[0].address.region_2depth_name
+          );
+        }
+      };
+
+      geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
     };
+    getLocation();
+  }, []);
 
-    geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
+  useEffect(() => {
     const token = getUrlParameter('token');
     const accessToken = token || '';
     console.log(accessToken);
