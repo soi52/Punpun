@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import jwt_decode from 'jwt-decode';
 import axios from 'axios';
 import Cookies from 'js-cookie';
@@ -50,7 +50,7 @@ const Oauth = () => {
   const { latitude = 0, longitude = 0 } =
     typeof location === 'object' ? location : {};
 
-  function getAddr(lat: any, lng: any) {
+  const getAddr = useCallback((lat: any, lng: any) => {
     let geocoder = new kakao.maps.services.Geocoder();
 
     let coord = new kakao.maps.LatLng(lat, lng);
@@ -65,11 +65,11 @@ const Oauth = () => {
       }
     };
     geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
-  }
+  }, []);
 
   useEffect(() => {
     getAddr(latitude, longitude);
-  }, [latitude, longitude]);
+  }, [getAddr, latitude, longitude]);
 
   useEffect(() => {
     const token = getUrlParameter('token');
