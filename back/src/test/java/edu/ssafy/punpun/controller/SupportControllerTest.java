@@ -1,7 +1,9 @@
 package edu.ssafy.punpun.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import edu.ssafy.punpun.dto.request.SupportRequestDTO;
+import edu.ssafy.punpun.dto.response.ShareResponseDTO;
 import edu.ssafy.punpun.dto.response.SupportResponseDTO;
 import edu.ssafy.punpun.entity.Member;
 import edu.ssafy.punpun.entity.Menu;
@@ -18,9 +20,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -145,6 +151,66 @@ public class SupportControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(input))
                 .andExpect(status().isOk())
+                .andDo(print());
+    }
+
+    @Test
+    @WIthCustomOwner
+    @DisplayName("나눔 리스트-type")
+    void findShareListType() throws Exception{
+        LocalDate date=LocalDate.now();
+        ShareResponseDTO shareResponseDTO1=new ShareResponseDTO(1L, SupportType.SHARE, date.toString(), 1L, "test1", 1L, 0L);
+        ShareResponseDTO shareResponseDTO2=new ShareResponseDTO(2L, SupportType.SHARE, date.minusDays(1).toString(), 2L, "test2", 1L, 0L);
+        PageRequest pageRequest=PageRequest.of(0,10);
+        Page<ShareResponseDTO> shareResponseDTOS=new PageImpl<>(List.of(shareResponseDTO1, shareResponseDTO2),pageRequest, 2);
+
+        doReturn(shareResponseDTOS).when(supportService).findShareList(any(Long.class), any(SupportType.class), any(Integer.class), isNull());
+
+        String result=new ObjectMapper().writeValueAsString(shareResponseDTOS);
+
+        mockMvc.perform(get("/supports/1?type=SHARE")
+                .with(csrf()))
+                .andExpect(status().isOk())
+                .andExpect(content().string(result))
+                .andDo(print());
+    }
+
+    @Test
+    @WIthCustomOwner
+    @DisplayName("나눔 리스트-page")
+    void findShareListTypePage() throws Exception{
+        PageRequest pageRequest=PageRequest.of(0,10);
+        Page<ShareResponseDTO> shareResponseDTOS=new PageImpl<>(List.of(),pageRequest, 0);
+
+        doReturn(shareResponseDTOS).when(supportService).findShareList(any(Long.class), any(SupportType.class), any(Integer.class), isNull());
+
+        String result=new ObjectMapper().writeValueAsString(shareResponseDTOS);
+
+        mockMvc.perform(get("/supports/1?type=SHARE&page=1")
+                .with(csrf()))
+                .andExpect(status().isOk())
+                .andExpect(content().string(result))
+                .andDo(print());
+    }
+
+    @Test
+    @WIthCustomOwner
+    @DisplayName("나눔 리스트-date")
+    void findShareListTypeDate() throws Exception{
+        LocalDate date=LocalDate.now();
+        ShareResponseDTO shareResponseDTO=new ShareResponseDTO(1L, SupportType.SHARE, date.toString(), 1L, "test1", 1L, 0L);
+
+        PageRequest pageRequest=PageRequest.of(0,10);
+        Page<ShareResponseDTO> shareResponseDTOS=new PageImpl<>(List.of(shareResponseDTO),pageRequest, 1);
+
+        doReturn(shareResponseDTOS).when(supportService).findShareList(any(Long.class), any(SupportType.class), any(Integer.class), any(LocalDate.class));
+
+        String result=new ObjectMapper().writeValueAsString(shareResponseDTOS);
+
+        mockMvc.perform(get("/supports/1?type=SHARE&date="+date.toString())
+                .with(csrf()))
+                .andExpect(status().isOk())
+                .andExpect(content().string(result))
                 .andDo(print());
     }
 }
