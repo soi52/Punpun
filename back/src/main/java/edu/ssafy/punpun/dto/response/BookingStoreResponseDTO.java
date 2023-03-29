@@ -2,11 +2,9 @@ package edu.ssafy.punpun.dto.response;
 
 import edu.ssafy.punpun.entity.Reservation;
 import edu.ssafy.punpun.entity.enumurate.ReservationState;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+@Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
