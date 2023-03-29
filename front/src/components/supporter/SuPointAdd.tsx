@@ -2,8 +2,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import API from '../../store/API';
 
-import MainTitle from '../ui/MainTitle';
-import MainMessage from '../ui/MainMessage';
+import SuMainMessage from './SuMainMessage';
 
 import { useRecoilState } from 'recoil';
 import { pointState } from '../../store/atoms';
@@ -44,12 +43,6 @@ const ButtonDiv = styled.div``;
 const CheckBoxDiv = styled.div``;
 
 const SuPointAdd = () => {
-  const mainMessage = {
-    title: '',
-    ownerName: '박정은 후원자님',
-    message: '어느새 후원한 금액이 10,000원 이네요!',
-    name: '정은 후원자님',
-  };
 
   const [selectedPoint, setSelectedPoint] = useState(0);
   const [selectedPayment, setSelectedPayment] = useState('');
@@ -96,12 +89,7 @@ const SuPointAdd = () => {
 
   return (
     <ComponentStyle>
-      <h2>
-        <MainTitle title={`${mainMessage.name} ${mainMessage.title}`} />
-      </h2>
-      <MainMessage
-        message={`${mainMessage.ownerName}, ${mainMessage.message}`}
-      />
+      <SuMainMessage/>
       <h2>충전 포인트</h2>
       <ButtonDiv>
         {points.map((point) => (

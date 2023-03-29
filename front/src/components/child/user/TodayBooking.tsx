@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { useEffect } from 'react';
 import styled from 'styled-components';
 import Cookies from 'js-cookie';
