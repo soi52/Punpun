@@ -16,28 +16,19 @@ import edu.ssafy.testutil.WIthCustomChild;
 import edu.ssafy.punpun.dto.request.BookingRequestDTO;
 import edu.ssafy.punpun.entity.enumurate.UserRole;
 import edu.ssafy.testutil.WIthCustomOwner;
-import io.netty.util.CharsetUtil;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockedStatic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.geo.GeoPage;
 import org.springframework.http.MediaType;
-import org.springframework.http.codec.json.Jackson2JsonEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-import java.time.Clock;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static org.mockito.Mockito.*;
