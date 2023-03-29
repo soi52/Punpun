@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import StoreData from './StoreData.json';
 import Map from './Map';
 import SearchStoreList from './SearchStoreList';
-import useGeolocation from './UseGeolocation';
+import useGeolocation from './useGeolocation';
 
 type SearchStoreProps = {
   message: string;

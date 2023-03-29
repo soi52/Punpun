@@ -12,7 +12,6 @@ import {
   userInfoState,
 } from '../../store/atoms';
 import { decode } from 'punycode';
-import UseGeolocation from '../../common/UseGeolocation';
 
 const Oauth = () => {
   const navigate = useNavigate();
