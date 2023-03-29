@@ -61,6 +61,15 @@ const Oauth = () => {
     console.log(decodedToken);
     console.log(decodedToken.role);
     console.log(decodedToken['role']);
+    setUserInfo(
+      {
+        userId: decodedToken.id,
+        userName: decodedToken.name,
+        userEmail: decodedToken.email,
+        userLocation: '',
+        userRole: decodedToken.role,
+      },
+    );
 
     if (decodedToken['role'] === 'SUPPORTER') {
       // if (!decodedToken.number) {
@@ -70,15 +79,6 @@ const Oauth = () => {
       // }
       setIsSupporter(true);
       setIsLoggedIn(true);
-      setUserInfo(
-        {
-          userId: decodedToken.id,
-          userName: decodedToken.name,
-          userEmail: decodedToken.email,
-          userLocation: '',
-          userRole: decodedToken.role,
-        },
-      );
       navigate('/');
     } else {
       navigate('/');
