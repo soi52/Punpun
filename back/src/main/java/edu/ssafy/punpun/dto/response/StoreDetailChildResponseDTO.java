@@ -3,12 +3,14 @@ package edu.ssafy.punpun.dto.response;
 import edu.ssafy.punpun.entity.Store;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Getter
 @AllArgsConstructor
-public class StoreDetailChildDTO {
+@NoArgsConstructor
+public class StoreDetailChildResponseDTO {
     private Long storeId;
     private String storeName;
     private String storeOpenTime;
@@ -21,7 +23,7 @@ public class StoreDetailChildDTO {
     private String storePhoneNumber;
     private List<FavoriteMenuDTO> favoriteMenuDTOList;
 
-    public StoreDetailChildDTO(Store store, List<FavoriteMenuDTO> favoriteMenuDTOList) {
+    public StoreDetailChildResponseDTO(Store store, List<FavoriteMenuDTO> favoriteMenuDTOList) {
         this.storeId = store.getId();
         this.storeName = store.getName();
         this.storeOpenTime = store.getOpenTime();
@@ -29,8 +31,10 @@ public class StoreDetailChildDTO {
         this.storeAddress = store.getAddress();
         this.storeLon = store.getLon();
         this.storeLat = store.getLat();
-        this.storeImageName = store.getImage().getName();
-        this.storeImage = store.getImage().getUrl();
+        if (store.getImage() != null) {
+            this.storeImageName = store.getImage().getName();
+            this.storeImage = store.getImage().getUrl();
+        }
         this.storePhoneNumber = store.getPhoneNumber();
         this.favoriteMenuDTOList = favoriteMenuDTOList;
     }

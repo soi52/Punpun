@@ -2,6 +2,7 @@ package edu.ssafy.punpun.service;
 
 import edu.ssafy.punpun.entity.Member;
 import edu.ssafy.punpun.entity.Store;
+import edu.ssafy.punpun.exception.NotStoreOwnerException;
 import edu.ssafy.punpun.repository.StoreRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,9 +32,13 @@ public class StoreServiceImpl implements StoreService {
 
     @Override
     public void deleteStoreByMember(Long id, Member member) {
-        Store store = storeRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+        Store store = storeRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 가게 입니다."));
 
-        store.setOwner(null);
-        storeRepository.save(store);
+        if (member.getId() != store.getOwner().getId()) {
+            throw new NotStoreOwnerException("가게의 주인이 아닙니다.");
+        } else {
+            store.deleteOwner();
+        }
     }
 }

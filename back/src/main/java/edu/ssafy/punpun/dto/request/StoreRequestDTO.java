@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class StoreUpdateDTO {
+public class StoreRequestDTO {
     private Long storeId;
     private String storeName;
     private double storeLon;
