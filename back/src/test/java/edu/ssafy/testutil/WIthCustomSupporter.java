@@ -10,4 +10,5 @@ import java.lang.annotation.RetentionPolicy;
 public @interface WIthCustomSupporter {
     String name() default "name";
     long remainPoint() default 0L;
+    long supportedPoint() default 0L;
 }
