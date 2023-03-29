@@ -26,6 +26,7 @@ export interface UserInfo {
   userEmail: string;
   userLocation: string;
   userRole: string;
+  userNumber: string;
 }
 
 export const userInfoState = atom<UserInfo>({
@@ -36,6 +37,7 @@ export const userInfoState = atom<UserInfo>({
     userEmail: '',
     userLocation: '',
     userRole: '',
+    userNumber: '',
   },
 });
 

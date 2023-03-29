@@ -1,11 +1,10 @@
 import { useParams } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import Map from '../../../common/Map';
 import useGeolocation from '../../../common/useGeolocation';
-import { storeState } from '../../../store/atoms';
 import StoreBanner from './Storebanner';
 import StoreHour from './Storehours';
+import StoreData from '../../../common/StoreData.json';
 
 const ComponentStyle = styled.div`
   padding: 20px;
@@ -13,7 +12,8 @@ const ComponentStyle = styled.div`
 
 const StoreInfo = () => {
   const { storeId } = useParams<{ storeId: string }>();
-  const stores = useRecoilValue(storeState);
+  // const stores = useRecoilValue(storeState);
+  const stores = StoreData
   const currentStore = stores.find((s) => s.storeId === Number(storeId));
   const location = useGeolocation();
   const { latitude = 0, longitude = 0 } =
@@ -27,8 +27,8 @@ const StoreInfo = () => {
         <span>위치</span>
         {currentStore ? (
           <Map
-            latitude={currentStore.latitude}
-            longitude={currentStore.longitude}
+            latitude={currentStore.storeLat}
+            longitude={currentStore.storeLon}
             stores={[currentStore]} // 수정된 부분
           />
         ) : (

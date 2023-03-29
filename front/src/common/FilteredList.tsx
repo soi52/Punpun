@@ -79,17 +79,33 @@ type FilteredListProps = {
   keyword: string; // 페이지당 보여줄 아이템 수
 };
 
-interface Store {
+type MenuDTO = {
+  menuId: number;
+  menuName: string;
+  menuPrice: number;
+  menuCount: number;
+};
+
+type Store = {
   storeId: number;
-  name: string;
-  latitude: number;
-  longitude: number;
-}
+  storeName: string;
+  storeOpenTime: string | null;
+  storeInfo: string | null;
+  storeAddress: string;
+  storeLon: number;
+  storeLat: number;
+  storeImageName: string | null;
+  storeImage: string | null;
+  storePhoneNumber: string | null;
+  menuDTOList: MenuDTO[];
+};
 
 const FilteredList = ({ stores, keyword }: FilteredListProps) => {
   const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
-  const filteredList = stores.filter((store) => store.name.includes(keyword));
+  const filteredList = stores.filter((store) =>
+    store.storeName.includes(keyword)
+  );
   const pageCount = Math.ceil(filteredList.length / itemsPerPage); // 전체 페이지 수
 
   // 현재 페이지에 해당하는 아이템들만 슬라이스해서 보여줍니다.
@@ -103,22 +119,32 @@ const FilteredList = ({ stores, keyword }: FilteredListProps) => {
         {currentItems.map((store, index) => (
           <ListItem key={index}>
             <StyledLink to={`/store/${store.storeId}`}>
-              <StoreName>{store.name}</StoreName>
+              <StoreName>{store.storeName}</StoreName>
             </StyledLink>
           </ListItem>
         ))}
       </List>
       {/* 페이지네이션 UI를 만듭니다. */}
       <Pagination>
-        <button onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}>
+        <button
+          onClick={() => setCurrentPage(currentPage - 1)}
+          disabled={currentPage === 1}
+        >
           Prev
         </button>
         {Array.from({ length: pageCount }, (_, i) => i + 1).map((page) => (
-          <button key={page} onClick={() => setCurrentPage(page)} className={currentPage === page ? 'active' : ''}>
+          <button
+            key={page}
+            onClick={() => setCurrentPage(page)}
+            className={currentPage === page ? 'active' : ''}
+          >
             {page}
           </button>
         ))}
-        <button onClick={() => setCurrentPage(currentPage + 1)} disabled={currentPage === pageCount}>
+        <button
+          onClick={() => setCurrentPage(currentPage + 1)}
+          disabled={currentPage === pageCount}
+        >
           Next
         </button>
       </Pagination>

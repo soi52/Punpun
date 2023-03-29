@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 import styled from 'styled-components';
-import Cookies from 'js-cookie';
+import API from '../../store/API';
+import { useRecoilState } from 'recoil';
+import { userInfoState } from '../../store/atoms';
 
 const Form = styled.form`
   display: flex;
@@ -51,53 +53,44 @@ const StyledInput = styled.input`
 `;
 
 const NumberForm = () => {
-  const [error, setError] = useState<string>('');
+  const [error, setError] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log(`전화번호: ${phoneNumber}`);
     // 유효성 검사
     if (phoneNumber.length !== 11) {
       setError('전화번호는 11자리로 입력해야 합니다.');
-      Swal.fire({
+      await Swal.fire({
         icon: 'warning',
         text: '전화번호는 11자리로 입력해야 합니다.',
         width: '30%',
-      })
-    //   alert('전화번호는 11자리로 입력해야 합니다.');
+      });
       return;
-    };
+    }
 
-    const accessToken = Cookies.get('access_token');
-    if (phoneNumber) {
-      fetch('https://j8d109.p.ssafy.io/api/user/phone', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
-        },
-        body: JSON.stringify({ phoneNumber }),
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          return response.json();
-        })
-        .then((data) => {
-          console.log(data);
-          // 서버 응답 데이터 처리
-        })
-        .catch((error) => {
-          console.error('There was a problem with the fetch operation:', error);
-          // 에러 처리
-        });
+    const formattedPhoneNumber = String(phoneNumber);
+
+    try {
+      const response = await API.patch('users/member/phone', {
+        phoneNumber: formattedPhoneNumber,
+      });
+      console.log(response.data);
+      setUserInfo((prevUserInfo) => ({
+        ...prevUserInfo,
+        userNumber: formattedPhoneNumber,
+      }));
+      // 서버 응답 데이터 처리
+    } catch (error) {
+      console.log(error)
+      // 에러 처리
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPhoneNumber(e.target.value);
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPhoneNumber(event.target.value);
   };
 
   return (

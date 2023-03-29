@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 
-import MainTitle from '../../ui/MainTitle';
-import MainMessage from '../../ui/MainMessage';
-
+import ChMainMessage from '../ChMainMessage';
 import LikedMenu from './LikedMenu';
 
 const ComponentStyle = styled.div`
@@ -10,19 +8,9 @@ const ComponentStyle = styled.div`
 `;
 
 const Preference = () => {
-  const storeInfo = {
-    title: '',
-    ownerName: '정은 학생',
-    message: '오늘도 맛있는 밥 먹어요~!',
-    name: '박정은 학생',
-  };
-
   return (
     <ComponentStyle>
-      <h2>
-        <MainTitle title={`${storeInfo.name} ${storeInfo.title}`} />
-      </h2>
-      <MainMessage message={`${storeInfo.ownerName}, ${storeInfo.message}`} />
+      <ChMainMessage/>
       <h2>선호 메뉴</h2>
       <LikedMenu/>
     </ComponentStyle>
