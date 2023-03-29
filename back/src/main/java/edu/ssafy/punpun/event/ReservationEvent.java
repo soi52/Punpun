@@ -7,18 +7,20 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ReservationEvent implements AlarmEvent{
+public class ReservationEvent implements AlarmEvent {
     private EventType type;
-    private String storeOwnerPhoneNumber;
+    private String storeName;
     private String menuName;
     private String reservationTime;
+    private String storeOwnerPhoneNumber;
 
     public static ReservationEvent entityToEvent(Reservation reservation) {
         return ReservationEvent.builder()
                 .type(EventType.RESERVATION)
-                .storeOwnerPhoneNumber(reservation.getMenu().getStore().getOwner().getPhoneNumber())
+                .storeName(reservation.getMenu().getStore().getOwner().getName())
                 .menuName(reservation.getMenu().getName())
                 .reservationTime(reservation.getReservationTime().toString())
+                .storeOwnerPhoneNumber(reservation.getMenu().getStore().getOwner().getPhoneNumber())
                 .build();
     }
 }

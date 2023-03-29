@@ -9,10 +9,12 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ApproveEvent implements AlarmEvent{
+public class ApproveEvent implements AlarmEvent {
     private EventType type;
     private String childName;
     private String menuName;
+    private String storeName;
+    private Long reservationId;
     private String reservationTime;
     private ReservationState state;
 
@@ -21,6 +23,8 @@ public class ApproveEvent implements AlarmEvent{
                 .type(EventType.APPROVE)
                 .childName(reservation.getChild().getName())
                 .menuName(reservation.getMenu().getName())
+                .storeName(reservation.getMenu().getStore().getName())
+                .reservationId(reservation.getId())
                 .reservationTime(reservation.getReservationTime().toString())
                 .state(reservation.getState())
                 .build();
