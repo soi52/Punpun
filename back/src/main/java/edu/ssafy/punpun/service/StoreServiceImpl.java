@@ -36,7 +36,7 @@ public class StoreServiceImpl implements StoreService {
         Store store = storeRepository.findById(storeId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 가게 입니다."));
 
-        if (member.getId() != store.getOwner().getId()) {
+        if (store.getOwner() == null || member.getId() != store.getOwner().getId()) {
             throw new NotStoreOwnerException("가게의 주인이 아닙니다.");
         }
         store.deleteOwner();
