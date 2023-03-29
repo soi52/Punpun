@@ -62,6 +62,13 @@ const Oauth = () => {
           ' ' +
           arr[0].address.region_2depth_name;
         setAddress(_arr);
+        setUserInfo((userInfo) => {
+          return {
+            ...userInfo,
+            userLocation: _arr,
+          };
+        });
+        console.log(userInfo);
       }
     };
     geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
