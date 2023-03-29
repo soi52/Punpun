@@ -3,7 +3,12 @@ import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import Logo from './Logo';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { isChildState, isLoggedInState, isOwnerState } from '../../store/atoms';
+import {
+  isChildState,
+  isLoggedInState,
+  isOwnerState,
+  userInfoState,
+} from '../../store/atoms';
 import ChildHeader from '../header/ChildHeader';
 import OwnerHeader from '../header/OwnerHeader';
 import SupporterHeader from '../header/SupporterHeader';
@@ -45,6 +50,7 @@ type HeaderProps = {
 };
 
 function Header(props: HeaderProps) {
+  const userInfo = useRecoilValue(userInfoState);
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLoggedInState);
   const isChild = useRecoilValue(isChildState);
   const [isOwner, setIsOwner] = useRecoilState(isOwnerState);
@@ -92,6 +98,7 @@ function Header(props: HeaderProps) {
             userType="owner"
             items={isOwner ? ['후원자'] : ['사장님']}
             selectedItem={selectedItem}
+            userRole={userInfo.userRole}
           />
         );
       } else {
@@ -103,6 +110,7 @@ function Header(props: HeaderProps) {
             userType="supporter"
             items={isOwner ? ['후원자'] : ['사장님']}
             selectedItem={selectedItem}
+            userRole={userInfo.userRole}
           />
         );
       }
