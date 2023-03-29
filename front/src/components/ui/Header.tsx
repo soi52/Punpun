@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import Logo from './Logo';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import {
-  isChildState,
   isLoggedInState,
   isOwnerState,
   userInfoState,
@@ -52,7 +51,6 @@ type HeaderProps = {
 function Header(props: HeaderProps) {
   const userInfo = useRecoilValue(userInfoState);
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLoggedInState);
-  const isChild = useRecoilValue(isChildState);
   const [isOwner, setIsOwner] = useRecoilState(isOwnerState);
   const [selectedItem, setSelectedItem] = useState('후원자');
   const navigate = useNavigate();
@@ -87,7 +85,7 @@ function Header(props: HeaderProps) {
 
   const renderNav = () => {
     if (isLoggedIn) {
-      if (isChild) {
+      if (userInfo.userRole == 'CHILD') {
         return <ChildHeader onLogout={onLogout} />;
       } else if (isOwner) {
         return (
