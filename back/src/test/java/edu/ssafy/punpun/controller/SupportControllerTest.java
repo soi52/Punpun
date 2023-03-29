@@ -108,13 +108,11 @@ public class SupportControllerTest {
     @WIthCustomSupporter
     @DisplayName("후원 결제")
     void supportPayment() throws Exception{
-        SupportRequestDTO supportRequestDTO= new SupportRequestDTO(8000L, List.of(1L, 2L), List.of(1L,1L), 1L);
+        SupportRequestDTO supportRequestDTO= new SupportRequestDTO(8000L, List.of(1L, 2L), List.of(1L,1L));
         Support support = Support.builder()
                 .supportState(SupportState.SUPPORT)
                 .supporter(Member.builder().build())
                 .supportType(SupportType.SUPPORT)
-                .menu(Menu.builder().id(supportRequestDTO.getMenuId().get(0)).build())
-                .store(Store.builder().id(supportRequestDTO.getStoreId()).build())
                 .build();
         List<Support> supports=List.of(support, support);
         doNothing().when(supportService).saveSupport(eq(supports), eq(supportRequestDTO.getMenuId()), eq(supportRequestDTO.getMenuCount()), any(Member.class), eq(supportRequestDTO.getUsePoint()));
@@ -133,13 +131,11 @@ public class SupportControllerTest {
     @WIthCustomOwner
     @DisplayName("오늘의 나눔 등록")
     void ownerShare() throws Exception{
-        SupportRequestDTO supportRequestDTO=new SupportRequestDTO(0L, List.of(1L, 2L), List.of(1L,1L), 1L);
+        SupportRequestDTO supportRequestDTO=new SupportRequestDTO(0L, List.of(1L, 2L), List.of(1L,1L));
         Support support = Support.builder()
                 .supportState(SupportState.SUPPORT)
                 .supporter(Member.builder().build())
                 .supportType(SupportType.SHARE)
-                .menu(Menu.builder().id(supportRequestDTO.getMenuId().get(0)).build())
-                .store(Store.builder().id(supportRequestDTO.getStoreId()).build())
                 .build();
         List<Support> supports=List.of(support, support);
         doNothing().when(supportService).saveSupport(eq(supports), eq(supportRequestDTO.getMenuId()), eq(supportRequestDTO.getMenuCount()), any(Member.class), eq(0L));

@@ -36,4 +36,12 @@ public class Support extends BaseEntity {
     public void setSupportType(SupportType supportType) {
         this.supportType = supportType;
     }
+
+    public void setMenu(Menu menu) {
+        this.menu = menu;
+    }
+
+    public void setStore(Store store){
+        this.store=store;
+    }
 }
