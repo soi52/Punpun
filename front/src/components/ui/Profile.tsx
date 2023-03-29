@@ -52,7 +52,7 @@ function Profile() {
         </ImgBox>
         <InfoBox>
           <span>
-            {userInfo.userName}님<br></br>
+            {userInfo.userName} 님<br></br>
             {userInfo.userLocation}
           </span>
         </InfoBox>

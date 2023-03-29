@@ -96,6 +96,11 @@ const Oauth = () => {
     //   sameSite: 'none',
     // });
   }, []);
+
+  useEffect(() => {
+    console.log(userInfo);
+    
+  }, [userInfo])
   return <></>;
 };
 
