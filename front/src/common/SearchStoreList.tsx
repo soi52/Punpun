@@ -45,12 +45,26 @@ const SearchBarDiv = styled.div`
   padding-bottom: 10px;
 `;
 
-interface Store {
+type MenuDTO = {
+  menuId: number;
+  menuName: string;
+  menuPrice: number;
+  menuCount: number;
+};
+
+type Store = {
   storeId: number;
-  name: string;
-  latitude: number;
-  longitude: number;
-}
+  storeName: string;
+  storeOpenTime: string | null;
+  storeInfo: string | null;
+  storeAddress: string;
+  storeLon: number;
+  storeLat: number;
+  storeImageName: string | null;
+  storeImage: string | null;
+  storePhoneNumber: string | null;
+  menuDTOList: MenuDTO[];
+};
 
 const SearchStoreList = ({ stores }: { stores: Store[] }) => {
   const [keyword, setKeyword] = useState('');
@@ -61,12 +75,12 @@ const SearchStoreList = ({ stores }: { stores: Store[] }) => {
   };
 
   const filteredList = stores
-    .filter((item) => item.name.includes(keyword))
+    .filter((item) => item.storeName.includes(keyword))
     .sort((a, b) => {
       if (activeTab === 'asc') {
-        return a.name.localeCompare(b.name);
+        return a.storeName.localeCompare(b.storeName);
       } else if (activeTab === 'desc') {
-        return b.name.localeCompare(a.name);
+        return b.storeName.localeCompare(a.storeName);
       } else {
         return 0;
       }
