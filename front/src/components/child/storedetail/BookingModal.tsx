@@ -161,7 +161,7 @@ const BookingModal: React.FC<ModalProps> = ({ menu, onClose }) => {
     };
 
     API.post('bookings', {
-      data: data
+      data
     })
     .then((response) => {
       console.log(response.data);
