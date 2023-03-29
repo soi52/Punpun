@@ -63,35 +63,35 @@ const SuPointAdd = () => {
     setSelectedPayment(event.target.value);
   };
 
-  const handleSubmit = (event: any) => {
+  const handleSubmit = async (event: any) => {
     event.preventDefault();
     if (selectedPoint === 0 || selectedPayment === '') {
       alert('충전 포인트와 결제 수단을 모두 선택해주세요.');
       return;
     }
     console.log(`충전 포인트: ${selectedPoint}, 결제 수단: ${selectedPayment}`);
-    const paymentObj = {
-      amount: point + selectedPoint,
-    };
-    // setPoint(paymentObj.amount);
-    API
-      .post('payments', {
+  
+    try {
+      // point post
+      await API.post('payments', {
         point: selectedPoint,
-      })
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
       });
+    
+      // point get하고 state 변경
+      const response = await API.get('payments');
+      console.log(response.data);
+      setPoint(response.data.memberPoint);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const points = [
-    { id: 1, name: '10,000', value: 10000 },
-    { id: 2, name: '30,000', value: 30000 },
-    { id: 3, name: '50,000', value: 50000 },
-    { id: 4, name: '70,000', value: 70000 },
-    { id: 5, name: '100,000', value: 100000 },
+    { id: 0, name: '10,000', value: 10000 },
+    { id: 1, name: '30,000', value: 30000 },
+    { id: 2, name: '50,000', value: 50000 },
+    { id: 3, name: '70,000', value: 70000 },
+    { id: 4, name: '100,000', value: 100000 },
   ];
 
   return (
@@ -106,6 +106,7 @@ const SuPointAdd = () => {
       <ButtonDiv>
         {points.map((point) => (
           <PointButton
+            key={point.id}
             name="point"
             value={point.value}
             selected={selectedPoint === point.value}

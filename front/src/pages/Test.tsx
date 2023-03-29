@@ -3,7 +3,12 @@ import API from '../store/API';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
+import { useRecoilState } from 'recoil';
+import { pointState } from '../store/atoms';
+
 const TestPage = () => {
+  const [point, setPoint] = useRecoilState(pointState);
+
   const accessToken = Cookies.get('accessToken');
   console.log(accessToken);
 
@@ -15,6 +20,7 @@ const TestPage = () => {
       .get('payments')
       .then((response) => {
         console.log(response.data);
+        setPoint(response.data.memberPoint);
       })
       .catch((error) => {
         console.log(error);
