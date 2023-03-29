@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Address from '../components/auth/Address';
 import alone_child from '../resources/images/alone_child.jpg';
 
 const Wrapper = styled.div`
