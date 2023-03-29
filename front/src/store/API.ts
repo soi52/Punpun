@@ -5,6 +5,7 @@ const API_URL = 'https://j8d109.p.ssafy.io/api/';
 
 const API: AxiosInstance = axios.create({
   baseURL: API_URL,
+  withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
   },

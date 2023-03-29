@@ -1,11 +1,8 @@
-import { useEffect } from 'react';
 import API from '../store/API';
 
 const TestCopy = () => {
-
   const apiRequest = () => {
-    API
-      .get('api/stores/test')
+    API.get('stores/test')
       .then((response: any) => {
         console.log(response.data);
       })
