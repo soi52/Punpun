@@ -4,8 +4,10 @@ import edu.ssafy.punpun.entity.Child;
 import edu.ssafy.punpun.entity.enumurate.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 @AllArgsConstructor
 public class ChildResponseDTO {
     private Long id;
