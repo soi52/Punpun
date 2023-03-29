@@ -2,17 +2,11 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import Logo from './Logo';
-import Dropdown from './Dropdown';
-import { useRecoilState } from 'recoil';
-import {
-  isChildState,
-  isLoggedInState,
-  isOwnerState,
-  isSupporterState,
-  OwStore,
-  owStoreState,
-} from '../../store/atoms';
-import Cookies from 'js-cookie';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { isChildState, isLoggedInState, isOwnerState } from '../../store/atoms';
+import ChildHeader from '../header/ChildHeader';
+import OwnerHeader from '../header/OwnerHeader';
+import SupporterHeader from '../header/SupporterHeader';
 
 const Wrapper = styled.div`
   position: absolute;
@@ -46,58 +40,16 @@ const NavLi = styled.li`
   margin: 30px;
 `;
 
-const StoreDropdown = styled.ul<{ show: boolean }>`
-  display: none;
-  position: absolute;
-  //left: 75%;
-  //transform: translateX(-50%);
-  width: 200px;
-  background-color: white;
-  border-radius: 5px;
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
-  z-index: 1;
-  padding: 10px;
-
-  ${({ show }) =>
-    show &&
-    `
-    display: block;
-  `}
-`;
-
-const StoreDropdownItem = styled.li`
-  cursor: pointer;
-  list-style: none;
-
-  &:hover {
-    color: white;
-    background-color: #3f51b5;
-  }
-`;
-
 type HeaderProps = {
   onSelect: (item: string) => void;
 };
 
 function Header(props: HeaderProps) {
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLoggedInState);
-  const [isChild, setIsChild] = useRecoilState(isChildState);
+  const isChild = useRecoilValue(isChildState);
   const [isOwner, setIsOwner] = useRecoilState(isOwnerState);
-  const [isSupporter, setIsSupporter] = useRecoilState(isSupporterState);
   const [selectedItem, setSelectedItem] = useState('후원자');
-  const [drop, setDrop] = useState(false);
-  const [storeDrop, setStoreDrop] = useState(false);
-  const [selectedStore, setSelectedStore] = useState<OwStore | null>(null);
-  const [owStore, setOWStore] = useRecoilState(owStoreState);
   const navigate = useNavigate();
-
-  const selectStore = (store: OwStore | null) => {
-    setSelectedStore(store);
-    setStoreDrop(true);
-    if (!store) {
-      navigate('/stores');
-    }
-  };
 
   const toLogin = () => {
     navigate('/login');
@@ -106,29 +58,9 @@ function Header(props: HeaderProps) {
   const toMain = () => {
     navigate('/sumain');
   };
-  const toSuSearch = () => {
-    navigate('/susearch');
-  };
-  const toSuMypage = () => {
-    navigate('/suuser');
-  };
-
-  const toChMain = () => {
-    navigate('/chmain');
-  };
-
-  const toMyPage = () => {
-    navigate('/chuser');
-  };
 
   const toOwStore = () => {
     navigate('/owstore/:store_id');
-  };
-  const toOwBooking = () => {
-    navigate('/owstore/:store_id/booking');
-  };
-  const toOwStoreList = () => {
-    navigate('/owstorelist');
   };
 
   const onLogout = () => {
@@ -140,89 +72,38 @@ function Header(props: HeaderProps) {
     setSelectedItem(item);
     if (item === '사장님') {
       setIsOwner(true);
-      setIsSupporter(false);
       toOwStore();
     } else if (item === '후원자') {
-      setIsSupporter(true);
       setIsOwner(false);
       toMain();
     }
   };
 
-  const selectMe = () => {
-    setDrop(!drop);
-  };
-
-  const seleteChild = () => {
-    setIsChild(!isChild);
-    isOwner ? toChMain() : toMain();
-  };
-
   const renderNav = () => {
-    console.log(isLoggedIn);
     if (isLoggedIn) {
       if (isChild) {
-        return (
-          <NavUl>
-            <NavLi onClick={toChMain}>가게찾기</NavLi>
-            <NavLi onClick={toMyPage}>마이페이지</NavLi>
-            <NavLi onClick={onLogout}>로그아웃</NavLi>
-          </NavUl>
-        );
+        return <ChildHeader onLogout={onLogout} />;
       } else if (isOwner) {
         return (
-          <NavUl>
-            <NavLi onClick={toOwStore}>가게운영</NavLi>
-            <NavLi onClick={() => setStoreDrop(!storeDrop)}>
-              {selectedStore?.storeName ?? '가게 선택'}
-              {storeDrop && (
-                <StoreDropdown show={storeDrop}>
-                  {owStore.map((store) => (
-                    <StoreDropdownItem
-                      key={store.id}
-                      onClick={() => selectStore(store)}
-                    >
-                      {store.storeName}
-                    </StoreDropdownItem>
-                  ))}
-                  <StoreDropdownItem onClick={() => navigate('/owstorelist')}>
-                    전체 가게 관리
-                  </StoreDropdownItem>
-                </StoreDropdown>
-              )}
-            </NavLi>
-            <NavLi onClick={toOwBooking}>예약관리</NavLi>
-            <NavLi onClick={onLogout}>로그아웃</NavLi>
-            <NavLi onClick={selectMe}>
-              {selectedItem}{' '}
-              {drop && (
-                <Dropdown
-                  onSelect={onSelect}
-                  items={isOwner ? ['후원자'] : ['사장님']}
-                  selectedItem={selectedItem}
-                />
-              )}
-            </NavLi>
-          </NavUl>
+          <OwnerHeader
+            onSelect={onSelect}
+            onLogout={onLogout}
+            toOwStore={toOwStore}
+            userType="owner"
+            items={isOwner ? ['후원자'] : ['사장님']}
+            selectedItem={selectedItem}
+          />
         );
       } else {
         return (
-          <NavUl>
-            <NavLi onClick={toMain}>사업소개</NavLi>
-            <NavLi onClick={toSuSearch}>가게찾기</NavLi>
-            <NavLi onClick={toSuMypage}>마이페이지</NavLi>
-            <NavLi onClick={onLogout}>로그아웃</NavLi>
-            <NavLi onClick={selectMe}>
-              {selectedItem}{' '}
-              {drop && (
-                <Dropdown
-                  onSelect={onSelect}
-                  items={isOwner ? ['후원자'] : ['사장님']}
-                  selectedItem={selectedItem}
-                />
-              )}
-            </NavLi>
-          </NavUl>
+          <SupporterHeader
+            onSelect={onSelect}
+            onLogout={onLogout}
+            toMain={toMain}
+            userType="supporter"
+            items={isOwner ? ['후원자'] : ['사장님']}
+            selectedItem={selectedItem}
+          />
         );
       }
     } else {
@@ -238,7 +119,6 @@ function Header(props: HeaderProps) {
   return (
     <Wrapper>
       <Logo />
-      <button onClick={seleteChild}>{isChild ? '어린이' : '일반'}</button>
       <Contents>
         <nav>{renderNav()}</nav>
       </Contents>
