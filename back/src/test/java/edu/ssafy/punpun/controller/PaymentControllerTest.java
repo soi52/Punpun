@@ -1,6 +1,7 @@
 package edu.ssafy.punpun.controller;
 
 import com.google.gson.Gson;
+import edu.ssafy.punpun.dto.request.PointRequestDTO;
 import edu.ssafy.punpun.dto.response.PointResponseDTO;
 import edu.ssafy.punpun.entity.Member;
 import edu.ssafy.punpun.entity.enumurate.UserRole;
@@ -11,8 +12,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.mockito.Mockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -48,6 +51,24 @@ public class PaymentControllerTest {
                 .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(content().string(result))
+                .andDo(print());
+    }
+
+    @Test
+    @WIthCustomSupporter(remainPoint = 10000L)
+    @DisplayName("포인트 충전")
+    void savePoints() throws Exception{
+
+        PointRequestDTO pointRequestDTO=new PointRequestDTO(30000L);
+        doNothing().when(paymentService).updatePoints(any(Member.class), eq(pointRequestDTO.getPoint()));
+
+        String input=new Gson().toJson(pointRequestDTO);
+
+        mockMvc.perform(post("/payments")
+                .with(csrf())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(input))
+                .andExpect(status().isOk())
                 .andDo(print());
     }
 
