@@ -46,21 +46,10 @@ const Oauth = () => {
     return params.get(name);
   };
 
-  const location = useGeolocation();
-  const { latitude = 0, longitude = 0 } =
-    typeof location === 'object' ? location : {};
-
   useEffect(() => {
-    const token = getUrlParameter('token');
-    const accessToken = token || '';
-    console.log(accessToken);
-    Cookies.set('access_token', accessToken, {
-      expires: 7, // 쿠키 만료 일자
-      path: '/', // 쿠키 경로
-      secure: true, // HTTPS 프로토콜에서만 전송
-      sameSite: 'strict', // SameSite 옵션
-      httpOnly: true, // JavaScript를 통한 접근 방지
-    });
+    const location = useGeolocation();
+    const { latitude = 0, longitude = 0 } =
+      typeof location === 'object' ? location : {};
 
     let geocoder = new kakao.maps.services.Geocoder();
     let coord = new kakao.maps.LatLng(latitude, longitude);
@@ -73,9 +62,22 @@ const Oauth = () => {
             result[0].address.region_2depth_name
         );
       }
-
-      geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
     };
+
+    geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
+  }, []);
+
+  useEffect(() => {
+    const token = getUrlParameter('token');
+    const accessToken = token || '';
+    console.log(accessToken);
+    Cookies.set('access_token', accessToken, {
+      expires: 7, // 쿠키 만료 일자
+      path: '/', // 쿠키 경로
+      secure: true, // HTTPS 프로토콜에서만 전송
+      sameSite: 'strict', // SameSite 옵션
+      httpOnly: true, // JavaScript를 통한 접근 방지
+    });
 
     const decodedToken: any = jwt_decode(accessToken);
     console.log(decodedToken);
