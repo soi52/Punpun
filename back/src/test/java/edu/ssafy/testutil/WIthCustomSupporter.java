@@ -9,4 +9,6 @@ import java.lang.annotation.RetentionPolicy;
 @WithSecurityContext(factory = WithMockCustomSupporterSecurityContextFactory.class)
 public @interface WIthCustomSupporter {
     String name() default "name";
+    long remainPoint() default 0L;
+    long supportedPoint() default 0L;
 }

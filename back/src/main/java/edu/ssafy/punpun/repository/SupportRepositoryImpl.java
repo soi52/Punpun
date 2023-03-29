@@ -48,7 +48,7 @@ public class SupportRepositoryImpl implements  SupportCustomRepository {
                             support.supportType.eq(supportType),
                             support.supportState.eq(SupportState.END),
                             support.menu.id.eq(supports.get(i).getMenuId()),
-                            betweenTime(supports.get(i).getSupportDate()))
+                            betweenTime(LocalDate.parse(supports.get(i).getSupportDate())))
                     .fetchOne();
             ShareResponseDTO shareResponseDTO=supports.get(i);
             shareResponseDTO.setUseCount(cnt);

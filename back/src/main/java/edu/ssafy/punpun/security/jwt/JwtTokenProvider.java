@@ -57,6 +57,11 @@ public class JwtTokenProvider {
         claims.put("name", member.getName());
         claims.put("email", member.getEmail());
         claims.put("role", member.getRole());
+        if (member.getPhoneNumber() == null) {
+            claims.put("phoneNumber", "NoNumber");
+        } else {
+            claims.put("phoneNumber", member.getPhoneNumber());
+        }
 
         Date now = new Date();
         String token = Jwts.builder()
@@ -78,6 +83,11 @@ public class JwtTokenProvider {
         claims.put("name", child.getName());
         claims.put("email", child.getEmail());
         claims.put("role", child.getRole());
+        if (child.getPhoneNumber() == null) {
+            claims.put("phoneNumber", "NoNumber");
+        } else {
+            claims.put("phoneNumber", child.getPhoneNumber());
+        }
 
         Date now = new Date();
         String token = Jwts.builder()
@@ -149,7 +159,7 @@ public class JwtTokenProvider {
     public String getUserEmail(String token) {
         log.debug("[getUserEmail] 토큰 기반 회원 구별 정보 추출");
         String info = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().get("email").toString();
-        log.debug("[getUserEmail] 토큰 기반 회원 구별 정보 추출 완료, info : {}", info);
+        log.info("[getUserEmail] 토큰 기반 회원 구별 정보 추출 완료, info : {}", info);
         return info;
     }
 }

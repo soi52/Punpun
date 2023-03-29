@@ -21,7 +21,7 @@ public class ExceptionHandleAdvice {
         String UUID = (String) request.getAttribute("uuid");
         String uri = request.getRequestURI();
         String method = request.getMethod();
-        log.error("[{}][{}][{}] error = {}", UUID, uri, method, e.getClass().getName());
+        log.error("[{}][{}][{}] error = {} message = {}", UUID, uri, method, e.getClass().getName(), e.getMessage());
 
         return new ErrorDTO(e.getClass().getName(), e.getMessage());
     }
@@ -32,7 +32,7 @@ public class ExceptionHandleAdvice {
         String UUID = (String) request.getAttribute("uuid");
         String uri = request.getRequestURI();
         String method = request.getMethod();
-        log.error("[{}][{}][{}] error = {}", UUID, uri, method, e.getClass().getName());
+        log.error("[{}][{}][{}] error = {} message = {}", UUID, uri, method, e.getClass().getName(), e.getMessage());
 
         return new ErrorDTO(e.getClass().getName(), e.getMessage());
     }
@@ -43,7 +43,7 @@ public class ExceptionHandleAdvice {
         String UUID = (String) request.getAttribute("uuid");
         String uri = request.getRequestURI();
         String method = request.getMethod();
-        log.error("[{}][{}][{}] error = {}", UUID, uri, method, e.getClass().getName());
+        log.error("[{}][{}][{}] error = {} message = {}", UUID, uri, method, e.getClass().getName(), e.getMessage());
 
         return new ErrorDTO(e.getClass().getName(), e.getMessage());
     }
@@ -54,7 +54,7 @@ public class ExceptionHandleAdvice {
         String UUID = (String) request.getAttribute("uuid");
         String uri = request.getRequestURI();
         String method = request.getMethod();
-        log.error("[{}][{}][{}] error = {}", UUID, uri, method, e.getClass().getName());
+        log.error("[{}][{}][{}] error = {} message = {}", UUID, uri, method, e.getClass().getName(), e.getMessage());
 
         return new ErrorDTO(e.getClass().getName(), e.getMessage());
     }

@@ -12,15 +12,15 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import java.util.Optional;
 
 @DataJpaTest
+@DisplayName("후원자, 사장 레포지토리 테스트")
 public class MemberRepositoryTest {
     @Autowired
     private MemberRepository memberRepository;
     @AfterEach
     void afterEach() { memberRepository.deleteAll(); }
     @Test
-    @DisplayName("test for Member findByEmail")
+    @DisplayName("후원자, 사장 이메일로 찾기")
     void findByEmail() {
-
         //given
         Member member1 = Member.builder()
                 .name("member1")
@@ -42,6 +42,5 @@ public class MemberRepositoryTest {
         Assertions.assertThat(result.get().getSupportedPoint()).isEqualTo(0L);
         Assertions.assertThat(result.get().getRemainPoint()).isEqualTo(member1.getRemainPoint());
         Assertions.assertThat(result.get().getRemainPoint()).isEqualTo(0L);
-
     }
 }

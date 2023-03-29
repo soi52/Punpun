@@ -83,6 +83,30 @@ class BookingControllerTest {
 
         @Test
         @WIthCustomChild
+        @DisplayName("성공 - 2")
+        void registReservation2() throws Exception {
+            Reservation reservation = Reservation.builder()
+                    .id(1L)
+                    .state(ReservationState.BOOKING)
+                    .build();
+
+            doReturn(reservation).when(bookingService).reservation(any(Child.class), eq(1L), any(LocalDateTime.class));
+
+            BookingRequestDTO bookingRequestDTO = new BookingRequestDTO();
+            bookingRequestDTO.setMenuId(1L);
+            bookingRequestDTO.setReservationTime("2023-03-29T09:48:57");
+            String input = new Gson().toJson(bookingRequestDTO);
+
+            mockMvc.perform(post("/bookings")
+                            .with(csrf())
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(input))
+                    .andExpect(status().isCreated())
+                    .andDo(print());
+        }
+
+        @Test
+        @WIthCustomChild
         @DisplayName("실패 - 메뉴 없음")
         void reservationFailNoMenu() throws Exception {
             LocalDateTime now = LocalDateTime.now();

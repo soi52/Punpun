@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PointRequestDTO {
-    Long point;
+public class MemberRequestDTO {
+    private String phoneNumber;
 }
