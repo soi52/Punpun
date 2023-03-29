@@ -12,7 +12,6 @@ const TestPage = () => {
   // 요청을 보낼 URL을 지정합니다.
   const url = 'https://j8d109.p.ssafy.io/api/stores/test';
 
-
   const apiRequest = () => {
     axios
       .get(url, {

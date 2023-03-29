@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import Map from '../../../common/Map';
-import useGeolocation from '../../../common/useGeolocation';
+import useGeolocation from '../../../common/UseGeolocation';
 import StoreBanner from './Storebanner';
 import StoreHour from './Storehours';
 import { useEffect, useState } from 'react';
