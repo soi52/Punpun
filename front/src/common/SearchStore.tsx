@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import StoreData from './StoreData.json';
 import Map from './Map';
 import SearchStoreList from './SearchStoreList';
-import useGeolocation from './useGeolocation';
+import useGeolocation from './UseGeolocation';
 
 type SearchStoreProps = {
   message: string;
@@ -33,7 +33,6 @@ const MapDiv = styled.div`
 const SearchStore = ({ message }: SearchStoreProps) => {
   // const stores = useRecoilValue(storeState);
   console.log(StoreData);
-  
 
   const location = useGeolocation();
   console.log(location);
