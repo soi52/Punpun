@@ -4,9 +4,11 @@ import edu.ssafy.punpun.entity.Menu;
 import edu.ssafy.punpun.entity.Store;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 public class FavoriteMenuChildDTO {
     private Long storeId;
     private String storeName;
