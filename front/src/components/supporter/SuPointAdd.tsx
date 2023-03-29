@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
+import API from '../../store/API';
 
 import MainTitle from '../ui/MainTitle';
 import MainMessage from '../ui/MainMessage';
@@ -72,7 +73,17 @@ const SuPointAdd = () => {
     const paymentObj = {
       amount: point + selectedPoint,
     };
-    setPoint(paymentObj.amount);
+    // setPoint(paymentObj.amount);
+    API
+      .post('payments', {
+        point: selectedPoint,
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const points = [
