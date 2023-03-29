@@ -2,7 +2,11 @@ package edu.ssafy.punpun.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
+import edu.ssafy.punpun.dto.ApproveState;
+import edu.ssafy.punpun.dto.BookingStoreSearchParamDTO;
+import edu.ssafy.punpun.dto.request.BookingProcessRequestDTO;
 import edu.ssafy.punpun.dto.response.BookingChildResponseDTO;
+import edu.ssafy.punpun.dto.response.BookingStoreResponseDTO;
 import edu.ssafy.punpun.dto.response.ErrorDTO;
 import edu.ssafy.punpun.entity.*;
 import edu.ssafy.punpun.entity.enumurate.ReservationState;
@@ -11,10 +15,13 @@ import edu.ssafy.punpun.service.BookingService;
 import edu.ssafy.testutil.WIthCustomChild;
 import edu.ssafy.punpun.dto.request.BookingRequestDTO;
 import edu.ssafy.punpun.entity.enumurate.UserRole;
+import edu.ssafy.testutil.WIthCustomOwner;
 import io.netty.util.CharsetUtil;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockedStatic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -28,6 +35,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.time.Clock;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -261,6 +269,92 @@ class BookingControllerTest {
                             .with(csrf()))
                     .andExpect(status().isOk())
                     .andExpect(content().string(output))
+                    .andDo(print());
+        }
+    }
+
+    @Nested
+    @DisplayName("가게가 받은 리뷰 찾기")
+    public class getBookingByStore {
+        @Test
+        @WIthCustomOwner
+        @DisplayName("성공")
+        void findReservationDefault() throws Exception {
+            Child child = Child.builder()
+                    .id(1L)
+                    .name("name")
+                    .build();
+            Store store = Store.builder()
+                    .id(1L)
+                    .name("test")
+                    .build();
+            Menu menu = Menu.builder()
+                    .id(1L)
+                    .name("Test")
+                    .store(store)
+                    .build();
+            Reservation reservation = Reservation.builder()
+                    .id(1L)
+                    .state(ReservationState.BOOKING)
+                    .reservationTime(LocalDateTime.now())
+                    .menu(menu)
+                    .child(child)
+                    .build();
+
+            PageRequest pageable = PageRequest.of(0, 10);
+            PageImpl<Reservation> result = new PageImpl<>(List.of(reservation), pageable, 1);
+
+            //TODO : LccalDateTime 때문에 안좋은 테스트 Params가 제대로 바뀌는지 확인이 안되기 때문!
+            doReturn(result).when(bookingService).findAllByStore(any(Member.class), any(BookingStoreSearchParamDTO.class));
+
+            Page<BookingStoreResponseDTO> response = result
+                    .map(BookingStoreResponseDTO::entityToDto);
+            String output = new ObjectMapper().writeValueAsString(response);
+
+            mockMvc.perform(get("/bookings/store/1")
+                            .with(csrf())
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andExpect(content().string(output))
+                    .andDo(print());
+        }
+
+    }
+
+    @Nested
+    @DisplayName("예약 승인, 거절하기")
+    public class ProcessReservation {
+        @Test
+        @WIthCustomOwner
+        @DisplayName("승낙하기")
+        void approveReservation() throws Exception {
+            doNothing().when(bookingService).reservationApprove(eq(1L), any(Member.class), eq(ApproveState.OK));
+
+            BookingProcessRequestDTO requestDto = new BookingProcessRequestDTO(1L, ApproveState.OK);
+            String input = new ObjectMapper().writeValueAsString(requestDto);
+
+            mockMvc.perform(post("/bookings/today")
+                            .with(csrf())
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(input))
+                    .andExpect(status().isCreated())
+                    .andDo(print());
+        }
+
+        @Test
+        @WIthCustomOwner
+        @DisplayName("거절하기")
+        void rejectReservation() throws Exception {
+            doNothing().when(bookingService).reservationApprove(eq(1L), any(Member.class), eq(ApproveState.NO));
+
+            BookingProcessRequestDTO requestDto = new BookingProcessRequestDTO(1L, ApproveState.NO);
+            String input = new ObjectMapper().writeValueAsString(requestDto);
+
+            mockMvc.perform(post("/bookings/today")
+                            .with(csrf())
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(input))
+                    .andExpect(status().isCreated())
                     .andDo(print());
         }
     }
