@@ -12,7 +12,6 @@ import java.util.Optional;
 
 @Repository
 public interface FavoriteMenuRepository extends JpaRepository<FavoriteMenu, Long> {
-    Optional<FavoriteMenu> findById(long id);
     List<FavoriteMenu> findByChild(Child child);
     Optional<FavoriteMenu> findByChildAndMenu(Child child, Menu menu);
     List<FavoriteMenu> findByChildAndMenu_Store(Child child, Store store);

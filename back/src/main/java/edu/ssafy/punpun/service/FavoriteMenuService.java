@@ -7,11 +7,8 @@ import edu.ssafy.punpun.entity.Store;
 import java.util.List;
 
 public interface FavoriteMenuService {
-    List<FavoriteMenu> findByChild(Child child);
 
-    List<FavoriteMenu> findByChildAndMenu_Store(Child child, Store store);
+    void insertFavoriteMenu(Child child, Long menuId);
 
-    void insertFavoriteMenu(Long childId, Long menuId);
-
-    void deleteFavoriteMenu(Long childId, Long menuId);
+    void deleteFavoriteMenu(Child child, Long menuId);
 }

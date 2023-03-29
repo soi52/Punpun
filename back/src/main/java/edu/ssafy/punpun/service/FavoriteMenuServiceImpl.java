@@ -19,20 +19,11 @@ public class FavoriteMenuServiceImpl implements FavoriteMenuService {
     private FavoriteMenuRepository favoriteMenuRepository;
     private ChildRepository childRepository;
     private MenuRepository menuRepository;
-    @Override
-    public List<FavoriteMenu> findByChild(Child child) {
-        return favoriteMenuRepository.findByChild(child);
-    }
 
     @Override
-    public List<FavoriteMenu> findByChildAndMenu_Store(Child child, Store store) {
-        return favoriteMenuRepository.findByChildAndMenu_Store(child, store);
-    }
-
-    @Override
-    public void insertFavoriteMenu(Long childId, Long menuId) {
-        Child child = childRepository.findById(childId).orElseThrow(IllegalArgumentException::new);
-        Menu menu = menuRepository.findById(menuId).orElseThrow(IllegalArgumentException::new);
+    public void insertFavoriteMenu(Child child, Long menuId) {
+        Menu menu = menuRepository.findById(menuId)
+                .orElseThrow(()->new IllegalArgumentException("존재하지 않는 메뉴 입니다."));
 
         FavoriteMenu favoriteMenu = FavoriteMenu.builder()
                 .child(child)
@@ -43,14 +34,12 @@ public class FavoriteMenuServiceImpl implements FavoriteMenuService {
     }
 
     @Override
-    public void deleteFavoriteMenu(Long childId, Long menuId) {
-        Child child = childRepository.findById(childId).orElseThrow(IllegalArgumentException::new);
-        Menu menu = menuRepository.findById(menuId).orElseThrow(IllegalArgumentException::new);
+    public void deleteFavoriteMenu(Child child, Long menuId) {
+        Menu menu = menuRepository.findById(menuId)
+                .orElseThrow(()->new IllegalArgumentException("존재하지 않는 메뉴 입니다."));
 
-//        favoriteMenuRepository.findByChildAndMenu(child, menu)
-//                .map(favoriteMenu1 -> favoriteMenuRepository.delete(favoriteMenu1))
-//                .orElseThrow(IllegalArgumentException::new);
-        FavoriteMenu favoriteMenu = favoriteMenuRepository.findByChildAndMenu(child, menu).orElseThrow(IllegalArgumentException::new);
+        FavoriteMenu favoriteMenu = favoriteMenuRepository.findByChildAndMenu(child, menu)
+                .orElseThrow(()->new IllegalArgumentException("좋아하는 메뉴로 등록되어 있지 않습니다."));
         favoriteMenuRepository.delete(favoriteMenu);
     }
 
