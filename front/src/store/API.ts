@@ -23,10 +23,8 @@ API.interceptors.response.use(
     return response;
   },
   async (error) => {
-    // const {
-    //   response: { status },
-    // } = error;
-    console.log(error);
+    const responseStatus = error?.response?.status || null;
+    console.log(`Error: ${responseStatus}`);
     // Handle error cases
     return Promise.reject(error);
   }
