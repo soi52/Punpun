@@ -1,11 +1,8 @@
 import styled from 'styled-components';
 
-import MainTitle from '../../ui/MainTitle';
-import MainMessage from '../../ui/MainMessage';
-
+import ChMainMessage from '../ChMainMessage';
 import TodayBooking from './TodayBooking';
 import Message from './Message';
-import ChMainMessage from '../ChMainMessage';
 
 const ComponentStyle = styled.div`
   padding: 20px;

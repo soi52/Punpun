@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
-import MainTitle from '../ui/MainTitle';
-import MainMessage from '../ui/MainMessage';
+import SuMainMessage from './SuMainMessage';
 import SupportHistory from './SupportHistroy';
 
 const ComponentStyle = styled.div`
@@ -18,10 +17,7 @@ function SuDetail() {
 
   return (
     <ComponentStyle>
-      <h2>
-        <MainTitle title={`${mainMessage.name} ${mainMessage.title}`} />
-      </h2>
-      <MainMessage message={`${mainMessage.ownerName}, ${mainMessage.message}`} />
+      <SuMainMessage/>
       <h2>후원내역</h2>
       <SupportHistory/>
     </ComponentStyle>

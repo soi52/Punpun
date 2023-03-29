@@ -24,12 +24,26 @@ type MapProps = {
   stores: Store[];
 };
 
-interface Store {
+type MenuDTO = {
+  menuId: number;
+  menuName: string;
+  menuPrice: number;
+  menuCount: number;
+};
+
+type Store = {
   storeId: number;
-  name: string;
-  latitude: number;
-  longitude: number;
-}
+  storeName: string;
+  storeOpenTime: string | null;
+  storeInfo: string | null;
+  storeAddress: string;
+  storeLon: number;
+  storeLat: number;
+  storeImageName: string | null;
+  storeImage: string | null;
+  storePhoneNumber: string | null;
+  menuDTOList: MenuDTO[];
+};
 
 const Map = ({ latitude, longitude, stores }: MapProps) => {
   const mapRef = useRef<kakao.maps.Map | null>(null);
@@ -56,8 +70,8 @@ const Map = ({ latitude, longitude, stores }: MapProps) => {
       // 각 가게들의 위치에 마커를 찍는 로직 추가
       stores.forEach((store) => {
         const markerPosition = new kakao.maps.LatLng(
-          store.latitude,
-          store.longitude
+          store.storeLat,
+          store.storeLon
         );
         const marker = new kakao.maps.Marker({
           position: markerPosition,
