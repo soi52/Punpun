@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import Cookies from 'js-cookie';
+import API from '../../../store/API';
 import styled, { keyframes } from 'styled-components';
 
 const fadeIn = keyframes`
@@ -145,27 +144,24 @@ const BookingModal: React.FC<ModalProps> = ({ menu, onClose }) => {
 
   // 30분 뒤
   const thirtyMinutesLater = new Date(now.getTime() + 30 * 60000); // 30분 = 30 * 60초 = 30 * 60 * 1000밀리초 = 30 * 60000
-  const formattedDate = `${now.getFullYear()}-${
-    now.getMonth() + 1
-  }-${now.getDate()} ${thirtyMinutesLater.getHours()}:${thirtyMinutesLater.getMinutes()}`;
-  console.log(formattedDate)
+  var year = now.getFullYear();
+  var month = now.getMonth()+1;
+  var day = now.getDate();
 
-  const accessToken = Cookies.get('accessToken');
-
+  const formattedDate = year+"-"+(("00"+month.toString()).slice(-2))+"-"+(("00"+day.toString()).slice(-2))+"T"+thirtyMinutesLater.getHours()+":"+thirtyMinutesLater.getMinutes()+":"+thirtyMinutesLater.getSeconds();
+  console.log(formattedDate);
+  
   function handleBooking() {
     // 선택한 checkbox 데이터와 menu 데이터를 담아서 서버로 보낸다.
     const data = {
-      menu,
-      takeout,
-      dineIn,
+      menuId:menu.id,
+      reservationTime: formattedDate
+      // takeout,
+      // dineIn,
     };
-  
-    axios.post('https://j8d109.p.ssafy.io/api/bookings', {
-      data: data,
-      withCredentials: true,
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
+
+    API.post('bookings', {
+      data: data
     })
     .then((response) => {
       console.log(response.data);
@@ -173,6 +169,20 @@ const BookingModal: React.FC<ModalProps> = ({ menu, onClose }) => {
     .catch((error) => {
       console.log(error);
     });
+  
+    // axios.post('https://j8d109.p.ssafy.io/api/bookings', {
+    //   data: data,
+    //   withCredentials: true,
+    //     headers: {
+    //       Authorization: `Bearer ${accessToken}`,
+    //     },
+    // })
+    // .then((response) => {
+    //   console.log(response.data);
+    // })
+    // .catch((error) => {
+    //   console.log(error);
+    // });
   }
 
   return (
