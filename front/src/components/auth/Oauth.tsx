@@ -123,7 +123,7 @@ const Oauth = () => {
     //   httpOnly: true,
     //   sameSite: 'none',
     // });
-  }, []);
+  }, [address]);
 
   useEffect(() => {
     console.log(userInfo);
