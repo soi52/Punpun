@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 
-const useGeolocation = () => {
+const UseGeolocation = () => {
   const [location, setLocation] = useState<
     { latitude: number; longitude: number } | string
   >('');
@@ -29,4 +29,4 @@ const useGeolocation = () => {
   return location;
 };
 
-export default useGeolocation;
+export default UseGeolocation;
