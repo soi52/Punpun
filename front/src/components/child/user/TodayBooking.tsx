@@ -68,7 +68,6 @@ const HrDiv = styled.hr`
 `;
 
 const TodayBooking = () => {
-  const apiClient = API();
 
   const today = new Date();
   const formattedDate = `${today.getFullYear()}-${
@@ -78,7 +77,7 @@ const TodayBooking = () => {
   const accessToken = Cookies.get('access_token');
 
   useEffect(() => {
-    apiClient
+    API
       .get(`api/bookings/child?date=${formattedDate}`)
       .then((response) => {
         console.log("Today's bookings:", response.data);

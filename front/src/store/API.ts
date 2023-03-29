@@ -1,60 +1,35 @@
-import React, { useEffect, useState } from 'react';
 import axios, { AxiosInstance } from 'axios';
 import Cookies from 'js-cookie';
 
-const API_URL = 'https://j8d109.p.ssafy.io/';
+const API_URL = 'http://j8d109.p.ssafy.io/api/';
 
-function API(): AxiosInstance {
-  const [accessToken, setAccessToken] = useState<string | undefined>(
-    Cookies.get('accessToken')
-  );
+const API: AxiosInstance = axios.create({
+  baseURL: API_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
 
-  useEffect(() => {
-    const handleAccessTokenChange = () => {
-      setAccessToken(Cookies.get('accessToken'));
-    };
-    window.addEventListener('access_token_change', handleAccessTokenChange);
-    return () => {
-      window.removeEventListener(
-        'access_token_change',
-        handleAccessTokenChange
-      );
-    };
-  }, []);
+API.interceptors.request.use((config) => {
+  const accessToken = Cookies.get('accessToken');
+  if (accessToken) {
+    config.headers.Authorization = `Bearer ${accessToken}`;
+  }
+  return config;
+});
 
-  const apiClient = axios.create({
-    baseURL: API_URL,
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
-
-  apiClient.interceptors.response.use(
-    (response) => response,
-    async (error) => {
-      const originalRequest = error.config;
-      if (error.response.status === 401 && !originalRequest._retry) {
-        originalRequest._retry = true;
-        try {
-          const response = await apiClient.post('/api/auth/refresh', {
-            refresh_token: Cookies.get('refreshToken'),
-          });
-          const newAccessToken = response.data.access_token;
-          Cookies.set('accessToken', newAccessToken);
-          window.dispatchEvent(new Event('access_token_change'));
-          return apiClient(originalRequest);
-        } catch (error) {
-          Cookies.remove('accessToken');
-          Cookies.remove('refreshToken');
-          window.location.href = '/login';
-        }
-      }
-      return Promise.reject(error);
-    }
-  );
-
-  return apiClient;
-}
+API.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  async (error) => {
+    // const {
+    //   response: { status },
+    // } = error;
+    console.log(error);
+    // Handle error cases
+    return Promise.reject(error);
+  }
+);
 
 export default API;
