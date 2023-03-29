@@ -14,6 +14,7 @@ import edu.ssafy.punpun.service.SupportService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -79,7 +80,7 @@ public class SupportController {
     public Page<ShareResponseDTO> findShareList(@PathVariable("storeId") Long storeId ,
                                                   @RequestParam(name="type") SupportType type,
                                                   @RequestParam(name="page", required = false, defaultValue = "0") int page,
-                                                  @RequestParam(name="date", required = false) LocalDate date){
+                                                  @RequestParam(name="date", required = false)@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date){
         return supportService.findShareList(storeId, type, page, date);
     }
 }
