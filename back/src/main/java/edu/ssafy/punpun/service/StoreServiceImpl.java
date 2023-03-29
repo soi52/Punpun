@@ -17,7 +17,8 @@ public class StoreServiceImpl implements StoreService {
 
     @Override
     public Store findById(Long id) {
-        return storeRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+        return storeRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 가게 입니다."));
     }
 
     @Override
