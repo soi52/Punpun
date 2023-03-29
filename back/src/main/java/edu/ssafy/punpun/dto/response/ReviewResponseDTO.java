@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Getter
-@NoArgsConstructor
 @AllArgsConstructor
 public class ReviewResponseDTO {
     private Long reviewId;
@@ -29,7 +28,10 @@ public class ReviewResponseDTO {
                 .collect(Collectors.toList());
         Long childId = review.getChild().getId();
         String childName = review.getChild().getName();
-        String childProfileUrl = review.getChild().getProfile().getUrl();
+        String childProfileUrl = "";
+        if (review.getChild().getProfile() != null) {
+            childProfileUrl = review.getChild().getProfile().getUrl();
+        }
         return new ReviewResponseDTO(reviewId, reviewContent, keywords, childId, childName, childProfileUrl);
     }
 }
