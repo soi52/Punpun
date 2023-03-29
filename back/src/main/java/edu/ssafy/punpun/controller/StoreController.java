@@ -3,7 +3,6 @@ package edu.ssafy.punpun.controller;
 import edu.ssafy.punpun.dto.response.*;
 import edu.ssafy.punpun.entity.*;
 import edu.ssafy.punpun.security.oauth2.PrincipalMemberDetail;
-import edu.ssafy.punpun.service.FavoriteMenuService;
 import edu.ssafy.punpun.service.MenuService;
 import edu.ssafy.punpun.service.StoreService;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,7 +21,6 @@ import java.util.stream.Collectors;
 public class StoreController {
     private final StoreService storeService;
     private final MenuService menuService;
-    private final FavoriteMenuService favoriteMenuService;
 
     @GetMapping("/{storeId}")
     @ResponseStatus(code = HttpStatus.OK)
@@ -61,9 +58,9 @@ public class StoreController {
 
     @DeleteMapping("/{storeId}")
     @ResponseStatus(code = HttpStatus.OK)
-    public void deleteStore(@AuthenticationPrincipal PrincipalMemberDetail principalMemberDetail, @PathVariable("storeId") Long id) {
+    public void deleteStore(@AuthenticationPrincipal PrincipalMemberDetail principalMemberDetail, @PathVariable("storeId") Long storeId) {
         Member member = principalMemberDetail.getMember();
-        storeService.deleteStoreByMember(id, member);
+        storeService.deleteStoreByMember(member, storeId);
     }
 
 }

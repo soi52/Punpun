@@ -32,8 +32,8 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
-    public void deleteStoreByMember(Long id, Member member) {
-        Store store = storeRepository.findById(id)
+    public void deleteStoreByMember(Member member, Long storeId) {
+        Store store = storeRepository.findById(storeId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 가게 입니다."));
 
         if (member.getId() != store.getOwner().getId()) {

@@ -5,14 +5,12 @@ import edu.ssafy.punpun.entity.Member;
 import edu.ssafy.punpun.entity.Store;
 import edu.ssafy.punpun.entity.enumurate.UserRole;
 import edu.ssafy.punpun.repository.StoreRepository;
-import org.apache.zookeeper.Op;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
@@ -207,7 +205,7 @@ public class StoreServiceImplTest {
         doReturn(Optional.of(store1)).when(storeRepository).findById(1L);
 
         // when
-        storeService.deleteStoreByMember(1L, member);
+        storeService.deleteStoreByMember(member, 1L);
         //then
         Assertions.assertThat(store1.getId()).isEqualTo(store1.getId());
         Assertions.assertThat(store1.getName()).isEqualTo(store1.getName());

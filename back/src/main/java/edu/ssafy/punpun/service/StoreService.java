@@ -9,5 +9,5 @@ public interface StoreService {
     Store findById(Long id);
     List<Store> findByNameContaining(String name);
     List<Store> findByOwner(Member member);
-    void deleteStoreByMember(Long id, Member member);
+    void deleteStoreByMember(Member member, Long storeId);
 }
