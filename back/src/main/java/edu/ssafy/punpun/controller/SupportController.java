@@ -60,8 +60,6 @@ public class SupportController {
             Support support = Support.builder()
                     .supportState(SupportState.SUPPORT)
                     .supporter(member)
-                    .menu(Menu.builder().id(supportRequestDTO.getMenuId().get(i)).build())
-                    .store(Store.builder().id(supportRequestDTO.getStoreId()).build())
                     .build();
             if(type == 0) {
                 support.setSupportType(SupportType.SUPPORT);
