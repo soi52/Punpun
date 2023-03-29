@@ -20,10 +20,11 @@ interface SupporterHeaderProps {
   userType: string;
   items: string[];
   selectedItem: string | undefined;
+  userRole: string;
 }
 
 function SupporterHeader(props: SupporterHeaderProps) {
-  const { onLogout, toMain, onSelect, items, selectedItem } = props;
+  const { onLogout, toMain, onSelect, items, selectedItem, userRole } = props;
   const navigate = useNavigate();
 
   const toSuSearch = () => {
@@ -44,6 +45,7 @@ function SupporterHeader(props: SupporterHeaderProps) {
         onSelect={onSelect}
         items={items}
         selectedItem={selectedItem}
+        userRole={userRole}
       />
     </NavUl>
   );
