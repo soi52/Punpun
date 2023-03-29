@@ -2,6 +2,7 @@ package edu.ssafy.punpun.service;
 
 import edu.ssafy.punpun.dto.ApproveState;
 import edu.ssafy.punpun.dto.BookingStoreSearchParamDTO;
+import edu.ssafy.punpun.event.EventType;
 import edu.ssafy.punpun.entity.*;
 import edu.ssafy.punpun.entity.enumurate.ReservationState;
 import edu.ssafy.punpun.entity.enumurate.SupportReservationState;
@@ -54,7 +55,7 @@ public class BookingServiceImpl implements BookingService {
                 .build();
         supportReservationRepository.save(supportReservation);
 
-        publisher.publish(reservation);
+        publisher.publish(reservation, EventType.RESERVATION);
         return reservation;
     }
 
@@ -86,6 +87,7 @@ public class BookingServiceImpl implements BookingService {
         } else if (state == ApproveState.NO) {
             reservation.changeState(ReservationState.CANCEL);
         }
-        // TODO : 예약 관련 이벤트 발급하기
+
+        publisher.publish(reservation, EventType.APPROVE);
     }
 }
