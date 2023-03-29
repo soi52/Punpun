@@ -17,7 +17,6 @@ const fadeIn = keyframes`
 interface menu {
   id: number;
   title: string;
-  image: string;
   price: number;
 }
 
