@@ -1,6 +1,9 @@
 package edu.ssafy.punpun.kafka;
 
-import edu.ssafy.punpun.dto.ReservationEvent;
+import edu.ssafy.punpun.event.AlarmEvent;
+import edu.ssafy.punpun.event.ApproveEvent;
+import edu.ssafy.punpun.event.EventType;
+import edu.ssafy.punpun.event.ReservationEvent;
 import edu.ssafy.punpun.entity.Reservation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,13 +18,20 @@ import org.springframework.util.concurrent.ListenableFutureCallback;
 @Component
 @RequiredArgsConstructor
 public class ReservationEventPublisher {
-    private final KafkaTemplate<String, ReservationEvent> template;
+    private final KafkaTemplate<String, AlarmEvent> template;
 
-    public void publish(Reservation reservation) {
-        ListenableFuture<SendResult<String, ReservationEvent>> future = template.send("alarm", ReservationEvent.entityToEvent(reservation));
+    public void publish(Reservation reservation, EventType type) {
+        AlarmEvent event;
+        if (type == EventType.RESERVATION) {
+            event = ReservationEvent.entityToEvent(reservation);
+        } else {
+            event = ApproveEvent.entityToEvent(reservation);
+        }
+
+        ListenableFuture<SendResult<String, AlarmEvent>> future = template.send("alarm", event);
         future.addCallback(new ListenableFutureCallback<>() {
             @Override
-            public void onSuccess(SendResult<String, ReservationEvent> result) {
+            public void onSuccess(SendResult<String, AlarmEvent> result) {
                 log.info("[Reservation ID = {}] Alarm Event Sent", reservation.getId());
             }
 
