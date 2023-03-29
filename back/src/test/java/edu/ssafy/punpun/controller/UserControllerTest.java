@@ -13,12 +13,14 @@ import edu.ssafy.testutil.WIthCustomChild;
 import edu.ssafy.testutil.WIthCustomSupporter;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.mockito.Mockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
@@ -89,6 +91,8 @@ public class UserControllerTest {
 
         MemberRequestDTO memberRequestDTO = new MemberRequestDTO("01000000000");
         String input = new Gson().toJson(memberRequestDTO);
+
+        doNothing().when(userService).updateMemberInfo(member.getId(), "01000000000");
 
         mockMvc.perform(patch("/users/member/phone")
                         .with(csrf())
