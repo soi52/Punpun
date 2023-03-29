@@ -69,7 +69,7 @@ const Oauth = () => {
 
   useEffect(() => {
     getAddr(latitude, longitude);
-  });
+  }, [latitude, longitude]);
 
   useEffect(() => {
     const token = getUrlParameter('token');
