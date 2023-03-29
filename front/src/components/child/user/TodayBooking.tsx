@@ -78,7 +78,7 @@ const TodayBooking = () => {
 
   useEffect(() => {
     API
-      .get(`api/bookings/child?date=${formattedDate}`)
+      .get(`bookings/child?date=${formattedDate}`)
       .then((response) => {
         console.log("Today's bookings:", response.data);
         const bookings = response.data.map((booking: Booking) => ({
