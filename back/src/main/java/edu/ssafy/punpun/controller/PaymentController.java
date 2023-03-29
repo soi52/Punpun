@@ -2,7 +2,7 @@ package edu.ssafy.punpun.controller;
 
 import edu.ssafy.punpun.dto.request.PointRequestDTO;
 import edu.ssafy.punpun.dto.response.PointResponseDTO;
-import edu.ssafy.punpun.entity.Member;
+import edu.ssafy.punpun.security.oauth2.PrincipalMemberDetail;
 import edu.ssafy.punpun.service.PaymentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,20 +20,20 @@ public class PaymentController {
 
     @GetMapping
     @ResponseStatus(code = HttpStatus.OK)
-    public PointResponseDTO getPoints(@AuthenticationPrincipal Member member){
-        return new PointResponseDTO(member.getId(), member.getRemainPoint());
+    public PointResponseDTO getPoints(@AuthenticationPrincipal PrincipalMemberDetail member){
+        return new PointResponseDTO(member.getMember().getId(), member.getMember().getRemainPoint());
     }
 
     @PostMapping
     @ResponseStatus(code = HttpStatus.OK)
-    public void savePoints(@AuthenticationPrincipal Member member, @RequestBody PointRequestDTO pointRequestDTO){
-        paymentService.updatePoints(member, pointRequestDTO.getPoint());
+    public void savePoints(@AuthenticationPrincipal PrincipalMemberDetail member, @RequestBody PointRequestDTO pointRequestDTO){
+        paymentService.updatePoints(member.getMember(), pointRequestDTO.getPoint());
     }
 
     @GetMapping("/total")
     @ResponseStatus(code = HttpStatus.OK)
-    public PointResponseDTO getTotalSupport(@AuthenticationPrincipal Member member){
-        return new PointResponseDTO(member.getId(), member.getSupportedPoint());
+    public PointResponseDTO getTotalSupport(@AuthenticationPrincipal PrincipalMemberDetail member){
+        return new PointResponseDTO(member.getMember().getId(), member.getMember().getSupportedPoint());
     }
 
 }
