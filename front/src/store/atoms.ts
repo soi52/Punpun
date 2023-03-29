@@ -20,10 +20,24 @@ export const isLoggedInState = atom({
   default: Cookies.get('accessToken') !== undefined,
 });
 
-// export const userInfoState = atom({
-//   key: 'userInfoState',
-//   default: JSON.parse(localStorage.getItem('USER')) || {},
-// });
+export interface UserInfo {
+  userId: number;
+  userName: string;
+  userEmail: string;
+  userLocation: string;
+  userRole: string;
+}
+
+export const userInfoState = atom<UserInfo>({
+  key: 'userInfoState',
+  default: {
+    userId: 0,
+    userName: '',
+    userEmail: '',
+    userLocation: '',
+    userRole: '',
+  },
+});
 
 export const LoginState = atom<boolean>({
   key: 'LoginState',
@@ -59,13 +73,13 @@ export const isChildState = atom<Boolean>({
   default: false,
 });
 
-export const isOwnerState = atom<Boolean>({
-  key: 'isOwnerState',
+export const isSupporterState = atom<Boolean>({
+  key: 'isSupporterState',
   default: false,
 });
 
-export const isSupporterState = atom<Boolean>({
-  key: 'isSupporterState',
+export const isOwnerState = atom<Boolean>({
+  key: 'isOwnerState',
   default: false,
 });
 

@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import { useRecoilState } from 'recoil';
+import { userInfoState } from '../../store/atoms';
 import profileImg from '../../resources/images/temp_profile.png';
 
 const ProfileBox = styled.div`
@@ -29,14 +31,19 @@ const InfoBox = styled.div`
   margin-top: 10px;
 `;
 
-type Info = { name: string; region: string };
+// type Info = { name: string; region: string };
 
-const Dummydata: Info = {
-  name: 'jungeun',
-  region: '대한민국, 구미',
-};
+// const Dummydata: Info = {
+//   name: 'jungeun',
+//   region: '대한민국, 구미',
+// };
 
 function Profile() {
+
+  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+  console.log(userInfo);
+  
+
   return (
     <div>
       <ProfileBox>
@@ -45,8 +52,8 @@ function Profile() {
         </ImgBox>
         <InfoBox>
           <span>
-            {Dummydata.name}님<br></br>
-            {Dummydata.region}
+            {userInfo.userName}님<br></br>
+            {userInfo.userLocation}
           </span>
         </InfoBox>
       </ProfileBox>

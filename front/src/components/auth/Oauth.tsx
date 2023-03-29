@@ -9,13 +9,16 @@ import {
   isLoggedInState,
   isOwnerState,
   isSupporterState,
+  userInfoState,
 } from '../../store/atoms';
+import { decode } from 'punycode';
 
 const Oauth = () => {
   const navigate = useNavigate();
   const [isChild, setIsChild] = useRecoilState(isChildState);
   const [isSupporter, setIsSupporter] = useRecoilState(isSupporterState);
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLoggedInState);
+  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
   //   const code = new URL(window.location.href).searchParams.get('code')
   //   console.log(code);
   //   const navigate = useNavigate();
@@ -67,6 +70,15 @@ const Oauth = () => {
       // }
       setIsSupporter(true);
       setIsLoggedIn(true);
+      setUserInfo(
+        {
+          userId: decodedToken.id,
+          userName: decodedToken.name,
+          userEmail: decodedToken.email,
+          userLocation: '',
+          userRole: decodedToken.role,
+        },
+      );
       navigate('/');
     } else {
       navigate('/');
