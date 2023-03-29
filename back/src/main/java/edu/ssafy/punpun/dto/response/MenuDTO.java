@@ -3,8 +3,10 @@ package edu.ssafy.punpun.dto.response;
 import edu.ssafy.punpun.entity.Menu;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 @AllArgsConstructor
 public class MenuDTO {
     private Long menuId;
