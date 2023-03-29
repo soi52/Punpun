@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useRecoilState, useSetRecoilState } from 'recoil';
-import useGeolocation from '../../common/useGeolocation';
+import useGeolocation from '../../common/UseGeolocation';
 import { UserInfo, userInfoState } from '../../store/atoms';
 
 function Address() {

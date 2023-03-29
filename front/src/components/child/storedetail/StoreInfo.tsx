@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import Map from '../../../common/Map';
-import useGeolocation from '../../../common/useGeolocation';
+import useGeolocation from '../../../common/UseGeolocation';
 import StoreBanner from './Storebanner';
 import StoreHour from './Storehours';
 import StoreData from '../../../common/StoreData.json';
@@ -13,7 +13,7 @@ const ComponentStyle = styled.div`
 const StoreInfo = () => {
   const { storeId } = useParams<{ storeId: string }>();
   // const stores = useRecoilValue(storeState);
-  const stores = StoreData
+  const stores = StoreData;
   const currentStore = stores.find((s) => s.storeId === Number(storeId));
   const location = useGeolocation();
   const { latitude = 0, longitude = 0 } =
