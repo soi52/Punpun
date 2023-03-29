@@ -58,7 +58,6 @@ const TotalPrice = styled.span`
 interface CartItem {
   id: number;
   title: string;
-  image: string;
   price: number;
   quantity: number;
 }
@@ -120,7 +119,7 @@ const MenuCart: React.FC<MenuCartProps> = ({
           {cartItems.map((item, index) => (
             <StyledLi key={index}>
               <CartContent>
-                <ItemImage src={item.image} alt={item.title} />
+                {/* <ItemImage src={item.image} alt={item.title} /> */}
                 <ItemTitle>{item.title}</ItemTitle>
                 <ItemPrice>{item.price}원</ItemPrice>
                 <button onClick={() => deleteCart(item.id)}>X</button>

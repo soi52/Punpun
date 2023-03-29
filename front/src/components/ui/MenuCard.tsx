@@ -20,7 +20,6 @@ interface MenuCardProps extends Menu {
 type Menu = {
   id: number;
   title: string;
-  image: string;
   price: number;
   quantity: number;
 };
@@ -75,7 +74,7 @@ const HeartButtonWrapper = styled.div`
 
 
 
-const MenuCard: React.FC<MenuCardProps> = ({ id, title, image, price, quantity, addToCart }) => {
+const MenuCard: React.FC<MenuCardProps> = ({ id, title, price, quantity, addToCart }) => {
   const [showModal, setShowModal] = useState(false);
   // const isChild = useRecoilValue(isChildState);
   const [isChild, setIsChild] = useRecoilState(isChildState);
@@ -116,7 +115,7 @@ const MenuCard: React.FC<MenuCardProps> = ({ id, title, image, price, quantity, 
       
     } else {
       // 어른 회원일 때 클릭 이벤트
-      addToCart({ id, title, image, price, quantity });
+      addToCart({ id, title, price, quantity });
       console.log('Clicked as an adult');
     }
   };
@@ -125,13 +124,13 @@ const MenuCard: React.FC<MenuCardProps> = ({ id, title, image, price, quantity, 
     <>
       <MenuCardContainer>
         <div onClick={handleClick}>
-          <MenuCardImage image={image}>
+          {/* <MenuCardImage image={image}> */}
             {isChild && (
               <HeartButtonWrapper>
                 <button onClick={toggleLike}>{liked ? '💖' : '🖤'}</button>
               </HeartButtonWrapper>
             )}
-          </MenuCardImage>
+          {/* </MenuCardImage> */}
           <div>
             <MenuCardTitle>{title}</MenuCardTitle>
             <MenuCardPrice>{price}원</MenuCardPrice>
@@ -139,7 +138,7 @@ const MenuCard: React.FC<MenuCardProps> = ({ id, title, image, price, quantity, 
         </div>
       </MenuCardContainer>
       {showModal && isChild && (
-        <BookingModal menu={{ id, title, image, price }} onClose={onClose} />
+        <BookingModal menu={{ id, title, price }} onClose={onClose} />
       )}
     </>
   );

@@ -18,11 +18,11 @@ const BannerText = styled.div`
   transform: translate(-50%, -50%); /* 정 가운데 위치 */
 `;
 
-const StoreBanner = () => {
+const StoreBanner = ({ storeName }: { storeName: string | undefined }) => {
   return (
     <BannerDiv>
       <BannerText>
-        <h1>정은 치킨</h1>
+        <h1>{storeName}</h1>
       </BannerText>
     </BannerDiv>
   );
