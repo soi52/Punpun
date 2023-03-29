@@ -25,7 +25,7 @@ const Item = styled.li`
 interface DropdownProps {
   onSelect: (item: string) => void;
   items: string[];
-  selectedItem: string;
+  selectedItem: string | undefined; // 선택된 아이템의 타입을 string | undefined로 변경
 }
 
 function Dropdown(props: DropdownProps) {
