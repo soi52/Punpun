@@ -47,4 +47,6 @@ public class Member extends BaseEntity {
     public void changeRole(UserRole role) {
         this.role = role;
     }
+
+    public void changePhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
 }
