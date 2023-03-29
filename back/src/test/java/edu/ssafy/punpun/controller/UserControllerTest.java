@@ -92,7 +92,7 @@ public class UserControllerTest {
         MemberRequestDTO memberRequestDTO = new MemberRequestDTO("01000000000");
         String input = new Gson().toJson(memberRequestDTO);
 
-        doNothing().when(userService).updateMemberInfo(member.getId(), "01000000000");
+        doNothing().when(userService).updateMemberInfo(member.getId(), memberRequestDTO.getPhoneNumber());
 
         mockMvc.perform(patch("/users/member/phone")
                         .with(csrf())
