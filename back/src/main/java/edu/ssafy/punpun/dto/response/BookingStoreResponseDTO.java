@@ -5,8 +5,10 @@ import edu.ssafy.punpun.entity.enumurate.ReservationState;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 @Builder
+@NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class BookingStoreResponseDTO {
     private Long reservationId;
