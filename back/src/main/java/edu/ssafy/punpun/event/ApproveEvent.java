@@ -17,6 +17,7 @@ public class ApproveEvent implements AlarmEvent {
     private Long reservationId;
     private String reservationTime;
     private ReservationState state;
+    private String childPhoneNumber;
 
     public static ApproveEvent entityToEvent(Reservation reservation) {
         return ApproveEvent.builder()
@@ -27,6 +28,7 @@ public class ApproveEvent implements AlarmEvent {
                 .reservationId(reservation.getId())
                 .reservationTime(reservation.getReservationTime().toString())
                 .state(reservation.getState())
+                .childPhoneNumber(reservation.getChild().getPhoneNumber())
                 .build();
     }
 
