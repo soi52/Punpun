@@ -38,8 +38,7 @@ public class StoreServiceImpl implements StoreService {
 
         if (member.getId() != store.getOwner().getId()) {
             throw new NotStoreOwnerException("가게의 주인이 아닙니다.");
-        } else {
-            store.deleteOwner();
         }
+        store.deleteOwner();
     }
 }

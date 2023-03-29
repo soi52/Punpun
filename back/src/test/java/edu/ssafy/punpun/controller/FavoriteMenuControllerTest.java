@@ -46,7 +46,7 @@ public class FavoriteMenuControllerTest {
                 .id(1L)
                 .build();
 
-        doNothing().when(favoriteMenuService).insertFavoriteMenu(child, menu.getId());
+        doNothing().when(favoriteMenuService).insertFavoriteMenu(any(Child.class), eq(1L));
 
         FavoriteMenuRequestDTO favoriteMenuRequestDTO = new FavoriteMenuRequestDTO(1L);
         String input = new Gson().toJson(favoriteMenuRequestDTO);

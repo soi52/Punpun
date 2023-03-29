@@ -126,11 +126,6 @@ public class StoreControllerTest {
     @WIthCustomOwner
     @DisplayName("delete - 사장이 소유한 가게 등록 해제")
     void deleteStore() throws Exception {
-        Member member = Member.builder().build();
-        Store store1 = Store.builder()
-                .id(1L)
-                .owner(member)
-                .build();
         doNothing().when(storeService).deleteStoreByMember(any(Member.class), eq(1L));
 
         mockMvc.perform(delete("/stores/1")
