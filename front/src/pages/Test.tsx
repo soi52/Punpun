@@ -2,8 +2,11 @@ import { useEffect } from 'react';
 import API from '../store/API';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { useRecoilValue } from 'recoil';
+import { userInfoState } from '../store/atoms';
 
 const TestPage = () => {
+  const userInfo = useRecoilValue(userInfoState);
   const accessToken = Cookies.get('accessToken');
   console.log(accessToken);
 
@@ -11,15 +14,14 @@ const TestPage = () => {
   const url = 'https://j8d109.p.ssafy.io/api/stores/test';
 
   useEffect(() => {
-    API
-      .get('payments')
+    API.get('payments')
       .then((response) => {
         console.log(response.data);
       })
       .catch((error) => {
         console.log(error);
       });
-  })
+  });
 
   const apiRequest = () => {
     axios
@@ -31,6 +33,7 @@ const TestPage = () => {
       })
       .then((response) => {
         console.log(response.data);
+        console.log(userInfo);
       })
       .catch((error) => {
         console.error(error);
