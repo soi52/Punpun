@@ -71,6 +71,7 @@ const Oauth = () => {
 
   useEffect(() => {
     const token = getUrlParameter('token');
+
     const accessToken = token || '';
     console.log(accessToken);
     Cookies.set('access_token', accessToken, {
@@ -90,7 +91,7 @@ const Oauth = () => {
       userId: decodedToken.id,
       userName: decodedToken.name,
       userEmail: decodedToken.email,
-      userLocation: address,
+      userLocation: '',
       userRole: decodedToken.role,
       userNumber: decodedToken.phoneNumber,
     });
@@ -120,7 +121,7 @@ const Oauth = () => {
     //   httpOnly: true,
     //   sameSite: 'none',
     // });
-  }, [address]);
+  }, []);
 
   useEffect(() => {
     console.log(userInfo);
