@@ -29,8 +29,10 @@ public class StoreDetailDTO {
         this.storeAddress = store.getAddress();
         this.storeLon = store.getLon();
         this.storeLat = store.getLat();
-        this.storeImageName = store.getImage().getName();
-        this.storeImage = store.getImage().getUrl();
+        if(store.getImage() != null){
+            this.storeImageName = store.getImage().getName();
+            this.storeImage = store.getImage().getUrl();
+        }
         this.storePhoneNumber = store.getPhoneNumber();
         this.menuDTOList = menuList;
     }
