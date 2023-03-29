@@ -16,6 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doNothing;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -62,17 +63,7 @@ public class FavoriteMenuControllerTest {
     @WIthCustomChild
     @DisplayName("delete - 좋아하는 메뉴 삭제하기")
     void deleteFavoriteMenu() throws Exception {
-        Child child = Child.builder()
-                .id(1L)
-                .name("name")
-                .email("email@email.com")
-                .role(UserRole.CHILD)
-                .build();
-        Menu menu = Menu.builder()
-                .id(1L)
-                .build();
-
-        doNothing().when(favoriteMenuService).deleteFavoriteMenu(child, menu.getId());
+        doNothing().when(favoriteMenuService).deleteFavoriteMenu(any(Child.class), eq(1L));
 
         FavoriteMenuRequestDTO favoriteMenuRequestDTO = new FavoriteMenuRequestDTO(1L);
         String input = new Gson().toJson(favoriteMenuRequestDTO);

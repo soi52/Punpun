@@ -21,6 +21,7 @@ import java.util.Optional;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
+@DisplayName("가게 서비스 테스트")
 public class StoreServiceImplTest {
     @Mock
     private StoreRepository storeRepository;
@@ -29,7 +30,7 @@ public class StoreServiceImplTest {
     private StoreServiceImpl storeService;
 
     @Test
-    @DisplayName("Service: test for Store Detail Dto")
+    @DisplayName("가게 상세 정보 보기")
     void findById() {
         // given
         Image image1 = Image.builder()
@@ -68,7 +69,7 @@ public class StoreServiceImplTest {
     }
 
     @Test
-    @DisplayName("Service: test for find Store by Name Containing")
+    @DisplayName("검색어(가게 이름)가 포함된 가게 찾기")
     void findByNameContaining() {
         // given
         Store store1 = Store.builder()
@@ -121,7 +122,7 @@ public class StoreServiceImplTest {
     }
 
     @Test
-    @DisplayName("Service: test for find Store by Owner")
+    @DisplayName("사장님 기준으로 가게 찾기")
     void findByOwner() {
         // given
         Member member = Member.builder()
@@ -182,7 +183,7 @@ public class StoreServiceImplTest {
     }
 
     @Test
-    @DisplayName("Service: test for deleteStoreByMember")
+    @DisplayName("가게 사장이 가게 삭제 하기 _ 가게 등록 해제")
     void deleteStoreByMember() {
         // given
         Member member = Member.builder()
