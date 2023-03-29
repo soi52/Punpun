@@ -1,5 +1,6 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import styled from 'styled-components';
+import API from '../../store/API';
 import { useRecoilValue } from 'recoil';
 import { pointState } from '../../store/atoms';
 
@@ -41,15 +42,25 @@ const SuSidebarContent: FC<SuSidebarContentProps> = ({
   currentMenuItemIndex,
   onMenuItemClick,
 }) => {
-  const point = useRecoilValue(pointState);
-  const formattedPoint = point.toLocaleString();
+  // const point = useRecoilValue(pointState);
+  useEffect(() => {
+    API
+      .get('payments')
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  })
+  // const formattedPoint = memberPoint.toLocaleString();
 
   return (
     <>
       <PointDiv>
         <h3>현재 포인트</h3>
         <PointDetail>
-          <span>{formattedPoint} P</span>
+          {/* <span>{formattedPoint} P</span> */}
           {menuItems.map((menuItem, index) =>
             index === 3 ? (
               <StyledLi
