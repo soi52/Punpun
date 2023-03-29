@@ -145,7 +145,7 @@ public class SupportRepositoryTest {
         for(int i=0; i<menus1.size(); i++){
             Assertions.assertEquals(shareResponseDTOS.get(i).getSupportType(), SupportType.SHARE);
             Assertions.assertEquals(shareResponseDTOS.get(i).getMenuId(), menus1.get(i).getId());
-            Assertions.assertEquals(shareResponseDTOS.get(i).getSupportDate(), date.toLocalDate());
+            Assertions.assertEquals(shareResponseDTOS.get(i).getSupportDate(), date.toLocalDate().toString());
             Assertions.assertEquals(shareResponseDTOS.get(i).getMenuName(), menus1.get(i).getName());
             Assertions.assertEquals(shareResponseDTOS.get(i).getTotalCount(), totalCount1.get(i));
             Assertions.assertEquals(shareResponseDTOS.get(i).getUseCount(), useCount1.get(i));
@@ -164,7 +164,7 @@ public class SupportRepositoryTest {
         for(int i=0; i<menus2.size(); i++){
             Assertions.assertEquals(shareResponseDTOS2.get(i).getSupportType(), SupportType.SHARE);
             Assertions.assertEquals(shareResponseDTOS2.get(i).getMenuId(), menus2.get(i).getId());
-            Assertions.assertEquals(shareResponseDTOS2.get(i).getSupportDate(), dates.get(i).toLocalDate());
+            Assertions.assertEquals(shareResponseDTOS2.get(i).getSupportDate(), dates.get(i).toLocalDate().toString());
             Assertions.assertEquals(shareResponseDTOS2.get(i).getMenuName(), menus2.get(i).getName());
             Assertions.assertEquals(shareResponseDTOS2.get(i).getTotalCount(), totalCount2.get(i));
             Assertions.assertEquals(shareResponseDTOS2.get(i).getUseCount(), useCount2.get(i));
