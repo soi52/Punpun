@@ -65,9 +65,6 @@ const Oauth = () => {
     };
 
     geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
-  }, []);
-
-  useEffect(() => {
     const token = getUrlParameter('token');
     const accessToken = token || '';
     console.log(accessToken);
