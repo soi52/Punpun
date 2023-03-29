@@ -61,31 +61,32 @@ const Oauth = () => {
     console.log(decodedToken);
     console.log(decodedToken.role);
     console.log(decodedToken['role']);
-    setUserInfo(
-      {
-        userId: decodedToken.id,
-        userName: decodedToken.name,
-        userEmail: decodedToken.email,
-        userLocation: '',
-        userRole: decodedToken.role,
-      },
-    );
+    
+    setUserInfo({
+      userId: decodedToken.id,
+      userName: decodedToken.name,
+      userEmail: decodedToken.email,
+      userLocation: '',
+      userRole: decodedToken.role,
+      userNumber: decodedToken.phoneNumber,
+    });
 
-    if (decodedToken['role'] === 'SUPPORTER') {
-      // if (!decodedToken.number) {
-      //   navigate('/addnumber');
-      // } else {
-      //   navigate('/')
-      // }
-      setIsSupporter(true);
-      setIsLoggedIn(true);
-      navigate('/');
-    } else {
+    if (decodedToken['role'] === 'CHILD') {
       navigate('/');
       setIsChild(true);
       setIsLoggedIn(true);
       console.log(isChild);
       console.log(isLoggedIn);
+    } else {
+      if (decodedToken.number === 'NoNumber') {
+        setIsLoggedIn(true);
+        setIsSupporter(true);
+        navigate('/addnumber');
+      } else {
+        setIsSupporter(true);
+        setIsLoggedIn(true);
+        navigate('/');
+      }
     }
 
     // window.localStorage.setItem('accessToken', accessToken);
@@ -99,8 +100,7 @@ const Oauth = () => {
 
   useEffect(() => {
     console.log(userInfo);
-    
-  }, [userInfo])
+  }, [userInfo]);
   return <></>;
 };
 
