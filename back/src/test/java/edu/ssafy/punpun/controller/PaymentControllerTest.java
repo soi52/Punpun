@@ -50,4 +50,29 @@ public class PaymentControllerTest {
                 .andExpect(content().string(result))
                 .andDo(print());
     }
+
+    @Test
+    @WIthCustomSupporter(supportedPoint = 8000L)
+    @DisplayName("후원 총 금액")
+    void getTotalSupport() throws Exception{
+        Member member = Member.builder()
+                .id(1L)
+                .name("name")
+                .email("email@email.com")
+                .role(UserRole.SUPPORTER)
+                .remainPoint(10000L)
+                .supportedPoint(8000L)
+                .build();
+
+        PointResponseDTO pointResponseDTO=new PointResponseDTO(member.getId(), member.getSupportedPoint());
+
+        String result=new Gson().toJson(pointResponseDTO);
+
+        mockMvc.perform(get("/payments/total")
+                .with(csrf()))
+                .andExpect(status().isOk())
+                .andExpect(content().string(result))
+                .andDo(print());
+    }
+
 }
