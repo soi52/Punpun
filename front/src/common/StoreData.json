@@ -1,0 +1,396 @@
+[
+  {
+    "storeId": 1646697,
+    "storeName": "회참치살롱",
+    "storeOpenTime": null,
+    "storeInfo": null,
+    "storeAddress": "경상북도 구미시 사곡동 674-4 1층",
+    "storeLon": 128.353586639285,
+    "storeLat": 36.0971212293365,
+    "storeImageName": null,
+    "storeImage": null,
+    "storePhoneNumber": null,
+    "menuDTOList": [
+      {
+        "menuId": 47456,
+        "menuName": "참치(스페샬)",
+        "menuPrice": 30000,
+        "menuCount": 0
+      },
+      {
+        "menuId": 47457,
+        "menuName": "참치(실장)",
+        "menuPrice": 50000,
+        "menuCount": 0
+      },
+      {
+        "menuId": 47458,
+        "menuName": "참치(Vip)",
+        "menuPrice": 70000,
+        "menuCount": 0
+      },
+      {
+        "menuId": 47459,
+        "menuName": "참치(VVip)",
+        "menuPrice": 100000,
+        "menuCount": 0
+      },
+      {
+        "menuId": 47460,
+        "menuName": "참치(쌀롱)",
+        "menuPrice": 40000,
+        "menuCount": 0
+      },
+      {
+        "menuId": 47461,
+        "menuName": "참치+회 (모듬)(소)",
+        "menuPrice": 35000,
+        "menuCount": 0
+      },
+      {
+        "menuId": 47462,
+        "menuName": "참치+회 (모듬)(중)",
+        "menuPrice": 50000,
+        "menuCount": 0
+      },
+      {
+        "menuId": 47464,
+        "menuName": "참치+회 (모듬)(대)",
+        "menuPrice": 70000,
+        "menuCount": 0
+      },
+      {
+        "menuId": 47465,
+        "menuName": "광어회(小)",
+        "menuPrice": 35000,
+        "menuCount": 0
+      },
+      {
+        "menuId": 47466,
+        "menuName": "광어회(中)",
+        "menuPrice": 50000,
+        "menuCount": 0
+      },
+      {
+        "menuId": 47467,
+        "menuName": "광어회(大)",
+        "menuPrice": 70000,
+        "menuCount": 0
+      },
+      {
+        "menuId": 47468,
+        "menuName": "모듬회(小)",
+        "menuPrice": 35000,
+        "menuCount": 0
+      },
+      {
+        "menuId": 47469,
+        "menuName": "모듬회(中)",
+        "menuPrice": 50000,
+        "menuCount": 0
+      },
+      {
+        "menuId": 47470,
+        "menuName": "모듬회(大)",
+        "menuPrice": 70000,
+        "menuCount": 0
+      },
+      {
+        "menuId": 47471,
+        "menuName": "참치(스페샬)",
+        "menuPrice": 30000,
+        "menuCount": 0
+      },
+      {
+        "menuId": 47472,
+        "menuName": "참치(쌀롱)",
+        "menuPrice": 40000,
+        "menuCount": 0
+      },
+      {
+        "menuId": 47473,
+        "menuName": "참치(실장)",
+        "menuPrice": 50000,
+        "menuCount": 0
+      },
+      {
+        "menuId": 47474,
+        "menuName": "참치(Vip)",
+        "menuPrice": 70000,
+        "menuCount": 0
+      },
+      {
+        "menuId": 47475,
+        "menuName": "참치(VVip)",
+        "menuPrice": 100000,
+        "menuCount": 0
+      },
+      {
+        "menuId": 47476,
+        "menuName": "광어회(小)",
+        "menuPrice": 35000,
+        "menuCount": 0
+      },
+      {
+        "menuId": 47477,
+        "menuName": "광어회(大)",
+        "menuPrice": 70000,
+        "menuCount": 0
+      },
+      {
+        "menuId": 47478,
+        "menuName": "광어회(中)",
+        "menuPrice": 50000,
+        "menuCount": 0
+      },
+      {
+        "menuId": 47479,
+        "menuName": "우럭회(小)",
+        "menuPrice": 35000,
+        "menuCount": 0
+      },
+      {
+        "menuId": 47480,
+        "menuName": "우럭회(中)",
+        "menuPrice": 50000,
+        "menuCount": 0
+      }
+    ]
+  },
+  {
+    "storeId": 1646698,
+    "storeName": "돌아온옛날통닭상모점",
+    "storeOpenTime": "매일 13:00 - 01:00/- 대한민국에 닭이 없어지면 휴무 합니다",
+    "storeInfo": "안녕하세요 돌아온옛날통닭입니다",
+    "storeAddress": "경상북도 구미시 상모동 48-3 1층 A동",
+    "storeLon": 128.35256473804,
+    "storeLat": 36.08922766612,
+    "storeImageName": null,
+    "storeImage": null,
+    "storePhoneNumber": null,
+    "menuDTOList": [
+      {
+        "menuId": 47481,
+        "menuName": "돌통 옛날통닭",
+        "menuPrice": 8000,
+        "menuCount": 0
+      },
+      {
+        "menuId": 47482,
+        "menuName": "야채똥집튀김(강추!!)",
+        "menuPrice": 12000,
+        "menuCount": 0
+      },
+      {
+        "menuId": 47483,
+        "menuName": "조각후라이드",
+        "menuPrice": 12000,
+        "menuCount": 0
+      },
+      {
+        "menuId": 47484,
+        "menuName": "양념통닭 (달콤.매콤달콤)",
+        "menuPrice": 13000,
+        "menuCount": 0
+      },
+      {
+        "menuId": 47485,
+        "menuName": "마늘간장통닭",
+        "menuPrice": 13000,
+        "menuCount": 0
+      },
+      {
+        "menuId": 47486,
+        "menuName": "불고기양념통닭",
+        "menuPrice": 13000,
+        "menuCount": 0
+      },
+      {
+        "menuId": 47487,
+        "menuName": "닭다리(5조각)",
+        "menuPrice": 8500,
+        "menuCount": 0
+      },
+      {
+        "menuId": 47488,
+        "menuName": "통날개",
+        "menuPrice": 8500,
+        "menuCount": 0
+      },
+      {
+        "menuId": 47489,
+        "menuName": "국물떡볶이",
+        "menuPrice": 9000,
+        "menuCount": 0
+      },
+      {
+        "menuId": 47490,
+        "menuName": "무뼈닭발튀김",
+        "menuPrice": 15000,
+        "menuCount": 0
+      }
+    ]
+  },
+  {
+    "storeId": 1646699,
+    "storeName": "제주통해장국",
+    "storeOpenTime": "매일 07:00 - 21:00",
+    "storeInfo": "제주식 조리법으로 신선한 식재료와 저희만의 특별한 양념다데기로 얼큰하고 개운한 맛을 느끼실수 있습니다.",
+    "storeAddress": "경상북도 구미시 공단동 252 2층 204호",
+    "storeLon": 128.382090011042,
+    "storeLat": 36.1026929972987,
+    "storeImageName": null,
+    "storeImage": null,
+    "storePhoneNumber": null,
+    "menuDTOList": [
+      {
+        "menuId": 47491,
+        "menuName": "통 해장국",
+        "menuPrice": 9000,
+        "menuCount": 0
+      },
+      {
+        "menuId": 47492,
+        "menuName": "동죽칼국수",
+        "menuPrice": 8000,
+        "menuCount": 0
+      },
+      {
+        "menuId": 47493,
+        "menuName": "보쌈",
+        "menuPrice": 13000,
+        "menuCount": 0
+      },
+      {
+        "menuId": 47494,
+        "menuName": "매운 오징어",
+        "menuPrice": 20000,
+        "menuCount": 0
+      },
+      {
+        "menuId": 47495,
+        "menuName": "곱도리탕",
+        "menuPrice": 29000,
+        "menuCount": 0
+      }
+    ]
+  },
+  {
+    "storeId": 1646720,
+    "storeName": "하씨네",
+    "storeOpenTime": null,
+    "storeInfo": null,
+    "storeAddress": "부산광역시 부산진구 부전동 168-130",
+    "storeLon": 129.057263208618,
+    "storeLat": 35.1566139477591,
+    "storeImageName": null,
+    "storeImage": null,
+    "storePhoneNumber": null,
+    "menuDTOList": []
+  },
+  {
+    "storeId": 1646721,
+    "storeName": "서울식당",
+    "storeOpenTime": null,
+    "storeInfo": null,
+    "storeAddress": "경기도 의정부시 금오동 472-3 101호",
+    "storeLon": 127.066082527938,
+    "storeLat": 37.7517664404476,
+    "storeImageName": null,
+    "storeImage": null,
+    "storePhoneNumber": null,
+    "menuDTOList": []
+  },
+  {
+    "storeId": 1646722,
+    "storeName": "미선이네김밥",
+    "storeOpenTime": null,
+    "storeInfo": null,
+    "storeAddress": "경기도 의정부시 가능동 631-21",
+    "storeLon": 127.038649316667,
+    "storeLat": 37.7505465438337,
+    "storeImageName": null,
+    "storeImage": null,
+    "storePhoneNumber": null,
+    "menuDTOList": []
+  },
+  {
+    "storeId": 1646723,
+    "storeName": "복장어샤브샤브",
+    "storeOpenTime": null,
+    "storeInfo": null,
+    "storeAddress": "전라북도 전주시 덕진구 산정동 874-7",
+    "storeLon": 127.167548288672,
+    "storeLat": 35.8369767371799,
+    "storeImageName": null,
+    "storeImage": null,
+    "storePhoneNumber": null,
+    "menuDTOList": []
+  },
+  {
+    "storeId": 1646724,
+    "storeName": "카티모",
+    "storeOpenTime": null,
+    "storeInfo": null,
+    "storeAddress": "전라북도 전주시 덕진구 우아동3가 594-19",
+    "storeLon": 127.152381442085,
+    "storeLat": 35.8556517906231,
+    "storeImageName": null,
+    "storeImage": null,
+    "storePhoneNumber": null,
+    "menuDTOList": []
+  },
+  {
+    "storeId": 1646725,
+    "storeName": "유가네김밥",
+    "storeOpenTime": null,
+    "storeInfo": null,
+    "storeAddress": "전라북도 전주시 덕진구 호성동1가 587-43",
+    "storeLon": 127.147862718844,
+    "storeLat": 35.8610056485127,
+    "storeImageName": null,
+    "storeImage": null,
+    "storePhoneNumber": null,
+    "menuDTOList": []
+  },
+  {
+    "storeId": 1646726,
+    "storeName": "코지",
+    "storeOpenTime": null,
+    "storeInfo": null,
+    "storeAddress": "전라북도 전주시 완산구 중앙동1가 46-2",
+    "storeLon": 127.139607981803,
+    "storeLat": 35.8162813616343,
+    "storeImageName": null,
+    "storeImage": null,
+    "storePhoneNumber": null,
+    "menuDTOList": []
+  },
+  {
+    "storeId": 1646727,
+    "storeName": "정성푸드",
+    "storeOpenTime": null,
+    "storeInfo": null,
+    "storeAddress": "부산광역시 사상구 주례동 83-56",
+    "storeLon": 129.013202753559,
+    "storeLat": 35.1480781071166,
+    "storeImageName": null,
+    "storeImage": null,
+    "storePhoneNumber": null,
+    "menuDTOList": []
+  },
+  {
+    "storeId": 1646728,
+    "storeName": "에스비 바(SB BAR)",
+    "storeOpenTime": null,
+    "storeInfo": null,
+    "storeAddress": "부산광역시 사상구 괘법동 544-21",
+    "storeLon": 128.983706143496,
+    "storeLat": 35.1627913628327,
+    "storeImageName": null,
+    "storeImage": null,
+    "storePhoneNumber": null,
+    "menuDTOList": []
+  }
+
+]

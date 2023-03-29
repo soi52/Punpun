@@ -1,7 +1,6 @@
-import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
-import { useRecoilValue, useRecoilState } from 'recoil';
+import API from '../../store/API';
+import { useRecoilState } from 'recoil';
 import { pointState } from '../../store/atoms';
 
 const Box = styled.div`
@@ -95,10 +94,12 @@ const MenuCart: React.FC<MenuCartProps> = ({
           usePoint: totalPrice,
           menuId: menuIds,
           menuCount: menuCounts,
-          // storeId: storeId
         };
-        await axios.post('/supports/payment', requestBody);
-        setPoint(point - totalPrice);
+        console.log(requestBody);
+        
+        await API.post('supports/payment', requestBody);
+        const response = await API.get('supports/payment')
+        setPoint(response.data)
         alert(`${totalPrice.toLocaleString()}원이 후원되었습니다. 감사합니다!`);
         deleteCart(-1);
       } catch (error) {

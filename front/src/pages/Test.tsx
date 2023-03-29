@@ -6,22 +6,12 @@ import { useRecoilValue } from 'recoil';
 import { userInfoState } from '../store/atoms';
 
 const TestPage = () => {
-  const userInfo = useRecoilValue(userInfoState);
   const accessToken = Cookies.get('accessToken');
   console.log(accessToken);
 
   // 요청을 보낼 URL을 지정합니다.
   const url = 'https://j8d109.p.ssafy.io/api/stores/test';
 
-  useEffect(() => {
-    API.get('payments')
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  });
 
   const apiRequest = () => {
     axios
@@ -33,7 +23,6 @@ const TestPage = () => {
       })
       .then((response) => {
         console.log(response.data);
-        console.log(userInfo);
       })
       .catch((error) => {
         console.error(error);

@@ -1,7 +1,6 @@
-import { useEffect, useState } from 'react';
-import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
-import { storeState } from '../store/atoms';
+// import { storeState } from '../store/atoms';
+import StoreData from './StoreData.json';
 import Map from './Map';
 import SearchStoreList from './SearchStoreList';
 import useGeolocation from './useGeolocation';
@@ -32,7 +31,9 @@ const MapDiv = styled.div`
 `;
 
 const SearchStore = ({ message }: SearchStoreProps) => {
-  const stores = useRecoilValue(storeState);
+  // const stores = useRecoilValue(storeState);
+  console.log(StoreData);
+  
 
   const location = useGeolocation();
   console.log(location);
@@ -45,9 +46,9 @@ const SearchStore = ({ message }: SearchStoreProps) => {
       <h3>{message}</h3>
       <ContentDiv>
         <MapDiv>
-          <Map latitude={latitude} longitude={longitude} stores={stores} />
+          <Map latitude={latitude} longitude={longitude} stores={StoreData} />
         </MapDiv>
-        <SearchStoreList stores={stores} />
+        <SearchStoreList stores={StoreData} />
       </ContentDiv>
     </Wrapper>
   );
