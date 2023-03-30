@@ -20,6 +20,11 @@ export const isLoggedInState = atom({
   default: Cookies.get('accessToken') !== undefined,
 });
 
+export const addressState = atom<string>({
+  key: 'addressState',
+  default: '',
+});
+
 export interface UserInfo {
   userId: number;
   userName: string;
