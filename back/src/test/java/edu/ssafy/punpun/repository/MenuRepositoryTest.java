@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @DataJpaTest
+@DisplayName("메뉴 레포지토리 테스트")
 public class MenuRepositoryTest {
 
     @Autowired

@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @DataJpaTest
+@DisplayName("가게 레포지토리 테스트")
 public class StoreRepositoryTest {
     @Autowired
     private StoreRepository storeRepository;
