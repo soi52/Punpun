@@ -8,18 +8,11 @@ const ComponentStyle = styled.div`
 `;
 
 function SuDetail() {
-  const mainMessage = {
-    title: '',
-    ownerName: '박정은 후원자님',
-    message: '어느새 후원한 금액이 10,000원 이네요!',
-    name: '정은 후원자님',
-  };
-
   return (
     <ComponentStyle>
-      <SuMainMessage/>
+      <SuMainMessage />
       <h2>후원내역</h2>
-      <SupportHistory/>
+      <SupportHistory />
     </ComponentStyle>
   );
 }

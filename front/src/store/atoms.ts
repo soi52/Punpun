@@ -25,33 +25,10 @@ export const addressState = atom<string>({
   default: '',
 });
 
-export const userLocationState = atom<
-  { latitude: number; longitude: number } | string
->({
-  key: 'userLocationState',
+export const userAreaState = atom<string>({
+  key: 'userAreaState',
   default: '',
 });
-
-// export interface UserInfo {
-//   userId: number;
-//   userName: string;
-//   userEmail: string;
-//   userLocation: string;
-//   userRole: string;
-//   userNumber: string;
-// }
-
-// export const userInfoState = atom<UserInfo>({
-//   key: 'userInfoState',
-//   default: {
-//     userId: 0,
-//     userName: '',
-//     userEmail: '',
-//     userLocation: '',
-//     userRole: '',
-//     userNumber: '',
-//   },
-// });
 
 export interface UserInfo {
   userId: number;

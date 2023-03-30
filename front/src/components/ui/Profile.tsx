@@ -1,9 +1,10 @@
 import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
-import { UserInfo, userInfoState } from '../../store/atoms';
+import { userAreaState, UserInfo, userInfoState } from '../../store/atoms';
 import profileImg from '../../resources/images/temp_profile.png';
 import { useEffect } from 'react';
 import API from '../../store/API';
+import useGeolocation from '../../common/UseGeolocation';
 
 const ProfileBox = styled.div`
   display: flex;
@@ -42,39 +43,33 @@ const InfoBox = styled.div`
 
 function Profile() {
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
-  console.log(userInfo);
+  const [userArea, setUserArea] = useRecoilState(userAreaState);
 
-  // const location = useGeolocation();
-  // const { latitude = 0, longitude = 0 } =
-  //   typeof location === 'object' ? location : {};
+  const location = useGeolocation();
+  const { latitude = 0, longitude = 0 } =
+    typeof location === 'object' ? location : {};
 
-  // function getAddr(lat: any, lng: any) {
-  //   let geocoder = new kakao.maps.services.Geocoder();
+  function getAddr(lat: any, lng: any) {
+    let geocoder = new kakao.maps.services.Geocoder();
+    let coord = new kakao.maps.LatLng(lat, lng);
+    let callback = function (result: any, status: any) {
+      if (status === kakao.maps.services.Status.OK) {
+        const arr = { ...result };
+        const _arr =
+          arr[0].address.region_1depth_name +
+          ' ' +
+          arr[0].address.region_2depth_name;
+        setUserArea(_arr);
+      }
+    };
+    geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
+  }
 
-  //   let coord = new kakao.maps.LatLng(lat, lng);
-  //   let callback = function (result: any, status: any) {
-  //     if (status === kakao.maps.services.Status.OK) {
-  //       const arr = { ...result };
-  //       const _arr =
-  //         arr[0].address.region_1depth_name +
-  //         ' ' +
-  //         arr[0].address.region_2depth_name;
-  //       setUserInfo((userInfo) => {
-  //         return {
-  //           ...userInfo,
-  //           userLocation: _arr,
-  //         };
-  //       });
-  //     }
-  //   };
-  //   geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
-  // }
-
-  // useEffect(() => {
-  //   if (typeof location === 'object') {
-  //     getAddr(latitude, longitude);
-  //   }
-  // }, [location]);
+  useEffect(() => {
+    if (typeof location === 'object') {
+      getAddr(latitude, longitude);
+    }
+  }, [getAddr]);
 
   useEffect(() => {
     API.get('users/member')
@@ -107,7 +102,7 @@ function Profile() {
         <InfoBox>
           <span>
             {userInfo.userName} 님<br></br>
-            {userInfo.userArea}
+            {userArea}
           </span>
         </InfoBox>
       </ProfileBox>
