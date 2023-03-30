@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import API from '../store/API';
-import axios from 'axios';
 import Cookies from 'js-cookie';
 import { useRecoilValue } from 'recoil';
 import { userInfoState } from '../store/atoms';
@@ -10,16 +9,11 @@ const TestPage = () => {
   console.log(accessToken);
 
   // 요청을 보낼 URL을 지정합니다.
-  const url = 'https://j8d109.p.ssafy.io/api/stores/test';
+  const url = 'https://j8d109.p.ssafy.io/api/users/member';
 
   const apiRequest = () => {
-    axios
-      .get(url, {
-        withCredentials: true,
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
+    API
+      .get('users/member')
       .then((response) => {
         console.log(response.data);
       })
