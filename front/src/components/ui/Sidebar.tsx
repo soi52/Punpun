@@ -74,13 +74,13 @@ const Sidebar: FC<SidebarProps> = ({
           onMenuItemClick={handleMenuItemClick}
         />
         <HrDIv2 />
-        {/* {isSupporter ? ( */}
+        {isSupporter ? (
           <SuSidebarContent
             menuItems={menuItems}
             currentMenuItemIndex={currentMenuItemIndex}
             onMenuItemClick={handleMenuItemClick}
           />
-        {/* // ) : null} */}
+        ) : null}
       </SidebarStyle>
     </>
   );

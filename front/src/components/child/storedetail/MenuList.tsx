@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { storeState } from '../../../store/atoms';
 import MenuCard from '../../ui/MenuCard';
 import MenuCart from '../../supporter/MenuCart';
+import Loading from '../../ui/Loading';
 
 const Container = styled.div`
   display: flex;
@@ -69,6 +70,10 @@ const MenuList: React.FC<MenuListProps> = (props) => {
       setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
     }
   };
+
+  if (!props.menuList) {
+    return <Loading />;
+  }
 
   return (
     <Container>

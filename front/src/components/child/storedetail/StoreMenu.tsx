@@ -17,18 +17,20 @@ type Props = {
 
 const StoreMenu = ({ myStoreId }: Props) => {
   const [menuDTOList, setMenuDTOList] = useState<MenuDTO[]>([]);
-  const [storeName, setStoreName] = useState();
+  const [storeName, setStoreName] = useState<string | undefined>();
 
   useEffect(() => {
-    API.get(`stores/${myStoreId}`)
-      .then((response) => {
-        setMenuDTOList(response.data.menuDTOList);
-        setStoreName(response.data.storeName);
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-  })        
+    if (myStoreId) {
+      API.get(`stores/${myStoreId}`)
+        .then((response) => {
+          setMenuDTOList(response.data.menuResponseDTOList);
+          setStoreName(response.data.storeName);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [myStoreId]);
 
   return (
     <>
