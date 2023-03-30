@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Objects;
 
 @Service
 @Transactional
@@ -31,7 +32,7 @@ public class ReviewServiceImpl implements ReviewService {
         if (reservation.getState() != ReservationState.END) {
             throw new IllegalArgumentException("리뷰를 남길 수 없는 상태입니다.");
         }
-        if (!reservation.getChild().equals(child)) {
+        if (!reservation.getChild().getId().equals(child.getId())) {
             throw new NotMatchChildException("예약을 남길 수 없는 아동입니다.");
         }
 
