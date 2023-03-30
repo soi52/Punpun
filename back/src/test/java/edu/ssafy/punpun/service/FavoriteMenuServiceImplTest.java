@@ -3,6 +3,7 @@ package edu.ssafy.punpun.service;
 import edu.ssafy.punpun.entity.Child;
 import edu.ssafy.punpun.entity.FavoriteMenu;
 import edu.ssafy.punpun.entity.Menu;
+import edu.ssafy.punpun.entity.Store;
 import edu.ssafy.punpun.entity.enumurate.UserRole;
 import edu.ssafy.punpun.exception.NotStoreOwnerException;
 import edu.ssafy.punpun.repository.FavoriteMenuRepository;
@@ -15,8 +16,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.*;
 
@@ -30,6 +33,44 @@ public class FavoriteMenuServiceImplTest {
 
     @InjectMocks
     private FavoriteMenuServiceImpl favoriteMenuService;
+    
+    @Test
+    @DisplayName("좋아하는 메뉴 리스트")
+    void getFavoriteMenuChild() {
+        // given
+        Child child1 = Child.builder()
+                .name("childTest")
+                .email("childTest@email.com")
+                .role(UserRole.CHILD)
+                .phoneNumber("01000000000")
+                .build();
+        Menu menu1 = Menu.builder()
+                .id(1L)
+                .name("menu1")
+                .build();
+        Menu menu2 = Menu.builder()
+                .id(1L)
+                .name("menu2")
+                .build();
+        FavoriteMenu favoriteMenu1 = FavoriteMenu.builder()
+                .child(child1)
+                .menu(menu1)
+                .build();
+        FavoriteMenu favoriteMenu2 = FavoriteMenu.builder()
+                .child(child1)
+                .menu(menu2)
+                .build();
+        doReturn(List.of(favoriteMenu1, favoriteMenu2)).when(favoriteMenuRepository).findByChild(child1);
+
+        //when
+        List<Menu> results = favoriteMenuService.getFavoriteMenuChild(child1);
+
+        //then
+        assertThat(results.get(0).getId()).isEqualTo(menu1.getId());
+        assertThat(results.get(0).getId()).isEqualTo(menu1.getId());
+        assertThat(results.get(1).getId()).isEqualTo(menu2.getId());
+        assertThat(results.get(1).getName()).isEqualTo(menu2.getName());
+    }
 
     @Test
     @DisplayName("좋아하는 메뉴 추가")
