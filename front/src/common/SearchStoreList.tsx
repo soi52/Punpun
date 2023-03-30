@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import SearchBar from './SearchBar';
 import FilteredList from './FilteredList';
+import API from '../store/API';
 
 const ComponentDiv = styled.div`
   display: flex;
@@ -73,6 +74,20 @@ const SearchStoreList = ({ stores }: { stores: Store[] }) => {
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setKeyword(event.target.value);
   };
+
+  useEffect(() => {
+    API.get('stores/search', {
+      params: {
+        name: keyword,
+      },
+    })
+      .then((response: any) => {
+        console.log(response.data);
+      })
+      .catch((error: any) => {
+        console.error(error);
+      });
+  });
 
   const filteredList = stores
     .filter((item) => item.storeName.includes(keyword))
