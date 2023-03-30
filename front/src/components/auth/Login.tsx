@@ -4,6 +4,7 @@ import Address from './Address';
 
 const Login = () => {
   const kakaoLogin = 'http://j8d109.p.ssafy.io/api/oauth2/authorization/kakao';
+  // const kakaoLogin = 'http://192.168.100.94:8888/api/oauth2/authorization/kakao';
 
   return (
     <div>

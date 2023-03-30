@@ -9,7 +9,7 @@ const TestPage = () => {
   console.log(accessToken);
 
   // 요청을 보낼 URL을 지정합니다.
-  const url = 'https://j8d109.p.ssafy.io/api/users/member';
+  // const url = 'https://j8d109.p.ssafy.io/api/users/member';
 
   const apiRequest = () => {
     API
