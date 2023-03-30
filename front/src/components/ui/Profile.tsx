@@ -45,6 +45,8 @@ function Profile() {
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
   const [userArea, setUserArea] = useRecoilState(userAreaState);
 
+  const role = localStorage.getItem('role');
+
   const location = useGeolocation();
   const { latitude = 0, longitude = 0 } =
     typeof location === 'object' ? location : {};
@@ -72,25 +74,47 @@ function Profile() {
   }, [getAddr]);
 
   useEffect(() => {
-    API.get('users/member')
-      .then((response: any) => {
-        console.log(response.data);
-        // API 요청에서 받아온 데이터를 memberInfoState에 업데이트
-        const newMemberInfo: UserInfo = {
-          userId: response.data.id,
-          userName: response.data.name,
-          userEmail: response.data.email,
-          userRole: response.data.role,
-          userNumber: response.data.phoneNumber,
-          userSupportedPoint: response.data.supportedPoint,
-          userRemainPoint: response.data.remainPoint,
-          userArea: null,
-        };
-        setUserInfo(newMemberInfo);
-      })
-      .catch((error: any) => {
-        console.error(error);
-      });
+    if (role === 'CHILD') {
+      API.get('users/child')
+        .then((response: any) => {
+          console.log(response.data);
+          // API 요청에서 받아온 데이터를 memberInfoState에 업데이트
+          const newUserInfo: UserInfo = {
+            userId: response.data.id,
+            userName: response.data.name,
+            userEmail: response.data.email,
+            userRole: response.data.role,
+            userNumber: response.data.phoneNumber,
+            userSupportedPoint: null,
+            userRemainPoint: null,
+            userArea: response.data.area,
+          };
+          setUserInfo(newUserInfo);
+        })
+        .catch((error: any) => {
+          console.error(error);
+        });
+    } else {
+      API.get('users/member')
+        .then((response: any) => {
+          console.log(response.data);
+          // API 요청에서 받아온 데이터를 memberInfoState에 업데이트
+          const newMemberInfo: UserInfo = {
+            userId: response.data.id,
+            userName: response.data.name,
+            userEmail: response.data.email,
+            userRole: response.data.role,
+            userNumber: response.data.phoneNumber,
+            userSupportedPoint: response.data.supportedPoint,
+            userRemainPoint: response.data.remainPoint,
+            userArea: null,
+          };
+          setUserInfo(newMemberInfo);
+        })
+        .catch((error: any) => {
+          console.error(error);
+        });
+    }
   }, [setUserInfo]);
 
   return (
