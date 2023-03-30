@@ -50,15 +50,14 @@ interface OwnerHeaderProps {
   onSelect: (item: string) => void;
   items: string[];
   selectedItem: string | undefined;
-  userRole: string;
+  role: string;
 }
 
 function OwnerHeader(props: OwnerHeaderProps) {
   const owStore = useRecoilValue(owStoreState);
   const [selectedStore, setSelectedStore] = useState<OwStore | null>(null);
   const [storeDrop, setStoreDrop] = useState(false);
-  const { onLogout, toOwStore, onSelect, items, selectedItem, userRole } =
-    props;
+  const { onLogout, toOwStore, onSelect, items, selectedItem, role } = props;
 
   const navigate = useNavigate();
 
@@ -101,7 +100,7 @@ function OwnerHeader(props: OwnerHeaderProps) {
         onSelect={onSelect}
         items={items}
         selectedItem={selectedItem}
-        userRole={userRole}
+        role={role}
       />
     </NavUl>
   );
