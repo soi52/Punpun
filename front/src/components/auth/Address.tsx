@@ -1,30 +1,40 @@
 import { useEffect } from 'react';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import useGeolocation from '../../common/UseGeolocation';
-import { UserInfo, userInfoState } from '../../store/atoms';
+import { addressState, userLocationState } from '../../store/atoms';
 
 function Address() {
-  // const location = useGeolocation();
-  // const { latitude = 0, longitude = 0 } =
-  //   typeof location === 'object' ? location : {};
+  const [address, setAddress] = useRecoilState(addressState);
+  const userLocation = useRecoilValue(userLocationState);
 
-  // let geocoder = new kakao.maps.services.Geocoder();
-  // let coord = new kakao.maps.LatLng(latitude, longitude);
+  const location = useGeolocation();
+  const { latitude = 0, longitude = 0 } =
+    typeof location === 'object' ? location : {};
 
-  // let callback = function (result: any, status: any) {
-  //   if (status === kakao.maps.services.Status.OK) {
-  //     console.log(result[0].address.region_1depth_name +
-  //       ' ' +
-  //       result[0].address.region_2depth_name,);
+  function getAddr(lat: any, lng: any) {
+    let geocoder = new kakao.maps.services.Geocoder();
 
-  //     };
-  //      // 업데이트된 userInfo 객체를 userInfoState에 반영합니다.
-  //   }
-  // };
+    let coord = new kakao.maps.LatLng(lat, lng);
+    let callback = function (result: any, status: any) {
+      if (status === kakao.maps.services.Status.OK) {
+        const arr = { ...result };
+        const _arr =
+          arr[0].address.region_1depth_name +
+          ' ' +
+          arr[0].address.region_2depth_name;
+        setAddress(_arr);
+      }
+    };
+    geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
+  }
 
-  // geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
+  useEffect(() => {
+    if (typeof userLocation === 'object') {
+      getAddr(userLocation.latitude, userLocation.longitude);
+    }
+  }, [userLocation]);
 
-  return null; // Address 컴포넌트는 렌더링할 JSX가 없으므로 null을 반환합니다.
+  return null;
 }
 
 export default Address;
