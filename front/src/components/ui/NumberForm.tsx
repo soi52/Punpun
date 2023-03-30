@@ -17,13 +17,6 @@ const InputLabel = styled.label`
   font-size: 1rem;
 `;
 
-const Input = styled.input`
-  padding: 0.5rem;
-  border: 1px solid gray;
-  border-radius: 4px;
-  font-size: 1rem;
-`;
-
 const Button = styled.button`
   padding: 0.5rem 1rem;
   border: none;
