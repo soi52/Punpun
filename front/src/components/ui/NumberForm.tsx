@@ -67,7 +67,7 @@ const NumberForm = () => {
     const formattedPhoneNumber = String(phoneNumber);
 
     try {
-      const response = await API.put('users/member/phone', {
+      const response = await API.patch('users/member/phone', {
         phoneNumber: formattedPhoneNumber,
       });
       console.log(response.data);
