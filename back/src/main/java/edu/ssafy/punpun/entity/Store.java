@@ -8,7 +8,6 @@ import java.util.List;
 
 @Entity
 @Getter
-@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -45,4 +44,5 @@ public class Store extends BaseEntity {
     public void appendReview(Review review) {
         this.reviews.add(review);
     }
+    public void deleteOwner() { this.owner = null; }
 }

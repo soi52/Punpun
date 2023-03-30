@@ -1,4 +1,4 @@
-package edu.ssafy.punpun.security;
+package edu.ssafy.punpun.config;
 
 import edu.ssafy.punpun.security.exception.CustomAccessDeniedHandler;
 import edu.ssafy.punpun.security.exception.CustomAuthenticationEntryPoint;

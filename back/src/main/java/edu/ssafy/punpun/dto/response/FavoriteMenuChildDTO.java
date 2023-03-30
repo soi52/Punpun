@@ -1,23 +1,24 @@
 package edu.ssafy.punpun.dto.response;
 
 import edu.ssafy.punpun.entity.Menu;
+import edu.ssafy.punpun.entity.Store;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor
 @AllArgsConstructor
-public class MenuDTO {
+@NoArgsConstructor
+public class FavoriteMenuChildDTO {
+    private Long storeId;
+    private String storeName;
     private Long menuId;
     private String menuName;
-    private Long menuPrice;
-    private Long menuCount;
 
-    public MenuDTO(Menu menu) {
+    public FavoriteMenuChildDTO(Store store, Menu menu) {
+        this.storeId = store.getId();
+        this.storeName = store.getName();
         this.menuId = menu.getId();
         this.menuName = menu.getName();
-        this.menuPrice = menu.getPrice();
-        this.menuCount = menu.getSponsoredCount();
     }
 }
