@@ -49,6 +49,9 @@ type HeaderProps = {
 };
 
 function Header(props: HeaderProps) {
+
+  const role = localStorage.getItem('role');
+
   const userInfo = useRecoilValue(userInfoState);
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLoggedInState);
   const [isOwner, setIsOwner] = useRecoilState(isOwnerState);
@@ -85,9 +88,9 @@ function Header(props: HeaderProps) {
 
   const renderNav = () => {
     if (isLoggedIn) {
-      if (userInfo.userRole == 'CHILD') {
+      if (role === 'CHILD') {
         return <ChildHeader onLogout={onLogout} />;
-      } else if (isOwner) {
+      } else if (role === 'OWNER') {
         return (
           <OwnerHeader
             onSelect={onSelect}
