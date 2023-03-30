@@ -77,7 +77,7 @@ const NumberForm = () => {
       }));
       // 서버 응답 데이터 처리
     } catch (error) {
-      console.log(error)
+      console.log(error);
       // 에러 처리
     }
   };
