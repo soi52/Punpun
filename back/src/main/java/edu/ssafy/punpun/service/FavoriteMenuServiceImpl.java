@@ -3,13 +3,14 @@ package edu.ssafy.punpun.service;
 import edu.ssafy.punpun.entity.Child;
 import edu.ssafy.punpun.entity.FavoriteMenu;
 import edu.ssafy.punpun.entity.Menu;
-import edu.ssafy.punpun.entity.Store;
 import edu.ssafy.punpun.repository.ChildRepository;
 import edu.ssafy.punpun.repository.FavoriteMenuRepository;
 import edu.ssafy.punpun.repository.MenuRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -19,6 +20,15 @@ public class FavoriteMenuServiceImpl implements FavoriteMenuService {
     private FavoriteMenuRepository favoriteMenuRepository;
     private ChildRepository childRepository;
     private MenuRepository menuRepository;
+
+    @Override
+    public List<Menu> getFavoriteMenuChild(Child child) {
+        List<Menu> menuList = favoriteMenuRepository.findByChild(child).stream()
+                .map(favoriteMenu -> favoriteMenu.getMenu())
+                .collect(Collectors.toList());
+
+        return menuList;
+    }
 
     @Override
     public void insertFavoriteMenu(Child child, Long menuId) {
