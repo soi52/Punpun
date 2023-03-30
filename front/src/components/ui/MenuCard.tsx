@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import API from '../../store/API';
 import { DetailedHTMLProps, ImgHTMLAttributes } from 'react';
 
 // 로컬용 테스트 import (나중에 삭제)
@@ -98,7 +98,7 @@ const MenuCard: React.FC<MenuCardProps> = ({ id, title, price, quantity, addToCa
     console.log('liked: ' + liked);
 
     const method = liked ? 'delete' : 'post';
-    axios[method]('favors/' + id)
+    API[method]('favors', {id})
       .then((response) => {
         console.log(response.data);
       })
