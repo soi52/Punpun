@@ -1,6 +1,3 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-
 type StoreHourProps = {
   storeAddress: string | null;
   storeInfo: string | null;
@@ -10,22 +7,6 @@ type StoreHourProps = {
 
 const StoreHour = ({   storeAddress
   , storeInfo, storeOpenTime, storePhoneNumber }: StoreHourProps) => {
-  const [storeData, setStoreData] = useState({});
-
-  useEffect(() => {
-    axios
-      .get('/api/store', {
-        params: {
-          storeId: 'storeId',
-        },
-      })
-      .then((response) => {
-        setStoreData(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
 
   return (
     <div>
