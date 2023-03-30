@@ -1,5 +1,10 @@
 import axios from 'axios';
+import styled from 'styled-components';
 import { useEffect, useState } from 'react';
+
+const BookingDiv = styled.div`
+  padding-top: 20px;
+`;
 
 type Booking = {
   reservationId: number;
@@ -40,18 +45,20 @@ const PrevBookings = () => {
 
   return (
     <>
-      {bookings.map((booking) => (
-        <div key={booking.reservationId}>
-          <p>Reservation ID: {booking.reservationId}</p>
-          <p>Reservation state: {booking.reservationState}</p>
-          <p>Reservation time: {booking.reservationTime}</p>
-          <p>Menu ID: {booking.menuId}</p>
-          <p>Menu name: {booking.menuName}</p>
-          <p>Store ID: {booking.storeId}</p>
-          <p>Store name: {booking.storeName}</p>
-          <hr />
-        </div>
-      ))}
+      <BookingDiv>
+        {bookings.map((booking) => (
+          <div key={booking.reservationId}>
+            <p>Reservation ID: {booking.reservationId}</p>
+            <p>Reservation state: {booking.reservationState}</p>
+            <p>Reservation time: {booking.reservationTime}</p>
+            <p>Menu ID: {booking.menuId}</p>
+            <p>Menu name: {booking.menuName}</p>
+            <p>Store ID: {booking.storeId}</p>
+            <p>Store name: {booking.storeName}</p>
+            <hr />
+          </div>
+        ))}
+      </BookingDiv>
     </>
   );
 };
