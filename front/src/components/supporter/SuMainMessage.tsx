@@ -9,6 +9,7 @@ import MainTitle from '../ui/MainTitle';
 function SuMainMessage() {
   const userInfo = useRecoilValue(userInfoState);
   // const [usePoint, setUsePoint] = useRecoilState(usePointState);
+
   // useEffect(() => {
   //   API.get('payments/total')
   //     .then((response: any) => {
@@ -18,15 +19,15 @@ function SuMainMessage() {
   //     .catch((error: any) => {
   //       console.error(error);
   //     });
-  // });
+  // }, []);
 
-  // const formattedPoint = usePoint.toLocaleString();
+  const usePoint = userInfo.userSupportedPoint;
+  const formattedPoint = usePoint ? usePoint.toLocaleString() : '';
 
   const mainMessage = {
     title: '',
     ownerName: `${userInfo.userName} 후원자님`,
-    // message: `어느새 후원한 금액이 ${formattedPoint}원 이네요!`,
-    message: '어느새 후원한 금액이 10,000원 이네요!',
+    message: `어느새 후원한 금액이 ${formattedPoint}원 이네요!`,
     name: `${userInfo.userName} 후원자님`,
   };
   return (
