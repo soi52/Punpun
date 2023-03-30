@@ -1,7 +1,8 @@
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { pointState } from '../../store/atoms';
+import API from '../../store/API';
 
 const StyledLi = styled.li`
   list-style-type: none;
@@ -41,7 +42,18 @@ const SuSidebarContent: FC<SuSidebarContentProps> = ({
   currentMenuItemIndex,
   onMenuItemClick,
 }) => {
-  const point = useRecoilValue(pointState);
+  const [point, setPoint] = useRecoilState(pointState);
+
+  useEffect(() => {
+    API.get('payments')
+      .then((response: any) => {
+        setPoint(response.data.memberPoint);
+      })
+      .catch((error: any) => {
+        console.error(error);
+      });
+  }, [setPoint]);
+
   const formattedPoint = point.toLocaleString();
 
   return (

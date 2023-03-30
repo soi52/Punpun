@@ -43,7 +43,6 @@ const ButtonDiv = styled.div``;
 const CheckBoxDiv = styled.div``;
 
 const SuPointAdd = () => {
-
   const [selectedPoint, setSelectedPoint] = useState(0);
   const [selectedPayment, setSelectedPayment] = useState('');
   const [point, setPoint] = useRecoilState(pointState);
@@ -63,13 +62,13 @@ const SuPointAdd = () => {
       return;
     }
     console.log(`충전 포인트: ${selectedPoint}, 결제 수단: ${selectedPayment}`);
-  
+
     try {
       // point post
       await API.post('payments', {
         point: selectedPoint,
       });
-    
+
       // point get하고 state 변경
       const response = await API.get('payments');
       console.log(response.data);
@@ -89,7 +88,7 @@ const SuPointAdd = () => {
 
   return (
     <ComponentStyle>
-      <SuMainMessage/>
+      <SuMainMessage />
       <h2>충전 포인트</h2>
       <ButtonDiv>
         {points.map((point) => (
