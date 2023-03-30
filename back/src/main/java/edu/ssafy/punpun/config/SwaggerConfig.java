@@ -43,7 +43,6 @@ public class SwaggerConfig {
                 .licenseUrl("punpun-d109")
                 .version("0.1")
                 .build();
-
     }
 
     private ApiKey apiKey() {
