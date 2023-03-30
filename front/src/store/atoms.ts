@@ -67,11 +67,6 @@ export const isDarkAtom = atom({
   default: true,
 });
 
-// export const accessTokenState = atom<string | null>({
-//   key: 'accessTokenState',
-//   default: null,
-// });
-
 export const messageState = atom<string>({
   key: 'messageState',
   default: '',
@@ -80,6 +75,11 @@ export const messageState = atom<string>({
 // 포인트 atom
 export const pointState = atom<number>({
   key: 'pointState',
+  default: 0,
+});
+
+export const usePointState = atom<number>({
+  key: 'usePointState',
   default: 0,
 });
 
