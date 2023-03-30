@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
@@ -264,30 +265,32 @@ public class StoreServiceImplTest {
                     .isInstanceOf(NotStoreOwnerException.class);
         }
 
-//        @Test
-//        @DisplayName("가게 등록 해제 - 가게 주인이 아닌 경우")
-//        void deleteStoreByMember4() {
-//            // given
-//            Member member1 = Member.builder()
-//                    .name("memberTest")
-//                    .role(UserRole.OWNER)
-//                    .build();
-//            Member member2 = Member.builder()
-//                    .name("memberTest")
-//                    .role(UserRole.OWNER)
-//                    .build();
-//            Store store1 = Store.builder()
-//                    .id(1L)
-//                    .name("store1")
-//                    .owner(member2)
-//                    .build();
-//
-//            doReturn(Optional.of(store1)).when(storeRepository).findById(1L);
-//
-//            // when
-//            // then
-//            assertThatThrownBy(() -> storeService.deleteStoreByMember(member1, 1L))
-//                    .isInstanceOf(NotStoreOwnerException.class);
-//        }
+        @Test
+        @DisplayName("가게 등록 해제 - 가게 주인이 아닌 경우")
+        void deleteStoreByMember4() {
+            // given
+            Member member1 = Member.builder()
+                    .id(1L)
+                    .name("memberTest")
+                    .role(UserRole.OWNER)
+                    .build();
+            Member member2 = Member.builder()
+                    .id(2L)
+                    .name("memberTest")
+                    .role(UserRole.OWNER)
+                    .build();
+            Store store1 = Store.builder()
+                    .id(1L)
+                    .name("store1")
+                    .owner(member2)
+                    .build();
+
+            doReturn(Optional.of(store1)).when(storeRepository).findById(eq(1L));
+
+            // when
+            // then
+            assertThatCode(() -> storeService.deleteStoreByMember(member1, 1L))
+                    .isInstanceOf(NotStoreOwnerException.class);
+        }
     }
 }
