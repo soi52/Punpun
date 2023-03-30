@@ -71,6 +71,8 @@ const MenuList: React.FC<MenuListProps> = (props) => {
     }
   };
 
+  const role = localStorage.getItem('role');
+
   if (!props.menuList) {
     return <Loading />;
   }
@@ -89,13 +91,13 @@ const MenuList: React.FC<MenuListProps> = (props) => {
           />
         ))}
       </MenuListContainer>
-
+      { (role !== 'CHILD') ?
       <MenuCart
         cartItems={cartItems}
         updateCart={updateCart}
         deleteCart={deleteCart}
       />
-
+      : null }
     </Container>
   );
 };

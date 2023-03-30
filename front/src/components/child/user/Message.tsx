@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import API from '../../../store/API';
 import styled from 'styled-components';
 
 import MessageInput from './MessageInput';
@@ -53,11 +53,15 @@ const btnMessage: MessageBtn[] = [
 ];
 
 type MessageSet = {
-    inputValue: string;
-    selectedButtons: string[];
-  };
+  inputValue: string;
+  selectedButtons: string[];
+};
 
-const Message: React.FC = () => {
+type MessageProps = {
+  reservationId: number;
+};
+
+const Message: React.FC<MessageProps> = ({ reservationId }) => {
   const [messages, setMessages] = useState<MessageSet[]>([]);
   const [inputValue, setInputValue] = useState('');
   const [selectedButtons, setSelectedButtons] = useState<string[]>([]);
@@ -66,18 +70,20 @@ const Message: React.FC = () => {
     const message = {
       keyword: selectedButtons,
       content: inputValue,
-      reservationId: 'your_reservation_id_here',
+      reservationId: reservationId,
     };
 
-    axios.post('/reviews', message)
-    .then((response) => {
-      console.log('Message sent:', response.data);
-      setMessages([{inputValue: inputValue, selectedButtons: selectedButtons}, ...messages]);
-    })
-    .catch((error) => {
-      console.error('Error sending message:', error);
-    });
-
+    API.post('/reviews', message)
+      .then((response) => {
+        console.log('Message sent:', response.data);
+        setMessages([
+          { inputValue: inputValue, selectedButtons: selectedButtons },
+          ...messages,
+        ]);
+      })
+      .catch((error) => {
+        console.error('Error sending message:', error);
+      });
   };
 
   const handleDeleteMessage = (index: number) => {
