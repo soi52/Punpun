@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import API from '../../store/API';
 import { useRecoilState } from 'recoil';
 import { userInfoState } from '../../store/atoms';
+import { useNavigate } from 'react-router';
 
 const Form = styled.form`
   display: flex;
@@ -46,6 +47,7 @@ const StyledInput = styled.input`
 `;
 
 const NumberForm = () => {
+  const navigate = useNavigate();
   const [error, setError] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
@@ -75,6 +77,7 @@ const NumberForm = () => {
         ...prevUserInfo,
         userNumber: formattedPhoneNumber,
       }));
+      navigate('/');
       // 서버 응답 데이터 처리
     } catch (error) {
       console.log(error);
