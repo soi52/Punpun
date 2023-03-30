@@ -59,10 +59,7 @@ const Oauth = () => {
     });
 
     const decodedToken: any = jwt_decode(accessToken);
-    console.log(decodedToken);
-    console.log(decodedToken.role);
-    console.log(decodedToken['role']);
-    console.log(decodedToken);
+    localStorage.setItem('role', decodedToken.role);
     
 
     setUserInfo({
@@ -75,7 +72,7 @@ const Oauth = () => {
     });
 
     if (decodedToken['role'] === 'CHILD') {
-      navigate('/');
+      navigate('/chmain');
       setIsChild(true);
       setIsLoggedIn(true);
       console.log(isChild);
