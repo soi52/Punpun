@@ -1,10 +1,11 @@
 import { useEffect } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import useGeolocation from '../../common/UseGeolocation';
-import { addressState } from '../../store/atoms';
+import { addressState, userLocationState } from '../../store/atoms';
 
 function Address() {
   const [address, setAddress] = useRecoilState(addressState);
+  const userLocation = useRecoilValue(userLocationState);
 
   const location = useGeolocation();
   const { latitude = 0, longitude = 0 } =
@@ -28,8 +29,10 @@ function Address() {
   }
 
   useEffect(() => {
-    getAddr(latitude, longitude);
-  }, [address]);
+    if (typeof userLocation === 'object') {
+      getAddr(userLocation.latitude, userLocation.longitude);
+    }
+  }, [userLocation]);
 
   return null;
 }
