@@ -98,7 +98,7 @@ public class SecurityConfig {
                 "http://localhost:3000",
                 "https://j8d109.p.ssafy.io/"));
         // setAllowedMethods : Set the HTTP methods to allow
-        corsConfiguration.setAllowedMethods(List.of("GET", "POST", "FETCH", "PUT", "DELETE"));
+        corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PATCH", "PUT", "DELETE"));
         // setAllowedHeaders : Set the list of headers that a pre-flight request can list as allowed for use during an actual request.
         corsConfiguration.setAllowedHeaders(List.of("Accept", "Accept-Language", "Authorization", "Content-Language", "Content-Type"));
         // setAllowedCredentials : Whether user credentials are supported.
