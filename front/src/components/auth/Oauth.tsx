@@ -50,13 +50,13 @@ const Oauth = () => {
 
     const accessToken = token || '';
     console.log(accessToken);
-    // Cookies.set('accessToken', accessToken, {
-    //   expires: 7, // 쿠키 만료 일자
-    //   path: '/', // 쿠키 경로
-    //   secure: true, // HTTPS 프로토콜에서만 전송
-    //   sameSite: 'strict', // SameSite 옵션
-    //   httpOnly: true, // JavaScript를 통한 접근 방지
-    // });
+    Cookies.set('access_token', accessToken, {
+      expires: 7, // 쿠키 만료 일자
+      path: '/', // 쿠키 경로
+      secure: true, // HTTPS 프로토콜에서만 전송
+      sameSite: 'strict', // SameSite 옵션
+      httpOnly: true, // JavaScript를 통한 접근 방지
+    });
 
     const decodedToken: any = jwt_decode(accessToken);
     console.log(decodedToken);
