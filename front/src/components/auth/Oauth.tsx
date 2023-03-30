@@ -60,16 +60,15 @@ const Oauth = () => {
 
     const decodedToken: any = jwt_decode(accessToken);
     localStorage.setItem('role', decodedToken.role);
-    
 
-    setUserInfo({
-      userId: decodedToken.id,
-      userName: decodedToken.name,
-      userEmail: decodedToken.email,
-      userLocation: address,
-      userRole: decodedToken.role,
-      userNumber: decodedToken.phoneNumber,
-    });
+    // setUserInfo({
+    //   userId: decodedToken.id,
+    //   userName: decodedToken.name,
+    //   userEmail: decodedToken.email,
+    //   userLocation: address,
+    //   userRole: decodedToken.role,
+    //   userNumber: decodedToken.phoneNumber,
+    // });
 
     if (decodedToken['role'] === 'CHILD') {
       navigate('/chmain');
