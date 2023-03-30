@@ -67,7 +67,7 @@ const NumberForm = () => {
     const formattedPhoneNumber = String(phoneNumber);
 
     try {
-      const response = await API.patch('users/member/phone', {
+      const response = await API.put('users/member/phone', {
         phoneNumber: formattedPhoneNumber,
       });
       console.log(response.data);
@@ -77,7 +77,7 @@ const NumberForm = () => {
       }));
       // 서버 응답 데이터 처리
     } catch (error) {
-      console.log(error)
+      console.log(error);
       // 에러 처리
     }
   };
