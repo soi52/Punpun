@@ -1,11 +1,16 @@
 import { useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import useGeolocation from '../../common/UseGeolocation';
-import { addressState, userLocationState } from '../../store/atoms';
+import {
+  addressState,
+  userInfoState,
+  userLocationState,
+} from '../../store/atoms';
 
 function Address() {
-  const [address, setAddress] = useRecoilState(addressState);
-  const userLocation = useRecoilValue(userLocationState);
+  // const [address, setAddress] = useRecoilState(addressState);
+  // const userLocation = useRecoilValue(userLocationState);
+  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
 
   const location = useGeolocation();
   const { latitude = 0, longitude = 0 } =
@@ -22,17 +27,23 @@ function Address() {
           arr[0].address.region_1depth_name +
           ' ' +
           arr[0].address.region_2depth_name;
-        setAddress(_arr);
+        // setAddress(_arr);
+        setUserInfo((userInfo) => {
+          return {
+            ...userInfo,
+            userLocation: _arr,
+          };
+        });
       }
     };
     geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
   }
 
   useEffect(() => {
-    if (typeof userLocation === 'object') {
-      getAddr(userLocation.latitude, userLocation.longitude);
+    if (typeof location === 'object') {
+      getAddr(latitude, longitude);
     }
-  }, [userLocation]);
+  }, [location]);
 
   return null;
 }
