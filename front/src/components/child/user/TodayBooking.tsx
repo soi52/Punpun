@@ -1,6 +1,5 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import Cookies from 'js-cookie';
 import API from '../../../store/API';
 
 type Booking = {
@@ -13,14 +12,9 @@ type Booking = {
   storeName: string;
 };
 
-const dummyData = {
-  reservationId: 1234,
-  reservationState: true,
-  reservationTime: '2023-03-24 18:00:00',
-  menuId: 5678,
-  menuName: 'Spicy Chicken Burger',
-  storeId: 9012,
-  storeName: 'Burger King',
+type TodayBookingProps = {
+  bookings: Booking[];
+  setBookings: React.Dispatch<React.SetStateAction<Booking[]>>;
 };
 
 const Wrapper = styled.div`
@@ -33,7 +27,7 @@ const PostIt = styled.div`
   width: 90%;
   height: 200px;
   background-color: #fff8dc;
-//   border: 2px solid #ffd700;
+  //   border: 2px solid #ffd700;
   border-radius: 5px;
   margin: 10px;
   padding: 20px;
@@ -66,13 +60,12 @@ const HrDiv = styled.hr`
   margin-bottom: 30px;
 `;
 
-const TodayBooking = () => {
-
+const TodayBooking = ({ bookings, setBookings }: TodayBookingProps) => {
   useEffect(() => {
-    API
-      .get('bookings/child')
+    API.get('bookings/child')
       .then((response) => {
         console.log("Today's bookings:", response.data.content);
+        setBookings(response.data.content);
       })
       .catch((error) => {
         console.error("Error fetching today's bookings:", error);
@@ -80,20 +73,24 @@ const TodayBooking = () => {
   }, []);
 
   return (
-    <Wrapper>
-      <PostIt>
-        <ReservationInfo>
-          <IdDiv>
-            <span>예약번호 </span>
-            <ReservationId># {dummyData.reservationId}</ReservationId>
-          </IdDiv>
-          <StoreName>{dummyData.storeName}</StoreName>
-          <HrDiv></HrDiv>
-        </ReservationInfo>
-        <MenuInfo>{`메뉴: ${dummyData.menuName}`}</MenuInfo>
-        <span>{`식사 시간: ${dummyData.reservationTime}`}</span>
-      </PostIt>
-    </Wrapper>
+    <>
+      {bookings.map((booking, index) => (
+        <Wrapper key={index}>
+          <PostIt>
+            <ReservationInfo>
+              <IdDiv>
+                <span>예약번호 </span>
+                <ReservationId># {booking.reservationId}</ReservationId>
+              </IdDiv>
+              <StoreName>{booking.storeName}</StoreName>
+              <HrDiv></HrDiv>
+            </ReservationInfo>
+            <MenuInfo>{`메뉴: ${booking.menuName}`}</MenuInfo>
+            <span>{`식사 시간: ${booking.reservationTime}`}</span>
+          </PostIt>
+        </Wrapper>
+      ))}
+    </>
   );
 };
 
