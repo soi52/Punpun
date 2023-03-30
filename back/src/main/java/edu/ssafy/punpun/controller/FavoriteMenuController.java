@@ -27,9 +27,7 @@ public class FavoriteMenuController {
         Child child = principalChildDetail.getChild();
 
         List<FavoriteMenuChildDTO> favoriteMenuChildDTOList = favoriteMenuService.getFavoriteMenuChild(child).stream()
-                .map(menu -> {
-                    return new FavoriteMenuChildDTO(menu.getStore(), menu);
-                })
+                .map(menu -> new FavoriteMenuChildDTO(menu.getStore(), menu))
                 .collect(Collectors.toList());
 
         return favoriteMenuChildDTOList;

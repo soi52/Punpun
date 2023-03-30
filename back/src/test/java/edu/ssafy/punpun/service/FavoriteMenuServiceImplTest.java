@@ -67,7 +67,7 @@ public class FavoriteMenuServiceImplTest {
 
         //then
         assertThat(results.get(0).getId()).isEqualTo(menu1.getId());
-        assertThat(results.get(0).getId()).isEqualTo(menu1.getId());
+        assertThat(results.get(0).getName()).isEqualTo(menu1.getName());
         assertThat(results.get(1).getId()).isEqualTo(menu2.getId());
         assertThat(results.get(1).getName()).isEqualTo(menu2.getName());
     }
