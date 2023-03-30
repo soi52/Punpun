@@ -28,7 +28,7 @@ const btnMessage: MessageBtn[] = [
   },
   {
     id: 2,
-    value: '😋 맛있어요',
+    value: '맛있어요',
   },
   {
     id: 3,
@@ -68,7 +68,7 @@ const Message: React.FC<MessageProps> = ({ reservationId }) => {
 
   const handleAddMessage = (inputValue: string, selectedButtons: string[]) => {
     const message = {
-      keyword: selectedButtons,
+      keyword: selectedButtons[0],
       content: inputValue,
       reservationId: reservationId,
     };

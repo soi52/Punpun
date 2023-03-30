@@ -24,7 +24,7 @@ const menuItems = [
 
 function ChUserPage() {
   const [currentMenuItemIndex, setCurrentMenuItemIndex] = useState(0);
-
+  
   return (
     <ComponentStyle>
       <Sidebar
