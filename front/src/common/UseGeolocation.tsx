@@ -1,6 +1,5 @@
 import { useState, useMemo } from 'react';
 import { useRecoilState } from 'recoil';
-import { userLocationState } from '../store/atoms';
 
 const useGeolocation = () => {
   const [location, setLocation] = useState<
