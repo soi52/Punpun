@@ -75,7 +75,7 @@ function Profile() {
     if (typeof location === 'object') {
       getAddr(latitude, longitude);
     }
-  }, []);
+  }, [location]);
 
   return (
     <div>
