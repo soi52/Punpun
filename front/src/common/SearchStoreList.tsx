@@ -70,12 +70,13 @@ type Store = {
 const SearchStoreList = ({ stores }: { stores: Store[] }) => {
   const [keyword, setKeyword] = useState('');
   const [activeTab, setActiveTab] = useState('asc');
+  const [searchedList, setSearchedList] = useState<Store[]>([]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setKeyword(event.target.value);
   };
 
-  useEffect(() => {
+  const searchStores = () => {
     API.get('stores/search', {
       params: {
         name: keyword,
@@ -83,23 +84,32 @@ const SearchStoreList = ({ stores }: { stores: Store[] }) => {
     })
       .then((response: any) => {
         console.log(response.data);
+        setSearchedList(response.data);
       })
       .catch((error: any) => {
         console.error(error);
       });
-  });
+  };
 
-  const filteredList = stores
-    .filter((item) => item.storeName.includes(keyword))
-    .sort((a, b) => {
-      if (activeTab === 'asc') {
-        return a.storeName.localeCompare(b.storeName);
-      } else if (activeTab === 'desc') {
-        return b.storeName.localeCompare(a.storeName);
-      } else {
-        return 0;
-      }
-    });
+  const handleSearchSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    searchStores();
+  };
+
+  const filteredList =
+    searchedList.length > 0
+      ? searchedList
+      : stores
+          .filter((item) => item.storeName.includes(keyword))
+          .sort((a, b) => {
+            if (activeTab === 'asc') {
+              return a.storeName.localeCompare(b.storeName);
+            } else if (activeTab === 'desc') {
+              return b.storeName.localeCompare(a.storeName);
+            } else {
+              return 0;
+            }
+          });
 
   return (
     <ComponentDiv>
@@ -118,7 +128,11 @@ const SearchStoreList = ({ stores }: { stores: Store[] }) => {
         </TabButton>
       </TabList>
       <SearchBarDiv>
-        <SearchBar value={keyword} onChange={handleInputChange} />
+        <SearchBar
+          value={keyword}
+          onChange={handleInputChange}
+          onSubmit={handleSearchSubmit}
+        />
       </SearchBarDiv>
       <FilteredList stores={filteredList} keyword={keyword} />
     </ComponentDiv>

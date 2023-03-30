@@ -13,15 +13,18 @@ const Input = styled.input`
 type SearchBarProps = {
   value: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
 };
 
-const SearchBar = ({ value, onChange }: SearchBarProps) => (
-  <Input
-    type="text"
-    value={value}
-    onChange={onChange}
-    placeholder="가게명을 입력해주세요."
-  />
+const SearchBar = ({ value, onChange, onSubmit }: SearchBarProps) => (
+  <form onSubmit={onSubmit}>
+    <Input
+      type="text"
+      value={value}
+      onChange={onChange}
+      placeholder="가게명을 입력해주세요."
+    />
+  </form>
 );
 
 export default SearchBar;
