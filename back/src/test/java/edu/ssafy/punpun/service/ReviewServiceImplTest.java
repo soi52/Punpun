@@ -126,10 +126,10 @@ class ReviewServiceImplTest {
                 .store(store)
                 .build();
         Child child = Child.builder()
-                .id(1L)
+                .id(2L)
                 .build();
         Child child2 = Child.builder()
-                .id(1L)
+                .id(3L)
                 .build();
         Reservation reservation = Reservation.builder()
                 .id(1L)
@@ -141,7 +141,7 @@ class ReviewServiceImplTest {
 
         assertThatThrownBy(() ->
                 reviewService.postReview(child, 1L, "content test1", "test1"))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(NotMatchChildException.class);
     }
 
     @Test
@@ -191,7 +191,7 @@ class ReviewServiceImplTest {
     void findAllByNoStore() {
         doReturn(Optional.empty()).when(storeRepository).findById(1L);
 
-        assertThatThrownBy(()->reviewService.findAllByStore(1L, 0))
+        assertThatThrownBy(() -> reviewService.findAllByStore(1L, 0))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }
