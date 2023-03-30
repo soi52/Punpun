@@ -141,7 +141,7 @@ class ReviewServiceImplTest {
 
         assertThatThrownBy(() ->
                 reviewService.postReview(child, 1L, "content test1", "test1"))
-                .isInstanceOf(NotMatchChildException.class);
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
