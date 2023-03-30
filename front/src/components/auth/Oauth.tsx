@@ -99,7 +99,7 @@ const Oauth = () => {
     //   httpOnly: true,
     //   sameSite: 'none',
     // });
-  }, [userInfo]);
+  }, []);
 
   useEffect(() => {
     console.log(userInfo);

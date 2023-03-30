@@ -1,10 +1,9 @@
 import styled from 'styled-components';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { addressState, userInfoState } from '../../store/atoms';
+import { useRecoilState } from 'recoil';
+import { UserInfo, userInfoState } from '../../store/atoms';
 import profileImg from '../../resources/images/temp_profile.png';
-import Address from '../auth/Address';
 import { useEffect } from 'react';
-import useGeolocation from '../../common/UseGeolocation';
+import API from '../../store/API';
 
 const ProfileBox = styled.div`
   display: flex;
@@ -77,6 +76,28 @@ function Profile() {
   //   }
   // }, [location]);
 
+  useEffect(() => {
+    API.get('users/member')
+      .then((response: any) => {
+        console.log(response.data);
+        // API 요청에서 받아온 데이터를 memberInfoState에 업데이트
+        const newMemberInfo: UserInfo = {
+          userId: response.data.id,
+          userName: response.data.name,
+          userEmail: response.data.email,
+          userRole: response.data.role,
+          userNumber: response.data.phoneNumber,
+          userSupportedPoint: response.data.supportedPoint,
+          userRemainPoint: response.data.remainPoint,
+          userArea: null,
+        };
+        setUserInfo(newMemberInfo);
+      })
+      .catch((error: any) => {
+        console.error(error);
+      });
+  }, [setUserInfo]);
+
   return (
     <div>
       <ProfileBox>
@@ -86,7 +107,7 @@ function Profile() {
         <InfoBox>
           <span>
             {userInfo.userName} 님<br></br>
-            {userInfo.userLocation}
+            {userInfo.userArea}
           </span>
         </InfoBox>
       </ProfileBox>
