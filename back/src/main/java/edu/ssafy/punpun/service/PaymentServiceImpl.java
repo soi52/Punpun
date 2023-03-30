@@ -10,11 +10,11 @@ import javax.transaction.Transactional;
 
 @Slf4j
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class PaymentServiceImpl implements PaymentService {
     private final MemberRepository memberRepository;
 
-    @Transactional
     @Override
     public void updatePoints(Member member, Long point) {
         Member user=memberRepository.findById(member.getId())

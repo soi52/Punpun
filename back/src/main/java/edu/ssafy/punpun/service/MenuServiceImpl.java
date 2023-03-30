@@ -10,6 +10,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class MenuServiceImpl implements MenuService {
 
@@ -20,7 +21,6 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    @Transactional
     public void addSponsoredCount(Long id, Long menuCount) {
         Menu menu = menuRepository.findById(id)
                 .orElseThrow(()->new IllegalArgumentException("없는 메뉴 번호입니다."));
