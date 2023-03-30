@@ -125,48 +125,51 @@ const CheckboxInput = styled.input`
 `;
 
 const BookingModal: React.FC<ModalProps> = ({ menu, onClose }) => {
-  const [takeout, setTakeout] = useState(false);
-  const [dineIn, setDineIn] = useState(true);
+  const [thirtyminutes, setThirtyminutes] = useState(true);
+  const [hour, setHour] = useState(false);
 
-  const handleTakeoutChange = () => {
-    setTakeout(!takeout);
-    setDineIn(false);
+  const handleThirtyMinutes = () => {
+    setThirtyminutes(!thirtyminutes);
+    setHour(false);
   };
 
-  const handleDineInChange = () => {
-    setDineIn(!dineIn);
-    setTakeout(false);
+  const handleHour = () => {
+    setHour(!hour);
+    setThirtyminutes(false);
   };
 
   // 현재 시각
   const now = new Date();
 
-  // 30분 뒤
-  const thirtyMinutesLater = new Date(now.getTime() + 30 * 60000); // 30분 = 30 * 60초 = 30 * 60 * 1000밀리초 = 30 * 60000
-  var year = now.getFullYear();
-  var month = now.getMonth()+1;
-  var day = now.getDate();
+  // 30분 뒤 또는 1시간 뒤의 시각
+  const formattedTime = new Date();
+  if (thirtyminutes) {
+    formattedTime.setMinutes(now.getMinutes() + 30);
+  } else if (hour) {
+    formattedTime.setHours(now.getHours() + 1);
+  }
 
-  const formattedDate = year+"-"+(("00"+month.toString()).slice(-2))+"-"+(("00"+day.toString()).slice(-2))+"T"+(("00"+thirtyMinutesLater.getHours().toString()).slice(-2))+":"+thirtyMinutesLater.getMinutes()+":"+thirtyMinutesLater.getSeconds();
-  // console.log(formattedDate);
+  // 예약 날짜 및 시각
+  const year = formattedTime.getFullYear();
+  const month = ("00" + (formattedTime.getMonth() + 1)).slice(-2);
+  const day = ("00" + formattedTime.getDate()).slice(-2);
+  const hours = ("00" + formattedTime.getHours()).slice(-2);
+  const minutes = ("00" + formattedTime.getMinutes()).slice(-2);
+  const seconds = ("00" + formattedTime.getSeconds()).slice(-2);
+  const formattedDate = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
   
   function handleBooking() {
     // 선택한 checkbox 데이터와 menu 데이터를 담아서 서버로 보낸다.
-    const data = {
+    API.post('bookings', {
       menuId:menu.id,
       reservationTime: formattedDate
-      // takeout,
-      // dineIn,
-    };
-
-    API.post('bookings', {
-      data
     })
     .then((response) => {
       console.log(response.data);
     })
     .catch((error) => {
       console.log(error);
+      alert(error.response.data.message)
     });
   
     // axios.post('https://j8d109.p.ssafy.io/api/bookings', {
@@ -193,19 +196,19 @@ const BookingModal: React.FC<ModalProps> = ({ menu, onClose }) => {
           시간에 맞춰 방문 부탁드려요 :)
           <CheckboxWrapper>
             <CheckboxLabel>
-              포장주문
+              30분 뒤 방문
               <CheckboxInput
                 type="checkbox"
-                checked={takeout}
-                onChange={handleTakeoutChange}
+                checked={thirtyminutes}
+                onChange={handleThirtyMinutes}
               />
             </CheckboxLabel>
             <CheckboxLabel>
-              매장식사
+              1시간 뒤 방문
               <CheckboxInput
                 type="checkbox"
-                checked={dineIn}
-                onChange={handleDineInChange}
+                checked={hour}
+                onChange={handleHour}
               />
             </CheckboxLabel>
           </CheckboxWrapper>

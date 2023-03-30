@@ -112,6 +112,8 @@ const MenuCard: React.FC<MenuCardProps> = ({ id, title, price, quantity, addToCa
       // 어린이 회원일 때 클릭 이벤트
       setShowModal(true);
       console.log(isChild);
+      console.log(id);
+      
       
     } else {
       // 어른 회원일 때 클릭 이벤트

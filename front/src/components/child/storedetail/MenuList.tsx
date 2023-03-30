@@ -89,11 +89,13 @@ const MenuList: React.FC<MenuListProps> = (props) => {
           />
         ))}
       </MenuListContainer>
+
       <MenuCart
         cartItems={cartItems}
         updateCart={updateCart}
         deleteCart={deleteCart}
       />
+
     </Container>
   );
 };
