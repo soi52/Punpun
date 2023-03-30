@@ -147,8 +147,8 @@ const BookingModal: React.FC<ModalProps> = ({ menu, onClose }) => {
   var month = now.getMonth()+1;
   var day = now.getDate();
 
-  const formattedDate = year+"-"+(("00"+month.toString()).slice(-2))+"-"+(("00"+day.toString()).slice(-2))+"T"+thirtyMinutesLater.getHours()+":"+thirtyMinutesLater.getMinutes()+":"+thirtyMinutesLater.getSeconds();
-  console.log(formattedDate);
+  const formattedDate = year+"-"+(("00"+month.toString()).slice(-2))+"-"+(("00"+day.toString()).slice(-2))+"T"+(("00"+thirtyMinutesLater.getHours().toString()).slice(-2))+":"+thirtyMinutesLater.getMinutes()+":"+thirtyMinutesLater.getSeconds();
+  // console.log(formattedDate);
   
   function handleBooking() {
     // 선택한 checkbox 데이터와 menu 데이터를 담아서 서버로 보낸다.

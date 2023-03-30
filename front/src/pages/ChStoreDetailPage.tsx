@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import API from '../store/API';
 import { useParams } from 'react-router-dom';
 
+import Loading from '../components/ui/Loading';
 import Sidebar from '../components/ui/Sidebar';
 import MainComponent from '../components/ui/MainComponent';
 
@@ -69,7 +70,7 @@ function ChStoreDetailPage() {
   }, [myStoreId]);
 
   if (!stores) {
-    return <div>Loading...</div>;
+    return <Loading/>;
   }
 
   return (
@@ -80,7 +81,7 @@ function ChStoreDetailPage() {
         currentMenuItemIndex={currentMenuItemIndex}
         setCurrentMenuItemIndex={setCurrentMenuItemIndex}
       />
-      <MainComponent width={70}>
+      <MainComponent width={53.7}>
         {menuItems[currentMenuItemIndex].component()}
       </MainComponent>
     </ComponentStyle>
