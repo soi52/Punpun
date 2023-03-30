@@ -31,7 +31,7 @@ const SupportHistory = () => {
     API.get('supports')
       .then((response: any) => {
         console.log(response.data);
-        setSupportData(response.data);
+        // setSupportData(response.data);
       })
       .catch((error: any) => {
         console.error(error);
