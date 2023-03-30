@@ -7,8 +7,6 @@ const useGeolocation = () => {
     { latitude: number; longitude: number } | string
   >('');
 
-  const [userlocation, setUserLocation] = useRecoilState(userLocationState);
-
   useMemo(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(success, error);
@@ -19,18 +17,10 @@ const useGeolocation = () => {
         latitude: position.coords.latitude,
         longitude: position.coords.longitude,
       });
-      setUserLocation({
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude,
-      });
     }
 
     function error() {
       setLocation({
-        latitude: 37.483034,
-        longitude: 126.902435,
-      });
-      setUserLocation({
         latitude: 37.483034,
         longitude: 126.902435,
       });
