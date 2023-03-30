@@ -20,6 +20,7 @@ import java.util.List;
 
 @Slf4j
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class SupportServiceImpl implements SupportService{
     private final SupportRepository supportRepository;
@@ -34,7 +35,6 @@ public class SupportServiceImpl implements SupportService{
     }
 
     @Override
-    @Transactional
     public void saveSupport(List<Support> supportList, List<Long> menuId , List<Long> menuCount, Member member, Long usePoint) {
         // supporter use point
         Member supporter=memberRepository.findById(member.getId())

@@ -22,6 +22,7 @@ import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class BookingServiceImpl implements BookingService {
     private final SupportReservationRepository supportReservationRepository;
@@ -31,7 +32,6 @@ public class BookingServiceImpl implements BookingService {
     private final ReservationEventPublisher publisher;
 
     @Override
-    @Transactional
     public Reservation reservation(Child child, Long menuId, LocalDateTime reservationTime) {
         Menu menu = menuRepository.findById(menuId)
                 .orElseThrow(() -> new IllegalArgumentException("없는 메뉴입니다."));
