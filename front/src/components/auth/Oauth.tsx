@@ -62,6 +62,8 @@ const Oauth = () => {
     console.log(decodedToken);
     console.log(decodedToken.role);
     console.log(decodedToken['role']);
+    console.log(decodedToken);
+    
 
     setUserInfo({
       userId: decodedToken.id,
@@ -97,7 +99,7 @@ const Oauth = () => {
     //   httpOnly: true,
     //   sameSite: 'none',
     // });
-  }, [userInfo]);
+  }, []);
 
   useEffect(() => {
     console.log(userInfo);
