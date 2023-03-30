@@ -92,7 +92,7 @@ const Oauth = () => {
       console.log(isChild);
       console.log(isLoggedIn);
     } else {
-      if (decodedToken.number === 'NoNumber') {
+      if (decodedToken.phoneNumber === 'NoNumber') {
         setIsLoggedIn(true);
         setIsSupporter(true);
         navigate('/addnumber');
