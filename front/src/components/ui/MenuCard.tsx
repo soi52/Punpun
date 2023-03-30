@@ -72,20 +72,22 @@ const HeartButtonWrapper = styled.div`
   cursor: pointer;
 `;
 
-
-
-const MenuCard: React.FC<MenuCardProps> = ({ id, title, price, quantity, addToCart }) => {
+const MenuCard: React.FC<MenuCardProps> = ({
+  id,
+  title,
+  price,
+  quantity,
+  addToCart,
+}) => {
   const [showModal, setShowModal] = useState(false);
-  // const isChild = useRecoilValue(isChildState);
   const [isChild, setIsChild] = useRecoilState(isChildState);
   const [liked, setLiked] = useState(false);
 
-  
   // 로컬용 테스트 코드
-  const accessToken:any = Cookies.get('accessToken')
+  const accessToken: any = Cookies.get('accessToken');
   const decodedToken: any = jwt_decode(accessToken);
-  if ((decodedToken.role) === 'CHILD') {
-    setIsChild(true)
+  if (decodedToken.role === 'CHILD') {
+    setIsChild(true);
   }
 
   const onClose = () => {
@@ -98,7 +100,7 @@ const MenuCard: React.FC<MenuCardProps> = ({ id, title, price, quantity, addToCa
     console.log('liked: ' + liked);
 
     const method = liked ? 'delete' : 'post';
-    API[method]('favors', {id})
+    API[method]('favors', { id })
       .then((response) => {
         console.log(response.data);
       })
@@ -113,8 +115,6 @@ const MenuCard: React.FC<MenuCardProps> = ({ id, title, price, quantity, addToCa
       setShowModal(true);
       console.log(isChild);
       console.log(id);
-      
-      
     } else {
       // 어른 회원일 때 클릭 이벤트
       addToCart({ id, title, price, quantity });
@@ -127,11 +127,11 @@ const MenuCard: React.FC<MenuCardProps> = ({ id, title, price, quantity, addToCa
       <MenuCardContainer>
         <div onClick={handleClick}>
           {/* <MenuCardImage image={image}> */}
-            {isChild && (
-              <HeartButtonWrapper>
-                <button onClick={toggleLike}>{liked ? '💖' : '🖤'}</button>
-              </HeartButtonWrapper>
-            )}
+          {isChild && (
+            <HeartButtonWrapper>
+              <button onClick={toggleLike}>{liked ? '💖' : '🖤'}</button>
+            </HeartButtonWrapper>
+          )}
           {/* </MenuCardImage> */}
           <div>
             <MenuCardTitle>{title}</MenuCardTitle>

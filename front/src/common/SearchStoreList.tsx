@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import SearchBar from './SearchBar';
 import FilteredList from './FilteredList';
+import API from '../store/API';
 
 const ComponentDiv = styled.div`
   display: flex;
@@ -68,44 +69,88 @@ type Store = {
 
 const SearchStoreList = ({ stores }: { stores: Store[] }) => {
   const [keyword, setKeyword] = useState('');
-  const [activeTab, setActiveTab] = useState('asc');
+  const [activeTab, setActiveTab] = useState<'search' | 'filter'>('filter');
+  const [searchedList, setSearchedList] = useState<Store[]>([]);
+  const [searchKeyword, setSearchKeyword] = useState('');
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setKeyword(event.target.value);
   };
 
+  const handleSearchInputChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setSearchKeyword(event.target.value);
+  };
+
+  const searchStores = () => {
+    API.get('stores/search', {
+      params: {
+        name: searchKeyword,
+      },
+    })
+      .then((response: any) => {
+        console.log(response.data);
+        setSearchedList(response.data);
+      })
+      .catch((error: any) => {
+        console.error(error);
+      });
+  };
+
+  const handleSearchSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    searchStores();
+  };
+
   const filteredList = stores
     .filter((item) => item.storeName.includes(keyword))
     .sort((a, b) => {
-      if (activeTab === 'asc') {
-        return a.storeName.localeCompare(b.storeName);
-      } else if (activeTab === 'desc') {
-        return b.storeName.localeCompare(a.storeName);
-      } else {
-        return 0;
-      }
+      return a.storeName.localeCompare(b.storeName);
+      // if (activeTab === 'asc') {
+      //   return a.storeName.localeCompare(b.storeName);
+      // } else if (activeTab === 'desc') {
+      //   return b.storeName.localeCompare(a.storeName);
+      // } else {
+      //   return 0;
+      // }
     });
 
   return (
     <ComponentDiv>
       <TabList>
         <TabButton
-          isActive={activeTab === 'asc'}
-          onClick={() => setActiveTab('asc')}
+          isActive={activeTab === 'filter'}
+          onClick={() => setActiveTab('filter')}
         >
-          오름차순
+          내 주변 가게 보기
         </TabButton>
         <TabButton
-          isActive={activeTab === 'desc'}
-          onClick={() => setActiveTab('desc')}
+          isActive={activeTab === 'search'}
+          onClick={() => setActiveTab('search')}
         >
-          내림차순
+          가게 검색하기
         </TabButton>
       </TabList>
       <SearchBarDiv>
-        <SearchBar value={keyword} onChange={handleInputChange} />
+        {activeTab === 'search' ? (
+          <SearchBar
+            value={searchKeyword}
+            onChange={handleSearchInputChange}
+            onSubmit={handleSearchSubmit}
+          />
+        ) : (
+          <SearchBar
+            value={keyword}
+            onChange={handleInputChange}
+            onSubmit={handleSearchSubmit}
+          />
+        )}
       </SearchBarDiv>
-      <FilteredList stores={filteredList} keyword={keyword} />
+      <FilteredList
+        stores={activeTab === 'search' ? searchedList : filteredList}
+        keyword={activeTab === 'search' ? searchKeyword : keyword}
+      />
     </ComponentDiv>
   );
 };
