@@ -73,8 +73,7 @@ const MenuCart: React.FC<MenuCartProps> = ({
   updateCart,
   deleteCart,
 }) => {
-    const [point, setPoint] = useRecoilState(pointState);
-
+  const [point, setPoint] = useRecoilState(pointState);
   const totalPrice = cartItems.reduce(
     (acc, item) => acc + item.price * item.quantity,
     0
@@ -82,23 +81,20 @@ const MenuCart: React.FC<MenuCartProps> = ({
 
   const handleDonateClick = async () => {
     if (totalPrice > point) {
+      console.log(totalPrice, point);
       alert('포인트가 부족합니다. 포인트를 충전해주세요.');
-      //   window.location.href = '/charge';
     } else {
       try {
-        const menuIds = cartItems.map(item => item.id);
-        const menuCounts = cartItems.map(item => item.quantity);
-        // const storeId = cartItems[0].storeId;
+        const menuIds = cartItems.map((item) => item.id);
+        const menuCounts = cartItems.map((item) => item.quantity);
         const requestBody = {
-          usePoint: totalPrice,
-          menuId: menuIds,
           menuCount: menuCounts,
+          menuId: menuIds,
+          usePoint: totalPrice,
         };
-        console.log(requestBody);
-        
         await API.post('supports/payment', requestBody);
-        const response = await API.get('supports/payment')
-        setPoint(response.data)
+        const response = await API.get('payments');
+        setPoint(response.data.memberPoint);
         alert(`${totalPrice.toLocaleString()}원이 후원되었습니다. 감사합니다!`);
         deleteCart(-1);
       } catch (error) {
@@ -107,7 +103,6 @@ const MenuCart: React.FC<MenuCartProps> = ({
       }
     }
   };
-  
 
   return (
     <Box>
