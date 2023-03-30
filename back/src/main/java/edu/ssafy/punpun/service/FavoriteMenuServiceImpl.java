@@ -9,10 +9,10 @@ import edu.ssafy.punpun.repository.FavoriteMenuRepository;
 import edu.ssafy.punpun.repository.MenuRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
+import javax.transaction.Transactional;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class FavoriteMenuServiceImpl implements FavoriteMenuService {
 
