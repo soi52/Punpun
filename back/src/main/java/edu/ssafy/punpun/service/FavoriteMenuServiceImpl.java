@@ -17,9 +17,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class FavoriteMenuServiceImpl implements FavoriteMenuService {
 
-    private FavoriteMenuRepository favoriteMenuRepository;
-    private ChildRepository childRepository;
-    private MenuRepository menuRepository;
+    private final FavoriteMenuRepository favoriteMenuRepository;
+    private final MenuRepository menuRepository;
 
     @Override
     public List<Menu> getFavoriteMenuChild(Child child) {

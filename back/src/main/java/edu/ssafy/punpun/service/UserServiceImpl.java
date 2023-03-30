@@ -12,7 +12,6 @@ import javax.transaction.Transactional;
 @Transactional
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-    private final ChildRepository childRepository;
     private final MemberRepository memberRepository;
 
     @Override
