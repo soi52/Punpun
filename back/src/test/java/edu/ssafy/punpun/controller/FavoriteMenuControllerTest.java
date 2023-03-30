@@ -2,8 +2,11 @@ package edu.ssafy.punpun.controller;
 
 import com.google.gson.Gson;
 import edu.ssafy.punpun.dto.request.FavoriteMenuRequestDTO;
+import edu.ssafy.punpun.dto.response.FavoriteMenuChildDTO;
 import edu.ssafy.punpun.entity.Child;
+import edu.ssafy.punpun.entity.FavoriteMenu;
 import edu.ssafy.punpun.entity.Menu;
+import edu.ssafy.punpun.entity.Store;
 import edu.ssafy.punpun.entity.enumurate.UserRole;
 import edu.ssafy.punpun.service.FavoriteMenuService;
 import edu.ssafy.testutil.WIthCustomChild;
@@ -15,9 +18,13 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doReturn;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
@@ -34,18 +41,49 @@ public class FavoriteMenuControllerTest {
 
     @Test
     @WIthCustomChild
-    @DisplayName("post - 좋아하는 메뉴 추가하기")
-    void insertFavoriteMenu() throws Exception {
-        Child child = Child.builder()
+    @DisplayName("get - 아이가 좋아하는 메뉴 리스트")
+    void getFavoriteMenuChild() throws Exception {
+        // given
+        Store store1 = Store.builder()
                 .id(1L)
-                .name("name")
-                .email("email@email.com")
-                .role(UserRole.CHILD)
+                .name("store1")
                 .build();
-        Menu menu = Menu.builder()
+        Menu menu1 = Menu.builder()
                 .id(1L)
+                .name("menu1")
+                .store(store1)
+                .build();
+        Store store2 = Store.builder()
+                .id(2L)
+                .name("store2")
+                .build();
+        Menu menu2 = Menu.builder()
+                .id(1L)
+                .name("menu2")
+                .store(store2)
                 .build();
 
+        doReturn(List.of(menu1, menu2)).when(favoriteMenuService).getFavoriteMenuChild(any(Child.class));
+
+        List<FavoriteMenuChildDTO> favoriteMenuChildDTOList = new ArrayList<>();
+        favoriteMenuChildDTOList.add(new FavoriteMenuChildDTO(store1, menu1));
+        favoriteMenuChildDTOList.add(new FavoriteMenuChildDTO(store2, menu2));
+        String output = new Gson().toJson(favoriteMenuChildDTOList);
+
+        // when
+        // then
+        mockMvc.perform(get("/favors")
+                        .with(csrf()))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(content().string(output))
+                .andDo(print());
+    }
+
+    @Test
+    @WIthCustomChild
+    @DisplayName("post - 좋아하는 메뉴 추가하기")
+    void insertFavoriteMenu() throws Exception {
         doNothing().when(favoriteMenuService).insertFavoriteMenu(any(Child.class), eq(1L));
 
         FavoriteMenuRequestDTO favoriteMenuRequestDTO = new FavoriteMenuRequestDTO(1L);
