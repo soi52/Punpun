@@ -8,19 +8,21 @@ import MainTitle from '../ui/MainTitle';
 
 function SuMainMessage() {
   const userInfo = useRecoilValue(userInfoState);
-  const [usePoint, setUsePoint] = useRecoilState(usePointState);
-  useEffect(() => {
-    API.get('payments/total')
-      .then((response: any) => {
-        console.log(response.data);
-        setUsePoint(response.data.memberPoint);
-      })
-      .catch((error: any) => {
-        console.error(error);
-      });
-  });
+  // const [usePoint, setUsePoint] = useRecoilState(usePointState);
 
-  const formattedPoint = usePoint.toLocaleString();
+  // useEffect(() => {
+  //   API.get('payments/total')
+  //     .then((response: any) => {
+  //       console.log(response.data);
+  //       setUsePoint(response.data.memberPoint);
+  //     })
+  //     .catch((error: any) => {
+  //       console.error(error);
+  //     });
+  // }, []);
+
+  const usePoint = userInfo.userSupportedPoint;
+  const formattedPoint = usePoint ? usePoint.toLocaleString() : '';
 
   const mainMessage = {
     title: '',
