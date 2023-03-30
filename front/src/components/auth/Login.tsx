@@ -13,7 +13,6 @@ const Login = () => {
         alt="kakaologin"
         onClick={() => window.location.replace(kakaoLogin)}
       />
-      <Address />
     </div>
   );
 };
