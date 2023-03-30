@@ -49,7 +49,6 @@ type HeaderProps = {
 };
 
 function Header(props: HeaderProps) {
-
   const role = localStorage.getItem('role');
 
   const userInfo = useRecoilValue(userInfoState);
@@ -90,7 +89,7 @@ function Header(props: HeaderProps) {
     if (isLoggedIn) {
       if (role === 'CHILD') {
         return <ChildHeader onLogout={onLogout} />;
-      } else if (role === 'OWNER') {
+      } else if (isOwner) {
         return (
           <OwnerHeader
             onSelect={onSelect}
