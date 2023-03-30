@@ -1,11 +1,7 @@
 import { useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import useGeolocation from '../../common/UseGeolocation';
-import {
-  addressState,
-  userInfoState,
-  userLocationState,
-} from '../../store/atoms';
+import { userInfoState } from '../../store/atoms';
 
 function Address() {
   // const [address, setAddress] = useRecoilState(addressState);
