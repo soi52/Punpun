@@ -59,6 +59,7 @@ const Sidebar: FC<SidebarProps> = ({
   };
 
   // 사이드메뉴 충전하기 클릭
+  const role = localStorage.getItem('role');
 
   return (
     <>
@@ -74,7 +75,7 @@ const Sidebar: FC<SidebarProps> = ({
           onMenuItemClick={handleMenuItemClick}
         />
         <HrDIv2 />
-        {isSupporter ? (
+        { role !== 'CHILD' ? (
           <SuSidebarContent
             menuItems={menuItems}
             currentMenuItemIndex={currentMenuItemIndex}

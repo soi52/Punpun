@@ -68,34 +68,16 @@ const HrDiv = styled.hr`
 
 const TodayBooking = () => {
 
-  const today = new Date();
-  const formattedDate = `${today.getFullYear()}-${
-    today.getMonth() + 1
-  }-${today.getDate()}`;
-  
-  const accessToken = Cookies.get('access_token');
-
   useEffect(() => {
     API
-      .get(`bookings/child?date=${formattedDate}`)
+      .get('bookings/child')
       .then((response) => {
-        console.log("Today's bookings:", response.data);
-        const bookings = response.data.map((booking: Booking) => ({
-          reservationId: booking.reservationId,
-          reservationState: booking.reservationState,
-          reservationTime: booking.reservationTime,
-          menuId: booking.menuId,
-          menuName: booking.menuName,
-          storeId: booking.storeId,
-          storeName: booking.storeName,
-        }));
-        console.log('Transformed bookings:', bookings);
-        // Handle the transformed data here
+        console.log("Today's bookings:", response.data.content);
       })
       .catch((error) => {
         console.error("Error fetching today's bookings:", error);
       });
-  }, [formattedDate]);
+  }, []);
 
   return (
     <Wrapper>
