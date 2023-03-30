@@ -67,9 +67,91 @@ type Store = {
   menuDTOList: MenuDTO[];
 };
 
+// const SearchStoreList = ({ stores }: { stores: Store[] }) => {
+//   const [keyword, setKeyword] = useState('');
+//   const [activeTab, setActiveTab] = useState('asc');
+//   const [searchedList, setSearchedList] = useState<Store[]>([]);
+
+//   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+//     setKeyword(event.target.value);
+//   };
+
+//   const searchStores = () => {
+//     API.get('stores/search', {
+//       params: {
+//         name: keyword,
+//       },
+//     })
+//       .then((response: any) => {
+//         console.log(response.data);
+//         setSearchedList(response.data);
+//       })
+//       .catch((error: any) => {
+//         console.error(error);
+//       });
+//   };
+
+//   const handleSearchSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+//     event.preventDefault();
+//     searchStores();
+//   };
+
+//   const filteredList =
+//     searchedList.length > 0
+//       ? searchedList
+//       : stores
+//           .filter((item) => item.storeName.includes(keyword))
+//           .sort((a, b) => {
+//             if (activeTab === 'asc') {
+//               return a.storeName.localeCompare(b.storeName);
+//             } else if (activeTab === 'desc') {
+//               return b.storeName.localeCompare(a.storeName);
+//             } else {
+//               return 0;
+//             }
+//           });
+
+//   return (
+//     <ComponentDiv>
+//       <TabList>
+//         <TabButton
+//           isActive={activeTab === 'asc'}
+//           onClick={() => setActiveTab('asc')}
+//         >
+//           오름차순
+//         </TabButton>
+//         <TabButton
+//           isActive={activeTab === 'desc'}
+//           onClick={() => setActiveTab('desc')}
+//         >
+//           내림차순
+//         </TabButton>
+//         <TabButton
+//         >
+//           주변 가게 보기
+//         </TabButton>
+//         <TabButton
+//         >
+//           가게 검색
+//         </TabButton>
+//       </TabList>
+//       <SearchBarDiv>
+//         <SearchBar
+//           value={keyword}
+//           onChange={handleInputChange}
+//           onSubmit={handleSearchSubmit}
+//         />
+//       </SearchBarDiv>
+//       <FilteredList stores={filteredList} keyword={keyword} />
+//     </ComponentDiv>
+//   );
+// };
+
+// export default SearchStoreList;
+
 const SearchStoreList = ({ stores }: { stores: Store[] }) => {
   const [keyword, setKeyword] = useState('');
-  const [activeTab, setActiveTab] = useState('asc');
+  const [activeTab, setActiveTab] = useState<'search' | 'filter'>('filter');
   const [searchedList, setSearchedList] = useState<Store[]>([]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -96,35 +178,32 @@ const SearchStoreList = ({ stores }: { stores: Store[] }) => {
     searchStores();
   };
 
-  const filteredList =
-    searchedList.length > 0
-      ? searchedList
-      : stores
-          .filter((item) => item.storeName.includes(keyword))
-          .sort((a, b) => {
-            if (activeTab === 'asc') {
-              return a.storeName.localeCompare(b.storeName);
-            } else if (activeTab === 'desc') {
-              return b.storeName.localeCompare(a.storeName);
-            } else {
-              return 0;
-            }
-          });
+  // const filteredList = stores
+  //   .filter((item) => item.storeName.includes(keyword))
+  //   .sort((a, b) => {
+  //     if (activeTab === 'asc') {
+  //       return a.storeName.localeCompare(b.storeName);
+  //     } else if (activeTab === 'desc') {
+  //       return b.storeName.localeCompare(a.storeName);
+  //     } else {
+  //       return 0;
+  //     }
+  //   });
 
   return (
     <ComponentDiv>
       <TabList>
         <TabButton
-          isActive={activeTab === 'asc'}
-          onClick={() => setActiveTab('asc')}
+          isActive={activeTab === 'filter'}
+          onClick={() => setActiveTab('filter')}
         >
-          오름차순
+          내 주변 가게 보기
         </TabButton>
         <TabButton
-          isActive={activeTab === 'desc'}
-          onClick={() => setActiveTab('desc')}
+          isActive={activeTab === 'search'}
+          onClick={() => setActiveTab('search')}
         >
-          내림차순
+          가게 검색하기
         </TabButton>
       </TabList>
       <SearchBarDiv>
@@ -134,7 +213,10 @@ const SearchStoreList = ({ stores }: { stores: Store[] }) => {
           onSubmit={handleSearchSubmit}
         />
       </SearchBarDiv>
-      <FilteredList stores={filteredList} keyword={keyword} />
+      <FilteredList
+        stores={activeTab === 'search' ? searchedList : stores}
+        keyword={keyword}
+      />
     </ComponentDiv>
   );
 };
