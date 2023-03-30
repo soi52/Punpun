@@ -32,13 +32,36 @@ export const userLocationState = atom<
   default: '',
 });
 
+// export interface UserInfo {
+//   userId: number;
+//   userName: string;
+//   userEmail: string;
+//   userLocation: string;
+//   userRole: string;
+//   userNumber: string;
+// }
+
+// export const userInfoState = atom<UserInfo>({
+//   key: 'userInfoState',
+//   default: {
+//     userId: 0,
+//     userName: '',
+//     userEmail: '',
+//     userLocation: '',
+//     userRole: '',
+//     userNumber: '',
+//   },
+// });
+
 export interface UserInfo {
   userId: number;
   userName: string;
   userEmail: string;
-  userLocation: string;
   userRole: string;
   userNumber: string;
+  userSupportedPoint: number | null;
+  userRemainPoint: number | null;
+  userArea: string | null;
 }
 
 export const userInfoState = atom<UserInfo>({
@@ -47,9 +70,11 @@ export const userInfoState = atom<UserInfo>({
     userId: 0,
     userName: '',
     userEmail: '',
-    userLocation: '',
     userRole: '',
     userNumber: '',
+    userSupportedPoint: 0,
+    userRemainPoint: 0,
+    userArea: '',
   },
 });
 
@@ -89,7 +114,7 @@ export const isChildState = atom<Boolean>({
 
 export const isSupporterState = atom<Boolean>({
   key: 'isSupporterState',
-  default: false,
+  default: true,
 });
 
 export const isOwnerState = atom<Boolean>({
