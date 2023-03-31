@@ -17,27 +17,27 @@ const StoreThanksMessage = ({ myStoreId }: Props) => {
   useEffect(() => {
     API.get(`reviews/stores/${myStoreId}`)
       .then((response) => {
-        setReviews(response.data)
+        setReviews(response.data);
       })
       .catch((error) => {
         console.log(error);
-      })
+      });
   });
 
   useEffect(() => {
     API.get(`stores/${myStoreId}`)
       .then((response) => {
-        setStoreName(response.data.storeName)
+        setStoreName(response.data.storeName);
       })
       .catch((error) => {
         console.log(error);
-      })
+      });
   });
 
   return (
     <>
-      <StoreBanner storeName={storeName}/>
-      <ReviewItem reviews={reviews} />
+      <StoreBanner storeName={storeName} />
+      {/* <ReviewItem reviews={reviews} /> */}
     </>
   );
 };
