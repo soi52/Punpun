@@ -56,6 +56,10 @@ const NumberForm = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log(`전화번호: ${phoneNumber}`);
+  
+    // 이름 입력란이 비어있을 경우 defaultValue 사용
+    const formattedName = name || userInfo.userName;
+  
     // 유효성 검사
     if (phoneNumber.length !== 11) {
       setError('전화번호는 11자리로 입력해야 합니다.');
@@ -66,18 +70,18 @@ const NumberForm = () => {
       });
       return;
     }
-
+  
     const formattedPhoneNumber = String(phoneNumber);
-
+  
     try {
-      const response = await API.patch('users/member/phone', {
-        name: name,
+      const response = await API.patch('users/member/update', {
+        name: formattedName,
         phoneNumber: formattedPhoneNumber,
       });
       console.log(response.data);
       setUserInfo((prevUserInfo) => ({
         ...prevUserInfo,
-        userName: name,
+        userName: formattedName,
         userNumber: formattedPhoneNumber,
       }));
       navigate('/');
