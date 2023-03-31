@@ -62,7 +62,7 @@ function OwnerHeader(props: OwnerHeaderProps) {
   const navigate = useNavigate();
 
   const toOwBooking = () => {
-    navigate(`/owstore/${selectedStore?.id ?? ''}/booking`);
+    navigate(`/owstore/${selectedStore?.storeId ?? ''}/booking`);
   };
 
   const selectStore = (store: OwStore | null) => {
@@ -82,7 +82,7 @@ function OwnerHeader(props: OwnerHeaderProps) {
           <StoreDropdown show={storeDrop}>
             {owStore.map((store) => (
               <StoreDropdownItem
-                key={store.id}
+                key={store.storeId}
                 onClick={() => selectStore(store)}
               >
                 {store.storeName}
