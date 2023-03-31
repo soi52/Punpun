@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import javax.transaction.Transactional;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -56,18 +57,23 @@ public class ReviewRepositoryTest {
         //후원
         Support support1 = Support.builder()
                 .supporter(member1)
+                .supportReservations(new ArrayList<>())
                 .build();
         Support support2 = Support.builder()
                 .supporter(member2)
+                .supportReservations(new ArrayList<>())
                 .build();
         Support support3 = Support.builder()
                 .supporter(member1)
+                .supportReservations(new ArrayList<>())
                 .build();
         Support support4 = Support.builder()
                 .supporter(member2)
+                .supportReservations(new ArrayList<>())
                 .build();
         Support support5 = Support.builder()
                 .supporter(member1)
+                .supportReservations(new ArrayList<>())
                 .build();
         supportRepository.save(support1);
         supportRepository.save(support2);
@@ -123,6 +129,11 @@ public class ReviewRepositoryTest {
         reservation3.setSupportReservation(sr3);
         reservation4.setSupportReservation(sr4);
         reservation5.setSupportReservation(sr5);
+        support1.appendSupportReservation(sr1);
+        support2.appendSupportReservation(sr2);
+        support3.appendSupportReservation(sr3);
+        support4.appendSupportReservation(sr4);
+        support5.appendSupportReservation(sr5);
 
         //리뷰
         Review review1 = Review.builder()
@@ -150,6 +161,11 @@ public class ReviewRepositoryTest {
         reviewRepository.save(review3);
         reviewRepository.save(review4);
         reviewRepository.save(review5);
+        reservation1.setReview(review1);
+        reservation2.setReview(review2);
+        reservation3.setReview(review3);
+        reservation4.setReview(review4);
+        reservation5.setReview(review5);
 
         store.appendReview(review1);
         store.appendReview(review2);
@@ -164,6 +180,7 @@ public class ReviewRepositoryTest {
         PageRequest pageable = PageRequest.of(0, 10);
         Page<Review> reviews = reviewRepository.findAllBySupporter(member1, pageable);
 
+        List<Review> all = reviewRepository.findAll();
         assertThat(reviews.getContent().size()).isEqualTo(3);
         assertThat(reviews.getTotalPages()).isEqualTo(1);
         assertThat(reviews.getTotalElements()).isEqualTo(3);
