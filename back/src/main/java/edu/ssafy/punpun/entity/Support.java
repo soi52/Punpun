@@ -3,8 +3,10 @@ package edu.ssafy.punpun.entity;
 import edu.ssafy.punpun.entity.enumurate.SupportState;
 import edu.ssafy.punpun.entity.enumurate.SupportType;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +22,8 @@ public class Support extends BaseEntity {
     private Long id;
     private SupportType supportType;
     private SupportState supportState;
+    @CreatedDate
+    private LocalDate supportDate;
     @ManyToOne(targetEntity = Member.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member supporter;
