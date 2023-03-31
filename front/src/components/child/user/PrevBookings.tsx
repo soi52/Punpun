@@ -2,7 +2,6 @@ import API from '../../../store/API';
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import Loading from '../../ui/Loading';
-import { log } from 'console';
 
 const BookingDiv = styled.div`
   padding-top: 20px;
@@ -40,18 +39,22 @@ const PrevBookings = () => {
   return (
     <>
       <BookingDiv>
-        {bookings.map((booking) => (
-          <div key={booking.reservationId}>
-            <p>Reservation ID: {booking.reservationId}</p>
-            <p>Reservation state: {booking.reservationState}</p>
-            <p>Reservation time: {booking.reservationTime}</p>
-            <p>Menu ID: {booking.menuId}</p>
-            <p>Menu name: {booking.menuName}</p>
-            <p>Store ID: {booking.storeId}</p>
-            <p>Store name: {booking.storeName}</p>
-            <hr />
-          </div>
-        ))}
+        {bookings && bookings.length > 0 ? (
+          bookings.map((booking) => (
+            <div key={booking.reservationId}>
+              <p>Reservation ID: {booking.reservationId}</p>
+              <p>Reservation state: {booking.reservationState}</p>
+              <p>Reservation time: {booking.reservationTime}</p>
+              <p>Menu ID: {booking.menuId}</p>
+              <p>Menu name: {booking.menuName}</p>
+              <p>Store ID: {booking.storeId}</p>
+              <p>Store name: {booking.storeName}</p>
+              <hr />
+            </div>
+          ))
+        ) : (
+          <p>No bookings found.</p>
+        )}
       </BookingDiv>
     </>
   );
