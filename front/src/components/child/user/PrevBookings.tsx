@@ -23,16 +23,7 @@ const PrevBookings = () => {
     API
       .get('/bookings/child')
       .then((response) => {
-        const data: Booking[] = response.data.map((booking: Booking) => ({
-          reservationId: booking.reservationId,
-          reservationState: booking.reservationState,
-          reservationTime: booking.reservationTime,
-          menuId: booking.menuId,
-          menuName: booking.menuName,
-          storeId: booking.storeId,
-          storeName: booking.storeName,
-        }));
-        setBookings(data);
+        setBookings(response.data.contents);
       })
       .catch((error) => {
         console.error('Error fetching bookings:', error);
@@ -42,18 +33,22 @@ const PrevBookings = () => {
   return (
     <>
       <BookingDiv>
-        {bookings.map((booking) => (
-          <div key={booking.reservationId}>
-            <p>Reservation ID: {booking.reservationId}</p>
-            <p>Reservation state: {booking.reservationState}</p>
-            <p>Reservation time: {booking.reservationTime}</p>
-            <p>Menu ID: {booking.menuId}</p>
-            <p>Menu name: {booking.menuName}</p>
-            <p>Store ID: {booking.storeId}</p>
-            <p>Store name: {booking.storeName}</p>
-            <hr />
-          </div>
-        ))}
+        {bookings && bookings.length > 0 ? (
+          bookings.map((booking) => (
+            <div key={booking.reservationId}>
+              <p>Reservation ID: {booking.reservationId}</p>
+              <p>Reservation state: {booking.reservationState}</p>
+              <p>Reservation time: {booking.reservationTime}</p>
+              <p>Menu ID: {booking.menuId}</p>
+              <p>Menu name: {booking.menuName}</p>
+              <p>Store ID: {booking.storeId}</p>
+              <p>Store name: {booking.storeName}</p>
+              <hr />
+            </div>
+          ))
+        ) : (
+          <p>No bookings found.</p>
+        )}
       </BookingDiv>
     </>
   );
