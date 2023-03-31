@@ -1,8 +1,10 @@
 package edu.ssafy.punpun.service;
 
+import com.sun.jdi.request.DuplicateRequestException;
 import edu.ssafy.punpun.entity.Child;
 import edu.ssafy.punpun.entity.FavoriteMenu;
 import edu.ssafy.punpun.entity.Menu;
+import edu.ssafy.punpun.exception.DuplicateFavoriteMenuException;
 import edu.ssafy.punpun.repository.ChildRepository;
 import edu.ssafy.punpun.repository.FavoriteMenuRepository;
 import edu.ssafy.punpun.repository.MenuRepository;
@@ -33,6 +35,10 @@ public class FavoriteMenuServiceImpl implements FavoriteMenuService {
     public void insertFavoriteMenu(Child child, Long menuId) {
         Menu menu = menuRepository.findById(menuId)
                 .orElseThrow(()->new IllegalArgumentException("존재하지 않는 메뉴 입니다."));
+
+        if (favoriteMenuRepository.findByChildAndMenu(child, menu).isPresent()) {
+            throw new DuplicateFavoriteMenuException("이미 좋아요 한 메뉴 입니다.");
+        }
 
         FavoriteMenu favoriteMenu = FavoriteMenu.builder()
                 .child(child)
