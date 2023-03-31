@@ -47,7 +47,6 @@ const Oauth = () => {
 
   useEffect(() => {
     const token = getUrlParameter('token');
-
     const accessToken = token || '';
     console.log(accessToken);
     Cookies.set('accessToken', accessToken, {
@@ -61,14 +60,16 @@ const Oauth = () => {
     const decodedToken: any = jwt_decode(accessToken);
     localStorage.setItem('role', decodedToken.role);
 
-    // setUserInfo({
-    //   userId: decodedToken.id,
-    //   userName: decodedToken.name,
-    //   userEmail: decodedToken.email,
-    //   userLocation: address,
-    //   userRole: decodedToken.role,
-    //   userNumber: decodedToken.phoneNumber,
-    // });
+    setUserInfo({
+      userId: decodedToken.id,
+      userName: decodedToken.name,
+      userEmail: decodedToken.email,
+      userRole: decodedToken.role,
+      userNumber: decodedToken.phoneNumber,
+      userSupportedPoint: 0,
+      userRemainPoint: 0,
+      userArea: '',
+    });
 
     if (decodedToken['role'] === 'CHILD') {
       navigate('/chmain');
@@ -87,14 +88,6 @@ const Oauth = () => {
         navigate('/');
       }
     }
-
-    // window.localStorage.setItem('accessToken', accessToken);
-    // setCookie('accessToken', accessToken, {
-    //   path: '/',
-    //   secure: true,
-    //   httpOnly: true,
-    //   sameSite: 'none',
-    // });
   }, []);
 
   useEffect(() => {
