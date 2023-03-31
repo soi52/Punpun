@@ -6,11 +6,13 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import {
   isLoggedInState,
   isOwnerState,
+  owStoreState,
   userInfoState,
 } from '../../store/atoms';
 import ChildHeader from '../header/ChildHeader';
 import OwnerHeader from '../header/OwnerHeader';
 import SupporterHeader from '../header/SupporterHeader';
+import API from '../../store/API';
 
 const Wrapper = styled.div`
   position: absolute;
@@ -53,6 +55,7 @@ function Header(props: HeaderProps) {
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLoggedInState);
   const [isOwner, setIsOwner] = useRecoilState(isOwnerState);
   const [selectedItem, setSelectedItem] = useState('후원자');
+  const [owStores, setOwStores] = useRecoilState(owStoreState);
   const navigate = useNavigate();
 
   const toLogin = () => {
@@ -64,7 +67,7 @@ function Header(props: HeaderProps) {
   };
 
   const toOwStore = () => {
-    navigate('/owstore/:store_id');
+    navigate(`/owstore/${owStores[0].storeId}`);
   };
 
   const onLogout = () => {
@@ -82,6 +85,17 @@ function Header(props: HeaderProps) {
       toMain();
     }
   };
+
+  useEffect(() => {
+    API.get('stores/list')
+      .then((response: any) => {
+        console.log(response.data);
+        setOwStores(response.data);
+      })
+      .catch((error: any) => {
+        console.error(error);
+      });
+  }, [toOwStore]);
 
   const renderNav = () => {
     if (isLoggedIn) {

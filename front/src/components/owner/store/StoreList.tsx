@@ -1,9 +1,10 @@
 import styled from 'styled-components';
 import StoreListItem from './StoreListItem';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { OwStore, owStoreState } from '../../../store/atoms';
 import { useNavigate } from 'react-router';
+import API from '../../../store/API';
 
 const Wrapper = styled.div`
   padding: 20px;
@@ -34,9 +35,22 @@ function StoreList() {
   };
 
   const handleDelete = (id: number) => {
-    const updatedStores = stores.filter((store: OwStore) => store.id !== id);
+    const updatedStores = stores.filter(
+      (store: OwStore) => store.storeId !== id
+    );
     setStores(updatedStores);
   };
+
+  useEffect(() => {
+    API.get('stores/list')
+      .then((response: any) => {
+        console.log(response.data);
+        setStores(response.data);
+      })
+      .catch((error: any) => {
+        console.error(error);
+      });
+  }, []);
 
   return (
     <Wrapper>
