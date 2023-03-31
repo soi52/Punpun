@@ -41,16 +41,16 @@ function StoreList() {
     setStores(updatedStores);
   };
 
-  useEffect(() => {
-    API.get('stores/list')
-      .then((response: any) => {
-        console.log(response.data);
-        setStores(response.data);
-      })
-      .catch((error: any) => {
-        console.error(error);
-      });
-  }, []);
+  // useEffect(() => {
+  //   API.get('stores/list')
+  //     .then((response: any) => {
+  //       console.log(response.data);
+  //       setStores(response.data);
+  //     })
+  //     .catch((error: any) => {
+  //       console.error(error);
+  //     });
+  // }, []);
 
   return (
     <Wrapper>
