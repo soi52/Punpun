@@ -3,9 +3,8 @@ package edu.ssafy.punpun.service;
 import edu.ssafy.punpun.entity.Child;
 import edu.ssafy.punpun.entity.FavoriteMenu;
 import edu.ssafy.punpun.entity.Menu;
-import edu.ssafy.punpun.entity.Store;
 import edu.ssafy.punpun.entity.enumurate.UserRole;
-import edu.ssafy.punpun.exception.NotStoreOwnerException;
+import edu.ssafy.punpun.exception.DuplicateFavoriteMenuException;
 import edu.ssafy.punpun.repository.FavoriteMenuRepository;
 import edu.ssafy.punpun.repository.MenuRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -72,29 +71,59 @@ public class FavoriteMenuServiceImplTest {
         assertThat(results.get(1).getName()).isEqualTo(menu2.getName());
     }
 
-    @Test
+    @Nested
     @DisplayName("좋아하는 메뉴 추가")
-    void insertFavoriteMenu() {
-        // given
-        Child child1 = Child.builder()
-                .name("childTest")
-                .email("childTest@email.com")
-                .role(UserRole.CHILD)
-                .phoneNumber("01000000000")
-                .build();
-        Menu menu1 = Menu.builder()
-                .id(1L)
-                .name("menu1")
-                .price(1000L)
-                .build();
-        doReturn(Optional.of(menu1)).when(menuRepository).findById(1L);
+    public class insertFavoriteMenu {
 
-        //when
-        favoriteMenuService.insertFavoriteMenu(child1, menu1.getId());
+        @Test
+        @DisplayName("좋아하는 메뉴 추가")
+        void insertFavoriteMenu1() {
+            // given
+            Child child1 = Child.builder()
+                    .name("childTest")
+                    .email("childTest@email.com")
+                    .role(UserRole.CHILD)
+                    .phoneNumber("01000000000")
+                    .build();
+            Menu menu1 = Menu.builder()
+                    .id(1L)
+                    .name("menu1")
+                    .price(1000L)
+                    .build();
+            doReturn(Optional.of(menu1)).when(menuRepository).findById(1L);
 
-        //then
-        verify(favoriteMenuRepository, times(1)).save(any());
+            //when
+            favoriteMenuService.insertFavoriteMenu(child1, menu1.getId());
+
+            //then
+            verify(favoriteMenuRepository, times(1)).save(any());
+        }
+
+        @Test
+        @DisplayName("좋아하는 메뉴 추가 - 중복 확인")
+        void insertFavoriteMenu2() {
+            // given
+            Child child1 = Child.builder()
+                    .name("childTest")
+                    .email("childTest@email.com")
+                    .role(UserRole.CHILD)
+                    .phoneNumber("01000000000")
+                    .build();
+            Menu menu1 = Menu.builder()
+                    .id(1L)
+                    .name("menu1")
+                    .price(1000L)
+                    .build();
+            doReturn(Optional.of(menu1)).when(menuRepository).findById(1L);
+            doThrow(DuplicateFavoriteMenuException.class).when(favoriteMenuRepository).findByChildAndMenu(child1, menu1);
+
+            // when
+            // then
+            assertThatThrownBy(() -> favoriteMenuService.insertFavoriteMenu(child1, menu1.getId()))
+                    .isInstanceOf(DuplicateFavoriteMenuException.class);
+        }
     }
+
 
     @Nested
     @DisplayName("좋아하는 메뉴 삭제")
