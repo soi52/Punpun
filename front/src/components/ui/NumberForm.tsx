@@ -90,6 +90,9 @@ const NumberForm = () => {
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPhoneNumber(event.target.value);
+  };
+
+  const handleChange2 = (event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
   };
 
@@ -101,8 +104,8 @@ const NumberForm = () => {
           id="name-input"
           type="string"
           placeholder={userInfo.userName}
-          value={name}
-          onChange={handleChange}
+          defaultValue={name || userInfo.userName}
+          onChange={handleChange2}
           required
         />
         <InputLabel htmlFor="phone-input">전화번호 입력</InputLabel>
