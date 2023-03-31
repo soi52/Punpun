@@ -1,5 +1,7 @@
+import { useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
+import API from '../../../store/API';
 import { reviewState } from '../../../store/atoms';
 import ReviewItem from '../../ui/ReviewItem';
 import StoreInfo from '../StoreInfo';
@@ -10,6 +12,10 @@ const Wrapper = styled.div`
 
 function ReviewList() {
   const reviews = useRecoilValue(reviewState);
+
+  useEffect(() => {
+    API.get(`reviews/stores`);
+  });
 
   return (
     <Wrapper>
