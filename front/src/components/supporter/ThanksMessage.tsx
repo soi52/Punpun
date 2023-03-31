@@ -10,10 +10,12 @@ const ComponentStyle = styled.div`
 `;
 
 interface Reviews {
-  id: number;
-  userImage: string;
-  userName: string;
-  reviewText: string;
+  reviewId: number;
+  reviewContent: string;
+  keywords: [];
+  childId: number;
+  childName: string;
+  childProfileUrl: string;
 }
 
 function ThanksMessage() {
