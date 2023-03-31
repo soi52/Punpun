@@ -1,4 +1,5 @@
-import { useRecoilValue } from 'recoil';
+import { useEffect } from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import {
   owStoreState,
   selectedStoreState,
@@ -9,7 +10,7 @@ import MainTitle from '../ui/MainTitle';
 
 function StoreInfo() {
   const userInfo = useRecoilValue(userInfoState);
-  const selectedStore = useRecoilValue(selectedStoreState);
+  const [selectedStore, setSelectedStore] = useRecoilState(selectedStoreState);
   const stores = useRecoilValue(owStoreState);
 
   const storeInfo = {
@@ -19,14 +20,16 @@ function StoreInfo() {
     name: '싸피식당',
   };
 
-  const storeName = selectedStore
-    ? selectedStore.storeName
-    : stores[0].storeName;
+  useEffect(() => {
+    if (!selectedStore) {
+      setSelectedStore(stores[0]);
+    }
+  }, [selectedStore, setSelectedStore, stores]);
 
   return (
     <>
       <h2>
-        <MainTitle title={`${storeInfo.title} ${storeName}`} />
+        <MainTitle title={`${storeInfo.title} ${selectedStore?.storeName}`} />
       </h2>
       <MainMessage message={`${userInfo.userName}, ${storeInfo.message}`} />
     </>
