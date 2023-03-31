@@ -32,13 +32,26 @@ const MenuCardPrice = styled.div`
   color: #666666;
 `;
 
-function StoreMenu() {
+interface StoreMenuProps {
+  storeMenus: {
+    menuCount: number;
+    menuId: number;
+    menuImage: string;
+    menuImageName: string;
+    menuName: string;
+    menuPrice: number;
+  }[];
+}
+
+function StoreMenu({ storeMenus }: StoreMenuProps) {
   return (
     <MenuCardContainer>
-      <div>
-        {/* <MenuCardTitle>{title}</MenuCardTitle>
-          <MenuCardPrice>{price}원</MenuCardPrice> */}
-      </div>
+      {storeMenus.map((menu) => (
+        <div key={menu.menuId}>
+          <MenuCardTitle>{menu.menuName}</MenuCardTitle>
+          <MenuCardPrice>{menu.menuPrice}원</MenuCardPrice>
+        </div>
+      ))}
     </MenuCardContainer>
   );
 }
