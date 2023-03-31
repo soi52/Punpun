@@ -46,7 +46,6 @@ public class ReviewServiceImpl implements ReviewService {
                 .store(reservation.getMenu().getStore())
                 .content(content)
                 .reservation(reservation)
-                .reviewKeywords(new ArrayList<>())
                 .build();
         reviewRepository.save(review);
 
@@ -55,7 +54,6 @@ public class ReviewServiceImpl implements ReviewService {
                 .keyword(keyword)
                 .build();
         reviewKeywordRepository.save(reviewKeyword);
-        review.setReviewKeywords(reviewKeyword);
 
         return review;
     }

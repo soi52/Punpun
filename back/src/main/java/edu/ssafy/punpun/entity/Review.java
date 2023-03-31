@@ -30,8 +30,4 @@ public class Review extends BaseEntity {
     @OneToMany(mappedBy = "review", cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<ReviewKeyword> reviewKeywords = new ArrayList<>();
-
-    public void setReviewKeywords(ReviewKeyword reviewKeyword) {
-        this.reviewKeywords.add(reviewKeyword);
-    }
 }
