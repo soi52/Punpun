@@ -159,6 +159,11 @@ export const owStoreState = atom<OwStore[]>({
   ],
 });
 
+export const selectedStoreState = atom<OwStore | null>({
+  key: 'selectedStoreState',
+  default: null,
+});
+
 export interface Store {
   storeId: number;
   name: string;
