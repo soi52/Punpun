@@ -33,18 +33,16 @@ public class StoreServiceImpl implements StoreService {
     }
 
     public List<FavoriteMenuDTO> getStoreDetailChild(Store store, Child child) {
-        List<FavoriteMenuDTO> favoriteMenuDTOList =
-                menuRepository.findByStore(store).stream()
-                        .map(menu -> {
-                            Optional<FavoriteMenu> favoriteMenu = favoriteMenuRepository.findByChildAndMenu(child, menu);
-                            if (favoriteMenu != null) {
-                                return new FavoriteMenuDTO(menu, true);
-                            } else {
-                                return new FavoriteMenuDTO(menu, false);
-                            }
-                        })
-                        .collect(Collectors.toList());
-        return favoriteMenuDTOList;
+        return menuRepository.findByStore(store).stream()
+                .map(menu -> {
+                    Optional<FavoriteMenu> favoriteMenu = favoriteMenuRepository.findByChildAndMenu(child, menu);
+                    if (favoriteMenu != null) {
+                        return new FavoriteMenuDTO(menu, true);
+                    } else {
+                        return new FavoriteMenuDTO(menu, false);
+                    }
+                })
+                .collect(Collectors.toList());
     }
 
     @Override
