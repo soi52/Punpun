@@ -5,8 +5,6 @@ import edu.ssafy.punpun.entity.enumurate.SupportState;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.time.LocalDateTime;
-
 @Getter
 @AllArgsConstructor
 public class SupportResponseDTO {
@@ -22,7 +20,7 @@ public class SupportResponseDTO {
     public SupportResponseDTO(Support support){
         this.supportId=support.getId();
         this.supportState=support.getSupportState();
-        this.supportCreationDate=support.getCreatedDateTime().toString();
+        this.supportCreationDate=support.getSupportDate().toString();
         this.storeId=support.getStore().getId();
         this.storeName=support.getStore().getName();
         this.menuId=support.getMenu().getId();
