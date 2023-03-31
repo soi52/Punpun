@@ -37,7 +37,7 @@ public class StoreServiceImpl implements StoreService {
         return menuRepository.findByStore(store).stream()
                 .map(menu -> {
                     Optional<FavoriteMenu> favoriteMenu = favoriteMenuRepository.findByChildAndMenu(child, menu);
-                    if (favoriteMenu != null) {
+                    if (favoriteMenu.isPresent()) {
                         return new FavoriteMenuDTO(menu, true);
                     } else {
                         return new FavoriteMenuDTO(menu, false);
