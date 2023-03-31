@@ -33,6 +33,7 @@ public class StoreServiceImpl implements StoreService {
     }
 
     public List<FavoriteMenuDTO> getStoreDetailChild(Store store, Child child) {
+        // TODO : 추후 변경 예정
         return menuRepository.findByStore(store).stream()
                 .map(menu -> {
                     Optional<FavoriteMenu> favoriteMenu = favoriteMenuRepository.findByChildAndMenu(child, menu);

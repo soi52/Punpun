@@ -83,9 +83,7 @@ public class StoreControllerTest {
         FavoriteMenuDTO favoriteMenuDTO = new FavoriteMenuDTO(menu1, true);
         doReturn(List.of(favoriteMenuDTO)).when(storeService).getStoreDetailChild(any(Store.class), any(Child.class));
 
-        List<FavoriteMenuDTO> favoriteMenuDTOList = new ArrayList<>();
-        favoriteMenuDTOList.add(favoriteMenuDTO);
-        StoreDetailChildResponseDTO storeDetailChildResponseDTO = new StoreDetailChildResponseDTO(store, favoriteMenuDTOList);
+        StoreDetailChildResponseDTO storeDetailChildResponseDTO = new StoreDetailChildResponseDTO(store, List.of(favoriteMenuDTO));
         String output = new ObjectMapper().writeValueAsString(storeDetailChildResponseDTO);
 
         mockMvc.perform(get("/stores/child/1")
