@@ -22,7 +22,7 @@ public class UserServiceImplTest {
     @InjectMocks
     private UserServiceImpl userService;
     @Test
-    @DisplayName("Service : test for User_Member Update Information")
+    @DisplayName("사용자 정보 (이름, 휴대폰 번호) 변경")
     void updateMemberInfo() {
         Member member = Member.builder()
                 .name("memberTest")
@@ -32,8 +32,9 @@ public class UserServiceImplTest {
                 .build();
 
         Mockito.doReturn(Optional.of(member)).when(memberRepository).findById(member.getId());
-        userService.updateMemberInfo(member.getId(), "01011111111");
+        userService.updateMemberInfo(member.getId(), "member", "01011111111");
 
+        Assertions.assertEquals(member.getName(), "member");
         Assertions.assertEquals(member.getPhoneNumber(), "01011111111");
     }
 }
