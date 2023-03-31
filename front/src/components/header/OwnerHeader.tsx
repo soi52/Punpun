@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import API from '../../store/API';
-import { OwStore, owStoreState } from '../../store/atoms';
+import { OwStore, owStoreState, selectedStoreState } from '../../store/atoms';
 import UserTypeSelector from './UserTypeSelector';
 
 const NavUl = styled.ul`
@@ -56,11 +56,18 @@ interface OwnerHeaderProps {
 
 function OwnerHeader(props: OwnerHeaderProps) {
   const [stores, setStores] = useRecoilState(owStoreState);
-  const [selectedStore, setSelectedStore] = useState<OwStore | null>(null);
+  const [selectedStore, setSelectedStore] = useRecoilState<OwStore | null>(
+    selectedStoreState
+  );
   const [storeDrop, setStoreDrop] = useState(false);
   const { onLogout, toOwStore, onSelect, items, selectedItem, role } = props;
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // selectedStore가 업데이트되면 헤더를 다시 그림
+    console.log('selectedStore updated', selectedStore);
+  }, [selectedStore]);
 
   const toOwBooking = () => {
     navigate(`/owstore/${selectedStore?.storeId ?? ''}/booking`);

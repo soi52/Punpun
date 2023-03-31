@@ -1,19 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-
-interface Store {
-  storeId: number;
-  storeImage: string;
-  storeImageName: string;
-  storeInfo: string;
-  storeLat: number;
-  storeLon: number;
-  storeName: string;
-}
+import { useSetRecoilState } from 'recoil';
+import { OwStore, selectedStoreState } from '../../../store/atoms';
 
 interface StoreItemProps {
-  stores: Store[];
+  stores: OwStore[];
   onDelete: (id: number) => void;
 }
 
@@ -57,6 +49,7 @@ const DeleteButton = styled.button`
 
 function StoreListItem({ stores, onDelete }: StoreItemProps) {
   const navigate = useNavigate();
+  const setSelectedStore = useSetRecoilState(selectedStoreState); // 새로 추가된 코드
 
   const handleDelete = (id: number) => {
     onDelete(id);
@@ -64,7 +57,12 @@ function StoreListItem({ stores, onDelete }: StoreItemProps) {
 
   const StoreList = stores.map((store) => (
     <StoreInfoList key={store.storeId}>
-      <div onClick={() => navigate(`/owstore/${store.storeId}`)}>
+      <div
+        onClick={() => {
+          navigate(`/owstore/${store.storeId}`);
+          setSelectedStore(store);
+        }}
+      >
         <StoreName>{store.storeName}</StoreName>
         <StoreInfo>{store.storeInfo}</StoreInfo>
         <StoreText>

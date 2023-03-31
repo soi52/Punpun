@@ -95,7 +95,7 @@ function Header(props: HeaderProps) {
       .catch((error: any) => {
         console.error(error);
       });
-  }, [toOwStore]);
+  }, []);
 
   const renderNav = () => {
     if (isLoggedIn) {
