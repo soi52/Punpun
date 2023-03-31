@@ -1,7 +1,7 @@
 package edu.ssafy.punpun.repository;
 
 import com.querydsl.core.types.Projections;
-import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.*;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import edu.ssafy.punpun.dto.response.ShareResponseDTO;
 import edu.ssafy.punpun.entity.QSupport;
@@ -13,8 +13,6 @@ import org.springframework.data.domain.PageRequest;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 
 public class SupportRepositoryImpl implements  SupportCustomRepository {
@@ -27,17 +25,18 @@ public class SupportRepositoryImpl implements  SupportCustomRepository {
     @Override
     public Page<ShareResponseDTO> findShareList(Long storeId, SupportType supportType, int page, LocalDate date) {
         PageRequest pageRequest= PageRequest.of(page, PAGE_SIZE);
+
         List<ShareResponseDTO> supports = queryFactory
-                .select(Projections.constructor(ShareResponseDTO.class, support.supportType, support.createdDateTime, support.menu.id, support.menu.name,
+                .select(Projections.constructor(ShareResponseDTO.class, support.supportType, support.supportDate, support.menu.id, support.menu.name,
                         support.menu.id.count()))
                 .from(support)
                 .where(support.store.id.eq(storeId),
                         support.supportType.eq(supportType),
-                        betweenTime(date))
-                .groupBy(support.createdDateTime, support.menu.id)
+                        eqDate(date))
+                .groupBy(support.supportDate, support.menu.id)
                 .offset(pageRequest.getOffset())
                 .limit(pageRequest.getPageSize())
-                .orderBy(support.createdDateTime.desc())
+                .orderBy(support.supportDate.desc())
                 .fetch();
 
         for (int i=0; i<supports.size(); i++) {
@@ -48,7 +47,7 @@ public class SupportRepositoryImpl implements  SupportCustomRepository {
                             support.supportType.eq(supportType),
                             support.supportState.eq(SupportState.END),
                             support.menu.id.eq(supports.get(i).getMenuId()),
-                            betweenTime(LocalDate.parse(supports.get(i).getSupportDate())))
+                            eqDate(date))
                     .fetchOne();
             ShareResponseDTO shareResponseDTO=supports.get(i);
             shareResponseDTO.setUseCount(cnt);
@@ -57,11 +56,9 @@ public class SupportRepositoryImpl implements  SupportCustomRepository {
         return new PageImpl<>(supports, pageRequest, supports.size()) ;
     }
 
-    private BooleanExpression betweenTime(LocalDate date){
+    private BooleanExpression eqDate(LocalDate date){
         if(date != null ){
-            LocalDateTime from= date.atStartOfDay();
-            LocalDateTime to= date.atTime(LocalTime.MAX).withNano(0);
-            return support.createdDateTime.between(from, to);
+            return support.supportDate.eq(date);
         }
         return null;
     }

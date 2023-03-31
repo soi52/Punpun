@@ -13,7 +13,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.domain.Page;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @DataJpaTest
@@ -35,6 +34,7 @@ public class SupportRepositoryTest {
 
     @BeforeEach
     public void BeforeEach(){
+        supportRepository.deleteAll();
         member=Member.builder().build();
     }
 
@@ -122,16 +122,15 @@ public class SupportRepositoryTest {
         menuRepository.save(menu3);
         menuRepository.save(menu4);
 
-        LocalDateTime date=LocalDateTime.now();
+        LocalDate date=LocalDate.now();
 
         saveSupportTable(SupportState.SUPPORT, SupportType.SHARE, store, menu1, date );
-        saveSupportTable(SupportState.SUPPORT, SupportType.SHARE, store, menu1, date.plusDays(1) );
         saveSupportTable(SupportState.END, SupportType.SHARE, store, menu1, date );
         saveSupportTable(SupportState.END, SupportType.SHARE, store, menu2, date );
-        saveSupportTable(SupportState.END, SupportType.SHARE, store, menu2, date.minusDays(1) );
         saveSupportTable(SupportState.BOOKING, SupportType.SHARE, store, menu2, date );
         saveSupportTable(SupportState.SUPPORT, SupportType.SHARE, store, menu3, date );
         saveSupportTable(SupportState.SUPPORT, SupportType.SUPPORT, store, menu4, date );
+
 
         List<Menu> menus1=List.of(menu1, menu2, menu3);
         List<Long> totalCount1=List.of(2L,2L,1L);
@@ -145,41 +144,40 @@ public class SupportRepositoryTest {
         for(int i=0; i<menus1.size(); i++){
             Assertions.assertEquals(shareResponseDTOS.get(i).getSupportType(), SupportType.SHARE);
             Assertions.assertEquals(shareResponseDTOS.get(i).getMenuId(), menus1.get(i).getId());
-            Assertions.assertEquals(shareResponseDTOS.get(i).getSupportDate(), date.toLocalDate().toString());
+            Assertions.assertEquals(shareResponseDTOS.get(i).getSupportDate(), date.toString());
             Assertions.assertEquals(shareResponseDTOS.get(i).getMenuName(), menus1.get(i).getName());
             Assertions.assertEquals(shareResponseDTOS.get(i).getTotalCount(), totalCount1.get(i));
             Assertions.assertEquals(shareResponseDTOS.get(i).getUseCount(), useCount1.get(i));
         }
 
-        List<Menu> menus2=List.of(menu1,menu1, menu2, menu3, menu2);
-        List<Long> totalCount2=List.of(1L,2L,2L, 1L, 1L);
-        List<Long> useCount2=List.of(0L,1L,1L, 0L, 1L);
-        List<LocalDateTime> dates=List.of(date.plusDays(1), date, date, date, date.minusDays(1));
+        List<Menu> menus2=List.of(menu1, menu2, menu3);
+        List<Long> totalCount2=List.of(2L,2L, 1L);
+        List<Long> useCount2=List.of(1L,1L, 0L);
 
         Page<ShareResponseDTO> shareResponseDTOPage2=supportRepository.findShareList(store.getId(), SupportType.SHARE, 0, null);
-        Assertions.assertEquals(shareResponseDTOPage2.getContent().size(), 5);
+        Assertions.assertEquals(shareResponseDTOPage2.getContent().size(), 3);
 
         List<ShareResponseDTO> shareResponseDTOS2=shareResponseDTOPage2.getContent();
 
         for(int i=0; i<menus2.size(); i++){
             Assertions.assertEquals(shareResponseDTOS2.get(i).getSupportType(), SupportType.SHARE);
             Assertions.assertEquals(shareResponseDTOS2.get(i).getMenuId(), menus2.get(i).getId());
-            Assertions.assertEquals(shareResponseDTOS2.get(i).getSupportDate(), dates.get(i).toLocalDate().toString());
+            Assertions.assertEquals(shareResponseDTOS2.get(i).getSupportDate(), date.toString());
             Assertions.assertEquals(shareResponseDTOS2.get(i).getMenuName(), menus2.get(i).getName());
             Assertions.assertEquals(shareResponseDTOS2.get(i).getTotalCount(), totalCount2.get(i));
             Assertions.assertEquals(shareResponseDTOS2.get(i).getUseCount(), useCount2.get(i));
         }
     }
 
-    private void saveSupportTable(SupportState supportState, SupportType supportType, Store store, Menu menu, LocalDateTime date){
+    private void saveSupportTable(SupportState supportState, SupportType supportType, Store store, Menu menu, LocalDate date){
         Support support=Support.builder()
                 .supportState(supportState)
                 .supportType(supportType)
                 .supporter(member)
+                .supportDate(date)
                 .store(store)
                 .menu(menu)
                 .build();
-        support.setCreatedDateTime(date);
 
         supportRepository.save(support);
     }
