@@ -53,6 +53,7 @@ public class ReviewServiceImpl implements ReviewService {
                 .keyword(keyword)
                 .build();
         reviewKeywordRepository.save(reviewKeyword);
+        review.setReviewKeywords(reviewKeyword);
 
         return review;
     }

@@ -3,6 +3,7 @@ package edu.ssafy.punpun.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -28,5 +29,9 @@ public class Review extends BaseEntity {
     private Child child;
     @OneToMany(mappedBy = "review", cascade = CascadeType.ALL)
     @ToString.Exclude
-    private List<ReviewKeyword> reviewKeywords;
+    private List<ReviewKeyword> reviewKeywords = new ArrayList<>();
+
+    public void setReviewKeywords(ReviewKeyword reviewKeyword) {
+        this.reviewKeywords.add(reviewKeyword);
+    }
 }
