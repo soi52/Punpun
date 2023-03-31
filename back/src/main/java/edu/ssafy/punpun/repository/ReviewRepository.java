@@ -12,6 +12,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Long> {
+    @Query(value = "select c from Child c inner join c.favoriteMenus fm inner join fm.menu where c = ?1"
+    ,countQuery = "select count(c) from Child c inner join c.favoriteMenus fm inner join fm.menu where c = ?1")
     Page<Review> findAllByChild(Child child, Pageable pageable);
 
     @Query(value = "select r from Review r " +
