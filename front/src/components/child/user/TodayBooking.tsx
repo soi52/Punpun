@@ -4,7 +4,7 @@ import API from '../../../store/API';
 
 type Booking = {
   reservationId: number;
-  reservationState: boolean;
+  reservationState: string;
   reservationTime: number;
   menuId: number;
   menuName: string;

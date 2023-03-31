@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import ChMainMessage from '../ChMainMessage';
 import TodayBooking from './TodayBooking';
@@ -20,7 +20,7 @@ const MessageDiv = styled.div`
 
 type Booking = {
   reservationId: number;
-  reservationState: boolean;
+  reservationState: string;
   reservationTime: number;
   menuId: number;
   menuName: string;
@@ -30,6 +30,11 @@ type Booking = {
 
 const ChUserMain = () => {
   const [bookings, setBookings] = useState<Booking[]>([]);
+  useEffect(() => {
+    console.log(bookings);
+    
+  }, [bookings])
+  
 
   const filteredBookings = bookings.filter((booking) => {
     const reservationTime = new Date(booking.reservationTime);
@@ -40,7 +45,6 @@ const ChUserMain = () => {
       reservationTime.getDate() === today.getDate()
     );
   });
-  console.log(filteredBookings);
 
   // 메세지 컴포넌트를 보여줄지 여부
   const shouldShowMessage = filteredBookings.some((booking) => {
@@ -67,13 +71,15 @@ const ChUserMain = () => {
       <ChMainMessage />
       <BookingDiv>
         <h2>오늘의 예약</h2>
-        { filteredBookings.length > 0 ?
+        {/* { filteredBookings.length > 0 ? */}
         <TodayBooking bookings={bookings} setBookings={setBookings} />
-        : '오늘의 예약이 없어요 :('}
+        {/* : '오늘의 예약이 없어요 :('} */}
       </BookingDiv>
-      {!shouldHideMessage &&
-      shouldShowMessage &&
-      filteredBookings.length > 0 ? (
+      { bookings[0].reservationState === 'END' ?
+      // !shouldHideMessage &&
+      // shouldShowMessage &&
+      // filteredBookings.length > 0 ? 
+      (
         <MessageDiv>
           <h2>감사메세지 작성</h2>
           <Message reservationId={filteredBookings[0].reservationId} />
