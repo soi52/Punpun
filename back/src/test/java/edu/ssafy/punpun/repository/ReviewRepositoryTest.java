@@ -208,11 +208,6 @@ public class ReviewRepositoryTest {
         reviewKeywordRepository.save(rk3);
         reviewKeywordRepository.save(rk4);
         reviewKeywordRepository.save(rk5);
-        review1.setReviewKeywords(rk1);
-        review2.setReviewKeywords(rk2);
-        review3.setReviewKeywords(rk3);
-        review4.setReviewKeywords(rk4);
-        review5.setReviewKeywords(rk5);
 
         store.appendReview(review1);
         store.appendReview(review2);
