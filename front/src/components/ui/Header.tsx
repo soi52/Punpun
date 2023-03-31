@@ -7,6 +7,7 @@ import {
   isLoggedInState,
   isOwnerState,
   owStoreState,
+  selectedStoreState,
   userInfoState,
 } from '../../store/atoms';
 import ChildHeader from '../header/ChildHeader';
@@ -95,7 +96,7 @@ function Header(props: HeaderProps) {
       .catch((error: any) => {
         console.error(error);
       });
-  }, []);
+  }, [selectedStoreState]);
 
   const renderNav = () => {
     if (isLoggedIn) {

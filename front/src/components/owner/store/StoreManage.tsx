@@ -1,8 +1,11 @@
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
-import MainMessage from '../../ui/MainMessage';
-import MainTitle from '../../ui/MainTitle';
+import API from '../../../store/API';
+import { owStoreMenuState, selectedStoreState } from '../../../store/atoms';
 import StoreInfo from '../StoreInfo';
+import StoreMenu from './StoreMenu';
 
 const Wrapper = styled.div`
   padding: 20px;
@@ -10,10 +13,26 @@ const Wrapper = styled.div`
 
 function StoreManage() {
   const navigate = useNavigate();
+  const [storeMenus, setStoreMenus] = useRecoilState(owStoreMenuState);
+  const selectedStore = useRecoilValue(selectedStoreState);
+
+  useEffect(() => {
+    API.get(`stores/${selectedStore?.storeId}`)
+      .then((response) => {
+        // console.log(response.data);
+        console.log(response.data.menuResponseDTOList);
+        setStoreMenus(response.data.menuResponseDTOList);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, [selectedStore]);
+
   return (
     <Wrapper>
       <StoreInfo />
       <h2>가게 정보</h2>
+      <StoreMenu storeMenus={storeMenus} />
       <button onClick={() => navigate('/owregister')}>수정하기</button>
     </Wrapper>
   );
