@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.Objects;
 
 @Service
@@ -45,6 +46,7 @@ public class ReviewServiceImpl implements ReviewService {
                 .store(reservation.getMenu().getStore())
                 .content(content)
                 .reservation(reservation)
+                .reviewKeywords(new ArrayList<>())
                 .build();
         reviewRepository.save(review);
 
@@ -53,6 +55,7 @@ public class ReviewServiceImpl implements ReviewService {
                 .keyword(keyword)
                 .build();
         reviewKeywordRepository.save(reviewKeyword);
+        review.setReviewKeywords(reviewKeyword);
 
         return review;
     }

@@ -36,12 +36,13 @@ public class UserController {
         return new MemberResponseDTO(member);
     }
 
-    @PatchMapping("/member/phone")
+    @PatchMapping("/member/update")
     @ResponseStatus(code = HttpStatus.OK)
     public void updateMemberInfo(@AuthenticationPrincipal PrincipalMemberDetail principalMemberDetail, @RequestBody MemberRequestDTO memberRequestDTO) {
         Member member = principalMemberDetail.getMember();
+        String name = memberRequestDTO.getName();
         String phoneNumber = memberRequestDTO.getPhoneNumber();
 
-        userService.updateMemberInfo(member.getId(), phoneNumber);
+        userService.updateMemberInfo(member.getId(), name, phoneNumber);
     }
 }

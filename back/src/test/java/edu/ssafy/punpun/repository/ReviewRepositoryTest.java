@@ -1,6 +1,7 @@
 package edu.ssafy.punpun.repository;
 
 import edu.ssafy.punpun.entity.*;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import javax.transaction.Transactional;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -31,6 +33,10 @@ public class ReviewRepositoryTest {
     private ReviewRepository reviewRepository;
     @Autowired
     private StoreRepository storeRepository;
+    @Autowired
+    private ReviewKeywordRepository reviewKeywordRepository;
+    @Autowired
+    private KeywordRepository keywordRepository;
     private Member member1;
     private Member member2;
     private Store store;
@@ -56,18 +62,23 @@ public class ReviewRepositoryTest {
         //후원
         Support support1 = Support.builder()
                 .supporter(member1)
+                .supportReservations(new ArrayList<>())
                 .build();
         Support support2 = Support.builder()
                 .supporter(member2)
+                .supportReservations(new ArrayList<>())
                 .build();
         Support support3 = Support.builder()
                 .supporter(member1)
+                .supportReservations(new ArrayList<>())
                 .build();
         Support support4 = Support.builder()
                 .supporter(member2)
+                .supportReservations(new ArrayList<>())
                 .build();
         Support support5 = Support.builder()
                 .supporter(member1)
+                .supportReservations(new ArrayList<>())
                 .build();
         supportRepository.save(support1);
         supportRepository.save(support2);
@@ -123,33 +134,85 @@ public class ReviewRepositoryTest {
         reservation3.setSupportReservation(sr3);
         reservation4.setSupportReservation(sr4);
         reservation5.setSupportReservation(sr5);
+        support1.appendSupportReservation(sr1);
+        support2.appendSupportReservation(sr2);
+        support3.appendSupportReservation(sr3);
+        support4.appendSupportReservation(sr4);
+        support5.appendSupportReservation(sr5);
+
+        //키워드
+        Keyword keyword = Keyword.builder()
+                .content("test Keyword")
+                .build();
+        keywordRepository.save(keyword);
 
         //리뷰
         Review review1 = Review.builder()
                 .store(store)
                 .reservation(reservation1)
+                .reviewKeywords(new ArrayList<>())
                 .build();
         Review review2 = Review.builder()
                 .store(store)
                 .reservation(reservation2)
+                .reviewKeywords(new ArrayList<>())
                 .build();
         Review review3 = Review.builder()
                 .store(store)
                 .reservation(reservation3)
+                .reviewKeywords(new ArrayList<>())
                 .build();
         Review review4 = Review.builder()
                 .store(store)
                 .reservation(reservation4)
+                .reviewKeywords(new ArrayList<>())
                 .build();
         Review review5 = Review.builder()
                 .store(store)
                 .reservation(reservation5)
+                .reviewKeywords(new ArrayList<>())
                 .build();
         reviewRepository.save(review1);
         reviewRepository.save(review2);
         reviewRepository.save(review3);
         reviewRepository.save(review4);
         reviewRepository.save(review5);
+        reservation1.setReview(review1);
+        reservation2.setReview(review2);
+        reservation3.setReview(review3);
+        reservation4.setReview(review4);
+        reservation5.setReview(review5);
+
+        ReviewKeyword rk1 = ReviewKeyword.builder()
+                .review(review1)
+                .keyword(keyword)
+                .build();
+        ReviewKeyword rk2 = ReviewKeyword.builder()
+                .review(review2)
+                .keyword(keyword)
+                .build();
+        ReviewKeyword rk3 = ReviewKeyword.builder()
+                .review(review3)
+                .keyword(keyword)
+                .build();
+        ReviewKeyword rk4 = ReviewKeyword.builder()
+                .review(review4)
+                .keyword(keyword)
+                .build();
+        ReviewKeyword rk5 = ReviewKeyword.builder()
+                .review(review5)
+                .keyword(keyword)
+                .build();
+        reviewKeywordRepository.save(rk1);
+        reviewKeywordRepository.save(rk2);
+        reviewKeywordRepository.save(rk3);
+        reviewKeywordRepository.save(rk4);
+        reviewKeywordRepository.save(rk5);
+        review1.setReviewKeywords(rk1);
+        review2.setReviewKeywords(rk2);
+        review3.setReviewKeywords(rk3);
+        review4.setReviewKeywords(rk4);
+        review5.setReviewKeywords(rk5);
 
         store.appendReview(review1);
         store.appendReview(review2);
@@ -158,12 +221,25 @@ public class ReviewRepositoryTest {
         store.appendReview(review5);
     }
 
+    @AfterEach
+    void afterEach() {
+        reviewKeywordRepository.deleteAll();
+        keywordRepository.deleteAll();
+        reviewRepository.deleteAll();
+        supportReservationRepository.deleteAll();
+        reservationRepository.deleteAll();
+        supportRepository.deleteAll();
+        storeRepository.deleteAll();
+        memberRepository.deleteAll();
+    }
+
     @Test
     @DisplayName("후원자가 받은 모든 리뷰 검색")
     void findAllBySupporter() {
         PageRequest pageable = PageRequest.of(0, 10);
         Page<Review> reviews = reviewRepository.findAllBySupporter(member1, pageable);
 
+        List<Review> all = reviewRepository.findAll();
         assertThat(reviews.getContent().size()).isEqualTo(3);
         assertThat(reviews.getTotalPages()).isEqualTo(1);
         assertThat(reviews.getTotalElements()).isEqualTo(3);

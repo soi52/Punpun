@@ -80,7 +80,7 @@ public class UserControllerTest {
 
     @Test
     @WIthCustomSupporter
-    @DisplayName("patch - 사용자 휴대폰 번호 변경")
+    @DisplayName("patch - 사용자 정보 (이름, 휴대폰 번호) 변경")
     void updateMemberInfo() throws Exception {
         Member member = Member.builder()
                 .id(1L)
@@ -89,12 +89,12 @@ public class UserControllerTest {
                 .role(UserRole.SUPPORTER)
                 .build();
 
-        MemberRequestDTO memberRequestDTO = new MemberRequestDTO("01000000000");
+        MemberRequestDTO memberRequestDTO = new MemberRequestDTO("member", "01000000000");
         String input = new Gson().toJson(memberRequestDTO);
 
-        doNothing().when(userService).updateMemberInfo(member.getId(), memberRequestDTO.getPhoneNumber());
+        doNothing().when(userService).updateMemberInfo(member.getId(), memberRequestDTO.getName(), memberRequestDTO.getPhoneNumber());
 
-        mockMvc.perform(patch("/users/member/phone")
+        mockMvc.perform(patch("/users/member/update")
                         .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(input))

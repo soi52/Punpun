@@ -15,9 +15,9 @@ public class UserServiceImpl implements UserService {
     private final MemberRepository memberRepository;
 
     @Override
-    public void updateMemberInfo(Long memberId, String phoneNumber) {
+    public void updateMemberInfo(Long memberId, String name, String phoneNumber) {
         Member member = memberRepository.findById(memberId).orElseThrow(IllegalArgumentException::new);
 
-        member.changePhoneNumber(phoneNumber);
+        member.updateMemberInfo(name, phoneNumber);
     }
 }

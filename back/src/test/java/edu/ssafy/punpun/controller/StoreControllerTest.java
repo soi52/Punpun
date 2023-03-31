@@ -1,9 +1,8 @@
 package edu.ssafy.punpun.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.ssafy.punpun.dto.response.MenuResponseDTO;
-import edu.ssafy.punpun.dto.response.StoreDetailMemberResponseDTO;
-import edu.ssafy.punpun.dto.response.StoreInfoResponseDTO;
+import edu.ssafy.punpun.dto.response.*;
+import edu.ssafy.punpun.entity.Child;
 import edu.ssafy.punpun.entity.Member;
 import edu.ssafy.punpun.entity.Menu;
 import edu.ssafy.punpun.entity.Store;
@@ -62,6 +61,32 @@ public class StoreControllerTest {
         String output = new ObjectMapper().writeValueAsString(storeDetailMemberResponseDTO);
 
         mockMvc.perform(get("/stores/1")
+                        .with(csrf()))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(content().string(output))
+                .andDo(print());
+    }
+
+    @Test
+    @WIthCustomChild
+    @DisplayName("get - 가게 정보 상세 보기 _ 아동")
+    void getStoreDetailChild() throws Exception {
+        Store store = Store.builder()
+                .id(1L)
+                .build();
+        doReturn(store).when(storeService).findById(1L);
+        Menu menu1 = Menu.builder()
+                .id(1L)
+                .store(store)
+                .build();
+        FavoriteMenuDTO favoriteMenuDTO = new FavoriteMenuDTO(menu1, true);
+        doReturn(List.of(favoriteMenuDTO)).when(storeService).getStoreDetailChild(any(Store.class), any(Child.class));
+
+        StoreDetailChildResponseDTO storeDetailChildResponseDTO = new StoreDetailChildResponseDTO(store, List.of(favoriteMenuDTO));
+        String output = new ObjectMapper().writeValueAsString(storeDetailChildResponseDTO);
+
+        mockMvc.perform(get("/stores/child/1")
                         .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
