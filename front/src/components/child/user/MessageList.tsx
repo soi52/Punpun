@@ -69,7 +69,7 @@ const MessageList: React.FC<MessageListProps> = ({
               <MessageButton key={index}>{selectedButtons}</MessageButton>
             ))}
           </ListContent>
-          <Button onClick={() => handleDeleteMessage(index)}>Delete</Button>
+          {/* <Button onClick={() => handleDeleteMessage(index)}>Delete</Button> */}
         </StyledLi>
       ))}
     </Div>
