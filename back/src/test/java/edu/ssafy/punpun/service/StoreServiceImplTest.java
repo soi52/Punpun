@@ -87,27 +87,38 @@ public class StoreServiceImplTest {
                 .id(1L)
                 .name("store1")
                 .build();
-        Menu menu = Menu.builder()
+        Menu menu1 = Menu.builder()
                 .id(1L)
                 .name("menu1")
                 .price(10000L)
                 .store(store)
                 .build();
+        Menu menu2 = Menu.builder()
+                .id(2L)
+                .name("menu2")
+                .price(10000L)
+                .store(store)
+                .build();
         FavoriteMenu favoriteMenu = FavoriteMenu.builder()
                 .child(child)
-                .menu(menu)
+                .menu(menu1)
                 .build();
 
-        doReturn(List.of(menu)).when(menuRepository).findByStore(store);
-        doReturn(Optional.of(favoriteMenu)).when(favoriteMenuRepository).findByChildAndMenu(child, menu);
+        doReturn(List.of(menu1, menu2)).when(menuRepository).findByStore(store);
+        doReturn(Optional.of(favoriteMenu)).when(favoriteMenuRepository).findByChildAndMenu(child, menu1);
 
         // when
         List<FavoriteMenuDTO> results = storeService.getStoreDetailChild(store, child);
 
         // then
-        Assertions.assertThat(results.get(0).getMenuId()).isEqualTo(menu.getId());
-        Assertions.assertThat(results.get(0).getMenuPrice()).isEqualTo(menu.getPrice());
-        Assertions.assertThat(results.get(0).getMenuName()).isEqualTo(menu.getName());
+        Assertions.assertThat(results.get(0).getMenuId()).isEqualTo(menu1.getId());
+        Assertions.assertThat(results.get(0).getMenuName()).isEqualTo(menu1.getName());
+        Assertions.assertThat(results.get(0).getMenuPrice()).isEqualTo(menu1.getPrice());
+        Assertions.assertThat(results.get(0).isFavoriteMenu()).isEqualTo(true);
+        Assertions.assertThat(results.get(1).getMenuId()).isEqualTo(menu2.getId());
+        Assertions.assertThat(results.get(1).getMenuName()).isEqualTo(menu2.getName());
+        Assertions.assertThat(results.get(1).getMenuPrice()).isEqualTo(menu2.getPrice());
+        Assertions.assertThat(results.get(1).isFavoriteMenu()).isEqualTo(false);
     }
 
     @Test
