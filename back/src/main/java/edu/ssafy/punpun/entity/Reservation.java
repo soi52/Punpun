@@ -41,4 +41,8 @@ public class Reservation extends BaseEntity {
     public void setSupportReservation(SupportReservation supportReservation) {
         this.supportReservation = supportReservation;
     }
+
+    public void setReview(Review review) {
+        this.review = review;
+    }
 }
