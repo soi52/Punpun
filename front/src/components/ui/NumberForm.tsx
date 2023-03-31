@@ -50,6 +50,7 @@ const NumberForm = () => {
   const navigate = useNavigate();
   const [error, setError] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [name, setName] = useState('');
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -70,11 +71,13 @@ const NumberForm = () => {
 
     try {
       const response = await API.patch('users/member/phone', {
+        name: name,
         phoneNumber: formattedPhoneNumber,
       });
       console.log(response.data);
       setUserInfo((prevUserInfo) => ({
         ...prevUserInfo,
+        userName: name,
         userNumber: formattedPhoneNumber,
       }));
       navigate('/');
@@ -87,11 +90,21 @@ const NumberForm = () => {
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPhoneNumber(event.target.value);
+    setName(event.target.value);
   };
 
   return (
     <>
       <Form onSubmit={handleSubmit}>
+        <InputLabel htmlFor="name-input">이름 입력</InputLabel>
+        <StyledInput
+          id="name-input"
+          type="string"
+          placeholder={userInfo.userName}
+          value={name}
+          onChange={handleChange}
+          required
+        />
         <InputLabel htmlFor="phone-input">전화번호 입력</InputLabel>
         <StyledInput
           id="phone-input"
