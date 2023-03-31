@@ -78,6 +78,12 @@ const LikedMenu = () => {
     setIsLiked((prev) => !prev);
   };
 
+  if (menus.length === 0) {
+    return(
+      <p>아직 선호하는 메뉴가 없어요 :(</p>
+    )
+  }
+
   return (
     <MenuList>
       {menus.map((menu) => (

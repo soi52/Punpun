@@ -1,6 +1,8 @@
 import API from '../../../store/API';
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
+import Loading from '../../ui/Loading';
+import { log } from 'console';
 
 const BookingDiv = styled.div`
   padding-top: 20px;
@@ -23,21 +25,17 @@ const PrevBookings = () => {
     API
       .get('/bookings/child')
       .then((response) => {
-        const data: Booking[] = response.data.map((booking: Booking) => ({
-          reservationId: booking.reservationId,
-          reservationState: booking.reservationState,
-          reservationTime: booking.reservationTime,
-          menuId: booking.menuId,
-          menuName: booking.menuName,
-          storeId: booking.storeId,
-          storeName: booking.storeName,
-        }));
-        setBookings(data);
+        setBookings(response.data.content);
+        console.log(response.data);
       })
       .catch((error) => {
         console.error('Error fetching bookings:', error);
       });
   }, []);
+
+  if (!bookings) {
+    return <Loading />;
+  }
 
   return (
     <>
