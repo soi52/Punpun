@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -19,9 +19,9 @@ public class ShareResponseDTO {
     private Long totalCount;
     private Long useCount;
 
-    public ShareResponseDTO(SupportType supportType, LocalDateTime date, Long id, String name, Long totalCount){
+    public ShareResponseDTO(SupportType supportType, LocalDate date, Long id, String name, Long totalCount){
         this.supportType=supportType;
-        this.supportDate=date.toLocalDate().toString();
+        this.supportDate=date.toString();
         this.menuId=id;
         this.menuName=name;
         this.totalCount=totalCount;
