@@ -48,5 +48,8 @@ public class Member extends BaseEntity {
         this.role = role;
     }
 
-    public void changePhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
+    public void updateMemberInfo(String name, String phoneNumber) {
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+    }
 }
