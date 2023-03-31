@@ -20,7 +20,7 @@ function UserTypeSelector(props: UserTypeSelectorProps) {
   return (
     <NavLi onClick={() => role === 'OWNER' && setDrop(!drop)}>
       {selectedItem}{' '}
-      {drop && role === 'OWNER' && (
+      {drop && (
         <Dropdown
           onSelect={onSelect}
           items={items}
