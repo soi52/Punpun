@@ -50,11 +50,16 @@ const NumberForm = () => {
   const navigate = useNavigate();
   const [error, setError] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [name, setName] = useState('');
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log(`전화번호: ${phoneNumber}`);
+  
+    // 이름 입력란이 비어있을 경우 defaultValue 사용
+    const formattedName = name || userInfo.userName;
+  
     // 유효성 검사
     if (phoneNumber.length !== 11) {
       setError('전화번호는 11자리로 입력해야 합니다.');
@@ -65,16 +70,18 @@ const NumberForm = () => {
       });
       return;
     }
-
+  
     const formattedPhoneNumber = String(phoneNumber);
-
+  
     try {
-      const response = await API.patch('users/member/phone', {
+      const response = await API.patch('users/member/update', {
+        name: formattedName,
         phoneNumber: formattedPhoneNumber,
       });
       console.log(response.data);
       setUserInfo((prevUserInfo) => ({
         ...prevUserInfo,
+        userName: formattedName,
         userNumber: formattedPhoneNumber,
       }));
       navigate('/');
@@ -89,9 +96,22 @@ const NumberForm = () => {
     setPhoneNumber(event.target.value);
   };
 
+  const handleChange2 = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setName(event.target.value);
+  };
+
   return (
     <>
       <Form onSubmit={handleSubmit}>
+        <InputLabel htmlFor="name-input">이름 입력</InputLabel>
+        <StyledInput
+          id="name-input"
+          type="string"
+          placeholder={userInfo.userName}
+          defaultValue={name || userInfo.userName}
+          onChange={handleChange2}
+          required
+        />
         <InputLabel htmlFor="phone-input">전화번호 입력</InputLabel>
         <StyledInput
           id="phone-input"
