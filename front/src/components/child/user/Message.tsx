@@ -28,7 +28,7 @@ const btnMessage: MessageBtn[] = [
   },
   {
     id: 2,
-    value: '맛있어요',
+    value: '😋 맛있어요',
   },
   {
     id: 3,

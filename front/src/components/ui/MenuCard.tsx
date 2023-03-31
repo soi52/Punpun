@@ -98,15 +98,24 @@ const MenuCard: React.FC<MenuCardProps> = ({
     e.stopPropagation();
     setLiked(!liked);
     console.log('liked: ' + liked);
-
-    const method = liked ? 'delete' : 'post';
-    API[method]('favors', { id })
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+  
+    if (liked) {
+      API.delete('favors', { data: { menuId: id } })
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    } else {
+      API.post('favors', { menuId: id })
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
   };
 
   const handleClick = () => {
