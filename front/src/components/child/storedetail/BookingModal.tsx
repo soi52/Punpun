@@ -161,7 +161,7 @@ const BookingModal: React.FC<ModalProps> = ({ menu, onClose }) => {
   function handleBooking() {
     // 선택한 checkbox 데이터와 menu 데이터를 담아서 서버로 보낸다.
     API.post('bookings', {
-      menuId:menu.id,
+      menuId: menu.id,
       reservationTime: formattedDate
     })
     .then((response) => {
