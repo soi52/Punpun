@@ -13,13 +13,13 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Long> {
-    @Query(value = "select r from Review r left join fetch r.reviewKeywords rk left join fetch rk.review where r.child = ?1"
+    @EntityGraph(attributePaths = {"reviewKeywords.keyword"})
+    @Query(value = "select r from Review r where r.child = ?1"
             , countQuery = "select count(r) from Review r where r.child = ?1")
     Page<Review> findAllByChild(Child child, Pageable pageable);
 
+    @EntityGraph(attributePaths = {"reviewKeywords.keyword"})
     @Query(value = "select r from Review r " +
-            "left join fetch r.reviewKeywords rk " +
-            "left join fetch rk.keyword " +
             "inner join r.reservation res " +
             "inner join res.supportReservation sr " +
             "inner join sr.support sup where sup.supporter = ?1",
