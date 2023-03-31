@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
+import API from '../../store/API';
 import { OwStore, owStoreState } from '../../store/atoms';
 import UserTypeSelector from './UserTypeSelector';
 
@@ -54,7 +55,7 @@ interface OwnerHeaderProps {
 }
 
 function OwnerHeader(props: OwnerHeaderProps) {
-  const owStore = useRecoilValue(owStoreState);
+  const [stores, setStores] = useRecoilState(owStoreState);
   const [selectedStore, setSelectedStore] = useState<OwStore | null>(null);
   const [storeDrop, setStoreDrop] = useState(false);
   const { onLogout, toOwStore, onSelect, items, selectedItem, role } = props;
@@ -62,14 +63,16 @@ function OwnerHeader(props: OwnerHeaderProps) {
   const navigate = useNavigate();
 
   const toOwBooking = () => {
-    navigate(`/owstore/${selectedStore?.id ?? ''}/booking`);
+    navigate(`/owstore/${selectedStore?.storeId ?? ''}/booking`);
   };
 
   const selectStore = (store: OwStore | null) => {
     setSelectedStore(store);
     setStoreDrop(true);
     if (!store) {
-      navigate('/stores');
+      navigate(`/owstore/${stores[0].storeId}`);
+    } else {
+      navigate(`/owstore/${store.storeId}`);
     }
   };
 
@@ -80,9 +83,9 @@ function OwnerHeader(props: OwnerHeaderProps) {
         {selectedStore?.storeName ?? '가게 선택'}
         {storeDrop && (
           <StoreDropdown show={storeDrop}>
-            {owStore.map((store) => (
+            {stores.map((store) => (
               <StoreDropdownItem
-                key={store.id}
+                key={store.storeId}
                 onClick={() => selectStore(store)}
               >
                 {store.storeName}

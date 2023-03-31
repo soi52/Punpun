@@ -1,10 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 interface Store {
-  id: number;
+  storeId: number;
+  storeImage: string;
+  storeImageName: string;
+  storeInfo: string;
+  storeLat: number;
+  storeLon: number;
   storeName: string;
-  storeText: string;
 }
 
 interface StoreItemProps {
@@ -12,7 +17,7 @@ interface StoreItemProps {
   onDelete: (id: number) => void;
 }
 
-const StoreInfo = styled.div`
+const StoreInfoList = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -24,6 +29,12 @@ const StoreInfo = styled.div`
 
 const StoreName = styled.span`
   font-size: 20px;
+  font-weight: bold;
+  margin-right: 10px;
+  color: #333;
+`;
+const StoreInfo = styled.div`
+  font-size: 15px;
   font-weight: bold;
   margin-right: 10px;
   color: #333;
@@ -45,23 +56,28 @@ const DeleteButton = styled.button`
 `;
 
 function StoreListItem({ stores, onDelete }: StoreItemProps) {
+  const navigate = useNavigate();
+
   const handleDelete = (id: number) => {
     onDelete(id);
   };
 
   const StoreList = stores.map((store) => (
-    <StoreInfo key={store.id}>
-      <div>
+    <StoreInfoList key={store.storeId}>
+      <div onClick={() => navigate(`/owstore/${store.storeId}`)}>
         <StoreName>{store.storeName}</StoreName>
+        <StoreInfo>{store.storeInfo}</StoreInfo>
         <StoreText>
-          {store.storeText}
+          항상 나눔
           <input type="checkbox" />
         </StoreText>
       </div>
       <div>
-        <DeleteButton onClick={() => handleDelete(store.id)}>삭제</DeleteButton>
+        <DeleteButton onClick={() => handleDelete(store.storeId)}>
+          삭제
+        </DeleteButton>
       </div>
-    </StoreInfo>
+    </StoreInfoList>
   ));
 
   return <>{StoreList}</>;

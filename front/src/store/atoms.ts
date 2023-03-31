@@ -135,28 +135,26 @@ export const reviewState = atom<Reviews[]>({
 });
 
 export interface OwStore {
-  id: number;
+  storeId: number;
+  storeImage: string;
+  storeImageName: string;
+  storeInfo: string;
+  storeLat: number;
+  storeLon: number;
   storeName: string;
-  storeText: string;
 }
 
 export const owStoreState = atom<OwStore[]>({
   key: 'owStoreState',
   default: [
     {
-      id: 1,
-      storeName: '스테이크 팩토리1',
-      storeText: '항상 후원',
-    },
-    {
-      id: 2,
-      storeName: '스테이크 팩토리2',
-      storeText: '항상 후원',
-    },
-    {
-      id: 3,
-      storeName: '스테이크 팩토리3',
-      storeText: '항상 후원',
+      storeId: 0,
+      storeImage: '',
+      storeImageName: '',
+      storeInfo: '',
+      storeLat: 0,
+      storeLon: 0,
+      storeName: '',
     },
   ],
 });
