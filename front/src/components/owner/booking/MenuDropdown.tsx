@@ -43,21 +43,26 @@ const Select = styled.select`
 `;
 
 interface Menu {
-  id: number;
-  title: string;
-  image: string;
-  price: number;
+  menuCount: number;
+  menuId: number;
+  menuImage: string;
+  menuImageName: string;
+  menuName: string;
+  menuPrice: number;
 }
 
-type MenuDropdownProps = {
+interface MenuDropdownProps {
   menuList: Menu[];
   onMenuSelect: (menu: Menu) => void;
-};
+}
 
-const MenuDropdown = ({ menuList, onMenuSelect }: MenuDropdownProps) => {
+const MenuDropdown: React.FC<MenuDropdownProps> = ({
+  menuList,
+  onMenuSelect,
+}) => {
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedId = parseInt(event.target.value);
-    const selectedMenu = menuList.find((menu) => menu.id === selectedId);
+    const selectedMenu = menuList.find((menu) => menu.menuId === selectedId);
     if (selectedMenu) {
       onMenuSelect(selectedMenu);
     }
@@ -70,8 +75,8 @@ const MenuDropdown = ({ menuList, onMenuSelect }: MenuDropdownProps) => {
           메뉴를 선택하세요.
         </option>
         {menuList.map((menu) => (
-          <option key={menu.id} value={menu.id}>
-            {menu.title} ({menu.price}원)
+          <option key={menu.menuId} value={menu.menuId}>
+            {menu.menuName} ({menu.menuPrice}원)
           </option>
         ))}
       </Select>

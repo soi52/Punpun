@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import API from '../../../store/API';
-import { selectedStoreState } from '../../../store/atoms';
+import { owStoreMenuState, selectedStoreState } from '../../../store/atoms';
 import StoreInfo from '../StoreInfo';
 import StoreMenu from './StoreMenu';
 
@@ -13,7 +13,7 @@ const Wrapper = styled.div`
 
 function StoreManage() {
   const navigate = useNavigate();
-  const [storeMenus, setStoreMenus] = useState([]);
+  const [storeMenus, setStoreMenus] = useRecoilState(owStoreMenuState);
   const selectedStore = useRecoilValue(selectedStoreState);
 
   useEffect(() => {
