@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { useState } from 'react';
-
+import { useState, useEffect } from 'react';
+import API from '../../../store/API';
 import ChMainMessage from '../ChMainMessage';
 import TodayBooking from './TodayBooking';
 import Message from './Message';
@@ -20,7 +20,7 @@ const MessageDiv = styled.div`
 
 type Booking = {
   reservationId: number;
-  reservationState: boolean;
+  reservationState: string;
   reservationTime: number;
   menuId: number;
   menuName: string;
@@ -30,6 +30,16 @@ type Booking = {
 
 const ChUserMain = () => {
   const [bookings, setBookings] = useState<Booking[]>([]);
+  useEffect(() => {
+    API.get('bookings/child')
+      .then((response) => {
+        console.log("Today's bookings:", response.data.content);
+        setBookings(response.data.content);
+      })
+      .catch((error) => {
+        console.error("Error fetching today's bookings:", error);
+      });
+  }, []);
 
   const filteredBookings = bookings.filter((booking) => {
     const reservationTime = new Date(booking.reservationTime);
@@ -40,22 +50,14 @@ const ChUserMain = () => {
       reservationTime.getDate() === today.getDate()
     );
   });
-  console.log(filteredBookings);
 
-  // 메세지 컴포넌트를 보여줄지 여부
   const shouldShowMessage = filteredBookings.some((booking) => {
     const reservationTime = new Date(booking.reservationTime);
     const currentTime = new Date();
     const timeDifference = currentTime.getTime() - reservationTime.getTime();
-
     return timeDifference > 1800000; // 30분 (60분 * 60초 * 1000밀리초)
   });
-  
-  // if (filteredBookings.length > 0) {
-  //   const reservationId = filteredBookings[0].reservationId;
-  // }
 
-  // 마감시간이 지난 경우 메세지 컴포넌트를 숨김
   const shouldHideMessage = new Date().setHours(23, 59, 59, 999) < Date.now();
 
   if (!filteredBookings) {
@@ -67,18 +69,20 @@ const ChUserMain = () => {
       <ChMainMessage />
       <BookingDiv>
         <h2>오늘의 예약</h2>
-        { filteredBookings.length > 0 ?
-        <TodayBooking bookings={bookings} setBookings={setBookings} />
-        : '오늘의 예약이 없어요 :('}
+        {bookings.length > 0 && (
+          <TodayBooking bookings={bookings} setBookings={setBookings} />
+        )}
       </BookingDiv>
-      {!shouldHideMessage &&
-      shouldShowMessage &&
-      filteredBookings.length > 0 ? (
-        <MessageDiv>
-          <h2>감사메세지 작성</h2>
-          <Message reservationId={filteredBookings[0].reservationId} />
-        </MessageDiv>
-      ) : null}
+      {bookings.length > 0 &&
+        bookings[0].reservationState === 'END' &&
+        !shouldHideMessage &&
+        shouldShowMessage &&
+        filteredBookings.length > 0 && (
+          <MessageDiv>
+            <h2>감사메세지 작성</h2>
+            <Message reservationId={filteredBookings[0].reservationId} />
+          </MessageDiv>
+        )}
     </ComponentStyle>
   );
 };

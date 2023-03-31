@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { isSupporterState } from '../../store/atoms';
@@ -21,11 +21,12 @@ const SidebarContent: FC<SidebarContentProps> = ({
   onMenuItemClick,
 }) => {
   const isSupporter = useRecoilValue(isSupporterState);
+  const role: string = localStorage.getItem('role') || '';
 
   return (
     <>
       {menuItems.map((menuItem, index) =>
-        isSupporter ? (
+        role === 'SUPPORTER' ? (
           index !== 3 ? (
             <StyledLi
               key={index}
