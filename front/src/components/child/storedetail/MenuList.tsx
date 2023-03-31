@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
-import { storeState } from '../../../store/atoms';
 import MenuCard from '../../ui/MenuCard';
 import MenuCart from '../../supporter/MenuCart';
 import Loading from '../../ui/Loading';
@@ -39,7 +37,7 @@ interface CartItem {
   quantity: number;
 }
 
-const MenuList: React.FC<MenuListProps> = (props) => {
+const MenuList: React.FC<MenuListProps> = (props) => { // MenuListProps | ChMenuListProps로 수정
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
   const addToCart = (item: CartItem) => {
@@ -71,8 +69,6 @@ const MenuList: React.FC<MenuListProps> = (props) => {
     }
   };
 
-  const role = localStorage.getItem('role');
-
   if (!props.menuList) {
     return <Loading />;
   }
@@ -80,24 +76,24 @@ const MenuList: React.FC<MenuListProps> = (props) => {
   return (
     <Container>
       <MenuListContainer>
-        {props.menuList.map((menu, index) => (
-          <MenuCard
-            key={index}
-            id={menu.menuId}
-            title={menu.menuName}
-            price={menu.menuPrice}
-            quantity={menu.menuCount}
-            addToCart={addToCart}
-          />
-        ))}
+        {props.menuList.map((menu, index) => {
+          return(
+            <MenuCard
+              key={index}
+              id={menu.menuId}
+              title={menu.menuName}
+              price={menu.menuPrice}
+              quantity={menu.menuCount}
+              addToCart={addToCart}
+            />
+          )
+        })}
       </MenuListContainer>
-      { (role !== 'CHILD') ?
       <MenuCart
         cartItems={cartItems}
         updateCart={updateCart}
         deleteCart={deleteCart}
       />
-      : null }
     </Container>
   );
 };
