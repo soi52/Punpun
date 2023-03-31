@@ -1,23 +1,15 @@
 import React, { useState } from 'react';
-import API from '../../store/API';
+import API from '../../../store/API';
+import BookingModal from './BookingModal';
 import { DetailedHTMLProps, ImgHTMLAttributes } from 'react';
 
 import styled from 'styled-components';
-import BookingModal from '../child/storedetail/BookingModal';
-import { useRecoilValue } from 'recoil';
-import { isChildState } from '../../store/atoms';
-import { useRecoilState } from 'recoil';
 
-interface MenuCardProps extends Menu {
-  key: number;
-  addToCart: (Item: Menu) => void;
-}
-
-type Menu = {
+type ChMenu = {
   id: number;
   title: string;
   price: number;
-  quantity: number;
+  favoriteMenu: boolean;
 };
 
 interface MenuCardImageProps
@@ -68,18 +60,9 @@ const HeartButtonWrapper = styled.div`
   cursor: pointer;
 `;
 
-const MenuCard: React.FC<MenuCardProps> = ({
-  id,
-  title,
-  price,
-  quantity,
-  addToCart,
-}) => {
+const ChMenuCard: React.FC<ChMenu> = ({ id, title, price, favoriteMenu }) => {
   const [showModal, setShowModal] = useState(false);
-  const [isChild, setIsChild] = useRecoilState(isChildState);
   const [liked, setLiked] = useState(false);
-
-  const role = localStorage.getItem('role');
 
   const onClose = () => {
     setShowModal(false);
@@ -89,8 +72,8 @@ const MenuCard: React.FC<MenuCardProps> = ({
     e.stopPropagation();
     setLiked(!liked);
     console.log('liked: ' + liked);
-  
-    if (liked) {
+
+    if (favoriteMenu) {
       API.delete('favors', { data: { menuId: id } })
         .then((response) => {
           console.log(response.data);
@@ -110,16 +93,8 @@ const MenuCard: React.FC<MenuCardProps> = ({
   };
 
   const handleClick = () => {
-    if (role === 'CHILD') {
-      // 어린이 회원일 때 클릭 이벤트
-      setShowModal(true);
-      console.log(isChild);
-      console.log(id);
-    } else {
-      // 어른 회원일 때 클릭 이벤트
-      addToCart({ id, title, price, quantity });
-      console.log('Clicked as an adult');
-    }
+    setShowModal(true);
+    console.log(id);
   };
 
   return (
@@ -127,11 +102,9 @@ const MenuCard: React.FC<MenuCardProps> = ({
       <MenuCardContainer>
         <div onClick={handleClick}>
           {/* <MenuCardImage image={image}> */}
-          {role === 'CHILD' && (
-            <HeartButtonWrapper>
-              <button onClick={toggleLike}>{liked ? '💖' : '🖤'}</button>
-            </HeartButtonWrapper>
-          )}
+          <HeartButtonWrapper>
+            <button onClick={toggleLike}>{favoriteMenu ? '💖' : '🖤'}</button>
+          </HeartButtonWrapper>
           {/* </MenuCardImage> */}
           <div>
             <MenuCardTitle>{title}</MenuCardTitle>
@@ -139,11 +112,11 @@ const MenuCard: React.FC<MenuCardProps> = ({
           </div>
         </div>
       </MenuCardContainer>
-      {showModal && isChild && (
+      {showModal && (
         <BookingModal menu={{ id, title, price }} onClose={onClose} />
       )}
     </>
   );
 };
 
-export default MenuCard;
+export default ChMenuCard;

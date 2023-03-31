@@ -108,35 +108,52 @@ const FilteredList = ({ stores, keyword }: FilteredListProps) => {
   );
   const pageCount = Math.ceil(filteredList.length / itemsPerPage); // 전체 페이지 수
 
+  // 페이지네이션 UI에 표시할 페이지 버튼 수
+  const maxPageButtons = 3;
+
   // 현재 페이지에 해당하는 아이템들만 슬라이스해서 보여줍니다.
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const currentItems = filteredList.slice(startIndex, endIndex);
 
-  // 페이지 번호 배열 생성
-  const pageNumbers = [];
-  for (let i = 1; i <= pageCount; i++) {
-    pageNumbers.push(i);
-  }
-
-  // 중간 페이지들 출력을 위한 배열 생성
-  const midPageNumbers = [];
-  let startPage = currentPage - 2;
-  let endPage = currentPage + 2;
-
-  if (startPage < 1) {
-    startPage = 1;
-    endPage = startPage + 4 > pageCount ? pageCount : startPage + 4;
-  }
-
-  if (endPage > pageCount) {
-    endPage = pageCount;
-    startPage = endPage - 4 < 1 ? 1 : endPage - 4;
-  }
-
-  for (let i = startPage; i <= endPage; i++) {
-    midPageNumbers.push(i);
-  }
+  // 페이지네이션 UI를 만듭니다.
+  const getPageButtons = () => {
+    const pageButtons = [];
+    const startPage = Math.max(1, currentPage - Math.floor(maxPageButtons / 2));
+    const endPage = Math.min(pageCount, startPage + maxPageButtons - 1);
+    for (let page = startPage; page <= endPage; page++) {
+      pageButtons.push(
+        <button
+          key={page}
+          onClick={() => setCurrentPage(page)}
+          className={currentPage === page ? "active" : ""}
+        >
+          {page}
+        </button>
+      );
+    }
+    if (startPage > 1) {
+      if (startPage > 2) {
+        pageButtons.unshift(<span key="ellipsis-start">...</span>);
+      }
+      pageButtons.unshift(
+        <button key="1" onClick={() => setCurrentPage(1)}>
+          1
+        </button>
+      );
+    }
+    if (endPage < pageCount) {
+      if (endPage < pageCount - 1) {
+        pageButtons.push(<span key="ellipsis-end">...</span>);
+      }
+      pageButtons.push(
+        <button key={pageCount} onClick={() => setCurrentPage(pageCount)}>
+          {pageCount}
+        </button>
+      );
+    }
+    return pageButtons;
+  };
 
   return (
     <div>
@@ -157,27 +174,7 @@ const FilteredList = ({ stores, keyword }: FilteredListProps) => {
         >
           Prev
         </button>
-        {currentPage > 3 && (
-          <>
-            <button onClick={() => setCurrentPage(1)}>1</button>
-            {currentPage > 4 && <span>...</span>}
-          </>
-        )}
-        {currentPage > 2 && (
-          <button onClick={() => setCurrentPage(currentPage - 1)}>
-            {currentPage - 1}
-          </button>
-        )}
-        <button className="active">{currentPage}</button>
-        {currentPage < pageCount - 1 && (
-          <button onClick={() => setCurrentPage(currentPage + 1)}>
-            {currentPage + 1}
-          </button>
-        )}
-        {currentPage < pageCount - 2 && <span>...</span>}
-        {currentPage < pageCount - 2 && (
-          <button onClick={() => setCurrentPage(pageCount)}>{pageCount}</button>
-        )}
+        {getPageButtons()}
         <button
           onClick={() => setCurrentPage(currentPage + 1)}
           disabled={currentPage === pageCount}

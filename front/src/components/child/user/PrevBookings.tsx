@@ -1,6 +1,7 @@
 import API from '../../../store/API';
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
+import Loading from '../../ui/Loading';
 
 const BookingDiv = styled.div`
   padding-top: 20px;
@@ -23,37 +24,37 @@ const PrevBookings = () => {
     API
       .get('/bookings/child')
       .then((response) => {
-        const data: Booking[] = response.data.map((booking: Booking) => ({
-          reservationId: booking.reservationId,
-          reservationState: booking.reservationState,
-          reservationTime: booking.reservationTime,
-          menuId: booking.menuId,
-          menuName: booking.menuName,
-          storeId: booking.storeId,
-          storeName: booking.storeName,
-        }));
-        setBookings(data);
+        setBookings(response.data.content);
+        console.log(response.data);
       })
       .catch((error) => {
         console.error('Error fetching bookings:', error);
       });
   }, []);
 
+  if (!bookings) {
+    return <Loading />;
+  }
+
   return (
     <>
       <BookingDiv>
-        {bookings.map((booking) => (
-          <div key={booking.reservationId}>
-            <p>Reservation ID: {booking.reservationId}</p>
-            <p>Reservation state: {booking.reservationState}</p>
-            <p>Reservation time: {booking.reservationTime}</p>
-            <p>Menu ID: {booking.menuId}</p>
-            <p>Menu name: {booking.menuName}</p>
-            <p>Store ID: {booking.storeId}</p>
-            <p>Store name: {booking.storeName}</p>
-            <hr />
-          </div>
-        ))}
+        {bookings && bookings.length > 0 ? (
+          bookings.map((booking) => (
+            <div key={booking.reservationId}>
+              <p>Reservation ID: {booking.reservationId}</p>
+              <p>Reservation state: {booking.reservationState}</p>
+              <p>Reservation time: {booking.reservationTime}</p>
+              <p>Menu ID: {booking.menuId}</p>
+              <p>Menu name: {booking.menuName}</p>
+              <p>Store ID: {booking.storeId}</p>
+              <p>Store name: {booking.storeName}</p>
+              <hr />
+            </div>
+          ))
+        ) : (
+          <p>No bookings found.</p>
+        )}
       </BookingDiv>
     </>
   );
