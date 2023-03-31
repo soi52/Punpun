@@ -16,11 +16,15 @@ const NavLi = styled.li`
 interface SupporterHeaderProps {
   toMain: () => void;
   onLogout: () => void;
+  onSelect: (item: string) => void;
   userType: string;
+  items: string[];
+  selectedItem: string | undefined;
+  role: string;
 }
 
 function SupporterHeader(props: SupporterHeaderProps) {
-  const { onLogout, toMain } = props;
+  const { onLogout, toMain, onSelect, items, selectedItem, role } = props;
   const navigate = useNavigate();
 
   const toSuSearch = () => {
@@ -37,6 +41,14 @@ function SupporterHeader(props: SupporterHeaderProps) {
       <NavLi onClick={toSuSearch}>가게찾기</NavLi>
       <NavLi onClick={toSuMypage}>마이페이지</NavLi>
       <NavLi onClick={onLogout}>로그아웃</NavLi>
+      {role === 'OWNER' && (
+        <UserTypeSelector
+          onSelect={onSelect}
+          items={items}
+          selectedItem={selectedItem}
+          role={role}
+        />
+      )}
     </NavUl>
   );
 }

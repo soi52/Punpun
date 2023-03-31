@@ -87,7 +87,7 @@ function Header(props: HeaderProps) {
     if (isLoggedIn) {
       if (role === 'CHILD') {
         return <ChildHeader onLogout={onLogout} />;
-      } else if (role === 'OWNER') {
+      } else if (isOwner) {
         return (
           <OwnerHeader
             onSelect={onSelect}
@@ -106,6 +106,9 @@ function Header(props: HeaderProps) {
             onLogout={onLogout}
             toMain={toMain}
             userType="supporter"
+            items={isOwner ? ['후원자'] : ['사장님']}
+            selectedItem={selectedItem}
+            role={role}
           />
         );
       }
