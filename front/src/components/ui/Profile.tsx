@@ -34,13 +34,6 @@ const InfoBox = styled.div`
   margin-top: 10px;
 `;
 
-// type Info = { name: string; region: string };
-
-// const Dummydata: Info = {
-//   name: 'jungeun',
-//   region: '대한민국, 구미',
-// };
-
 function Profile() {
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
   const [userArea, setUserArea] = useRecoilState(userAreaState);
@@ -99,7 +92,7 @@ function Profile() {
         .then((response: any) => {
           console.log(response.data);
           // API 요청에서 받아온 데이터를 memberInfoState에 업데이트
-          const newMemberInfo: UserInfo = {
+          const newUserInfo: UserInfo = {
             userId: response.data.id,
             userName: response.data.name,
             userEmail: response.data.email,
@@ -109,7 +102,7 @@ function Profile() {
             userRemainPoint: response.data.remainPoint,
             userArea: null,
           };
-          setUserInfo(newMemberInfo);
+          setUserInfo(newUserInfo);
         })
         .catch((error: any) => {
           console.error(error);

@@ -75,7 +75,7 @@ const Sidebar: FC<SidebarProps> = ({
           onMenuItemClick={handleMenuItemClick}
         />
         <HrDIv2 />
-        { role !== 'CHILD' ? (
+        {role === 'SUPPORTER' ? (
           <SuSidebarContent
             menuItems={menuItems}
             currentMenuItemIndex={currentMenuItemIndex}

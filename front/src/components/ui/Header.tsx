@@ -49,9 +49,7 @@ type HeaderProps = {
 };
 
 function Header(props: HeaderProps) {
-  const role = localStorage.getItem('role');
-
-  const userInfo = useRecoilValue(userInfoState);
+  const role: string = localStorage.getItem('role') || '';
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLoggedInState);
   const [isOwner, setIsOwner] = useRecoilState(isOwnerState);
   const [selectedItem, setSelectedItem] = useState('후원자');
@@ -89,7 +87,7 @@ function Header(props: HeaderProps) {
     if (isLoggedIn) {
       if (role === 'CHILD') {
         return <ChildHeader onLogout={onLogout} />;
-      } else if (isOwner) {
+      } else if (role === 'OWNER') {
         return (
           <OwnerHeader
             onSelect={onSelect}
@@ -98,7 +96,7 @@ function Header(props: HeaderProps) {
             userType="owner"
             items={isOwner ? ['후원자'] : ['사장님']}
             selectedItem={selectedItem}
-            userRole={userInfo.userRole}
+            role={role}
           />
         );
       } else {
@@ -108,9 +106,6 @@ function Header(props: HeaderProps) {
             onLogout={onLogout}
             toMain={toMain}
             userType="supporter"
-            items={isOwner ? ['후원자'] : ['사장님']}
-            selectedItem={selectedItem}
-            userRole={userInfo.userRole}
           />
         );
       }

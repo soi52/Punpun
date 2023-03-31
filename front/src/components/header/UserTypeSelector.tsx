@@ -10,17 +10,17 @@ interface UserTypeSelectorProps {
   onSelect: (item: string) => void;
   items: string[];
   selectedItem: string | undefined;
-  userRole: string;
+  role: string;
 }
 
 function UserTypeSelector(props: UserTypeSelectorProps) {
   const [drop, setDrop] = useState(false);
-  const { onSelect, items, selectedItem, userRole } = props;
+  const { onSelect, items, selectedItem, role } = props;
 
   return (
-    <NavLi onClick={() => userRole === 'OWNER' && setDrop(!drop)}>
+    <NavLi onClick={() => role === 'OWNER' && setDrop(!drop)}>
       {selectedItem}{' '}
-      {drop && userRole === 'OWNER' && (
+      {drop && role === 'OWNER' && (
         <Dropdown
           onSelect={onSelect}
           items={items}
