@@ -106,9 +106,6 @@ function Header(props: HeaderProps) {
             onLogout={onLogout}
             toMain={toMain}
             userType="supporter"
-            items={isOwner ? ['후원자'] : ['사장님']}
-            selectedItem={selectedItem}
-            role={role}
           />
         );
       }
