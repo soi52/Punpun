@@ -5,6 +5,7 @@ import edu.ssafy.punpun.entity.enumurate.SupportType;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -31,7 +32,7 @@ public class Support extends BaseEntity {
     private Menu menu;
     @OneToMany(mappedBy = "support", cascade = CascadeType.ALL)
     @ToString.Exclude
-    private List<SupportReservation> supportReservations;
+    private List<SupportReservation> supportReservations = new ArrayList<>();
 
     public void setSupportType(SupportType supportType) {
         this.supportType = supportType;
@@ -41,7 +42,11 @@ public class Support extends BaseEntity {
         this.menu = menu;
     }
 
-    public void setStore(Store store){
-        this.store=store;
+    public void setStore(Store store) {
+        this.store = store;
+    }
+
+    public void appendSupportReservation(SupportReservation supportReservation) {
+        this.supportReservations.add(supportReservation);
     }
 }
