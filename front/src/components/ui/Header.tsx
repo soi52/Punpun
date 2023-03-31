@@ -87,7 +87,7 @@ function Header(props: HeaderProps) {
     if (isLoggedIn) {
       if (role === 'CHILD') {
         return <ChildHeader onLogout={onLogout} />;
-      } else if (isOwner) {
+      } else if (role === 'OWNER') {
         return (
           <OwnerHeader
             onSelect={onSelect}
