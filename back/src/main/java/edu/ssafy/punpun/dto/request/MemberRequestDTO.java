@@ -8,5 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MemberRequestDTO {
+    private String name;
     private String phoneNumber;
 }
