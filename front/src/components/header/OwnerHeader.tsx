@@ -76,17 +76,6 @@ function OwnerHeader(props: OwnerHeaderProps) {
     }
   };
 
-  useEffect(() => {
-    API.get('stores/list')
-      .then((response: any) => {
-        console.log(response.data);
-        setStores(response.data);
-      })
-      .catch((error: any) => {
-        console.error(error);
-      });
-  }, [setStores]);
-
   return (
     <NavUl>
       <NavLi onClick={toOwStore}>가게운영</NavLi>
