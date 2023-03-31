@@ -1,6 +1,7 @@
 import API from '../../../store/API';
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
+import Loading from '../../ui/Loading';
 
 const BookingDiv = styled.div`
   padding-top: 20px;
@@ -23,12 +24,17 @@ const PrevBookings = () => {
     API
       .get('/bookings/child')
       .then((response) => {
-        setBookings(response.data.contents);
+        setBookings(response.data.content);
+        console.log(response.data);
       })
       .catch((error) => {
         console.error('Error fetching bookings:', error);
       });
   }, []);
+
+  if (!bookings) {
+    return <Loading />;
+  }
 
   return (
     <>

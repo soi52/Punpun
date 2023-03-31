@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import defaultUserImage from '../../resources/images/profileDefault.png';
 
 const Review = styled.div`
   display: flex;
@@ -27,10 +28,12 @@ const ReviewText = styled.p`
 
 interface ReviewItemProps {
   reviews: {
-    id: number;
-    userImage: string;
-    userName: string;
-    reviewText: string;
+    reviewId: number;
+    reviewContent: string;
+    keywords: { content: string }[]; // keywords 배열 요소 타입을 정의합니다.
+    childId: number;
+    childName: string;
+    childProfileUrl: string;
   }[];
 }
 
@@ -39,11 +42,17 @@ function ReviewItem({ reviews }: ReviewItemProps) {
     return <div>리뷰가 없습니다.</div>;
   } else {
     const reviewList = reviews.map((review) => (
-      <Review key={review.id}>
-        <UserImage src={review.userImage} alt="User Image" />
+      <Review key={review.reviewId}>
+        <UserImage
+          src={review.childProfileUrl || defaultUserImage}
+          alt="User Image"
+        />
         <div>
-          <UserName>{review.userName}</UserName>
-          <ReviewText>{review.reviewText}</ReviewText>
+          <UserName>{review.childName}</UserName>
+          <ReviewText>{review.reviewContent}</ReviewText>
+          {review.keywords && review.keywords.length > 0 && (
+            <ReviewText>{review.keywords[0].content}</ReviewText>
+          )}
         </div>
       </Review>
     ));
