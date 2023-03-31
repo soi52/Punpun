@@ -1,6 +1,6 @@
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { reviewState } from '../../../store/atoms';
+// import { reviewState } from '../../../store/atoms';
 import ReviewItem from '../../ui/ReviewItem';
 import StoreBanner from './Storebanner';
 import API from '../../../store/API';
@@ -11,13 +11,13 @@ type Props = {
 };
 
 const StoreThanksMessage = ({ myStoreId }: Props) => {
-  const [reviews, setReviews] = useRecoilState(reviewState);
+  // const [reviews, setReviews] = useRecoilState(reviewState);
   const [storeName, setStoreName] = useState();
 
   useEffect(() => {
     API.get(`reviews/stores/${myStoreId}`)
       .then((response) => {
-        setReviews(response.data);
+        // setReviews(response.data);
       })
       .catch((error) => {
         console.log(error);

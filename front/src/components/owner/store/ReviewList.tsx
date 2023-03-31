@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import API from '../../../store/API';
-import { reviewState, selectedStoreState } from '../../../store/atoms';
+import { selectedStoreState } from '../../../store/atoms';
 import ReviewItem from '../../ui/ReviewItem';
 import StoreInfo from '../StoreInfo';
 

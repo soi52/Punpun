@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import API from '../../../store/API';
 import SelectedMenu, { SelectedMenuProps } from './SelectedMenu';
 
 export interface SelectedMenuListProps {
@@ -64,6 +65,40 @@ const SelectedMenuList: React.FC<SelectedMenuListProps> = ({
   const handleClearClick = (id: number) => {
     onClearClick(id);
   };
+
+  // const shareSubmit = () => {
+  //   const postData = async () => {
+  //     const data = {
+  //       selectedMenus: selectedMenus.map((menu) => ({
+  //         menuId: menu.id,
+  //         menuCount: menu.quantity,
+  //         usePoint: menu.quantity * menu.price,
+  //       })),
+  //     };
+  //     const response = await API.post('supports/share', data);
+  //     console.log(response.data);
+  //   };
+  // };
+
+  const postShare = async () => {
+    const data = selectedMenus.reduce<{
+      menuId: number[];
+      menuCount: number[];
+      usePoint: number;
+    }>(
+      (acc, menu) => {
+        acc.menuId.push(menu.id);
+        acc.menuCount.push(menu.quantity);
+        acc.usePoint += menu.quantity * menu.price;
+        return acc;
+      },
+      { menuId: [], menuCount: [], usePoint: 0 }
+    );
+
+    const response = await API.post('supports/share', data);
+    console.log(response.data);
+  };
+
   return (
     <Wrapper>
       {selectedMenus.length === 0 && <div>선택한 메뉴가 없습니다.</div>}
@@ -90,7 +125,7 @@ const SelectedMenuList: React.FC<SelectedMenuListProps> = ({
         onChange={(e) => setInputValue(e.target.value)}
         placeholder={inputValue === '' ? '편하게 와서 먹고가세요!' : ''}
       />
-      <Button>나눔 등록하기</Button>
+      <Button onClick={postShare}>나눔 등록하기</Button>
     </Wrapper>
   );
 };
