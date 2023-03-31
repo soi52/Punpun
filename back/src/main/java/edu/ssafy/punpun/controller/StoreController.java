@@ -2,6 +2,7 @@ package edu.ssafy.punpun.controller;
 
 import edu.ssafy.punpun.dto.response.*;
 import edu.ssafy.punpun.entity.*;
+import edu.ssafy.punpun.security.oauth2.PrincipalChildDetail;
 import edu.ssafy.punpun.security.oauth2.PrincipalMemberDetail;
 import edu.ssafy.punpun.service.MenuService;
 import edu.ssafy.punpun.service.StoreService;
@@ -31,6 +32,16 @@ public class StoreController {
                 .collect(Collectors.toList());
 
         return new StoreDetailMemberResponseDTO(store, menuResponseDTOList);
+    }
+
+    @GetMapping("/child/{storeId}")
+    @ResponseStatus(code = HttpStatus.OK)
+    public StoreDetailChildResponseDTO getStoreDetailChild(@AuthenticationPrincipal PrincipalChildDetail principalChildDetail, @PathVariable("storeId") Long id) {
+        Child child = principalChildDetail.getChild();
+        Store store = storeService.findById(id);
+        List<FavoriteMenuDTO> favoriteMenuDTOList = storeService.getStoreDetailChild(store, child);
+
+        return new StoreDetailChildResponseDTO(store, favoriteMenuDTOList);
     }
 
     @GetMapping("/search")
