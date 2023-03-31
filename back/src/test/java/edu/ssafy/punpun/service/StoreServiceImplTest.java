@@ -1,11 +1,12 @@
 package edu.ssafy.punpun.service;
 
 import edu.ssafy.punpun.dto.ApproveState;
-import edu.ssafy.punpun.entity.Image;
-import edu.ssafy.punpun.entity.Member;
-import edu.ssafy.punpun.entity.Store;
+import edu.ssafy.punpun.dto.response.FavoriteMenuDTO;
+import edu.ssafy.punpun.entity.*;
 import edu.ssafy.punpun.entity.enumurate.UserRole;
 import edu.ssafy.punpun.exception.NotStoreOwnerException;
+import edu.ssafy.punpun.repository.FavoriteMenuRepository;
+import edu.ssafy.punpun.repository.MenuRepository;
 import edu.ssafy.punpun.repository.StoreRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -30,6 +31,10 @@ import static org.mockito.Mockito.*;
 public class StoreServiceImplTest {
     @Mock
     private StoreRepository storeRepository;
+    @Mock
+    private MenuRepository menuRepository;
+    @Mock
+    private FavoriteMenuRepository favoriteMenuRepository;
 
     @InjectMocks
     private StoreServiceImpl storeService;
@@ -71,6 +76,38 @@ public class StoreServiceImplTest {
         Assertions.assertThat(result.getImage()).isEqualTo(store1.getImage());
         Assertions.assertThat(result.isAlwaysShare()).isEqualTo(store1.isAlwaysShare());
         Assertions.assertThat(result.isOpenState()).isEqualTo(store1.isOpenState());
+    }
+
+    @Test
+    @DisplayName("가게 상세 정보 보기 - 아동")
+    void getStoreDetailChild() {
+        // given
+        Child child = Child.builder().build();
+        Store store = Store.builder()
+                .id(1L)
+                .name("store1")
+                .build();
+        Menu menu = Menu.builder()
+                .id(1L)
+                .name("menu1")
+                .price(10000L)
+                .store(store)
+                .build();
+        FavoriteMenu favoriteMenu = FavoriteMenu.builder()
+                .child(child)
+                .menu(menu)
+                .build();
+
+        doReturn(List.of(menu)).when(menuRepository).findByStore(store);
+        doReturn(Optional.of(favoriteMenu)).when(favoriteMenuRepository).findByChildAndMenu(child, menu);
+
+        // when
+        List<FavoriteMenuDTO> results = storeService.getStoreDetailChild(store, child);
+
+        // then
+        Assertions.assertThat(results.get(0).getMenuId()).isEqualTo(menu.getId());
+        Assertions.assertThat(results.get(0).getMenuPrice()).isEqualTo(menu.getPrice());
+        Assertions.assertThat(results.get(0).getMenuName()).isEqualTo(menu.getName());
     }
 
     @Test
