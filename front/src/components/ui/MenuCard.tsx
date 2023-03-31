@@ -2,10 +2,6 @@ import React, { useState } from 'react';
 import API from '../../store/API';
 import { DetailedHTMLProps, ImgHTMLAttributes } from 'react';
 
-// 로컬용 테스트 import (나중에 삭제)
-import Cookies from 'js-cookie';
-import jwt_decode from 'jwt-decode';
-
 import styled from 'styled-components';
 import BookingModal from '../child/storedetail/BookingModal';
 import { useRecoilValue } from 'recoil';
@@ -83,12 +79,7 @@ const MenuCard: React.FC<MenuCardProps> = ({
   const [isChild, setIsChild] = useRecoilState(isChildState);
   const [liked, setLiked] = useState(false);
 
-  // 로컬용 테스트 코드
-  const accessToken: any = Cookies.get('accessToken');
-  const decodedToken: any = jwt_decode(accessToken);
-  if (decodedToken.role === 'CHILD') {
-    setIsChild(true);
-  }
+  const role = localStorage.getItem('role');
 
   const onClose = () => {
     setShowModal(false);
@@ -119,7 +110,7 @@ const MenuCard: React.FC<MenuCardProps> = ({
   };
 
   const handleClick = () => {
-    if (isChild) {
+    if (role === 'CHILD') {
       // 어린이 회원일 때 클릭 이벤트
       setShowModal(true);
       console.log(isChild);

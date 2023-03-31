@@ -1,4 +1,4 @@
-import axios from 'axios';
+import API from '../../../store/API';
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 
@@ -20,12 +20,8 @@ const PrevBookings = () => {
   const [bookings, setBookings] = useState<Booking[]>([]);
 
   useEffect(() => {
-    axios
-      .get('/bookings/child', {
-        params: {
-          page: 1, // Replace with the desired page number
-        },
-      })
+    API
+      .get('/bookings/child')
       .then((response) => {
         const data: Booking[] = response.data.map((booking: Booking) => ({
           reservationId: booking.reservationId,
