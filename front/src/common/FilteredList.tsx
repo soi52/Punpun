@@ -113,6 +113,31 @@ const FilteredList = ({ stores, keyword }: FilteredListProps) => {
   const endIndex = startIndex + itemsPerPage;
   const currentItems = filteredList.slice(startIndex, endIndex);
 
+  // 페이지 번호 배열 생성
+  const pageNumbers = [];
+  for (let i = 1; i <= pageCount; i++) {
+    pageNumbers.push(i);
+  }
+
+  // 중간 페이지들 출력을 위한 배열 생성
+  const midPageNumbers = [];
+  let startPage = currentPage - 2;
+  let endPage = currentPage + 2;
+
+  if (startPage < 1) {
+    startPage = 1;
+    endPage = startPage + 4 > pageCount ? pageCount : startPage + 4;
+  }
+
+  if (endPage > pageCount) {
+    endPage = pageCount;
+    startPage = endPage - 4 < 1 ? 1 : endPage - 4;
+  }
+
+  for (let i = startPage; i <= endPage; i++) {
+    midPageNumbers.push(i);
+  }
+
   return (
     <div>
       <List>
@@ -132,15 +157,27 @@ const FilteredList = ({ stores, keyword }: FilteredListProps) => {
         >
           Prev
         </button>
-        {Array.from({ length: pageCount }, (_, i) => i + 1).map((page) => (
-          <button
-            key={page}
-            onClick={() => setCurrentPage(page)}
-            className={currentPage === page ? 'active' : ''}
-          >
-            {page}
+        {currentPage > 3 && (
+          <>
+            <button onClick={() => setCurrentPage(1)}>1</button>
+            {currentPage > 4 && <span>...</span>}
+          </>
+        )}
+        {currentPage > 2 && (
+          <button onClick={() => setCurrentPage(currentPage - 1)}>
+            {currentPage - 1}
           </button>
-        ))}
+        )}
+        <button className="active">{currentPage}</button>
+        {currentPage < pageCount - 1 && (
+          <button onClick={() => setCurrentPage(currentPage + 1)}>
+            {currentPage + 1}
+          </button>
+        )}
+        {currentPage < pageCount - 2 && <span>...</span>}
+        {currentPage < pageCount - 2 && (
+          <button onClick={() => setCurrentPage(pageCount)}>{pageCount}</button>
+        )}
         <button
           onClick={() => setCurrentPage(currentPage + 1)}
           disabled={currentPage === pageCount}
