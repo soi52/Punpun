@@ -35,17 +35,20 @@ interface ReviewItemProps {
 }
 
 function ReviewItem({ reviews }: ReviewItemProps) {
-  const reviewList = reviews.map((review) => (
-    <Review key={review.id}>
-      <UserImage src={review.userImage} alt="User Image" />
-      <div>
-        <UserName>{review.userName}</UserName>
-        <ReviewText>{review.reviewText}</ReviewText>
-      </div>
-    </Review>
-  ));
-
-  return <>{reviewList}</>;
+  if (reviews.length === 0) {
+    return <div>리뷰가 없습니다.</div>;
+  } else {
+    const reviewList = reviews.map((review) => (
+      <Review key={review.id}>
+        <UserImage src={review.userImage} alt="User Image" />
+        <div>
+          <UserName>{review.userName}</UserName>
+          <ReviewText>{review.reviewText}</ReviewText>
+        </div>
+      </Review>
+    ));
+    return <>{reviewList}</>;
+  }
 }
 
 export default ReviewItem;
