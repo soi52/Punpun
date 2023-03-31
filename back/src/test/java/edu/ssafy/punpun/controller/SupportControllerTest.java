@@ -52,6 +52,7 @@ public class SupportControllerTest {
     @WIthCustomSupporter
     @DisplayName("후원내역 리스트")
     void findSupport() throws Exception{
+        LocalDate date= LocalDate.now();
         Member member = Member.builder()
                 .id(1L)
                 .name("name")
@@ -61,6 +62,7 @@ public class SupportControllerTest {
 
         Support support1=Support.builder()
                 .id(1L)
+                .supportDate(date)
                 .supportState(SupportState.SUPPORT)
                 .supporter(member)
                 .store(Store.builder()
@@ -73,9 +75,10 @@ public class SupportControllerTest {
                         .price(7500L)
                         .build())
                 .build();
-        support1.setCreatedDateTime(LocalDateTime.now());
+
         Support support2=Support.builder()
                 .id(2L)
+                .supportDate(date)
                 .supportState(SupportState.SUPPORT)
                 .supporter(member)
                 .store(Store.builder()
@@ -88,7 +91,7 @@ public class SupportControllerTest {
                         .price(8000L)
                         .build())
                 .build();
-        support2.setCreatedDateTime(LocalDateTime.now());
+
         List<Support> supports= List.of(support1, support2);
         doReturn(List.of(support1, support2)).when(supportService).findSupport(any(Member.class));
 
