@@ -44,5 +44,9 @@ public class Store extends BaseEntity {
     public void appendReview(Review review) {
         this.reviews.add(review);
     }
+    public void registOwner(Member member, String licenseNumber) {
+        this.owner = member;
+        this.licenseNumber = licenseNumber;
+    }
     public void deleteOwner() { this.owner = null; }
 }
