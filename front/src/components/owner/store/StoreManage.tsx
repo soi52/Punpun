@@ -20,8 +20,8 @@ function StoreManage() {
     API.get(`stores/${selectedStore?.storeId}`)
       .then((response) => {
         // console.log(response.data);
-        console.log(response.data.menuResponseDTOList);
-        setStoreMenus(response.data.menuResponseDTOList);
+        console.log(response.data.menuMemberResponseDTOList);
+        setStoreMenus(response.data.menuMemberResponseDTOList);
       })
       .catch((error) => {
         console.error(error);
