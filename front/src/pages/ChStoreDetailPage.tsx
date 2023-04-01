@@ -46,6 +46,8 @@ type ChMenuDTO = {
   menuName: string;
   menuPrice: number;
   favoriteMenu: boolean;
+  menuImage: string | null;
+  menuImageName: string | null;
 };
 
 type ChStore = {
