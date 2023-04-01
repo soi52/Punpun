@@ -54,10 +54,10 @@ public class StoreControllerTest {
                 .build();
         doReturn(List.of(menu1, menu2)).when(menuService).findByStore(store);
 
-        List<MenuResponseDTO> menuResponseDTOList = new ArrayList<>();
-        menuResponseDTOList.add(new MenuResponseDTO(menu1));
-        menuResponseDTOList.add(new MenuResponseDTO(menu2));
-        StoreDetailMemberResponseDTO storeDetailMemberResponseDTO = new StoreDetailMemberResponseDTO(store, menuResponseDTOList);
+        List<MenuMemberResponseDTO> menuMemberResponseDTOList = new ArrayList<>();
+        menuMemberResponseDTOList.add(new MenuMemberResponseDTO(menu1));
+        menuMemberResponseDTOList.add(new MenuMemberResponseDTO(menu2));
+        StoreDetailMemberResponseDTO storeDetailMemberResponseDTO = new StoreDetailMemberResponseDTO(store, menuMemberResponseDTOList);
         String output = new ObjectMapper().writeValueAsString(storeDetailMemberResponseDTO);
 
         mockMvc.perform(get("/stores/1")
@@ -80,10 +80,10 @@ public class StoreControllerTest {
                 .id(1L)
                 .store(store)
                 .build();
-        FavoriteMenuDTO favoriteMenuDTO = new FavoriteMenuDTO(menu1, true);
-        doReturn(List.of(favoriteMenuDTO)).when(storeService).getStoreDetailChild(any(Store.class), any(Child.class));
+        MenuChildResponseDTO menuChildResponseDTO = new MenuChildResponseDTO(menu1, true);
+        doReturn(List.of(menuChildResponseDTO)).when(storeService).getStoreDetailChild(any(Store.class), any(Child.class));
 
-        StoreDetailChildResponseDTO storeDetailChildResponseDTO = new StoreDetailChildResponseDTO(store, List.of(favoriteMenuDTO));
+        StoreDetailChildResponseDTO storeDetailChildResponseDTO = new StoreDetailChildResponseDTO(store, List.of(menuChildResponseDTO));
         String output = new ObjectMapper().writeValueAsString(storeDetailChildResponseDTO);
 
         mockMvc.perform(get("/stores/child/1")

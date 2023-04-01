@@ -21,9 +21,9 @@ public class StoreDetailMemberResponseDTO {
     private String storeImageName;
     private String storeImage;
     private String storePhoneNumber;
-    private List<MenuResponseDTO> menuResponseDTOList;
+    private List<MenuMemberResponseDTO> menuMemberResponseDTOList;
 
-    public StoreDetailMemberResponseDTO(Store store, List<MenuResponseDTO> menuList) {
+    public StoreDetailMemberResponseDTO(Store store, List<MenuMemberResponseDTO> menuList) {
         this.storeId = store.getId();
         this.storeName = store.getName();
         this.storeOpenTime = store.getOpenTime();
@@ -36,6 +36,6 @@ public class StoreDetailMemberResponseDTO {
             this.storeImage = store.getImage().getUrl();
         }
         this.storePhoneNumber = store.getPhoneNumber();
-        this.menuResponseDTOList = menuList;
+        this.menuMemberResponseDTOList = menuList;
     }
 }

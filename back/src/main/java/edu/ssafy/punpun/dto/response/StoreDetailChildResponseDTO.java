@@ -21,9 +21,9 @@ public class StoreDetailChildResponseDTO {
     private String storeImageName;
     private String storeImage;
     private String storePhoneNumber;
-    private List<FavoriteMenuDTO> favoriteMenuDTOList;
+    private List<MenuChildResponseDTO> menuChildResponseDTOList;
 
-    public StoreDetailChildResponseDTO(Store store, List<FavoriteMenuDTO> favoriteMenuDTOList) {
+    public StoreDetailChildResponseDTO(Store store, List<MenuChildResponseDTO> menuChildResponseDTOList) {
         this.storeId = store.getId();
         this.storeName = store.getName();
         this.storeOpenTime = store.getOpenTime();
@@ -36,6 +36,6 @@ public class StoreDetailChildResponseDTO {
             this.storeImage = store.getImage().getUrl();
         }
         this.storePhoneNumber = store.getPhoneNumber();
-        this.favoriteMenuDTOList = favoriteMenuDTOList;
+        this.menuChildResponseDTOList = menuChildResponseDTOList;
     }
 }

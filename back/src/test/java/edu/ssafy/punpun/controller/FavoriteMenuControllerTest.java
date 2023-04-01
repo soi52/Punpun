@@ -1,15 +1,15 @@
 package edu.ssafy.punpun.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import edu.ssafy.punpun.dto.request.FavoriteMenuRequestDTO;
-import edu.ssafy.punpun.dto.response.FavoriteMenuChildDTO;
+import edu.ssafy.punpun.dto.response.FavoriteMenuResponseDTO;
 import edu.ssafy.punpun.entity.Child;
-import edu.ssafy.punpun.entity.FavoriteMenu;
 import edu.ssafy.punpun.entity.Menu;
 import edu.ssafy.punpun.entity.Store;
-import edu.ssafy.punpun.entity.enumurate.UserRole;
 import edu.ssafy.punpun.service.FavoriteMenuService;
 import edu.ssafy.testutil.WIthCustomChild;
+import org.hibernate.result.Output;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,10 +65,10 @@ public class FavoriteMenuControllerTest {
 
         doReturn(List.of(menu1, menu2)).when(favoriteMenuService).getFavoriteMenuChild(any(Child.class));
 
-        List<FavoriteMenuChildDTO> favoriteMenuChildDTOList = new ArrayList<>();
-        favoriteMenuChildDTOList.add(new FavoriteMenuChildDTO(store1, menu1));
-        favoriteMenuChildDTOList.add(new FavoriteMenuChildDTO(store2, menu2));
-        String output = new Gson().toJson(favoriteMenuChildDTOList);
+        List<FavoriteMenuResponseDTO> favoriteMenuResponseDTOList = new ArrayList<>();
+        favoriteMenuResponseDTOList.add(new FavoriteMenuResponseDTO(store1, menu1));
+        favoriteMenuResponseDTOList.add(new FavoriteMenuResponseDTO(store2, menu2));
+        String output = new ObjectMapper().writeValueAsString(favoriteMenuResponseDTOList);
 
         // when
         // then

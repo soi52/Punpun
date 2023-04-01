@@ -8,16 +8,22 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class FavoriteMenuDTO {
+public class MenuMemberResponseDTO {
     private Long menuId;
     private String menuName;
     private Long menuPrice;
-    private boolean favoriteMenu;
+    private Long menuCount;
+    private String menuImageName;
+    private String menuImage;
 
-    public FavoriteMenuDTO(Menu menu, boolean favoriteMenu) {
+    public MenuMemberResponseDTO(Menu menu) {
         this.menuId = menu.getId();
         this.menuName = menu.getName();
         this.menuPrice = menu.getPrice();
-        this.favoriteMenu = favoriteMenu;
+        this.menuCount = menu.getSponsoredCount();
+        if (menu.getImage() != null) {
+            this.menuImageName = menu.getImage().getName();
+            this.menuImage = menu.getImage().getUrl();
+        }
     }
 }

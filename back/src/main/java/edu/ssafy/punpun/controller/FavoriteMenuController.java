@@ -1,7 +1,7 @@
 package edu.ssafy.punpun.controller;
 
 import edu.ssafy.punpun.dto.request.FavoriteMenuRequestDTO;
-import edu.ssafy.punpun.dto.response.FavoriteMenuChildDTO;
+import edu.ssafy.punpun.dto.response.FavoriteMenuResponseDTO;
 import edu.ssafy.punpun.entity.Child;
 import edu.ssafy.punpun.security.oauth2.PrincipalChildDetail;
 import edu.ssafy.punpun.service.FavoriteMenuService;
@@ -23,14 +23,14 @@ public class FavoriteMenuController {
 
     @GetMapping
     @ResponseStatus(code = HttpStatus.OK)
-    public List<FavoriteMenuChildDTO> getFavoriteMenuChild(@AuthenticationPrincipal PrincipalChildDetail principalChildDetail) {
+    public List<FavoriteMenuResponseDTO> getFavoriteMenuChild(@AuthenticationPrincipal PrincipalChildDetail principalChildDetail) {
         Child child = principalChildDetail.getChild();
 
-        List<FavoriteMenuChildDTO> favoriteMenuChildDTOList = favoriteMenuService.getFavoriteMenuChild(child).stream()
-                .map(menu -> new FavoriteMenuChildDTO(menu.getStore(), menu))
+        List<FavoriteMenuResponseDTO> favoriteMenuResponseDTOList = favoriteMenuService.getFavoriteMenuChild(child).stream()
+                .map(menu -> new FavoriteMenuResponseDTO(menu.getStore(), menu))
                 .collect(Collectors.toList());
 
-        return favoriteMenuChildDTOList;
+        return favoriteMenuResponseDTOList;
     }
 
     @PostMapping

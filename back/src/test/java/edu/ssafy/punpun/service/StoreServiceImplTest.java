@@ -1,14 +1,12 @@
 package edu.ssafy.punpun.service;
 
-import edu.ssafy.punpun.dto.ApproveState;
-import edu.ssafy.punpun.dto.response.FavoriteMenuDTO;
+import edu.ssafy.punpun.dto.response.MenuChildResponseDTO;
 import edu.ssafy.punpun.entity.*;
 import edu.ssafy.punpun.entity.enumurate.UserRole;
 import edu.ssafy.punpun.exception.NotStoreOwnerException;
 import edu.ssafy.punpun.repository.FavoriteMenuRepository;
 import edu.ssafy.punpun.repository.MenuRepository;
 import edu.ssafy.punpun.repository.StoreRepository;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -18,7 +16,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
@@ -106,7 +103,7 @@ public class StoreServiceImplTest {
         doReturn(Optional.of(favoriteMenu)).when(favoriteMenuRepository).findByChildAndMenu(child, menu1);
 
         // when
-        List<FavoriteMenuDTO> results = storeService.getStoreDetailChild(store, child);
+        List<MenuChildResponseDTO> results = storeService.getStoreDetailChild(store, child);
 
         // then
         assertThat(results.get(0).getMenuId()).isEqualTo(menu1.getId());
