@@ -27,11 +27,11 @@ const BookingRequest: React.FC<BookingListProps> = ({ bookings }) => {
     <BookingListContainer>
       {bookings.map((booking) => (
         <BookingItem
-          key={booking.id}
+          key={booking.reservationId}
           booking={booking}
-          isActive={booking.id === selectedId}
-          onClick={() => onSelect(booking.id)}
-          isRequest={true} // BookingRequest에서는 isRequest를 true로 설정
+          isActive={booking.reservationId === selectedId}
+          onClick={() => onSelect(booking.reservationId)}
+          isRequest={true}
         />
       ))}
     </BookingListContainer>
