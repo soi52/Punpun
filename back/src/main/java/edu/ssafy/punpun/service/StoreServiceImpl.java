@@ -57,6 +57,21 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
+    public void registerStore(Long storeId, Member member) {
+        Store store = storeRepository.findById(storeId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 가게 입니다."));
+
+        if (store.getOwner() != null) {
+            throw new NotStoreOwnerException("이미 등록된 가게 입니다. 관리자에게 문의해주세요");
+        }
+
+        // TODO : 이미지에서 사업자 번호 추출 및 관리자 승인
+
+        String licenseNumber = "117-12-51815";
+        store.registOwner(member, licenseNumber);
+    }
+
+    @Override
     public void deleteStoreByMember(Member member, Long storeId) {
         Store store = storeRepository.findById(storeId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 가게 입니다."));

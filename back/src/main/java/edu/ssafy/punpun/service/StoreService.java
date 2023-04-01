@@ -12,5 +12,7 @@ public interface StoreService {
     List<FavoriteMenuDTO> getStoreDetailChild(Store store, Child child);
     List<Store> findByNameContaining(String name);
     List<Store> findByOwner(Member member);
+    void registerStore(Long storeId, Member member);
     void deleteStoreByMember(Member member, Long storeId);
+
 }
