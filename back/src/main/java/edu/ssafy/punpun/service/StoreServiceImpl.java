@@ -88,37 +88,30 @@ public class StoreServiceImpl implements StoreService {
             throw new NotStoreOwnerException("존재하지 않는 가게입니다.");
         }
 
-        if (image == null) {
-            // 이미지 변경을 하지 않는 경우
-            store.updateStoreDetail(storeDTO.getStoreName(), storeDTO.getStoreOpenTime(), storeDTO.getStoreInfo(), storeDTO.getStoreAddress(), storeDTO.getStorePhoneNumber(), storeDTO.isStoreAlwaysShare());
-        } else {
-            // 이미지 변경을 하는 경우
-            try {
-                store.updateStoreDetail(storeDTO.getStoreName(), storeDTO.getStoreOpenTime(), storeDTO.getStoreInfo(), storeDTO.getStoreAddress(), storeDTO.getStorePhoneNumber(), storeDTO.isStoreAlwaysShare());
+        store.updateStoreDetail(storeDTO.getStoreName(), storeDTO.getStoreOpenTime(), storeDTO.getStoreInfo(), storeDTO.getStoreAddress(), storeDTO.getStorePhoneNumber(), storeDTO.isStoreAlwaysShare());
 
-                Map<String, String> map = s3Uploader.upload(image, "storeImage");
-                String imgUploadName = map.get("uploadName");
-                String imgUploadUrl = map.get("uploadUrl");
+        // 이미지 변경을 하는 경우
+        if (image != null) {
+            Map<String, String> map = s3Uploader.upload(image, "storeImage");
+            String imgUploadName = map.get("uploadName");
+            String imgUploadUrl = map.get("uploadUrl");
 
-                if (store.getImage() == null) {
-                    // 기존 이미지가 없는 경우
-                    Image uploadImage = Image.builder()
-                            .name(imgUploadName)
-                            .url(imgUploadUrl)
-                            .build();
+            if (store.getImage() == null) {
+                // 기존 이미지가 없는 경우
+                Image uploadImage = Image.builder()
+                        .name(imgUploadName)
+                        .url(imgUploadUrl)
+                        .build();
 
-                    imageRepository.save(uploadImage);
-                    store.updateImage(uploadImage);
-                } else {
-                    // 기존 이미지가 존재하는 경우
-                    Image originImage = imageRepository.findById(store.getImage().getId())
-                            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 이미지 입니다."));
+                imageRepository.save(uploadImage);
+                store.updateImage(uploadImage);
+            } else {
+                // 기존 이미지가 존재하는 경우
+                Image originImage = imageRepository.findById(store.getImage().getId())
+                        .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 이미지 입니다."));
 
-                    originImage.updateImage(imgUploadName, imgUploadUrl);
-                    store.updateImage(originImage);
-                }
-            } catch (IOException e) {
-                throw new UpdateStoreDetailException("가게 정보 수정 중 이미지 업로드 실패하였습니다");
+                originImage.updateImage(imgUploadName, imgUploadUrl);
+                store.updateImage(originImage);
             }
         }
 
@@ -133,5 +126,10 @@ public class StoreServiceImpl implements StoreService {
             throw new NotStoreOwnerException("가게의 주인이 아닙니다.");
         }
         store.deleteOwner();
+
+        if (member.getStores().size() < 1) {
+            // 사장이 소유한 가게가 하나도 없다면, 후원자로 Role 변경
+            member.changeRole(UserRole.SUPPORTER);
+        }
     }
 }
