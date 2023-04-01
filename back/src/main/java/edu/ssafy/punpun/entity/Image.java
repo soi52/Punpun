@@ -19,4 +19,9 @@ public class Image extends BaseEntity {
     private Long id;
     private String name;
     private String url;
+
+    public void updateImage(String name, String url) {
+        this.name = name;
+        this.url = url;
+    }
 }

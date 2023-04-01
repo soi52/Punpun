@@ -1,19 +1,24 @@
 package edu.ssafy.punpun.service;
 
+import edu.ssafy.punpun.dto.request.StoreDetailRequestDTO;
 import edu.ssafy.punpun.dto.response.MenuChildResponseDTO;
-import edu.ssafy.punpun.entity.Child;
-import edu.ssafy.punpun.entity.FavoriteMenu;
-import edu.ssafy.punpun.entity.Member;
-import edu.ssafy.punpun.entity.Store;
+import edu.ssafy.punpun.entity.*;
+import edu.ssafy.punpun.entity.enumurate.UserRole;
 import edu.ssafy.punpun.exception.NotStoreOwnerException;
+import edu.ssafy.punpun.exception.UpdateStoreDetailException;
 import edu.ssafy.punpun.repository.FavoriteMenuRepository;
+import edu.ssafy.punpun.repository.ImageRepository;
 import edu.ssafy.punpun.repository.MenuRepository;
 import edu.ssafy.punpun.repository.StoreRepository;
+import edu.ssafy.punpun.s3.S3Uploader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -25,6 +30,8 @@ public class StoreServiceImpl implements StoreService {
     private final StoreRepository storeRepository;
     private final MenuRepository menuRepository;
     private final FavoriteMenuRepository favoriteMenuRepository;
+    private final ImageRepository imageRepository;
+    private final S3Uploader s3Uploader;
 
     @Override
     public Store findById(Long id) {
@@ -67,12 +74,58 @@ public class StoreServiceImpl implements StoreService {
 
         // TODO : 이미지에서 사업자 번호 추출 및 관리자 승인
 
-        String licenseNumber = "117-12-51815";
+        String licenseNumber = "117-12-12345";
         store.registOwner(member, licenseNumber);
+        member.changeRole(UserRole.OWNER);
     }
 
     @Override
-    public void deleteStoreByMember(Member member, Long storeId) {
+    public void updateStoreDetail(Long storeId, Member member, StoreDetailRequestDTO storeDTO, MultipartFile image) {
+        Store store = storeRepository.findById(storeId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 가게입니다."));
+
+        if (member.getId() != store.getOwner().getId()) {
+            throw new NotStoreOwnerException("존재하지 않는 가게입니다.");
+        }
+
+        if (image == null) {
+            // 이미지 변경을 하지 않는 경우
+            store.updateStoreDetail(storeDTO.getStoreName(), storeDTO.getStoreOpenTime(), storeDTO.getStoreInfo(), storeDTO.getStoreAddress(), storeDTO.getStorePhoneNumber(), storeDTO.isStoreAlwaysShare());
+        } else {
+            // 이미지 변경을 하는 경우
+            try {
+                store.updateStoreDetail(storeDTO.getStoreName(), storeDTO.getStoreOpenTime(), storeDTO.getStoreInfo(), storeDTO.getStoreAddress(), storeDTO.getStorePhoneNumber(), storeDTO.isStoreAlwaysShare());
+
+                Map<String, String> map = s3Uploader.upload(image, "storeImage");
+                String imgUploadName = map.get("uploadName");
+                String imgUploadUrl = map.get("uploadUrl");
+
+                if (store.getImage() == null) {
+                    // 기존 이미지가 없는 경우
+                    Image uploadImage = Image.builder()
+                            .name(imgUploadName)
+                            .url(imgUploadUrl)
+                            .build();
+
+                    imageRepository.save(uploadImage);
+                    store.updateImage(uploadImage);
+                } else {
+                    // 기존 이미지가 존재하는 경우
+                    Image originImage = imageRepository.findById(store.getImage().getId())
+                            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 이미지 입니다."));
+
+                    originImage.updateImage(imgUploadName, imgUploadUrl);
+                    store.updateImage(originImage);
+                }
+            } catch (IOException e) {
+                throw new UpdateStoreDetailException("가게 정보 수정 중 이미지 업로드 실패하였습니다");
+            }
+        }
+
+    }
+
+    @Override
+    public void deleteStoreByMember(Long storeId, Member member) {
         Store store = storeRepository.findById(storeId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 가게 입니다."));
 

@@ -1,7 +1,9 @@
 package edu.ssafy.punpun.controller;
 
+import edu.ssafy.punpun.dto.request.StoreDetailRequestDTO;
 import edu.ssafy.punpun.dto.response.*;
 import edu.ssafy.punpun.entity.*;
+import edu.ssafy.punpun.s3.S3Uploader;
 import edu.ssafy.punpun.security.oauth2.PrincipalChildDetail;
 import edu.ssafy.punpun.security.oauth2.PrincipalMemberDetail;
 import edu.ssafy.punpun.service.MenuService;
@@ -10,10 +12,14 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -23,6 +29,7 @@ import java.util.stream.Collectors;
 public class StoreController {
     private final StoreService storeService;
     private final MenuService menuService;
+    private final S3Uploader s3Uploader;
 
     @ApiOperation(value = "가게 상세 정보 보기 - 사장, 후원자 입장")
     @GetMapping("/{storeId}")
@@ -81,12 +88,21 @@ public class StoreController {
         storeService.registerStore(storeId, member);
     }
 
+    @ApiOperation(value = "가게 상세 정보 수정 - 사장 입장")
+    @RequestMapping(value = "/{storeId}" , method = RequestMethod.PUT , consumes = {MediaType.APPLICATION_JSON_VALUE , MediaType.MULTIPART_FORM_DATA_VALUE})
+    @ResponseStatus(code = HttpStatus.OK)
+    public void updateStoreDetail(@AuthenticationPrincipal PrincipalMemberDetail principalMemberDetail, @PathVariable ("storeId") Long storeId,
+                                  @RequestPart("storeInfo") StoreDetailRequestDTO storeDetailRequestDTO, @RequestPart(name = "storeImage", required = false) MultipartFile image) throws IOException {
+        Member member = principalMemberDetail.getMember();
+        storeService.updateStoreDetail(storeId, member, storeDetailRequestDTO, image);
+    }
+
     @ApiOperation(value = "가게 등록 해제 - 사장 입장")
     @DeleteMapping("/{storeId}")
     @ResponseStatus(code = HttpStatus.OK)
     public void deleteStore(@AuthenticationPrincipal PrincipalMemberDetail principalMemberDetail, @PathVariable("storeId") Long storeId) {
         Member member = principalMemberDetail.getMember();
-        storeService.deleteStoreByMember(member, storeId);
+        storeService.deleteStoreByMember(storeId, member);
     }
 
 }

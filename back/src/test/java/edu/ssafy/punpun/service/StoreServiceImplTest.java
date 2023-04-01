@@ -1,5 +1,6 @@
 package edu.ssafy.punpun.service;
 
+import edu.ssafy.punpun.dto.request.StoreDetailRequestDTO;
 import edu.ssafy.punpun.dto.response.MenuChildResponseDTO;
 import edu.ssafy.punpun.entity.*;
 import edu.ssafy.punpun.entity.enumurate.UserRole;
@@ -14,7 +15,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.mock.web.MockMultipartFile;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -241,7 +246,7 @@ public class StoreServiceImplTest {
             Member member = Member.builder()
                     .id(1L)
                     .name("memberTest")
-                    .role(UserRole.OWNER)
+                    .role(UserRole.SUPPORTER)
                     .build();
             Store store = Store.builder()
                     .id(1L)
@@ -254,6 +259,7 @@ public class StoreServiceImplTest {
             // then
             assertThat(store.getOwner().getId()).isEqualTo(1L);
             assertThat(store.getLicenseNumber()).isEqualTo("117-12-51815");
+            assertThat(member.getRole()).isEqualTo(UserRole.OWNER);
         }
 
         @Test
@@ -302,6 +308,47 @@ public class StoreServiceImplTest {
 
     }
 
+
+//    @Nested
+//    @DisplayName("가게 상세 정보 수정 - 사장")
+//    public class updateStoreDetail {
+//
+//        @Test
+//        @DisplayName("가게 상세 정보 수정 - 정상 동작, 기존 이미지 없는 경우")
+//        void updateStoreDetail() throws IOException {
+//            // given
+//            Member member = Member.builder()
+//                    .id(1L)
+//                    .name("memberTest")
+//                    .role(UserRole.OWNER)
+//                    .build();
+//            Store store = Store.builder()
+//                    .id(1L)
+//                    .owner(member)
+//                    .build();
+//            doReturn(Optional.of(store)).when(storeRepository).findById(1L);
+//
+//            final String fileName = "testImage1"; //파일명
+//            final String contentType = "png"; //파일타입
+//            final String filePath = "src/test/resources/testImage/"+fileName+"."+contentType; //파일경로
+//            FileInputStream fileInputStream = new FileInputStream(new File(filePath));
+//            MockMultipartFile image = new MockMultipartFile(
+//                    "images", //name
+//                    fileName + "." + contentType, //originalFilename
+//                    contentType,
+//                    fileInputStream
+//            );
+//            StoreDetailRequestDTO storeDetailRequestDTO = new StoreDetailRequestDTO();
+//
+//            // when
+//            storeService.updateStoreDetail(1L, member, storeDetailRequestDTO, image);
+//
+//            // then
+//            assertThat(store.getImage()).isEqualTo(any(Image.class));
+//        }
+//
+//    }
+
     @Nested
     @DisplayName("가게 사장이 가게 삭제 하기 _ 가게 등록 해제")
     public class deleteStoreByMember {
@@ -331,7 +378,7 @@ public class StoreServiceImplTest {
             doReturn(Optional.of(store1)).when(storeRepository).findById(1L);
 
             // when
-            storeService.deleteStoreByMember(member, 1L);
+            storeService.deleteStoreByMember(1L, member);
             // then
             assertThat(store1.getId()).isEqualTo(1L);
             assertThat(store1.getOwner()).isEqualTo(null);
@@ -355,7 +402,7 @@ public class StoreServiceImplTest {
 
             // when
             // then
-            assertThatThrownBy(() -> storeService.deleteStoreByMember(member, 2L))
+            assertThatThrownBy(() -> storeService.deleteStoreByMember(2L, member))
                     .isInstanceOf(IllegalArgumentException.class);
         }
 
@@ -376,7 +423,7 @@ public class StoreServiceImplTest {
 
             // when
             // then
-            assertThatThrownBy(() -> storeService.deleteStoreByMember(member1, 1L))
+            assertThatThrownBy(() -> storeService.deleteStoreByMember(1L, member1))
                     .isInstanceOf(NotStoreOwnerException.class);
         }
 
@@ -404,7 +451,7 @@ public class StoreServiceImplTest {
 
             // when
             // then
-            assertThatCode(() -> storeService.deleteStoreByMember(member1, 1L))
+            assertThatCode(() -> storeService.deleteStoreByMember(1L, member1))
                     .isInstanceOf(NotStoreOwnerException.class);
         }
     }

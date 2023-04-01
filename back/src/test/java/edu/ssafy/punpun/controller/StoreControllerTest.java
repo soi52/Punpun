@@ -163,7 +163,7 @@ public class StoreControllerTest {
     @WIthCustomOwner
     @DisplayName("delete - 사장이 소유한 가게 등록 해제")
     void deleteStore() throws Exception {
-        doNothing().when(storeService).deleteStoreByMember(any(Member.class), eq(1L));
+        doNothing().when(storeService).deleteStoreByMember(eq(1L), any(Member.class));
 
         mockMvc.perform(delete("/stores/1")
                         .with(csrf()))
