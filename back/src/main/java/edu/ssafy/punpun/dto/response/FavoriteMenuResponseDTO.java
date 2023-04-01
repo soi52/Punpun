@@ -9,16 +9,22 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class FavoriteMenuChildDTO {
+public class FavoriteMenuResponseDTO {
     private Long storeId;
     private String storeName;
     private Long menuId;
     private String menuName;
+    private String menuImageName;
+    private String menuImage;
 
-    public FavoriteMenuChildDTO(Store store, Menu menu) {
+    public FavoriteMenuResponseDTO(Store store, Menu menu) {
         this.storeId = store.getId();
         this.storeName = store.getName();
         this.menuId = menu.getId();
         this.menuName = menu.getName();
+        if (menu.getImage() != null) {
+            this.menuImageName = menu.getImage().getName();
+            this.menuImage = menu.getImage().getUrl();
+        }
     }
 }

@@ -29,11 +29,11 @@ public class StoreController {
     @ResponseStatus(code = HttpStatus.OK)
     public StoreDetailMemberResponseDTO getStoreDetail(@PathVariable("storeId") Long id) {
         Store store = storeService.findById(id);
-        List<MenuResponseDTO> menuResponseDTOList = menuService.findByStore(store).stream()
-                .map(MenuResponseDTO::new)
+        List<MenuMemberResponseDTO> menuMemberResponseDTOList = menuService.findByStore(store).stream()
+                .map(MenuMemberResponseDTO::new)
                 .collect(Collectors.toList());
 
-        return new StoreDetailMemberResponseDTO(store, menuResponseDTOList);
+        return new StoreDetailMemberResponseDTO(store, menuMemberResponseDTOList);
     }
 
     @ApiOperation(value = "가게 상세 정보 보기 - 아동 입장")
@@ -42,9 +42,9 @@ public class StoreController {
     public StoreDetailChildResponseDTO getStoreDetailChild(@AuthenticationPrincipal PrincipalChildDetail principalChildDetail, @PathVariable("storeId") Long id) {
         Child child = principalChildDetail.getChild();
         Store store = storeService.findById(id);
-        List<FavoriteMenuDTO> favoriteMenuDTOList = storeService.getStoreDetailChild(store, child);
+        List<MenuChildResponseDTO> menuChildResponseDTOList = storeService.getStoreDetailChild(store, child);
 
-        return new StoreDetailChildResponseDTO(store, favoriteMenuDTOList);
+        return new StoreDetailChildResponseDTO(store, menuChildResponseDTOList);
     }
 
     @ApiOperation(value = "가게 검색 - 이름으로")

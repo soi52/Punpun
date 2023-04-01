@@ -1,6 +1,6 @@
 package edu.ssafy.punpun.service;
 
-import edu.ssafy.punpun.dto.response.FavoriteMenuDTO;
+import edu.ssafy.punpun.dto.response.MenuChildResponseDTO;
 import edu.ssafy.punpun.entity.Child;
 import edu.ssafy.punpun.entity.FavoriteMenu;
 import edu.ssafy.punpun.entity.Member;
@@ -32,15 +32,15 @@ public class StoreServiceImpl implements StoreService {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 가게 입니다."));
     }
 
-    public List<FavoriteMenuDTO> getStoreDetailChild(Store store, Child child) {
+    public List<MenuChildResponseDTO> getStoreDetailChild(Store store, Child child) {
         // TODO : 추후 변경 예정
         return menuRepository.findByStore(store).stream()
                 .map(menu -> {
                     Optional<FavoriteMenu> favoriteMenu = favoriteMenuRepository.findByChildAndMenu(child, menu);
                     if (favoriteMenu.isPresent()) {
-                        return new FavoriteMenuDTO(menu, true);
+                        return new MenuChildResponseDTO(menu, true);
                     } else {
-                        return new FavoriteMenuDTO(menu, false);
+                        return new MenuChildResponseDTO(menu, false);
                     }
                 })
                 .collect(Collectors.toList());
