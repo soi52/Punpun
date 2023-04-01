@@ -21,9 +21,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -66,16 +64,16 @@ public class StoreServiceImplTest {
         Store result = storeService.findById(0L);
 
         // then
-        Assertions.assertThat(result.getId()).isEqualTo(store1.getId());
-        Assertions.assertThat(result.getName()).isEqualTo(store1.getName());
-        Assertions.assertThat(result.getOpenTime()).isEqualTo(store1.getOpenTime());
-        Assertions.assertThat(result.getInfo()).isEqualTo(store1.getInfo());
-        Assertions.assertThat(result.getAddress()).isEqualTo(store1.getAddress());
-        Assertions.assertThat(result.getLon()).isEqualTo(store1.getLon());
-        Assertions.assertThat(result.getLat()).isEqualTo(store1.getLat());
-        Assertions.assertThat(result.getImage()).isEqualTo(store1.getImage());
-        Assertions.assertThat(result.isAlwaysShare()).isEqualTo(store1.isAlwaysShare());
-        Assertions.assertThat(result.isOpenState()).isEqualTo(store1.isOpenState());
+        assertThat(result.getId()).isEqualTo(store1.getId());
+        assertThat(result.getName()).isEqualTo(store1.getName());
+        assertThat(result.getOpenTime()).isEqualTo(store1.getOpenTime());
+        assertThat(result.getInfo()).isEqualTo(store1.getInfo());
+        assertThat(result.getAddress()).isEqualTo(store1.getAddress());
+        assertThat(result.getLon()).isEqualTo(store1.getLon());
+        assertThat(result.getLat()).isEqualTo(store1.getLat());
+        assertThat(result.getImage()).isEqualTo(store1.getImage());
+        assertThat(result.isAlwaysShare()).isEqualTo(store1.isAlwaysShare());
+        assertThat(result.isOpenState()).isEqualTo(store1.isOpenState());
     }
 
     @Test
@@ -111,14 +109,14 @@ public class StoreServiceImplTest {
         List<FavoriteMenuDTO> results = storeService.getStoreDetailChild(store, child);
 
         // then
-        Assertions.assertThat(results.get(0).getMenuId()).isEqualTo(menu1.getId());
-        Assertions.assertThat(results.get(0).getMenuName()).isEqualTo(menu1.getName());
-        Assertions.assertThat(results.get(0).getMenuPrice()).isEqualTo(menu1.getPrice());
-        Assertions.assertThat(results.get(0).isFavoriteMenu()).isEqualTo(true);
-        Assertions.assertThat(results.get(1).getMenuId()).isEqualTo(menu2.getId());
-        Assertions.assertThat(results.get(1).getMenuName()).isEqualTo(menu2.getName());
-        Assertions.assertThat(results.get(1).getMenuPrice()).isEqualTo(menu2.getPrice());
-        Assertions.assertThat(results.get(1).isFavoriteMenu()).isEqualTo(false);
+        assertThat(results.get(0).getMenuId()).isEqualTo(menu1.getId());
+        assertThat(results.get(0).getMenuName()).isEqualTo(menu1.getName());
+        assertThat(results.get(0).getMenuPrice()).isEqualTo(menu1.getPrice());
+        assertThat(results.get(0).isFavoriteMenu()).isEqualTo(true);
+        assertThat(results.get(1).getMenuId()).isEqualTo(menu2.getId());
+        assertThat(results.get(1).getMenuName()).isEqualTo(menu2.getName());
+        assertThat(results.get(1).getMenuPrice()).isEqualTo(menu2.getPrice());
+        assertThat(results.get(1).isFavoriteMenu()).isEqualTo(false);
     }
 
     @Test
@@ -151,27 +149,27 @@ public class StoreServiceImplTest {
         // when
         List<Store> results = storeService.findByNameContaining("store");
         // then 1
-        Assertions.assertThat(results.get(0).getId()).isEqualTo(store1.getId());
-        Assertions.assertThat(results.get(0).getName()).isEqualTo(store1.getName());
-        Assertions.assertThat(results.get(0).getOpenTime()).isEqualTo(store1.getOpenTime());
-        Assertions.assertThat(results.get(0).getInfo()).isEqualTo(store1.getInfo());
-        Assertions.assertThat(results.get(0).getAddress()).isEqualTo(store1.getAddress());
-        Assertions.assertThat(results.get(0).getLon()).isEqualTo(store1.getLon());
-        Assertions.assertThat(results.get(0).getLat()).isEqualTo(store1.getLat());
-        Assertions.assertThat(results.get(0).getImage()).isEqualTo(store1.getImage());
-        Assertions.assertThat(results.get(0).isAlwaysShare()).isEqualTo(store1.isAlwaysShare());
-        Assertions.assertThat(results.get(0).isOpenState()).isEqualTo(store1.isOpenState());
+        assertThat(results.get(0).getId()).isEqualTo(store1.getId());
+        assertThat(results.get(0).getName()).isEqualTo(store1.getName());
+        assertThat(results.get(0).getOpenTime()).isEqualTo(store1.getOpenTime());
+        assertThat(results.get(0).getInfo()).isEqualTo(store1.getInfo());
+        assertThat(results.get(0).getAddress()).isEqualTo(store1.getAddress());
+        assertThat(results.get(0).getLon()).isEqualTo(store1.getLon());
+        assertThat(results.get(0).getLat()).isEqualTo(store1.getLat());
+        assertThat(results.get(0).getImage()).isEqualTo(store1.getImage());
+        assertThat(results.get(0).isAlwaysShare()).isEqualTo(store1.isAlwaysShare());
+        assertThat(results.get(0).isOpenState()).isEqualTo(store1.isOpenState());
         // then 2
-        Assertions.assertThat(results.get(1).getId()).isEqualTo(store2.getId());
-        Assertions.assertThat(results.get(1).getName()).isEqualTo(store2.getName());
-        Assertions.assertThat(results.get(1).getOpenTime()).isEqualTo(store2.getOpenTime());
-        Assertions.assertThat(results.get(1).getInfo()).isEqualTo(store2.getInfo());
-        Assertions.assertThat(results.get(1).getAddress()).isEqualTo(store2.getAddress());
-        Assertions.assertThat(results.get(1).getLon()).isEqualTo(store2.getLon());
-        Assertions.assertThat(results.get(1).getLat()).isEqualTo(store2.getLat());
-        Assertions.assertThat(results.get(1).getImage()).isEqualTo(store2.getImage());
-        Assertions.assertThat(results.get(1).isAlwaysShare()).isEqualTo(store2.isAlwaysShare());
-        Assertions.assertThat(results.get(1).isOpenState()).isEqualTo(store2.isOpenState());
+        assertThat(results.get(1).getId()).isEqualTo(store2.getId());
+        assertThat(results.get(1).getName()).isEqualTo(store2.getName());
+        assertThat(results.get(1).getOpenTime()).isEqualTo(store2.getOpenTime());
+        assertThat(results.get(1).getInfo()).isEqualTo(store2.getInfo());
+        assertThat(results.get(1).getAddress()).isEqualTo(store2.getAddress());
+        assertThat(results.get(1).getLon()).isEqualTo(store2.getLon());
+        assertThat(results.get(1).getLat()).isEqualTo(store2.getLat());
+        assertThat(results.get(1).getImage()).isEqualTo(store2.getImage());
+        assertThat(results.get(1).isAlwaysShare()).isEqualTo(store2.isAlwaysShare());
+        assertThat(results.get(1).isOpenState()).isEqualTo(store2.isOpenState());
     }
 
     @Test
@@ -212,27 +210,99 @@ public class StoreServiceImplTest {
         // when
         List<Store> results = storeService.findByOwner(member);
         // then 1
-        Assertions.assertThat(results.get(0).getId()).isEqualTo(store1.getId());
-        Assertions.assertThat(results.get(0).getName()).isEqualTo(store1.getName());
-        Assertions.assertThat(results.get(0).getOpenTime()).isEqualTo(store1.getOpenTime());
-        Assertions.assertThat(results.get(0).getInfo()).isEqualTo(store1.getInfo());
-        Assertions.assertThat(results.get(0).getAddress()).isEqualTo(store1.getAddress());
-        Assertions.assertThat(results.get(0).getLon()).isEqualTo(store1.getLon());
-        Assertions.assertThat(results.get(0).getLat()).isEqualTo(store1.getLat());
-        Assertions.assertThat(results.get(0).getImage()).isEqualTo(store1.getImage());
-        Assertions.assertThat(results.get(0).isAlwaysShare()).isEqualTo(store1.isAlwaysShare());
-        Assertions.assertThat(results.get(0).isOpenState()).isEqualTo(store1.isOpenState());
+        assertThat(results.get(0).getId()).isEqualTo(store1.getId());
+        assertThat(results.get(0).getName()).isEqualTo(store1.getName());
+        assertThat(results.get(0).getOpenTime()).isEqualTo(store1.getOpenTime());
+        assertThat(results.get(0).getInfo()).isEqualTo(store1.getInfo());
+        assertThat(results.get(0).getAddress()).isEqualTo(store1.getAddress());
+        assertThat(results.get(0).getLon()).isEqualTo(store1.getLon());
+        assertThat(results.get(0).getLat()).isEqualTo(store1.getLat());
+        assertThat(results.get(0).getImage()).isEqualTo(store1.getImage());
+        assertThat(results.get(0).isAlwaysShare()).isEqualTo(store1.isAlwaysShare());
+        assertThat(results.get(0).isOpenState()).isEqualTo(store1.isOpenState());
         // then 2
-        Assertions.assertThat(results.get(1).getId()).isEqualTo(store2.getId());
-        Assertions.assertThat(results.get(1).getName()).isEqualTo(store2.getName());
-        Assertions.assertThat(results.get(1).getOpenTime()).isEqualTo(store2.getOpenTime());
-        Assertions.assertThat(results.get(1).getInfo()).isEqualTo(store2.getInfo());
-        Assertions.assertThat(results.get(1).getAddress()).isEqualTo(store2.getAddress());
-        Assertions.assertThat(results.get(1).getLon()).isEqualTo(store2.getLon());
-        Assertions.assertThat(results.get(1).getLat()).isEqualTo(store2.getLat());
-        Assertions.assertThat(results.get(1).getImage()).isEqualTo(store2.getImage());
-        Assertions.assertThat(results.get(1).isAlwaysShare()).isEqualTo(store2.isAlwaysShare());
-        Assertions.assertThat(results.get(1).isOpenState()).isEqualTo(store2.isOpenState());
+        assertThat(results.get(1).getId()).isEqualTo(store2.getId());
+        assertThat(results.get(1).getName()).isEqualTo(store2.getName());
+        assertThat(results.get(1).getOpenTime()).isEqualTo(store2.getOpenTime());
+        assertThat(results.get(1).getInfo()).isEqualTo(store2.getInfo());
+        assertThat(results.get(1).getAddress()).isEqualTo(store2.getAddress());
+        assertThat(results.get(1).getLon()).isEqualTo(store2.getLon());
+        assertThat(results.get(1).getLat()).isEqualTo(store2.getLat());
+        assertThat(results.get(1).getImage()).isEqualTo(store2.getImage());
+        assertThat(results.get(1).isAlwaysShare()).isEqualTo(store2.isAlwaysShare());
+        assertThat(results.get(1).isOpenState()).isEqualTo(store2.isOpenState());
+    }
+
+    @Nested
+    @DisplayName("가게 등록 하기 - 사장")
+    public class registerStore {
+
+        @Test
+        @DisplayName("가게 등록 하기 - 정상 동작")
+        void registerStore1() {
+            // given
+            Member member = Member.builder()
+                    .id(1L)
+                    .name("memberTest")
+                    .role(UserRole.OWNER)
+                    .build();
+            Store store = Store.builder()
+                    .id(1L)
+                    .build();
+
+            doReturn(Optional.of(store)).when(storeRepository).findById(1L);
+
+            // when
+            storeService.registerStore(1L, member);
+            // then
+            assertThat(store.getOwner().getId()).isEqualTo(1L);
+            assertThat(store.getLicenseNumber()).isEqualTo("117-12-51815");
+        }
+
+        @Test
+        @DisplayName("가게 등록 하기 - 오류, 가게가 존재하지 않는 경우")
+        void registerStore2() {
+            // given
+            Member member = Member.builder()
+                    .name("memberTest")
+                    .role(UserRole.OWNER)
+                    .build();
+
+            doReturn(Optional.empty()).when(storeRepository).findById(1L);
+
+            // when
+            // then
+            assertThatThrownBy(() -> storeService.registerStore(1L, member))
+                    .isInstanceOf(IllegalArgumentException.class);
+        }
+
+        @Test
+        @DisplayName("가게 등록 하기 - 오류, 이미 사장이 있는 가게인 경우")
+        void registerStore3() {
+            // given
+            Member member1 = Member.builder()
+                    .id(1L)
+                    .name("member1")
+                    .role(UserRole.OWNER)
+                    .build();
+            Member member2 = Member.builder()
+                    .id(2L)
+                    .name("member2")
+                    .role(UserRole.OWNER)
+                    .build();
+            Store store = Store.builder()
+                    .id(1L)
+                    .owner(member1)
+                    .build();
+
+            doReturn(Optional.of(store)).when(storeRepository).findById(1L);
+
+            // when
+            // then
+            assertThatThrownBy(() -> storeService.registerStore(1L, member2 ))
+                    .isInstanceOf(NotStoreOwnerException.class);
+        }
+
     }
 
     @Nested
@@ -266,8 +336,8 @@ public class StoreServiceImplTest {
             // when
             storeService.deleteStoreByMember(member, 1L);
             // then
-            Assertions.assertThat(store1.getId()).isEqualTo(1L);
-            Assertions.assertThat(store1.getOwner()).isEqualTo(null);
+            assertThat(store1.getId()).isEqualTo(1L);
+            assertThat(store1.getOwner()).isEqualTo(null);
         }
 
         @Test
