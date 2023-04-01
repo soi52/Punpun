@@ -17,6 +17,8 @@ type ChMenuDTO = {
   menuName: string;
   menuPrice: number;
   favoriteMenu: boolean;
+  menuImage: string | null;
+  menuImageName: string | null;
 };
 
 type Props = {
@@ -35,7 +37,7 @@ const StoreMenu = ({ myStoreId }: Props) => {
       if (myStoreId) {
         API.get(`stores/child/${myStoreId}`)
           .then((response) => {
-            setChMenuDTOList(response.data.favoriteMenuDTOList);
+            setChMenuDTOList(response.data.menuChildResponseDTOList);
             setStoreName(response.data.storeName);
           })
           .catch((error) => {

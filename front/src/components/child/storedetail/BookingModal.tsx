@@ -166,25 +166,12 @@ const BookingModal: React.FC<ModalProps> = ({ menu, onClose }) => {
     })
     .then((response) => {
       console.log(response.data);
+      onClose(); // API 요청이 성공적으로 처리되면 모달을 닫는다.
     })
     .catch((error) => {
       console.log(error);
       alert(error.response.data.message)
     });
-  
-    // axios.post('https://j8d109.p.ssafy.io/api/bookings', {
-    //   data: data,
-    //   withCredentials: true,
-    //     headers: {
-    //       Authorization: `Bearer ${accessToken}`,
-    //     },
-    // })
-    // .then((response) => {
-    //   console.log(response.data);
-    // })
-    // .catch((error) => {
-    //   console.log(error);
-    // });
   }
 
   return (
