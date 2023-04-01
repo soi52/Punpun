@@ -11,6 +11,5 @@ public class StoreRequestDTO {
     private double storeLon;
     private double storeLat;
     private String storeInfo;
-    private String storeImageName;
-    private String storeImage;
+    private Long storeImageId;
 }
