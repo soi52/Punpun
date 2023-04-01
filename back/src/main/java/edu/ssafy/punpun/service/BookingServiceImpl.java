@@ -10,10 +10,7 @@ import edu.ssafy.punpun.entity.enumurate.SupportState;
 import edu.ssafy.punpun.exception.AlreadyEndException;
 import edu.ssafy.punpun.exception.NotStoreOwnerException;
 import edu.ssafy.punpun.kafka.ReservationEventPublisher;
-import edu.ssafy.punpun.repository.MenuRepository;
-import edu.ssafy.punpun.repository.ReservationRepository;
-import edu.ssafy.punpun.repository.SupportRepository;
-import edu.ssafy.punpun.repository.SupportReservationRepository;
+import edu.ssafy.punpun.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -30,6 +27,7 @@ public class BookingServiceImpl implements BookingService {
     private final SupportRepository supportRepository;
     private final MenuRepository menuRepository;
     private final ReservationEventPublisher publisher;
+    private final MemberRepository memberRepository;
 
     @Override
     public Reservation reservation(Child child, Long menuId, LocalDateTime reservationTime) {
@@ -66,7 +64,10 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public Page<Reservation> findAllByStore(Member owner, BookingStoreSearchParamDTO params) {
-        owner.getStores().stream()
+        memberRepository.findById(owner.getId())
+                //TODO : 로딩을 위한 검색인데 필요한가?
+                .orElseThrow(() -> new IllegalArgumentException("없는 유저입니다."))
+                .getStores().stream()
                 .filter(store -> store.getId().equals(params.getStoreId()))
                 .findFirst()
                 .orElseThrow(() -> new NotStoreOwnerException("가게의 주인이 아닙니다."));
