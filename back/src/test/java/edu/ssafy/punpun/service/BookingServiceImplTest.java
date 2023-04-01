@@ -8,10 +8,7 @@ import edu.ssafy.punpun.entity.enumurate.SupportState;
 import edu.ssafy.punpun.exception.AlreadyEndException;
 import edu.ssafy.punpun.exception.NotStoreOwnerException;
 import edu.ssafy.punpun.kafka.ReservationEventPublisher;
-import edu.ssafy.punpun.repository.MenuRepository;
-import edu.ssafy.punpun.repository.ReservationRepository;
-import edu.ssafy.punpun.repository.SupportRepository;
-import edu.ssafy.punpun.repository.SupportReservationRepository;
+import edu.ssafy.punpun.repository.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -35,6 +32,8 @@ class BookingServiceImplTest {
     private ReservationRepository reservationRepository;
     @Mock
     private SupportRepository supportRepository;
+    @Mock
+    private MemberRepository memberRepository;
     @Mock
     private MenuRepository menuRepository;
     @Mock
@@ -143,12 +142,14 @@ class BookingServiceImplTest {
                 .id(2L)
                 .build();
         Member owner = Member.builder()
+                .id(1L)
                 .stores(List.of(store1, store2))
                 .build();
         BookingStoreSearchParamDTO params = BookingStoreSearchParamDTO.builder()
                 .storeId(3L)
                 .page(0)
                 .build();
+        doReturn(Optional.of(owner)).when(memberRepository).findById(1L);
 
         assertThatThrownBy(() -> bookingService.findAllByStore(owner, params))
                 .isInstanceOf(NotStoreOwnerException.class);
@@ -164,6 +165,7 @@ class BookingServiceImplTest {
                 .id(2L)
                 .build();
         Member owner = Member.builder()
+                .id(1L)
                 .stores(List.of(store1, store2))
                 .build();
         BookingStoreSearchParamDTO params = BookingStoreSearchParamDTO.builder()
@@ -171,6 +173,7 @@ class BookingServiceImplTest {
                 .page(0)
                 .build();
 
+        doReturn(Optional.of(owner)).when(memberRepository).findById(1L);
         doReturn(null).when(reservationRepository).findAllByStore(params);
         bookingService.findAllByStore(owner, params);
 
