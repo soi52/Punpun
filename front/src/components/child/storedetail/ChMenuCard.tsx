@@ -103,7 +103,7 @@ const ChMenuCard: React.FC<ChMenu> = ({ id, title, price, favoriteMenu }) => {
         <div onClick={handleClick}>
           {/* <MenuCardImage image={image}> */}
           <HeartButtonWrapper>
-            <button onClick={toggleLike}>{favoriteMenu ? '💖' : '🖤'}</button>
+            <button onClick={toggleLike}>{liked ? '💖' : '🖤'}</button>
           </HeartButtonWrapper>
           {/* </MenuCardImage> */}
           <div>

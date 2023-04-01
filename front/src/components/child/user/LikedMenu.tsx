@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import API from '../../../store/API';
+import { log } from 'console';
 
 const MenuList = styled.div`
   display: flex;
@@ -25,16 +26,16 @@ const CardHeader = styled.div`
   border-bottom: 1px solid #ccc;
 `;
 
-const LikeButton = styled.button<{ isLiked: boolean }>`
-  background-color: ${({ isLiked }) => (isLiked ? '#ff6b6b' : '#f5f5f5')};
-  color: ${({ isLiked }) => (isLiked ? '#fff' : '#333')};
+const LikeButton = styled.button`
+  background-color:  #ff6b6b;
+  color:  #fff;
   border: none;
   padding: 6px 12px;
   border-radius: 4px;
   cursor: pointer;
 
   &:hover {
-    background-color: ${({ isLiked }) => (isLiked ? '#ff3b3b' : '#ddd')};
+    background-color: #ff3b3b;
   }
 `;
 
@@ -51,7 +52,7 @@ type MenuType = {
 
 const LikedMenu = () => {
   const [menus, setMenus] = useState<MenuType[]>([]);
-  const [isLiked, setIsLiked] = useState(true);
+  // const [isLiked, setIsLiked] = useState(true);
 
   const handleDelete = (menuId: number) => {
     setMenus((prev) => prev.filter((menu) => menu.menuId !== menuId)); // 목록에서 해당 메뉴 삭제
@@ -65,17 +66,18 @@ const LikedMenu = () => {
       .catch((error) => {
         console.log(error);
       });
-  });
+  }, []);
 
   const toggleLike = (menuId: number) => {
     API.delete('favors', { data: { menuId: menuId } })
       .then(() => {
         handleDelete(menuId); // API 요청이 성공적으로 이루어졌을 때, 목록에서 해당 메뉴를 삭제하기 위해 onDelete 함수 호출
+        console.log('선호 메뉴 삭제 완');
       })
       .catch((error) => {
         console.error(error);
       });
-    setIsLiked((prev) => !prev);
+    // setIsLiked((prev) => !prev);
   };
 
   if (menus.length === 0) {
@@ -92,9 +94,10 @@ const LikedMenu = () => {
             <h3>{menu.menuName}</h3>
             <LikeButton
               onClick={() => toggleLike(menu.menuId)}
-              isLiked={isLiked}
             >
-              {isLiked ? '좋아요 취소' : '좋아요'}
+              {/* {isLiked ?  */}
+              좋아요 취소
+              {/* //  : '좋아요'} */}
             </LikeButton>
           </CardHeader>
           <CardBody>
