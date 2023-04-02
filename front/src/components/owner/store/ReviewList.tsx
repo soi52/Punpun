@@ -10,17 +10,22 @@ const Wrapper = styled.div`
   padding: 20px;
 `;
 
-interface Reviews {
+type Review = {
   reviewId: number;
   reviewContent: string;
-  keywords: { content: string }[]; // keywords 배열 요소 타입을 정의합니다.
+  keywords: {
+    content: string;
+    createdDateTime: string;
+    lastModifiedDateTime: string;
+    id: number;
+  }[];
   childId: number;
   childName: string;
   childProfileUrl: string;
-}
+};
 
 function ReviewList() {
-  const [owReviews, setOwReviews] = useState<Reviews[]>([]); // 배열 상태를 명시합니다.
+  const [owReviews, setOwReviews] = useState<Review[]>([]); // 배열 상태를 명시합니다.
   const selectedStore = useRecoilValue(selectedStoreState);
 
   useEffect(() => {

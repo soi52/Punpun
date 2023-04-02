@@ -143,7 +143,7 @@ function Header(props: HeaderProps) {
   };
   return (
     <Wrapper>
-      <Logo />
+      <Logo onClick={toMain}/>
       <Contents>
         <nav>{renderNav()}</nav>
       </Contents>

@@ -18,8 +18,9 @@ type TodayBookingProps = {
 };
 
 const Wrapper = styled.div`
-    display; flex;
-    align-items: center;
+  display; flex;
+  align-items: center;
+  margin: 30px;
 `;
 
 const PostIt = styled.div`
@@ -61,11 +62,25 @@ const HrDiv = styled.hr`
 `;
 
 const TodayBooking = ({ bookings, setBookings }: TodayBookingProps) => {
+
+const formattedBookings = bookings.map(booking => {
+  const date = new Date(booking.reservationTime);
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1; 
+  const day = date.getDate();
+  const hour = date.getHours();
+  const minute = date.getMinutes();
+  const formattedTime = `${year}년 ${month}월 ${day}일 ${hour}시 ${minute}분`;
   
+  return {
+    ...booking,
+    reservationTime: formattedTime
+  };
+}).reverse();
 
   return (
     <>
-      {bookings.map((booking, index) => (
+      {formattedBookings.map((booking, index) => (
         <Wrapper key={index}>
           <PostIt>
             <ReservationInfo>

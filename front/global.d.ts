@@ -4,3 +4,8 @@ declare namespace JSX {
     actpage?: string;
   }
 }
+
+declare module '*.mp4' {
+  const src: string;
+  export default src;
+}
