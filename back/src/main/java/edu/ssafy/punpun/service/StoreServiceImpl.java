@@ -114,7 +114,6 @@ public class StoreServiceImpl implements StoreService {
                 store.updateImage(originImage);
             }
         }
-
     }
 
     @Override

@@ -22,10 +22,13 @@ import org.springframework.mock.web.MockMultipartFile;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -314,45 +317,159 @@ public class StoreServiceImplTest {
 
     }
 
-//    @Nested
-//    @DisplayName("가게 상세 정보 수정 - 사장")
-//    public class updateStoreDetail {
-//
-//        @Test
-//        @DisplayName("가게 상세 정보 수정 - 정상 동작, 기존 이미지 없는 경우")
-//        void updateStoreDetail() throws IOException {
-//            // given
-//            Member member = Member.builder()
-//                    .id(1L)
-//                    .name("memberTest")
-//                    .role(UserRole.OWNER)
-//                    .build();
-//            Store store = Store.builder()
-//                    .id(1L)
-//                    .owner(member)
-//                    .build();
-//            doReturn(Optional.of(store)).when(storeRepository).findById(1L);
-//
-//            final String fileName = "testImage1"; //파일명
-//            final String contentType = "png"; //파일타입
-//            final String filePath = "src/test/resources/testImage/"+fileName+"."+contentType; //파일경로
-//            FileInputStream fileInputStream = new FileInputStream(new File(filePath));
-//            MockMultipartFile image = new MockMultipartFile(
-//                    "images", //name
-//                    fileName + "." + contentType, //originalFilename
-//                    contentType,
-//                    fileInputStream
-//            );
-//            StoreDetailRequestDTO storeDetailRequestDTO = new StoreDetailRequestDTO();
-//
-//            // when
-//            storeService.updateStoreDetail(1L, member, storeDetailRequestDTO, image);
-//
-//            // then
-//            assertThat(store.getImage()).isEqualTo(any(Image.class));
-//        }
-//
-//    }
+    @Nested
+    @DisplayName("가게 상세 정보 수정 - 사장")
+    public class updateStoreDetail {
+        // TODO : Docker 연결 혹은 S3 Mock 사용
+
+        @Test
+        @DisplayName("가게 상세 정보 수정 - 정상 동작, 기존 이미지 없는 경우")
+        void updateStoreDetail1() throws IOException {
+            // given
+            Member member = Member.builder()
+                    .id(1L)
+                    .name("memberTest")
+                    .role(UserRole.OWNER)
+                    .build();
+            Store store = Store.builder()
+                    .id(1L)
+                    .owner(member)
+                    .build();
+            doReturn(Optional.of(store)).when(storeRepository).findById(1L);
+
+            final String fileName = "testImage1"; //파일명
+            final String contentType = "png"; //파일타입
+            final String filePath = "src/test/resources/testImage/"+fileName+"."+contentType; //파일경로
+            FileInputStream fileInputStream = new FileInputStream(new File(filePath));
+            MockMultipartFile image = new MockMultipartFile(
+                    "storeImage", //name
+                    fileName + "." + contentType, //originalFilename
+                    contentType,
+                    fileInputStream
+            );
+            StoreDetailRequestDTO storeDetailRequestDTO = new StoreDetailRequestDTO();
+            Map<String, String> map = new HashMap<>();
+            doReturn(map).when(s3Uploader).upload(image, "storeImage");
+
+            // when
+            storeService.updateStoreDetail(1L, member, storeDetailRequestDTO, image);
+
+            // then
+            verify(imageRepository, times(1)).save(any(Image.class));
+            assertThat(store.getImage()).isNotNull();
+        }
+
+        @Test
+        @DisplayName("가게 상세 정보 수정 - 정상 동작, 기존 이미지가 있는 경우")
+        void updateStoreDetail2() throws IOException {
+            // given
+            Member member = Member.builder()
+                    .id(1L)
+                    .name("memberTest")
+                    .role(UserRole.OWNER)
+                    .build();
+            Image image = Image.builder()
+                    .id(1L)
+                    .name("testImage")
+                    .build();
+            Store store = Store.builder()
+                    .id(1L)
+                    .owner(member)
+                    .image(image)
+                    .build();
+            doReturn(Optional.of(store)).when(storeRepository).findById(1L);
+            doReturn(Optional.of(image)).when(imageRepository).findById(1L);
+
+            final String fileName = "testImage1"; //파일명
+            final String contentType = "png"; //파일타입
+            final String filePath = "src/test/resources/testImage/"+fileName+"."+contentType; //파일경로
+            FileInputStream fileInputStream = new FileInputStream(new File(filePath));
+            MockMultipartFile fileImage = new MockMultipartFile(
+                    "storeImage", //name
+                    fileName + "." + contentType, //originalFilename
+                    contentType,
+                    fileInputStream
+            );
+            StoreDetailRequestDTO storeDetailRequestDTO = new StoreDetailRequestDTO();
+            Map<String, String> map = new HashMap<>();
+            doReturn(map).when(s3Uploader).upload(fileImage, "storeImage");
+
+            // when
+            storeService.updateStoreDetail(1L, member, storeDetailRequestDTO, fileImage);
+
+            // then
+            verify(imageRepository, times(0)).save(any(Image.class));
+            assertThat(store.getImage()).isNotNull();
+            assertThat(store.getImage().getName()).isNotEqualTo("testImage");
+        }
+
+        @Test
+        @DisplayName("가게 상세 정보 수정 - 가게가 존재하지 않는 경우")
+        void updateStoreDetail3() throws IOException {
+            // given
+            Member member = Member.builder()
+                    .id(1L)
+                    .name("memberTest")
+                    .role(UserRole.OWNER)
+                    .build();
+            doReturn(Optional.empty()).when(storeRepository).findById(1L);
+
+            final String fileName = "testImage1"; //파일명
+            final String contentType = "png"; //파일타입
+            final String filePath = "src/test/resources/testImage/"+fileName+"."+contentType; //파일경로
+            FileInputStream fileInputStream = new FileInputStream(new File(filePath));
+            MockMultipartFile fileImage = new MockMultipartFile(
+                    "storeImage", //name
+                    fileName + "." + contentType, //originalFilename
+                    contentType,
+                    fileInputStream
+            );
+
+            // when
+            // then
+            assertThatThrownBy(() -> storeService.updateStoreDetail(1L, member, any(StoreDetailRequestDTO.class), fileImage))
+                    .isInstanceOf(IllegalArgumentException.class);
+        }
+
+        @Test
+        @DisplayName("가게 상세 정보 수정 - 가게entity에 저장된 이미지와 entity가 맞지 않는 경우")
+        void updateStoreDetail4() throws IOException {
+            // given
+            Member member = Member.builder()
+                    .id(1L)
+                    .name("memberTest")
+                    .role(UserRole.OWNER)
+                    .build();
+            Image image = Image.builder()
+                    .id(1L)
+                    .build();
+            Store store = Store.builder()
+                    .id(1L)
+                    .owner(member)
+                    .image(image)
+                    .build();
+            doReturn(Optional.of(store)).when(storeRepository).findById(1L);
+            doReturn(Optional.empty()).when(imageRepository).findById(store.getImage().getId());
+
+            final String fileName = "testImage1"; //파일명
+            final String contentType = "png"; //파일타입
+            final String filePath = "src/test/resources/testImage/"+fileName+"."+contentType; //파일경로
+            FileInputStream fileInputStream = new FileInputStream(new File(filePath));
+            MockMultipartFile fileImage = new MockMultipartFile(
+                    "storeImage", //name
+                    fileName + "." + contentType, //originalFilename
+                    contentType,
+                    fileInputStream
+            );
+            StoreDetailRequestDTO storeDetailRequestDTO = new StoreDetailRequestDTO();
+
+            // when
+            // then
+            assertThatThrownBy(() -> storeService.updateStoreDetail(1L, member, storeDetailRequestDTO, fileImage))
+                    .isInstanceOf(IllegalArgumentException.class);
+        }
+
+    }
 
     @Nested
     @DisplayName("가게 사장이 가게 삭제 하기 _ 가게 등록 해제")

@@ -1,6 +1,7 @@
 package edu.ssafy.punpun.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import edu.ssafy.punpun.dto.request.StoreDetailRequestDTO;
 import edu.ssafy.punpun.dto.response.*;
 import edu.ssafy.punpun.entity.Child;
 import edu.ssafy.punpun.entity.Member;
@@ -11,12 +12,20 @@ import edu.ssafy.punpun.service.StoreService;
 import edu.ssafy.testutil.WIthCustomChild;
 import edu.ssafy.testutil.WIthCustomOwner;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.mock.web.MockPart;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -156,6 +165,35 @@ public class StoreControllerTest {
         mockMvc.perform(post("/stores/1")
                         .with(csrf()))
                 .andExpect(status().isCreated())
+                .andDo(print());
+    }
+
+    @Test
+    @WIthCustomOwner
+    @DisplayName("put - 가게 상세 정보 수정 - 사장 입장")
+    void updateStoreDetail1() throws Exception {
+        StoreDetailRequestDTO storeDTO = new StoreDetailRequestDTO();
+        storeDTO.setStoreName("Test Store");
+        storeDTO.setStoreOpenTime("9:00AM - 5:00PM");
+        storeDTO.setStoreInfo("This is a test store.");
+        storeDTO.setStoreAddress("123 Main St.");
+        storeDTO.setStorePhoneNumber("555-1234");
+        storeDTO.setStoreAlwaysShare(false);
+        String storeDTOJson = new ObjectMapper().writeValueAsString(storeDTO);
+        MockMultipartFile storeInfo = new MockMultipartFile("storeInfo", "storeInfo", "application/json", storeDTOJson.getBytes(StandardCharsets.UTF_8));
+        MockMultipartFile storeImage = new MockMultipartFile("storeImage", "test.png", "image/png", "test".getBytes());
+
+        doNothing().when(storeService).updateStoreDetail(eq(1L), any(Member.class), any(StoreDetailRequestDTO.class), any(MultipartFile.class));
+
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/stores/1")
+                        .file(storeImage)
+                        .file(storeInfo)
+                        .with(request -> {
+                            request.setMethod("PUT");
+                            return request;
+                        })
+                        .with(csrf()))
+                .andExpect(status().isOk())
                 .andDo(print());
     }
 
