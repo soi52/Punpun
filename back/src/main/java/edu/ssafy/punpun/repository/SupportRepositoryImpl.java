@@ -33,7 +33,7 @@ public class SupportRepositoryImpl implements  SupportCustomRepository {
                 .where(support.store.id.eq(storeId),
                         support.supportType.eq(supportType),
                         eqDate(date))
-                .groupBy(support.supportDate, support.menu.id)
+                .groupBy(support.supportDate, support.menu.id, support.supportType, support.menu.name)
                 .offset(pageRequest.getOffset())
                 .limit(pageRequest.getPageSize())
                 .orderBy(support.supportDate.desc())
