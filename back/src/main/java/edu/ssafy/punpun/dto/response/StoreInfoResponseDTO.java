@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 public class StoreInfoResponseDTO {
     private Long storeId;
     private String storeName;
+    private String storeAddress;
     private double storeLon;
     private double storeLat;
     private String storeInfo;
@@ -21,6 +22,7 @@ public class StoreInfoResponseDTO {
         this.storeId = store.getId();
         this.storeName = store.getName();
         this.storeInfo = store.getInfo();
+        this.storeAddress = store.getAddress();
         this.storeLon = store.getLon();
         this.storeLat = store.getLat();
         if (store.getImage() != null) {
