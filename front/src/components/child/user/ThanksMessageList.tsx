@@ -17,10 +17,24 @@ const ReviewText = styled.p`
   font-size: 16px;
 `;
 
+const MessageButton = styled.button`
+  border: none;
+  border-radius: 15px;
+  text-align: center;
+  padding: 7px;
+  background-color: #E7E6F2;
+`;
+
+interface KeywordType {
+  content: string;
+  createdDateTime: string;
+  id: number;
+  lastModifiedDateTime: string;
+}
 
 type Message = {
   reviewContent: string;
-  keyword: string;
+  keywords: KeywordType[];
   reviewId: number;
 }
 
@@ -45,7 +59,12 @@ const ThanksMessageList = () => {
   return (
     <Review>
       {messages.map((message, index) => (
-        <ReviewText key={index}>{message.reviewContent}</ReviewText>
+        <>
+          <ReviewText key={index}>{message.reviewContent}</ReviewText>
+          {message.keywords.map((keyword, index) => (
+            <MessageButton key={index}>{keyword.content}</MessageButton>
+          ))}
+        </>
       ))}
     </Review>
   );

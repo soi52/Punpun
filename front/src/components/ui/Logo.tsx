@@ -8,13 +8,31 @@ const bounce = keyframes`
   0% {
     transform: translateY(0);
   }
+  25% {
+    transform: translateY(-3px);
+  }
   50% {
-    transform: translateY(-5px);
+    transform: translateY(0);
+  }
+  75% {
+    transform: translateY(-2px);
   }
   100% {
     transform: translateY(0);
   }
 `;
+
+// const bounce = keyframes`
+//   0% {
+//     transform: translateY(0);
+//   }
+//   50% {
+//     transform: translateY(-5px);
+//   }
+//   100% {
+//     transform: translateY(0);
+//   }
+// `;
 
 const LogoImgWrapper = styled.div`
   display: flex;

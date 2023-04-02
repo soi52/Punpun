@@ -1,13 +1,35 @@
 import styled from 'styled-components';
 import defaultUserImage from '../../resources/images/profileDefault.png';
 
-const Review = styled.div`
+export type Review = {
+  reviewId: number;
+  reviewContent: string;
+  keywords: {
+    content: string;
+    createdDateTime: string;
+    lastModifiedDateTime: string;
+    id: number;
+  }[];
+  childId: number;
+  childName: string;
+  childProfileUrl: string;
+};
+
+const ReviewItem = styled.div`
   display: flex;
   align-items: center;
   margin: 10px;
   padding: 10px;
   background-color: #ffffff;
   border-radius: 20px;
+`;
+
+const MessageButton = styled.button`
+  border: none;
+  border-radius: 15px;
+  text-align: center;
+  padding: 7px;
+  background-color: #E7E6F2;
 `;
 
 const UserImage = styled.img`
@@ -26,23 +48,16 @@ const ReviewText = styled.p`
   font-size: 16px;
 `;
 
-interface ReviewItemProps {
-  reviews: {
-    reviewId: number;
-    reviewContent: string;
-    keywords: { content: string }[]; // keywords 배열 요소 타입을 정의합니다.
-    childId: number;
-    childName: string;
-    childProfileUrl: string;
-  }[];
-}
+export type ReviewItemProps = {
+  reviews: Review[];
+};
 
-function ReviewItem({ reviews }: ReviewItemProps) {
+function ReviewItemList({ reviews }: ReviewItemProps) {
   if (reviews.length === 0) {
     return <div>리뷰가 없습니다.</div>;
   } else {
     const reviewList = reviews.map((review) => (
-      <Review key={review.reviewId}>
+      <ReviewItem key={review.reviewId}>
         <UserImage
           src={review.childProfileUrl || defaultUserImage}
           alt="User Image"
@@ -51,13 +66,13 @@ function ReviewItem({ reviews }: ReviewItemProps) {
           <UserName>{review.childName}</UserName>
           <ReviewText>{review.reviewContent}</ReviewText>
           {review.keywords && review.keywords.length > 0 && (
-            <ReviewText>{review.keywords[0].content}</ReviewText>
+            <MessageButton>{review.keywords[0].content}</MessageButton>
           )}
         </div>
-      </Review>
+      </ReviewItem>
     ));
     return <>{reviewList}</>;
   }
 }
 
-export default ReviewItem;
+export default ReviewItemList;
