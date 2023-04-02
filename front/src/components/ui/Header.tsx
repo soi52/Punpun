@@ -100,7 +100,7 @@ function Header(props: HeaderProps) {
       .catch((error: any) => {
         console.error(error);
       });
-  }, [selectedStoreState]);
+  }, [setOwStores]);
 
   const renderNav = () => {
     if (isLoggedIn) {

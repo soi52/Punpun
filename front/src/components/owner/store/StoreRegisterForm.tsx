@@ -1,10 +1,20 @@
-import { useState, ChangeEvent } from 'react';
+import { useState, ChangeEvent, useEffect } from 'react';
 import styled from 'styled-components';
+import StoreSearchModal from './StoreSearchModal';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import {
+  isRegisterState,
+  isRegisterStoreState,
+  owStoreState,
+  selectedMyStoreState,
+} from '../../../store/atoms';
+import API from '../../../store/API';
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
-    display: flex;
-    flex-direction: column;
-    width: 50%;
+  display: flex;
+  flex-direction: column;
+  width: 50%;
 `;
 
 const FormStyle = styled.form`
@@ -65,7 +75,7 @@ const ImgBox = styled.div`
 `;
 
 const CheckBoxBox = styled.div`
-    display: flex;
+  display: flex;
 `;
 
 const SubmitBox = styled.div`
@@ -84,51 +94,94 @@ const SubmitButton = styled.button`
   cursor: pointer;
 `;
 
-interface IFormValues {
+export interface Store {
+  storeId: number;
   storeName: string;
-  ownerName: string;
-  phoneNumber: string;
-  address: string;
-  description: string;
-  image: File | null;
+  storeOpenTime: string | null;
+  storeInfo: string | null;
+  storeAddress: string;
+  storeLon: number;
+  storeLat: number;
+  storeImageName: string | null;
+  storeImage: string | null;
+  storePhoneNumber: string | null;
+  menuDTOList: MenuDTO[];
 }
 
+export type MenuDTO = {
+  menuId: number;
+  menuName: string;
+  menuPrice: number;
+  menuCount: number;
+};
+
 const StoreRegisterForm = () => {
-  const [formValues, setFormValues] = useState<IFormValues>({
-    storeName: '',
-    ownerName: '',
-    phoneNumber: '',
-    address: '',
-    description: '',
-    image: null,
-  });
+  const selectedMyStore = useRecoilValue(selectedMyStoreState);
+  const [stores, setStores] = useRecoilState(owStoreState);
+  const [isRegisterStore, setIsRegisterStore] =
+    useRecoilState(isRegisterStoreState);
+  const [registerStore, setRegisterStore] = useState<Store | null>();
+  const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
 
-  const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const selectedImage = event.target.files && event.target.files[0];
-    setFormValues({ ...formValues, image: selectedImage });
+  useEffect(() => {
+    API.get(`stores/${selectedMyStore?.storeId}`)
+      .then((response: any) => {
+        console.log(response.data);
+        setRegisterStore(response.data);
+      })
+      .catch((error: any) => {
+        console.error(error);
+      });
+  }, [selectedMyStore]);
 
-    // Show preview of the selected image
-    if (selectedImage) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        const previewImageElement = document.getElementById(
-          'previewImage'
-        ) as HTMLImageElement;
-        previewImageElement.setAttribute('src', event.target?.result as string);
-      };
-      reader.readAsDataURL(selectedImage);
-    }
+  const handleSearch = () => {
+    setShowModal(true);
   };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
+  // const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
+  //   const selectedImage = event.target.files && event.target.files[0];
+  //   setFormValues({ ...formValues, image: selectedImage });
+
+  //   if (selectedImage) {
+  //     const reader = new FileReader();
+  //     reader.onload = (event) => {
+  //       const previewImageElement = document.getElementById(
+  //         'previewImage'
+  //       ) as HTMLImageElement;
+  //       previewImageElement.setAttribute('src', event.target?.result as string);
+  //     };
+  //     reader.readAsDataURL(selectedImage);
+  //   }
+  // };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     // 폼 제출 코드
   };
 
+  const handleRegister = () => {
+    API.post(`stores/${registerStore?.storeId}`, {
+      storeId: registerStore?.storeId,
+    })
+      .then((response: any) => {
+        console.log(response.data);
+        setIsRegisterStore(true);
+      })
+      .catch((error: any) => {
+        console.error(error);
+      });
+    navigate('/owstorelist');
+  };
+
   return (
-    <Container id='container'>
-      <FormStyle id='form' onSubmit={handleSubmit}>
-        <InputBox>
+    <Container id="container">
+      <FormStyle id="form" onSubmit={handleSubmit}>
+        {/* <InputBox>
           <ImgBox>
             {formValues.image ? (
               <PreviewImage id="previewImage" src="" />
@@ -144,20 +197,34 @@ const StoreRegisterForm = () => {
             onChange={handleImageChange}
             required
           />
-        </InputBox>
+        </InputBox> */}
         <InputBox>
           <InputLabel>가게명</InputLabel>
-          <InputField type="text" name="storeName" required />
+          <InputField
+            type="text"
+            name="storeName"
+            defaultValue={registerStore?.storeName}
+          />
+          <button onClick={handleSearch}>가게명 검색하기</button>
         </InputBox>
+        {showModal && <StoreSearchModal onClose={handleCloseModal} />}
         <InputBox>
           <InputLabel>주소</InputLabel>
-          <InputField type="text" name="storeLocation" required />
+          <InputField
+            type="text"
+            name="storeLocation"
+            defaultValue={registerStore?.storeAddress}
+          />
         </InputBox>
         <InputBox>
           <InputLabel>전화번호</InputLabel>
-          <InputField type="text" name="storePhoneNumber" required />
+          <InputField
+            type="text"
+            name="storePhoneNumber"
+            defaultValue={registerStore?.storePhoneNumber ?? ''}
+          />
         </InputBox>
-        <InputBox>
+        {/* <InputBox>
           <InputLabel>사업자 등록증 첨부</InputLabel>
           <InputField
             type="file"
@@ -165,20 +232,19 @@ const StoreRegisterForm = () => {
             accept="image/*"
             required
           />
-        </InputBox>
+        </InputBox> */}
         <CheckBoxBox>
           <InputLabel>항상 나눔하고 싶어요</InputLabel>
           <InputField
             type="checkbox"
             name="businessCertificate"
             accept="image/*"
-            required
           />
         </CheckBoxBox>
         <span>결식아동들이 항상 예약을 요청할 수 있어요.</span>
       </FormStyle>
       <SubmitBox>
-        <SubmitButton type="submit">등록하기</SubmitButton>
+        <SubmitButton onClick={handleRegister}>등록하기</SubmitButton>
       </SubmitBox>
     </Container>
   );

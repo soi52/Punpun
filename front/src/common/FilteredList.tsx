@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
+import { OwStore, isRegisterState, selectedMyStoreState } from '../store/atoms';
+import StoreRegisterItem, {
+  Store,
+} from '../components/owner/store/StoreRegisterItem';
 
 const StyledLink = styled(Link)`
   text-decoration: none;
@@ -79,30 +84,13 @@ type FilteredListProps = {
   keyword: string; // 페이지당 보여줄 아이템 수
 };
 
-type MenuDTO = {
-  menuId: number;
-  menuName: string;
-  menuPrice: number;
-  menuCount: number;
-};
-
-type Store = {
-  storeId: number;
-  storeName: string;
-  storeOpenTime: string | null;
-  storeInfo: string | null;
-  storeAddress: string;
-  storeLon: number;
-  storeLat: number;
-  storeImageName: string | null;
-  storeImage: string | null;
-  storePhoneNumber: string | null;
-  menuDTOList: MenuDTO[];
-};
-
 const FilteredList = ({ stores, keyword }: FilteredListProps) => {
   const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
+  const isRegister = useRecoilValue(isRegisterState);
+  const [selectedMyStore, setSelectedMyStore] =
+    useRecoilState(selectedMyStoreState);
+
   const filteredList = stores.filter((store) =>
     store.storeName.includes(keyword)
   );
@@ -116,6 +104,10 @@ const FilteredList = ({ stores, keyword }: FilteredListProps) => {
   const endIndex = startIndex + itemsPerPage;
   const currentItems = filteredList.slice(startIndex, endIndex);
 
+  const handleSelectStore = (store: Store | null) => {
+    setSelectedMyStore(store);
+  };
+
   // 페이지네이션 UI를 만듭니다.
   const getPageButtons = () => {
     const pageButtons = [];
@@ -126,7 +118,7 @@ const FilteredList = ({ stores, keyword }: FilteredListProps) => {
         <button
           key={page}
           onClick={() => setCurrentPage(page)}
-          className={currentPage === page ? "active" : ""}
+          className={currentPage === page ? 'active' : ''}
         >
           {page}
         </button>
@@ -157,15 +149,30 @@ const FilteredList = ({ stores, keyword }: FilteredListProps) => {
 
   return (
     <div>
-      <List>
-        {currentItems.map((store, index) => (
-          <ListItem key={index}>
-            <StyledLink to={`/store/${store.storeId}`}>
-              <StoreName>{store.storeName}</StoreName>
-            </StyledLink>
-          </ListItem>
-        ))}
-      </List>
+      {isRegister ? (
+        <List>
+          {currentItems.map((store, index) => (
+            <StoreRegisterItem
+              key={index}
+              store={store}
+              index={index}
+              onSelectStore={handleSelectStore}
+              selectedMyStore={selectedMyStore}
+            />
+          ))}
+        </List>
+      ) : (
+        // isOwner가 false일 경우 가게로 이동하는 코드를 렌더링합니다.
+        <List>
+          {stores.map((store) => (
+            <ListItem key={store.storeId}>
+              <StyledLink to={`/store/${store.storeId}`}>
+                <StoreName>{store.storeName}</StoreName>
+              </StyledLink>
+            </ListItem>
+          ))}
+        </List>
+      )}
       {/* 페이지네이션 UI를 만듭니다. */}
       <Pagination>
         <button
