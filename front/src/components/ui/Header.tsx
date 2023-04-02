@@ -6,6 +6,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import {
   isLoggedInState,
   isOwnerState,
+  isSupporterState,
   owStoreState,
   selectedStoreState,
   userInfoState,
@@ -55,6 +56,7 @@ function Header(props: HeaderProps) {
   const role: string = localStorage.getItem('role') || '';
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLoggedInState);
   const [isOwner, setIsOwner] = useRecoilState(isOwnerState);
+  const [isSupporter, setIsSupporter] = useRecoilState(isSupporterState);
   const [selectedItem, setSelectedItem] = useState('후원자');
   const [owStores, setOwStores] = useRecoilState(owStoreState);
   const navigate = useNavigate();
@@ -80,9 +82,11 @@ function Header(props: HeaderProps) {
     setSelectedItem(item);
     if (item === '사장님') {
       setIsOwner(true);
+      setIsSupporter(false);
       toOwStore();
     } else if (item === '후원자') {
       setIsOwner(false);
+      setIsSupporter(true);
       toMain();
     }
   };
