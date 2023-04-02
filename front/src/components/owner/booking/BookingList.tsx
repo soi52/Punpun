@@ -2,12 +2,20 @@ import styled from 'styled-components';
 import StoreInfo from '../StoreInfo';
 import BookingFix from './BookingFix';
 import BookingRequest from './BookingRequest';
+import { useEffect, useState } from 'react';
+import API from '../../../store/API';
+import { useRecoilValue } from 'recoil';
+import { selectedStoreState } from '../../../store/atoms';
 
 interface Booking {
-  id: number;
-  name: string;
-  date: string;
-  time: string;
+  id: number; // id 프로퍼티 추가
+  childId: number;
+  childName: string;
+  menuId: number;
+  menuName: string;
+  reservationId: number;
+  reservationSate: string;
+  reservationTime: string;
 }
 
 interface BookingListProps {
@@ -24,11 +32,19 @@ const BookingContainer = styled.div`
 `;
 
 function BookingList() {
-  const bookings: Booking[] = [
-    { id: 1, name: 'John', date: '2022-03-20', time: '10:00' },
-    { id: 2, name: 'Jane', date: '2022-03-21', time: '14:00' },
-    { id: 3, name: 'Bob', date: '2022-03-22', time: '16:00' },
-  ];
+  const selectedStore = useRecoilValue(selectedStoreState);
+  const [bookings, setBookings] = useState<Booking[]>([]); // bookings의 타입을 명시적으로 지정
+
+  useEffect(() => {
+    API.get(`bookings/store/${selectedStore?.storeId}`)
+      .then((response: any) => {
+        console.log(response.data.content);
+        setBookings(response.data.content);
+      })
+      .catch((error: any) => {
+        console.error(error);
+      });
+  }, []);
 
   return (
     <Wrapper>

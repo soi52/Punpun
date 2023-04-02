@@ -1,18 +1,23 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
+import API from '../../store/API';
 
 export interface Booking {
-  id: number;
-  name: string;
-  date: string;
-  time: string;
+  id: number; // id 프로퍼티 추가
+  childId: number;
+  childName: string;
+  menuId: number;
+  menuName: string;
+  reservationId: number;
+  reservationSate: string;
+  reservationTime: string;
 }
 
 interface BookingItemProps {
   booking: Booking;
   isActive: boolean;
   onClick: () => void;
-  isRequest?: boolean; // BookingRequest에서만 수락, 거절 버튼을 보여주도록 추가
+  isRequest?: boolean;
 }
 
 const fadeIn = keyframes`
@@ -40,30 +45,51 @@ const BookingItem: React.FC<BookingItemProps> = ({
   booking,
   isActive,
   onClick,
-  isRequest = false, // BookingRequest에서만 수락, 거절 버튼을 보여주도록 추가
+  isRequest = false,
 }) => {
   const handleButtonClickAdd = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-    console.log('예약 수락');
+    API.post('bookings/today', {
+      approveState: 'OK',
+      bookingId: booking.reservationId,
+    })
+      .then((response) => {
+        // 예약 수락 성공 처리
+        console.log('예약이 수락되었습니다.');
+      })
+      .catch((error) => {
+        // 예약 수락 실패 처리
+        console.error(error);
+      });
   };
   const handleButtonClickDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-    console.log('예약 거절');
+    API.post('bookings/today', {
+      approveState: 'NO',
+      bookingId: booking.reservationId,
+    })
+      .then((response) => {
+        console.log('예약이 거절되었습니다.');
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   return (
     <BookingItemContainer isActive={isActive} onClick={onClick}>
       <div>
-        {booking.name} - {booking.date}
+        {booking.childName} - {booking.reservationTime}
       </div>
       {isActive && (
         <>
           <BookingItemContent>
-            <p>{booking.name}</p>
-            <p>{booking.date}</p>
-            <p>{booking.time}</p>
+            <p>{booking.reservationId}</p>
+            <p>{booking.menuName}</p>
+            <p>{booking.reservationTime}</p>
+            {/* <p>{booking.time}</p> */}
           </BookingItemContent>
-          {isRequest && ( // BookingRequest에서만 수락, 거절 버튼을 보여주도록 변경
+          {isRequest && (
             <>
               <button onClick={handleButtonClickAdd}>수락</button>
               <button onClick={handleButtonClickDelete}>거절</button>
