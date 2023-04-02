@@ -18,9 +18,9 @@ type TodayBookingProps = {
 };
 
 const Wrapper = styled.div`
-    display; flex;
-    align-items: center;
-    margin: 30px;
+  display; flex;
+  align-items: center;
+  margin: 30px;
 `;
 
 const PostIt = styled.div`
