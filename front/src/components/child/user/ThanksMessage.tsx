@@ -9,6 +9,10 @@ const ComponentStyle = styled.div`
   padding: 20px;
 `;
 
+const BookingDiv = styled.div`
+  padding-top: 20px;
+`;
+
 const ThanksMessage = () => {
   // const [messages, setMessages] = useState<string[]>([]);
   // const handleDeleteMessage = (index: number) => {
@@ -20,8 +24,10 @@ const ThanksMessage = () => {
   return (
     <ComponentStyle>
       <ChMainMessage />
-      <h2>내가 남긴 감사메세지</h2>
-      <ThanksMessageList/>
+      <BookingDiv>
+        <h2>내가 남긴 감사메세지</h2>
+        <ThanksMessageList/>
+      </BookingDiv>
     </ComponentStyle>
   );
 };
