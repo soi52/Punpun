@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
-import { storeState } from '../../../store/atoms';
 import ChMenuCard from './ChMenuCard';
 import Loading from '../../ui/Loading';
 
@@ -25,6 +23,8 @@ type ChMenuDTO = {
   menuName: string;
   menuPrice: number;
   favoriteMenu: boolean;
+  menuImage: string | null;
+  menuImageName: string | null;
 };
 
 type ChMenuListProps = {

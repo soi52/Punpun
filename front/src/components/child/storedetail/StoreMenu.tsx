@@ -10,6 +10,8 @@ type MenuDTO = {
   menuName: string;
   menuPrice: number;
   menuCount: number;
+  menuImage: string | null;
+  menuImageName: string | null;
 };
 
 type ChMenuDTO = {
