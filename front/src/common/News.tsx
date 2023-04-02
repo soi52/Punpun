@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import NewsCard from './NewsCard';
 import styled from 'styled-components';
 import Slider from 'react-slick';
-import he from 'he';
+import { Fade } from 'react-awesome-reveal';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
@@ -19,7 +19,7 @@ const PrevArrow = (props: any) => {
         style={{
           ...style,
           display: 'block',
-          // background: '#C4C4C4',
+          background: '#C4C4C4',
           borderRadius: '50%',
           width: '35px',
           height: '35px',
@@ -140,13 +140,15 @@ const News = () => {
 
   return (
     <Container>
-      <Slider {...sliderSettings}>
-        {newsItems.map((item) => (
-          <Wrapper key={item.link}>
-            <NewsCard newsItem={item} />
-          </Wrapper>
-        ))}
-      </Slider>
+      <Fade duration={2000} direction="up">
+        <Slider {...sliderSettings}>
+          {newsItems.map((item) => (
+            <Wrapper key={item.link}>
+              <NewsCard newsItem={item} />
+            </Wrapper>
+          ))}
+        </Slider>
+      </Fade>
     </Container>
   );
 };
