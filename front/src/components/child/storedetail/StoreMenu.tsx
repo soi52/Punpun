@@ -48,7 +48,7 @@ const StoreMenu = ({ myStoreId }: Props) => {
       if (myStoreId) {
         API.get(`stores/${myStoreId}`)
           .then((response) => {
-            setMenuDTOList(response.data.menuResponseDTOList);
+            setMenuDTOList(response.data.menuMemberResponseDTOList);
             setStoreName(response.data.storeName);
           })
           .catch((error) => {
