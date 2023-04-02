@@ -6,8 +6,10 @@ import edu.ssafy.punpun.entity.*;
 import edu.ssafy.punpun.entity.enumurate.UserRole;
 import edu.ssafy.punpun.exception.NotStoreOwnerException;
 import edu.ssafy.punpun.repository.FavoriteMenuRepository;
+import edu.ssafy.punpun.repository.ImageRepository;
 import edu.ssafy.punpun.repository.MenuRepository;
 import edu.ssafy.punpun.repository.StoreRepository;
+import edu.ssafy.punpun.s3.S3Uploader;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -35,6 +37,10 @@ public class StoreServiceImplTest {
     private MenuRepository menuRepository;
     @Mock
     private FavoriteMenuRepository favoriteMenuRepository;
+    @Mock
+    private ImageRepository imageRepository;
+    @Mock
+    private S3Uploader s3Uploader;
 
     @InjectMocks
     private StoreServiceImpl storeService;
@@ -258,7 +264,7 @@ public class StoreServiceImplTest {
             storeService.registerStore(1L, member);
             // then
             assertThat(store.getOwner().getId()).isEqualTo(1L);
-            assertThat(store.getLicenseNumber()).isEqualTo("117-12-51815");
+            assertThat(store.getLicenseNumber()).isEqualTo("117-12-12345");
             assertThat(member.getRole()).isEqualTo(UserRole.OWNER);
         }
 
@@ -307,7 +313,6 @@ public class StoreServiceImplTest {
         }
 
     }
-
 
 //    @Nested
 //    @DisplayName("가게 상세 정보 수정 - 사장")

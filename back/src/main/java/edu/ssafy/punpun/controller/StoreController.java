@@ -3,7 +3,6 @@ package edu.ssafy.punpun.controller;
 import edu.ssafy.punpun.dto.request.StoreDetailRequestDTO;
 import edu.ssafy.punpun.dto.response.*;
 import edu.ssafy.punpun.entity.*;
-import edu.ssafy.punpun.s3.S3Uploader;
 import edu.ssafy.punpun.security.oauth2.PrincipalChildDetail;
 import edu.ssafy.punpun.security.oauth2.PrincipalMemberDetail;
 import edu.ssafy.punpun.service.MenuService;
@@ -19,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -29,7 +27,6 @@ import java.util.stream.Collectors;
 public class StoreController {
     private final StoreService storeService;
     private final MenuService menuService;
-    private final S3Uploader s3Uploader;
 
     @ApiOperation(value = "가게 상세 정보 보기 - 사장, 후원자 입장")
     @GetMapping("/{storeId}")

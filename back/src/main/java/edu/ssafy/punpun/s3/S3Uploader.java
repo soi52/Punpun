@@ -19,7 +19,6 @@ import java.util.Map;
 import java.util.Optional;
 
 @Slf4j
-@Component
 @Service
 @RequiredArgsConstructor
 public class S3Uploader {
