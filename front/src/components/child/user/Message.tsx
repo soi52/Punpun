@@ -6,7 +6,8 @@ import MessageInput from './MessageInput';
 import MessageList from './MessageList';
 
 const ComponentStyle = styled.div`
-  padding: 20px;
+  margin: auto;
+  width: 80%;
 `;
 
 const ThanksMessage = styled.div`
@@ -14,6 +15,7 @@ const ThanksMessage = styled.div`
   flex-direction: column;
   align-items: center;
   flex-wrap: nowrap;
+  justify-content: center;
 `;
 
 type MessageBtn = {
