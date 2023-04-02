@@ -1,8 +1,13 @@
 import styled from 'styled-components';
 import StoreListItem from './StoreListItem';
 import { useEffect, useState } from 'react';
-import { useRecoilState } from 'recoil';
-import { OwStore, owStoreState } from '../../../store/atoms';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import {
+  OwStore,
+  isRegisterState,
+  isRegisterStoreState,
+  owStoreState,
+} from '../../../store/atoms';
 import { useNavigate } from 'react-router';
 import API from '../../../store/API';
 
@@ -28,18 +33,37 @@ interface StoreItemProps {
 
 function StoreList() {
   const [stores, setStores] = useRecoilState(owStoreState);
+  const [isRegister, setIsRegister] = useRecoilState(isRegisterState);
+  const [isRegisterStore, setIsRegisterStore] =
+    useRecoilState(isRegisterStoreState);
   const navigate = useNavigate();
 
   const toStoreRegister = () => {
+    setIsRegister(true);
     navigate('/owregister');
   };
 
   const handleDelete = (id: number) => {
-    const updatedStores = stores.filter(
-      (store: OwStore) => store.storeId !== id
-    );
-    setStores(updatedStores);
+    API.delete(`stores/${id}`, { params: { storeId: id } })
+      .then((response: any) => {
+        console.log(response.data);
+        setIsRegisterStore(!isRegisterStore);
+      })
+      .catch((error: any) => {
+        console.error(error);
+      });
   };
+
+  useEffect(() => {
+    API.get('stores/list')
+      .then((response: any) => {
+        console.log(response.data);
+        setStores(response.data);
+      })
+      .catch((error: any) => {
+        console.error(error);
+      });
+  }, [isRegisterStore]);
 
   return (
     <Wrapper>
