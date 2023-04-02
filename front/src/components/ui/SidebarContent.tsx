@@ -26,7 +26,7 @@ const SidebarContent: FC<SidebarContentProps> = ({
   return (
     <>
       {menuItems.map((menuItem, index) =>
-        role === 'SUPPORTER' ? (
+        isSupporter ? (
           index !== 3 ? (
             <StyledLi
               key={index}
