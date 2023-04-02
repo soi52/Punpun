@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 import { OwStore, selectedStoreState } from '../../../store/atoms';
+import API from '../../../store/API';
 
 interface StoreItemProps {
   stores: OwStore[];
