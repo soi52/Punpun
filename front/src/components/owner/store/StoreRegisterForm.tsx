@@ -5,7 +5,6 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import {
   isRegisterState,
   isRegisterStoreState,
-  owStoreState,
   selectedMyStoreState,
 } from '../../../store/atoms';
 import API from '../../../store/API';
@@ -103,7 +102,7 @@ export interface Store {
   storeLon: number;
   storeLat: number;
   storeImageName: string | null;
-  storeImage: string | null;
+  storeImage: string | File | null;
   storePhoneNumber: string | null;
   menuDTOList: MenuDTO[];
 }
@@ -117,10 +116,22 @@ export type MenuDTO = {
 
 const StoreRegisterForm = () => {
   const selectedMyStore = useRecoilValue(selectedMyStoreState);
-  const [stores, setStores] = useRecoilState(owStoreState);
+  const [isRegister, setIsRegister] = useRecoilState(isRegisterState);
   const [isRegisterStore, setIsRegisterStore] =
     useRecoilState(isRegisterStoreState);
-  const [registerStore, setRegisterStore] = useState<Store | null>();
+  const [registerStore, setRegisterStore] = useState<Store>({
+    storeId: 0,
+    storeName: '',
+    storeOpenTime: null,
+    storeInfo: null,
+    storeAddress: '',
+    storeLon: 0,
+    storeLat: 0,
+    storeImageName: null,
+    storeImage: null,
+    storePhoneNumber: null,
+    menuDTOList: [],
+  });
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
 
@@ -143,21 +154,21 @@ const StoreRegisterForm = () => {
     setShowModal(false);
   };
 
-  // const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
-  //   const selectedImage = event.target.files && event.target.files[0];
-  //   setFormValues({ ...formValues, image: selectedImage });
+  const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const selectedImage = event.target.files && event.target.files[0];
+    setRegisterStore({ ...registerStore, storeImage: selectedImage });
 
-  //   if (selectedImage) {
-  //     const reader = new FileReader();
-  //     reader.onload = (event) => {
-  //       const previewImageElement = document.getElementById(
-  //         'previewImage'
-  //       ) as HTMLImageElement;
-  //       previewImageElement.setAttribute('src', event.target?.result as string);
-  //     };
-  //     reader.readAsDataURL(selectedImage);
-  //   }
-  // };
+    if (selectedImage) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const previewImageElement = document.getElementById(
+          'previewImage'
+        ) as HTMLImageElement;
+        previewImageElement.setAttribute('src', event.target?.result as string);
+      };
+      reader.readAsDataURL(selectedImage);
+    }
+  };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -181,9 +192,9 @@ const StoreRegisterForm = () => {
   return (
     <Container id="container">
       <FormStyle id="form" onSubmit={handleSubmit}>
-        {/* <InputBox>
+        <InputBox>
           <ImgBox>
-            {formValues.image ? (
+            {registerStore?.storeImage ? (
               <PreviewImage id="previewImage" src="" />
             ) : (
               <NoImage>이미지 없음</NoImage>
@@ -195,9 +206,8 @@ const StoreRegisterForm = () => {
             name="image"
             accept="image/*"
             onChange={handleImageChange}
-            required
           />
-        </InputBox> */}
+        </InputBox>
         <InputBox>
           <InputLabel>가게명</InputLabel>
           <InputField
@@ -222,6 +232,14 @@ const StoreRegisterForm = () => {
             type="text"
             name="storePhoneNumber"
             defaultValue={registerStore?.storePhoneNumber ?? ''}
+          />
+        </InputBox>
+        <InputBox>
+          <InputLabel>가게 설명</InputLabel>
+          <InputField
+            type="text"
+            name="storeInfo"
+            defaultValue={registerStore?.storeInfo ?? ''}
           />
         </InputBox>
         {/* <InputBox>

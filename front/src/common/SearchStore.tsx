@@ -4,6 +4,9 @@ import StoreData from './StoreData.json';
 import Map from './Map';
 import SearchStoreList from './SearchStoreList';
 import useGeolocation from './UseGeolocation';
+import { useEffect } from 'react';
+import { useRecoilState } from 'recoil';
+import { isRegisterState } from '../store/atoms';
 
 type SearchStoreProps = {
   message: string;
@@ -31,13 +34,17 @@ const MapDiv = styled.div`
 `;
 
 const SearchStore = ({ message }: SearchStoreProps) => {
-  // const stores = useRecoilValue(storeState);
+  const [isRegister, setIsRegister] = useRecoilState(isRegisterState);
   console.log(StoreData);
 
   const location = useGeolocation();
   console.log(location);
   const { latitude = 0, longitude = 0 } =
     typeof location === 'object' ? location : {};
+
+  useEffect(() => {
+    setIsRegister(false);
+  });
 
   return (
     <Wrapper>
