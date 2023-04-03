@@ -69,7 +69,7 @@ public class S3Uploader {
         File convertFile = new File(file.getOriginalFilename());
         try {
             if (convertFile.createNewFile()) {
-                FileOutputStream fos = new FileOutputStream(convertFile)
+                FileOutputStream fos = new FileOutputStream(convertFile);
                 fos.write(file.getBytes());
                 return Optional.of(convertFile);
             }
