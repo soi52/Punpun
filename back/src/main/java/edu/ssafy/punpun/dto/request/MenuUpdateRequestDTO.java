@@ -11,5 +11,4 @@ public class MenuUpdateRequestDTO {
     private Long menuId;
     private String menuName;
     private Long menuPrice;
-    private Long menuImageId;
 }
