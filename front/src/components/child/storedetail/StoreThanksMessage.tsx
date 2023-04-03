@@ -1,11 +1,8 @@
-import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
-// import { reviewState } from '../../../store/atoms';
 import ReviewItem from '../../ui/ReviewItem';
 import StoreBanner from './Storebanner';
 import API from '../../../store/API';
 import { useEffect, useState } from 'react';
-import Loading from '../../ui/Loading';
 
 type Props = {
   myStoreId: string | undefined;

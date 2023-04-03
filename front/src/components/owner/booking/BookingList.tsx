@@ -47,7 +47,7 @@ function BookingList() {
   }, []);
 
   return (
-    <Wrapper>
+    <>
       <StoreInfo />
       <BookingContainer>
         <div>
@@ -59,7 +59,7 @@ function BookingList() {
           <BookingFix bookings={bookings} />
         </div>
       </BookingContainer>
-    </Wrapper>
+    </>
   );
 }
 
