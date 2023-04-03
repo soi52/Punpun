@@ -1,5 +1,6 @@
 package edu.ssafy.punpun.service;
 
+import edu.ssafy.punpun.dto.request.SupportRequestDTO;
 import edu.ssafy.punpun.entity.Member;
 import edu.ssafy.punpun.entity.Menu;
 import edu.ssafy.punpun.entity.Store;
@@ -109,6 +110,7 @@ public class SupportServiceImplTest {
                 .name("menuTest2")
                 .price(8000L)
                 .build();
+        SupportRequestDTO supportRequestDTO=new SupportRequestDTO(23000L, List.of(1L, 2L), List.of(2L,1L));
         Support support1=Support.builder()
                 .supportType(SupportType.SUPPORT)
                 .supportState(SupportState.SUPPORT)
@@ -142,7 +144,7 @@ public class SupportServiceImplTest {
         doReturn(Optional.of(member)).when(memberRepository).findById(member.getId());
         doReturn(Optional.of(menu1)).when(menuRepository).findById(menu1.getId());
         doReturn(Optional.of(menu2)).when(menuRepository).findById(menu2.getId());
-        supportService.saveSupport(supports, menuId, menuCount, member, usePoint);
+        supportService.saveSupport(member, supportRequestDTO, 0  );
 
         Assertions.assertEquals(member.getRemainPoint(), 2000L);
         Assertions.assertEquals(member.getSupportedPoint(), usePoint);

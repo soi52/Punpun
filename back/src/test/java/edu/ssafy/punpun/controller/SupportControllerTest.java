@@ -111,14 +111,8 @@ public class SupportControllerTest {
     @WIthCustomSupporter
     @DisplayName("후원 결제")
     void supportPayment() throws Exception{
-        SupportRequestDTO supportRequestDTO= new SupportRequestDTO(8000L, List.of(1L, 2L), List.of(1L,1L));
-        Support support = Support.builder()
-                .supportState(SupportState.SUPPORT)
-                .supporter(Member.builder().build())
-                .supportType(SupportType.SUPPORT)
-                .build();
-        List<Support> supports=List.of(support, support);
-        doNothing().when(supportService).saveSupport(eq(supports), eq(supportRequestDTO.getMenuId()), eq(supportRequestDTO.getMenuCount()), any(Member.class), eq(supportRequestDTO.getUsePoint()));
+         SupportRequestDTO supportRequestDTO= new SupportRequestDTO(8000L, List.of(1L, 2L), List.of(1L,1L));
+        doNothing().when(supportService).saveSupport(any(Member.class), eq(supportRequestDTO),  any(Integer.class));
 
         String input=new Gson().toJson(supportRequestDTO);
 
@@ -135,13 +129,8 @@ public class SupportControllerTest {
     @DisplayName("오늘의 나눔 등록")
     void ownerShare() throws Exception{
         SupportRequestDTO supportRequestDTO=new SupportRequestDTO(0L, List.of(1L, 2L), List.of(1L,1L));
-        Support support = Support.builder()
-                .supportState(SupportState.SUPPORT)
-                .supporter(Member.builder().build())
-                .supportType(SupportType.SHARE)
-                .build();
-        List<Support> supports=List.of(support, support);
-        doNothing().when(supportService).saveSupport(eq(supports), eq(supportRequestDTO.getMenuId()), eq(supportRequestDTO.getMenuCount()), any(Member.class), eq(0L));
+
+        doNothing().when(supportService).saveSupport(any(Member.class), eq(supportRequestDTO),  any(Integer.class));
 
         String input=new Gson().toJson(supportRequestDTO);
 
