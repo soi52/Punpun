@@ -126,6 +126,16 @@ export interface OwStore {
   menuDTOList: MenuDTO[];
 }
 
+export interface OwStoreUpdate {
+  storeId: number;
+  storeName: string;
+  storeOpenTime: string | null;
+  storeInfo: string | null;
+  storeAddress: string;
+  storePhoneNumber: string | null;
+  storeAlwaysShare: Boolean;
+}
+
 export type MenuDTO = {
   menuId: number;
   menuName: string;
@@ -139,6 +149,11 @@ export const owStoreState = atom<OwStore[]>({
 });
 
 export const selectedMyStoreState = atom<OwStore | null>({
+  key: 'selectedMyStoreState',
+  default: null,
+});
+
+export const updatedStoreState = atom<OwStoreUpdate | OwStore | null>({
   key: 'selectedMyStoreState',
   default: null,
 });

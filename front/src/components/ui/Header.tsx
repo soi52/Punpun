@@ -8,7 +8,6 @@ import {
   isOwnerState,
   isSupporterState,
   owStoreState,
-  selectedStoreState,
   userInfoState,
 } from '../../store/atoms';
 import ChildHeader from '../header/ChildHeader';
@@ -100,7 +99,7 @@ function Header(props: HeaderProps) {
       .catch((error: any) => {
         console.error(error);
       });
-  }, [setOwStores]);
+  }, []);
 
   const renderNav = () => {
     if (isLoggedIn) {
@@ -143,7 +142,7 @@ function Header(props: HeaderProps) {
   };
   return (
     <Wrapper>
-      <Logo onClick={toMain}/>
+      <Logo />
       <Contents>
         <nav>{renderNav()}</nav>
       </Contents>

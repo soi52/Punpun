@@ -3,7 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import API from '../../store/API';
-import { OwStore, owStoreState, selectedStoreState } from '../../store/atoms';
+import {
+  OwStore,
+  owStoreState,
+  OwStoreUpdate,
+  selectedStoreState,
+} from '../../store/atoms';
 import UserTypeSelector from './UserTypeSelector';
 
 const NavUl = styled.ul`
@@ -56,7 +61,7 @@ interface OwnerHeaderProps {
 
 function OwnerHeader(props: OwnerHeaderProps) {
   const [stores, setStores] = useRecoilState(owStoreState);
-  const [selectedStore, setSelectedStore] = useRecoilState<OwStore | null>(
+  const [selectedStore, setSelectedStore] = useRecoilState<null | OwStore>(
     selectedStoreState
   );
   const [storeDrop, setStoreDrop] = useState(false);
