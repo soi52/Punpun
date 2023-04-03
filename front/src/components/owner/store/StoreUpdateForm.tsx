@@ -1,14 +1,17 @@
-import { useState, ChangeEvent, useEffect, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import StoreSearchModal from './StoreSearchModal';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import {
   OwStoreUpdate,
+  isUpdatedState,
   selectedStoreState,
   updatedStoreState,
 } from '../../../store/atoms';
 import API from '../../../store/API';
 import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faImage } from '@fortawesome/free-solid-svg-icons';
 
 const Container = styled.div`
   display: flex;
@@ -70,11 +73,31 @@ const ImgBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 20px 0;
+  position: relative;
+`;
+
+const UploadIcon = styled.div`
+  position: absolute;
+  bottom: -5px;
+  right: 5px;
+  cursor: pointer;
   margin: 10px;
+  display: inline-block; /* display 속성 추가 */
 `;
 
 const CheckBoxBox = styled.div`
   display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+`;
+
+const CheckBox = styled.input`
+  margin-right: 10px;
+`;
+
+const CheckBoxLabel = styled.label`
+  font-size: 16px;
 `;
 
 const SubmitBox = styled.div`
@@ -96,6 +119,7 @@ const SubmitButton = styled.button`
 const StoreUpdateForm = () => {
   const selectedImageFile = useRef<File | null>(null);
   const selectedStore = useRecoilValue(selectedStoreState);
+  const [isUpdated, setIsUpdated] = useRecoilState(isUpdatedState);
   const [updatedStore, setUpdatedStore] = useRecoilState(updatedStoreState);
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
@@ -144,7 +168,9 @@ const StoreUpdateForm = () => {
       storeInfo: (
         document.getElementsByName('storeInfo')[0] as HTMLInputElement
       ).value,
-      storeOpenTime: updatedStore?.storeOpenTime ?? null,
+      storeOpenTime: (
+        document.getElementsByName('storeOpenTime')[0] as HTMLInputElement
+      ).value,
       storeAlwaysShare: true,
     };
 
@@ -164,7 +190,7 @@ const StoreUpdateForm = () => {
       },
     })
       .then((response: any) => {
-        console.log(response.data);
+        setIsUpdated(!isUpdated);
         navigate(`/owstore/${selectedStore?.storeId}`);
       })
       .catch((error: any) => {
@@ -177,19 +203,39 @@ const StoreUpdateForm = () => {
       <FormStyle id="form" onSubmit={handleSubmit}>
         <InputBox>
           <ImgBox>
-            {selectedStore?.storeImage ? (
-              <PreviewImage id="previewImage" src="" />
+            {selectedImageFile.current ? (
+              <PreviewImage
+                id="previewImage"
+                src={URL.createObjectURL(selectedImageFile.current)}
+              />
+            ) : selectedStore?.storeImage ? (
+              <PreviewImage id="previewImage" src={selectedStore?.storeImage} />
             ) : (
               <NoImage>이미지 없음</NoImage>
             )}
+            <label htmlFor="uploadImage">
+              <UploadIcon>
+                <FontAwesomeIcon
+                  icon={faImage}
+                  size="2x"
+                  style={{ color: 'lightgray' }}
+                />
+              </UploadIcon>
+            </label>
+            <InputField
+              id="uploadImage"
+              type="file"
+              name="image"
+              accept="image/*"
+              onChange={handleImageChange}
+              style={{
+                opacity: 0,
+                position: 'absolute',
+                top: '-9999px',
+                left: '-9999px',
+              }}
+            />
           </ImgBox>
-          <InputLabel>대표이미지 등록</InputLabel>
-          <InputField
-            type="file"
-            name="image"
-            accept="image/*"
-            onChange={handleImageChange}
-          />
         </InputBox>
         <InputBox>
           <InputLabel>가게명</InputLabel>
@@ -225,22 +271,33 @@ const StoreUpdateForm = () => {
             defaultValue={selectedStore?.storeInfo ?? ''}
           />
         </InputBox>
-        {/* <InputBox>
-          <InputLabel>사업자 등록증 첨부</InputLabel>
+        <InputBox>
+          <InputLabel>오픈시간</InputLabel>
           <InputField
-            type="file"
-            name="businessCertificate"
-            accept="image/*"
-            required
+            type="text"
+            name="storeOpenTime"
+            defaultValue={selectedStore?.storeOpenTime ?? ''}
           />
-        </InputBox> */}
+        </InputBox>
+        {/* <InputBox>
+            <InputLabel>사업자 등록증 첨부</InputLabel>
+            <InputField
+              type="file"
+              name="businessCertificate"
+              accept="image/*"
+              required
+            />
+          </InputBox> */}
         <CheckBoxBox>
-          <InputLabel>항상 나눔하고 싶어요</InputLabel>
-          <InputField
+          <CheckBox
             type="checkbox"
             name="businessCertificate"
             accept="image/*"
+            id="businessCertificate"
           />
+          <CheckBoxLabel htmlFor="businessCertificate">
+            항상 나눔하고 싶어요
+          </CheckBoxLabel>
         </CheckBoxBox>
         <span>결식아동들이 항상 예약을 요청할 수 있어요.</span>
       </FormStyle>

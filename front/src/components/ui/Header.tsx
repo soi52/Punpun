@@ -2,13 +2,12 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import Logo from './Logo';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import {
   isLoggedInState,
   isOwnerState,
   isSupporterState,
   owStoreState,
-  userInfoState,
 } from '../../store/atoms';
 import ChildHeader from '../header/ChildHeader';
 import OwnerHeader from '../header/OwnerHeader';

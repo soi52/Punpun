@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
-import { OwStore, isRegisterState, selectedMyStoreState } from '../store/atoms';
+import { isRegisterState, selectedMyStoreState } from '../store/atoms';
 import StoreRegisterItem, {
   Store,
 } from '../components/owner/store/StoreRegisterItem';

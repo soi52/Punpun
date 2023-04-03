@@ -5,8 +5,10 @@ import styled from 'styled-components';
 import API from '../../../store/API';
 import {
   isRegisterState,
+  isUpdatedState,
   owStoreMenuState,
   selectedStoreState,
+  updatedStoreState,
 } from '../../../store/atoms';
 import StoreInfo from '../StoreInfo';
 import StoreMenu from './StoreMenu';
@@ -19,19 +21,24 @@ function StoreManage() {
   const navigate = useNavigate();
   const [storeMenus, setStoreMenus] = useRecoilState(owStoreMenuState);
   const [isRegister, setIsRegister] = useRecoilState(isRegisterState);
-  const selectedStore = useRecoilValue(selectedStoreState);
+  const [isUpdated, setIsUpdated] = useRecoilState(isUpdatedState);
+  const [selectedStore, setSelectedStore] = useRecoilState(selectedStoreState);
+  const updatedStore = useRecoilValue(updatedStoreState);
+
+  // useEffect(() => {
+  //   setIsUpdated(!isUpdated);
+  // }, []);
 
   useEffect(() => {
     API.get(`stores/${selectedStore?.storeId}`)
       .then((response) => {
-        // console.log(response.data);
-        console.log(response.data.menuMemberResponseDTOList);
         setStoreMenus(response.data.menuMemberResponseDTOList);
+        setSelectedStore(response.data);
       })
       .catch((error) => {
         console.error(error);
       });
-  }, [selectedStore]);
+  }, [updatedStore]);
 
   const handleStoreUpdate = () => {
     navigate(`/owstore/${selectedStore?.storeId}/update`);
@@ -43,6 +50,9 @@ function StoreManage() {
       <StoreInfo />
       <h2>가게 정보</h2>
       <StoreMenu storeMenus={storeMenus} />
+      <p>{selectedStore?.storePhoneNumber}</p>
+      <p>{selectedStore?.storeInfo}</p>
+      <p>{selectedStore?.storeOpenTime}</p>
       <button onClick={handleStoreUpdate}>수정하기</button>
     </Wrapper>
   );
