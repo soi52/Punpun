@@ -14,12 +14,14 @@ public class MenuChildResponseDTO {
     private Long menuPrice;
     private String menuImageName;
     private String menuImage;
+    private Long menuSponsoredCount;
     private boolean favoriteMenu;
 
     public MenuChildResponseDTO(Menu menu, boolean favoriteMenu) {
         this.menuId = menu.getId();
         this.menuName = menu.getName();
         this.menuPrice = menu.getPrice();
+        this.menuSponsoredCount = menu.getSponsoredCount();
         if (menu.getImage() != null) {
             this.menuImageName = menu.getImage().getName();
             this.menuImage = menu.getImage().getUrl();
