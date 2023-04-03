@@ -1,9 +1,10 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import API from '../../../store/API';
 import {
+  Store,
   isRegisterState,
   isUpdatedState,
   owStoreMenuState,
@@ -19,6 +20,7 @@ const Wrapper = styled.div`
 
 function StoreManage() {
   const navigate = useNavigate();
+  const [store, setStore] = useState<Store>();
   const [storeMenus, setStoreMenus] = useRecoilState(owStoreMenuState);
   const [isRegister, setIsRegister] = useRecoilState(isRegisterState);
   const [isUpdated, setIsUpdated] = useRecoilState(isUpdatedState);
@@ -31,6 +33,7 @@ function StoreManage() {
   useEffect(() => {
     API.get(`stores/${selectedStore?.storeId}`)
       .then((response) => {
+        setStore(response.data);
         setStoreMenus(response.data.menuMemberResponseDTOList);
       })
       .catch((error) => {
@@ -48,9 +51,9 @@ function StoreManage() {
       <StoreInfo />
       <h2>가게 정보</h2>
       <StoreMenu storeMenus={storeMenus} />
-      <p>{selectedStore?.storePhoneNumber}</p>
-      <p>{selectedStore?.storeInfo}</p>
-      <p>{selectedStore?.storeOpenTime}</p>
+      <p>{store?.storePhoneNumber}</p>
+      <p>{store?.storeInfo}</p>
+      <p>{store?.storeOpenTime}</p>
       <button onClick={handleStoreUpdate}>수정하기</button>
     </Wrapper>
   );

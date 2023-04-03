@@ -2,6 +2,20 @@ import API from '../../../store/API';
 import { useEffect, useState } from 'react';
 import Loading from '../../ui/Loading';
 import styled from 'styled-components';
+import { useRecoilState } from 'recoil';
+import { userInfoState } from '../../../store/atoms';
+import defaultUserImage from '../../../resources/images/profileDefault.png';
+
+
+const ReviewItem = styled.div`
+  display: flex;
+  align-items: center;
+  margin: 10px;
+  padding: 10px;
+  background-color: #ffffff;
+  border-radius: 20px;
+  flex-direction: column;
+`;
 
 const Review = styled.div`
   display: flex;
@@ -22,7 +36,7 @@ const MessageButton = styled.button`
   border-radius: 15px;
   text-align: center;
   padding: 7px;
-  background-color: #E7E6F2;
+  background-color: #e7e6f2;
 `;
 
 interface KeywordType {
@@ -36,9 +50,17 @@ type Message = {
   reviewContent: string;
   keywords: KeywordType[];
   reviewId: number;
-}
+};
+
+const UserImage = styled.img`
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 20px;
+`;
 
 const ThanksMessageList = () => {
+  const [userInfo] = useRecoilState(userInfoState);
   const [messages, setMessages] = useState<Message[]>([]);
 
   useEffect(() => {
@@ -59,12 +81,32 @@ const ThanksMessageList = () => {
   return (
     <Review>
       {messages.map((message, index) => (
-        <>
-          <ReviewText key={index}>{message.reviewContent}</ReviewText>
+        <ReviewItem key={index}>
+          <UserImage
+            src={userInfo.userProfileImage || defaultUserImage}
+            alt="User Image"
+          />
+          <ReviewText>{message.reviewContent}</ReviewText>
           {message.keywords.map((keyword, index) => (
-            <MessageButton key={index}>{keyword.content}</MessageButton>
+            <>
+              <p>
+                {new Date(message.keywords[0].createdDateTime).toLocaleString(
+                  'ko-KR',
+                  {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    // second: 'numeric',
+                    hour12: false,
+                  }
+                )}
+              </p>
+              <MessageButton>{message.keywords[0].content}</MessageButton>
+            </>
           ))}
-        </>
+        </ReviewItem>
       ))}
     </Review>
   );

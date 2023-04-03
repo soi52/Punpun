@@ -7,10 +7,11 @@ import {
   UserInfo,
   userInfoState,
 } from '../../store/atoms';
-import profileImg from '../../resources/images/temp_profile.png';
+// import profileImg from '../../resources/images/temp_profile.png';
 import { useEffect } from 'react';
 import API from '../../store/API';
 import useGeolocation from '../../common/UseGeolocation';
+import profileImg from '../../resources/images/profileDefault.png';
 
 const ProfileBox = styled.div`
   display: flex;
@@ -24,8 +25,9 @@ const ImgBox = styled.div`
   height: 150px;
   border-radius: 70%;
   overflow: hidden;
-  border: 0.5rem solid black;
+  border: 0.3rem solid black;
 `;
+
 interface ProImgProps {
   imgSrc: string;
 }
@@ -53,6 +55,7 @@ function Profile() {
   const profileImage = isOwner
     ? selectedStore?.storeImage || profileImg
     : profileImg;
+
   const role = localStorage.getItem('role');
 
   const location = useGeolocation();
@@ -96,6 +99,8 @@ function Profile() {
             userSupportedPoint: null,
             userRemainPoint: null,
             userArea: response.data.area,
+            userProfileName: response.data.profileName,
+            userProfileImage: response.data.profileImage,
           };
           setUserInfo(newUserInfo);
         })
@@ -116,6 +121,8 @@ function Profile() {
             userSupportedPoint: response.data.supportedPoint,
             userRemainPoint: response.data.remainPoint,
             userArea: null,
+            userProfileName: response.data.profileName,
+            userProfileImage: response.data.profileImage,
           };
           setUserInfo(newUserInfo);
         })

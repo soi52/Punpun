@@ -8,7 +8,7 @@ const Login = () => {
 
   return (
     <div>
-      <h1>로그인 페이지</h1>
+      <h1>PUNPUN의 가족이 되어보세요!</h1>
       <img
         src={kakaoLoginIMG}
         alt="kakaologin"

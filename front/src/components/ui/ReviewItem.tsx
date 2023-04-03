@@ -29,7 +29,7 @@ const MessageButton = styled.button`
   border-radius: 15px;
   text-align: center;
   padding: 7px;
-  background-color: #E7E6F2;
+  background-color: #e7e6f2;
 `;
 
 const UserImage = styled.img`
@@ -66,7 +66,21 @@ function ReviewItemList({ reviews }: ReviewItemProps) {
           <UserName>{review.childName}</UserName>
           <ReviewText>{review.reviewContent}</ReviewText>
           {review.keywords && review.keywords.length > 0 && (
-            <MessageButton>{review.keywords[0].content}</MessageButton>
+            <>
+              <p>{new Date(review.keywords[0].createdDateTime).toLocaleString(
+                  'ko-KR',
+                  {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    // second: 'numeric',
+                    hour12: false,
+                  }
+                )}</p>
+              <MessageButton>{review.keywords[0].content}</MessageButton>
+            </>
           )}
         </div>
       </ReviewItem>
