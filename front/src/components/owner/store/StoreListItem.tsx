@@ -2,11 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
-import { OwStore, selectedStoreState } from '../../../store/atoms';
+import { Store, selectedStoreState } from '../../../store/atoms';
 import API from '../../../store/API';
 
 interface StoreItemProps {
-  stores: OwStore[];
+  stores: Store[];
   onDelete: (id: number) => void;
 }
 
@@ -62,6 +62,7 @@ function StoreListItem({ stores, onDelete }: StoreItemProps) {
         onClick={() => {
           navigate(`/owstore/${store.storeId}`);
           setSelectedStore(store);
+          console.log(store);
         }}
       >
         <StoreName>{store.storeName}</StoreName>

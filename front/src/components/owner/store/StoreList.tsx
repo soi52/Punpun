@@ -3,7 +3,7 @@ import StoreListItem from './StoreListItem';
 import { useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import {
-  OwStore,
+  Store,
   isRegisterState,
   isRegisterStoreState,
   owStoreState,
@@ -27,7 +27,7 @@ const RegisterButton = styled.button`
 `;
 
 interface StoreItemProps {
-  stores: OwStore[];
+  stores: Store[];
   onDelete: (id: number) => void;
 }
 

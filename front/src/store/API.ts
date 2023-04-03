@@ -8,7 +8,8 @@ const API: AxiosInstance = axios.create({
   baseURL: API_URL,
   withCredentials: true,
   headers: {
-    'Content-Type': 'application/json',
+    'Content-Type': 'application/json;charset=UTF-8',
+    accept: 'application/json,',
   },
 });
 

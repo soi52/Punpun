@@ -6,7 +6,7 @@ import FilteredList from '../../../common/FilteredList';
 import SearchStoreList from '../../../common/SearchStoreList';
 import API from '../../../store/API';
 import { useRecoilValue } from 'recoil';
-import { selectedMyStoreState } from '../../../store/atoms';
+import { Store, selectedMyStoreState } from '../../../store/atoms';
 
 type StoreSearchModalProps = {
   onClose: () => void;
@@ -58,27 +58,6 @@ const ButtonDiv = styled.div`
   display: flex;
   justify-content: space-between;
 `;
-
-type MenuDTO = {
-  menuId: number;
-  menuName: string;
-  menuPrice: number;
-  menuCount: number;
-};
-
-type Store = {
-  storeId: number;
-  storeName: string;
-  storeOpenTime: string | null;
-  storeInfo: string | null;
-  storeAddress: string;
-  storeLon: number;
-  storeLat: number;
-  storeImageName: string | null;
-  storeImage: string | null;
-  storePhoneNumber: string | null;
-  menuDTOList: MenuDTO[];
-};
 
 const StoreSearchModal = (
   { onClose }: StoreSearchModalProps,

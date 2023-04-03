@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import styled from 'styled-components';
+import { Store } from '../store/atoms';
 
 const Div = styled.div`
   width: 400px;
@@ -22,27 +23,6 @@ type MapProps = {
   latitude: number;
   longitude: number;
   stores: Store[];
-};
-
-type MenuDTO = {
-  menuId: number;
-  menuName: string;
-  menuPrice: number;
-  menuCount: number;
-};
-
-type Store = {
-  storeId: number;
-  storeName: string;
-  storeOpenTime: string | null;
-  storeInfo: string | null;
-  storeAddress: string;
-  storeLon: number;
-  storeLat: number;
-  storeImageName: string | null;
-  storeImage: string | null;
-  storePhoneNumber: string | null;
-  menuDTOList: MenuDTO[];
 };
 
 const Map = ({ latitude, longitude, stores }: MapProps) => {
