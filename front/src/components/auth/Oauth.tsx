@@ -69,6 +69,8 @@ const Oauth = () => {
       userSupportedPoint: 0,
       userRemainPoint: 0,
       userArea: '',
+      userProfileName: decodedToken.profileName,
+      userProfileImage: decodedToken.profileImage,
     });
 
     if (decodedToken['role'] === 'CHILD') {

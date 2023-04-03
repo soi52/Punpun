@@ -38,6 +38,11 @@ const MenuCardContainer = styled.div`
   padding: 16px;
   max-width: 300px;
   cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  &:hover {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
 `;
 
 const MenuCardImage = styled.div<MenuCardImageProps>`
@@ -89,7 +94,7 @@ const MenuCard: React.FC<MenuCardProps> = ({
     e.stopPropagation();
     setLiked(!liked);
     console.log('liked: ' + liked);
-  
+
     if (liked) {
       API.delete('favors', { data: { menuId: id } })
         .then((response) => {
@@ -127,11 +132,6 @@ const MenuCard: React.FC<MenuCardProps> = ({
       <MenuCardContainer>
         <div onClick={handleClick}>
           {/* <MenuCardImage image={image}> */}
-          {role === 'CHILD' && (
-            <HeartButtonWrapper>
-              <button onClick={toggleLike}>{liked ? '💖' : '🖤'}</button>
-            </HeartButtonWrapper>
-          )}
           {/* </MenuCardImage> */}
           <div>
             <MenuCardTitle>{title}</MenuCardTitle>
@@ -139,9 +139,6 @@ const MenuCard: React.FC<MenuCardProps> = ({
           </div>
         </div>
       </MenuCardContainer>
-      {showModal && isChild && (
-        <BookingModal menu={{ id, title, price }} onClose={onClose} />
-      )}
     </>
   );
 };
