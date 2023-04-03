@@ -1,6 +1,8 @@
 package edu.ssafy.punpun.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import edu.ssafy.punpun.dto.request.MenuRegisterRequestDTO;
+import edu.ssafy.punpun.dto.request.MenuUpdateRequestDTO;
 import edu.ssafy.punpun.dto.request.StoreDetailRequestDTO;
 import edu.ssafy.punpun.dto.response.*;
 import edu.ssafy.punpun.entity.Child;
@@ -12,16 +14,12 @@ import edu.ssafy.punpun.service.StoreService;
 import edu.ssafy.testutil.WIthCustomChild;
 import edu.ssafy.testutil.WIthCustomOwner;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.mock.web.MockPart;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -204,6 +202,66 @@ public class StoreControllerTest {
         doNothing().when(storeService).deleteStoreByMember(eq(1L), any(Member.class));
 
         mockMvc.perform(delete("/stores/1")
+                        .with(csrf()))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
+
+    @Test
+    @WIthCustomOwner
+    @DisplayName("post - 가게 메뉴 추가 - 사장")
+    void registerMenuDetail() throws Exception {
+        MenuRegisterRequestDTO menuDTO = new MenuRegisterRequestDTO();
+        menuDTO.setStoreId(1L);
+        menuDTO.setMenuName("menuName");
+        menuDTO.setMenuPrice(1000L);
+        String menuDTOJson = new ObjectMapper().writeValueAsString(menuDTO);
+        MockMultipartFile menuRegist = new MockMultipartFile("menuRegist", "menuRegist", "application/json", menuDTOJson.getBytes(StandardCharsets.UTF_8));
+        MockMultipartFile menuImage = new MockMultipartFile("menuImage", "test.png", "image/png", "test".getBytes());
+
+        doNothing().when(menuService).registerMenuDetail(eq(1L), eq("menuName"), eq(1000L), any(MultipartFile.class), any(Member.class));
+
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/stores/menu")
+                        .file(menuRegist)
+                        .file(menuImage)
+                        .with(csrf()))
+                .andExpect(status().isCreated())
+                .andDo(print());
+    }
+
+    @Test
+    @WIthCustomOwner
+    @DisplayName("put - 가게 메뉴 정보 수정 - 사장 입장")
+    void updateMenuDetail() throws Exception {
+        MenuUpdateRequestDTO menuDTO = new MenuUpdateRequestDTO();
+        menuDTO.setMenuId(1L);
+        menuDTO.setMenuName("menuName");
+        menuDTO.setMenuPrice(1000L);
+        String menuDTOJson = new ObjectMapper().writeValueAsString(menuDTO);
+        MockMultipartFile menuRegist = new MockMultipartFile("menuUpdate", "menuUpdate", "application/json", menuDTOJson.getBytes(StandardCharsets.UTF_8));
+        MockMultipartFile menuImage = new MockMultipartFile("menuImage", "test.png", "image/png", "test".getBytes());
+
+        doNothing().when(menuService).updateMenuDetail(eq(1L), any(MenuUpdateRequestDTO.class), any(MultipartFile.class), any(Member.class));
+
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/stores/menu/1")
+                        .file(menuRegist)
+                        .file(menuImage)
+                        .with(request -> {
+                            request.setMethod("PUT");
+                            return request;
+                        })
+                        .with(csrf()))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
+
+    @Test
+    @WIthCustomOwner
+    @DisplayName("delete - 가게에 등록된 메뉴 삭제 - 사장 입장")
+    void deleteMenu() throws Exception {
+        doNothing().when(menuService).deleteMenu(eq(1L), any(Member.class));
+
+        mockMvc.perform(delete("/stores/menu/1")
                         .with(csrf()))
                 .andExpect(status().isOk())
                 .andDo(print());

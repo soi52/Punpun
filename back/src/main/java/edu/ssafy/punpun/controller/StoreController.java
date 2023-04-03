@@ -90,8 +90,10 @@ public class StoreController {
     @ApiOperation(value = "가게 상세 정보 수정 - 사장 입장")
     @RequestMapping(value = "/{storeId}" , method = RequestMethod.PUT , consumes = {MediaType.APPLICATION_JSON_VALUE , MediaType.MULTIPART_FORM_DATA_VALUE})
     @ResponseStatus(code = HttpStatus.OK)
-    public void updateStoreDetail(@AuthenticationPrincipal PrincipalMemberDetail principalMemberDetail, @PathVariable ("storeId") Long storeId,
-                                  @RequestPart("storeInfo") StoreDetailRequestDTO storeDetailRequestDTO, @RequestPart(name = "storeImage", required = false) MultipartFile image) throws IOException {
+    public void updateStoreDetail(@AuthenticationPrincipal PrincipalMemberDetail principalMemberDetail,
+                                  @PathVariable ("storeId") Long storeId,
+                                  @RequestPart("storeInfo") StoreDetailRequestDTO storeDetailRequestDTO,
+                                  @RequestPart(name = "storeImage", required = false) MultipartFile image) {
         Member member = principalMemberDetail.getMember();
         storeService.updateStoreDetail(storeId, member, storeDetailRequestDTO, image);
     }
@@ -110,8 +112,8 @@ public class StoreController {
     @RequestMapping(value = "/menu" , method = RequestMethod.POST , consumes = {MediaType.APPLICATION_JSON_VALUE , MediaType.MULTIPART_FORM_DATA_VALUE})
     @ResponseStatus(code = HttpStatus.CREATED)
     public void registerMenuDetail(@AuthenticationPrincipal PrincipalMemberDetail principalMemberDetail,
-                                   @RequestParam("menuRegist") MenuRegisterRequestDTO menuRegisterRequestDTO,
-                                   @RequestParam(name = "menuImage", required = false) MultipartFile image) {
+                                   @RequestPart("menuRegist") MenuRegisterRequestDTO menuRegisterRequestDTO,
+                                   @RequestPart(name = "menuImage", required = false) MultipartFile image) {
         Member member = principalMemberDetail.getMember();
 
         Long storeId = menuRegisterRequestDTO.getStoreId();
@@ -126,8 +128,8 @@ public class StoreController {
     @ResponseStatus(code = HttpStatus.OK)
     public void updateMenuDetail(@AuthenticationPrincipal PrincipalMemberDetail principalMemberDetail,
                                  @PathVariable ("menuId") Long menuId,
-                                 @RequestParam("menuUpdate") MenuUpdateRequestDTO menuUpdateRequestDTO,
-                                 @RequestParam(name = "menuImage", required = false) MultipartFile image) {
+                                 @RequestPart("menuUpdate") MenuUpdateRequestDTO menuUpdateRequestDTO,
+                                 @RequestPart(name = "menuImage", required = false) MultipartFile image) {
         Member member = principalMemberDetail.getMember();
         menuService.updateMenuDetail(menuId, menuUpdateRequestDTO, image, member);
     }
