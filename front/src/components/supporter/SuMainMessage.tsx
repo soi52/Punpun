@@ -36,7 +36,7 @@ function SuMainMessage() {
         <MainTitle title={`${mainMessage.name} ${mainMessage.title}`} />
       </h2>
       <MainMessage
-        message={`${mainMessage.ownerName}, ${mainMessage.message}`}
+        message={`　${mainMessage.ownerName}, ${mainMessage.message}`}
       />
     </>
   );

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import API from '../../../store/API';
-import { log } from 'console';
+import { useNavigate } from 'react-router';
 
 const MenuList = styled.div`
   display: flex;
@@ -15,6 +15,11 @@ const Card = styled.div`
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   width: 300px;
+  &:hover {
+    // background-color: #ff3b3b;
+    // opacity: 0.8;
+    transform: scale(1.05);
+  }
 `;
 
 const CardHeader = styled.div`
@@ -27,8 +32,8 @@ const CardHeader = styled.div`
 `;
 
 const LikeButton = styled.button`
-  background-color:  #ff6b6b;
-  color:  #fff;
+  background-color: #ff6b6b;
+  color: #fff;
   border: none;
   padding: 6px 12px;
   border-radius: 4px;
@@ -36,11 +41,23 @@ const LikeButton = styled.button`
 
   &:hover {
     background-color: #ff3b3b;
+    opacity: 0.8;
+    transform: scale(1.05);
   }
 `;
 
 const CardBody = styled.div`
   padding: 10px;
+`;
+
+const StoreName = styled.p`
+  // font-weight: bold;
+  cursor: pointer;
+  &:hover {
+    // background-color: #ff3b3b;
+    opacity: 0.8;
+    transform: scale(1.01);
+  }
 `;
 
 type MenuType = {
@@ -53,6 +70,8 @@ type MenuType = {
 const LikedMenu = () => {
   const [menus, setMenus] = useState<MenuType[]>([]);
   // const [isLiked, setIsLiked] = useState(true);
+
+  const Navigate = useNavigate();
 
   const handleDelete = (menuId: number) => {
     setMenus((prev) => prev.filter((menu) => menu.menuId !== menuId)); // 목록에서 해당 메뉴 삭제
@@ -80,10 +99,12 @@ const LikedMenu = () => {
     // setIsLiked((prev) => !prev);
   };
 
+  const toStore = (storeId: number) => {
+    Navigate(`/store/${storeId}`);
+  };
+
   if (menus.length === 0) {
-    return(
-      <p>아직 선호하는 메뉴가 없어요 :(</p>
-    )
+    return <p>아직 선호하는 메뉴가 없어요 :(</p>;
   }
 
   return (
@@ -92,16 +113,16 @@ const LikedMenu = () => {
         <Card key={menu.menuId}>
           <CardHeader>
             <h3>{menu.menuName}</h3>
-            <LikeButton
-              onClick={() => toggleLike(menu.menuId)}
-            >
+            <LikeButton onClick={() => toggleLike(menu.menuId)}>
               {/* {isLiked ?  */}
               좋아요 취소
               {/* //  : '좋아요'} */}
             </LikeButton>
           </CardHeader>
           <CardBody>
-            <p>{menu.storeName}</p>
+            <StoreName onClick={() => toStore(menu.storeId)}>
+              {menu.storeName}
+            </StoreName>
           </CardBody>
         </Card>
       ))}
