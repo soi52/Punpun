@@ -39,6 +39,8 @@ public class SupportServiceImpl implements SupportService{
     @Override
     public void saveSupport(Member member, SupportRequestDTO supportRequestDTO, int type) {
         for(int i=0; i<supportRequestDTO.getMenuId().size(); i++){
+            Menu menu=menuRepository.findById(supportRequestDTO.getMenuId().get(i))
+                    .orElseThrow(()->new IllegalArgumentException("없는 메뉴 입니다."));
             for(int j=0; j<supportRequestDTO.getMenuCount().get(i); j++) {
                 Support support = Support.builder()
                         .supportState(SupportState.SUPPORT)
@@ -51,8 +53,6 @@ public class SupportServiceImpl implements SupportService{
                     support.setSupportType(SupportType.SHARE);
                 }
 
-                Menu menu=menuRepository.findById(supportRequestDTO.getMenuId().get(i))
-                        .orElseThrow(()->new IllegalArgumentException("없는 메뉴 입니다."));
                 support.setMenu(menu);
                 support.setStore(menu.getStore());
 
