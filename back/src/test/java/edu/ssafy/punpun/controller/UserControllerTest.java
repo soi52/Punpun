@@ -6,6 +6,7 @@ import edu.ssafy.punpun.dto.request.MemberRequestDTO;
 import edu.ssafy.punpun.dto.response.ChildResponseDTO;
 import edu.ssafy.punpun.dto.response.MemberResponseDTO;
 import edu.ssafy.punpun.entity.Child;
+import edu.ssafy.punpun.entity.Image;
 import edu.ssafy.punpun.entity.Member;
 import edu.ssafy.punpun.entity.enumurate.UserRole;
 import edu.ssafy.punpun.service.UserService;
@@ -13,7 +14,6 @@ import edu.ssafy.testutil.WIthCustomChild;
 import edu.ssafy.testutil.WIthCustomSupporter;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -39,39 +39,51 @@ public class UserControllerTest {
     @WIthCustomChild
     @DisplayName("get - 어린이 상세 정보")
     void getChildDetail() throws Exception {
+        Image image = Image.builder()
+                .name("test")
+                .url("testUrl").build();
         Child child = Child.builder()
                 .id(1L)
                 .name("name")
                 .email("email@email.com")
                 .role(UserRole.CHILD)
+                .area("test")
+                .profile(image)
                 .build();
 
         ChildResponseDTO childDTO = new ChildResponseDTO(child);
         String output = new ObjectMapper().writeValueAsString(childDTO);
 
-        mockMvc.perform(get("/users/child"))
+        doReturn(childDTO).when(userService).getChildDetail(any(Child.class));
+
+        mockMvc.perform(get("/users/child")
+                        .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andExpect(content().string(output))
                 .andDo(print());
-
     }
 
     @Test
     @WIthCustomSupporter
     @DisplayName("get - 후원자, 사장 상세 정보")
     void getMemberDetail() throws Exception {
+        Image image = Image.builder().build();
         Member member = Member.builder()
                 .id(1L)
                 .name("name")
                 .email("email@email.com")
                 .role(UserRole.SUPPORTER)
+                .profile(image)
                 .build();
 
         MemberResponseDTO memberDTO = new MemberResponseDTO(member);
         String output = new ObjectMapper().writeValueAsString(memberDTO);
 
-        mockMvc.perform(get("/users/member"))
+        doReturn(memberDTO).when(userService).getMemberDetail(any(Member.class));
+
+        mockMvc.perform(get("/users/member")
+                        .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andExpect(content().string(output))
