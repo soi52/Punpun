@@ -18,6 +18,7 @@ public class StoreDetailMemberResponseDTO {
     private String storeAddress;
     private double storeLon;
     private double storeLat;
+    private boolean storeAlwaysShare;
     private String storeImageName;
     private String storeImage;
     private String storePhoneNumber;
@@ -31,6 +32,7 @@ public class StoreDetailMemberResponseDTO {
         this.storeAddress = store.getAddress();
         this.storeLon = store.getLon();
         this.storeLat = store.getLat();
+        this.storeAlwaysShare = store.isAlwaysShare();
         if (store.getImage() != null) {
             this.storeImageName = store.getImage().getName();
             this.storeImage = store.getImage().getUrl();
