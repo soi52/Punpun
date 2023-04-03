@@ -1,9 +1,11 @@
 package edu.ssafy.punpun.service;
 
+import edu.ssafy.punpun.dto.request.SupportRequestDTO;
 import edu.ssafy.punpun.dto.response.ShareResponseDTO;
 import edu.ssafy.punpun.entity.Member;
 import edu.ssafy.punpun.entity.Menu;
 import edu.ssafy.punpun.entity.Support;
+import edu.ssafy.punpun.entity.enumurate.SupportState;
 import edu.ssafy.punpun.entity.enumurate.SupportType;
 import edu.ssafy.punpun.exception.PointLackException;
 import edu.ssafy.punpun.repository.MemberRepository;
@@ -35,29 +37,41 @@ public class SupportServiceImpl implements SupportService{
     }
 
     @Override
-    public void saveSupport(List<Support> supportList, List<Long> menuId , List<Long> menuCount, Member member, Long usePoint) {
+    public void saveSupport(Member member, SupportRequestDTO supportRequestDTO, int type) {
+        for(int i=0; i<supportRequestDTO.getMenuId().size(); i++){
+            for(int j=0; j<supportRequestDTO.getMenuCount().get(i); j++) {
+                Support support = Support.builder()
+                        .supportState(SupportState.SUPPORT)
+                        .supporter(member)
+                        .build();
+                if(type == 0) {
+                    support.setSupportType(SupportType.SUPPORT);
+                }
+                else{
+                    support.setSupportType(SupportType.SHARE);
+                }
+
+                Menu menu=menuRepository.findById(supportRequestDTO.getMenuId().get(i))
+                        .orElseThrow(()->new IllegalArgumentException("없는 메뉴 입니다."));
+                support.setMenu(menu);
+                support.setStore(menu.getStore());
+
+                // save table
+                supportRepository.save(support);
+
+            }
+            menuService.addSponsoredCount(supportRequestDTO.getMenuId().get(i), supportRequestDTO.getMenuCount().get(i));
+        }
+
         // supporter use point
         Member supporter=memberRepository.findById(member.getId())
                 .orElseThrow(IllegalArgumentException::new);
 
-        if(supporter.getRemainPoint() < usePoint){
+        if(supporter.getRemainPoint() < supportRequestDTO.getUsePoint()){
             throw new PointLackException("포인트가 부족합니다.");
         }
-        supporter.support(usePoint);
+        supporter.support(supportRequestDTO.getUsePoint());
 
-        for(int i=0; i<supportList.size(); i++){
-            // add menu sponsored count
-            Menu menu=menuRepository.findById(menuId.get(i))
-                    .orElseThrow(()->new IllegalArgumentException("없는 메뉴 입니다."));
-            supportList.get(i).setMenu(menu);
-            supportList.get(i).setStore(menu.getStore());
-
-            menuService.addSponsoredCount(menuId.get(i), menuCount.get(i));
-            // save support table
-            for(int j=0; j<menuCount.get(i); j++) {
-                supportRepository.save(supportList.get(i));
-            }
-        }
     }
 
     @Override
