@@ -93,175 +93,95 @@ const SubmitButton = styled.button`
   cursor: pointer;
 `;
 
-// const StoreUpdateForm = () => {
-//   const [selectedImageFile, setSelectedImageFile] = useState<File | null>(null);
-//   const selectedStore = useRecoilValue(selectedStoreState);
-//   const [updatedStore, setUpdatedStore] = useRecoilState(updatedStoreState);
-//   const [showModal, setShowModal] = useState(false);
-//   const navigate = useNavigate();
+const StoreUpdateForm = () => {
+  const selectedImageFile = useRef<File | null>(null);
+  const selectedStore = useRecoilValue(selectedStoreState);
+  const [updatedStore, setUpdatedStore] = useRecoilState(updatedStoreState);
+  const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
 
-//   const handleSearch = () => {
-//     setShowModal(true);
-//   };
+  const handleSearch = () => {
+    setShowModal(true);
+  };
 
-//   const handleCloseModal = () => {
-//     setShowModal(false);
-//   };
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
 
-//   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-//     const selectedImage = event.target.files?.[0];
-//     if (selectedImage && selectedImage.type.startsWith('image/')) {
-//       const reader = new FileReader();
-//       reader.onload = (event) => {
-//         const storeImageFile = selectedImage;
-//         setSelectedImageFile(storeImageFile);
-//         setUpdatedStore(selectedStore);
-//       };
-//       reader.readAsDataURL(selectedImage);
-//     } else {
-//       alert('이미지 파일을 선택해주세요.');
-//       event.target.value && (event.target.value = '');
-//     }
-//   };
-
-//   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-//     event.preventDefault();
-//   };
-
-//   const handleUpdate = () => {
-//     const updatedStoreInfo: OwStoreUpdate = {
-//       ...updatedStore!,
-//       storeId: updatedStore?.storeId || 0,
-//       storeName: (
-//         document.getElementsByName('storeName')[0] as HTMLInputElement
-//       ).value,
-//       storeAddress: (
-//         document.getElementsByName('storeLocation')[0] as HTMLInputElement
-//       ).value,
-//       storePhoneNumber: (
-//         document.getElementsByName('storePhoneNumber')[0] as HTMLInputElement
-//       ).value,
-//       storeInfo: (
-//         document.getElementsByName('storeInfo')[0] as HTMLInputElement
-//       ).value,
-//       storeOpenTime: updatedStore?.storeOpenTime ?? null,
-//       storeAlwaysShare: true,
-//     };
-
-//     const formData = new FormData();
-//     if (selectedImageFile) {
-//       formData.append('storeImage', selectedImageFile);
-//       console.log(selectedImageFile);
-//     }
-//     formData.append(
-//       'storeInfo',
-//       new Blob([JSON.stringify(updatedStoreInfo)], { type: 'application/json' })
-//     );
-
-//     API.put(`stores/${selectedStore?.storeId}`, formData, {
-//       headers: {
-//         'Content-Type': 'multipart/form-data',
-//       },
-//     })
-//       .then((response: any) => {
-//         console.log(response.data);
-//         navigate(`/owstore/${selectedStore?.storeId}`);
-//       })
-//       .catch((error: any) => {
-//         console.error(error);
-//       });
-//   };
-
-  const StoreUpdateForm = () => {
-    const selectedImageFile = useRef<File | null>(null);
-    const selectedStore = useRecoilValue(selectedStoreState);
-    const [updatedStore, setUpdatedStore] = useRecoilState(updatedStoreState);
-    const [showModal, setShowModal] = useState(false);
-    const navigate = useNavigate();
-
-    const handleSearch = () => {
-      setShowModal(true);
-    };
-
-    const handleCloseModal = () => {
-      setShowModal(false);
-    };
-
-    const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      const selectedImage = event.target.files?.[0];
-      if (selectedImage && selectedImage.type.startsWith('image/')) {
-        const reader = new FileReader();
-        reader.onload = (event) => {
-          const storeImageFile = selectedImage;
-          selectedImageFile.current = storeImageFile;
-          setUpdatedStore(selectedStore);
-        };
-        reader.readAsDataURL(selectedImage);
-      } else {
-        alert('이미지 파일을 선택해주세요.');
-        event.target.value && (event.target.value = '');
-      }
-    };
-
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-      event.preventDefault();
-    };
-
-    const handleUpdate = () => {
-      const updatedStoreInfo: OwStoreUpdate = {
-        ...updatedStore!,
-        storeId: updatedStore?.storeId || 0,
-        storeName: (
-          document.getElementsByName('storeName')[0] as HTMLInputElement
-        ).value,
-        storeAddress: (
-          document.getElementsByName('storeLocation')[0] as HTMLInputElement
-        ).value,
-        storePhoneNumber: (
-          document.getElementsByName('storePhoneNumber')[0] as HTMLInputElement
-        ).value,
-        storeInfo: (
-          document.getElementsByName('storeInfo')[0] as HTMLInputElement
-        ).value,
-        storeOpenTime: updatedStore?.storeOpenTime ?? null,
-        storeAlwaysShare: true,
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedImage = event.target.files?.[0];
+    if (selectedImage && selectedImage.type.startsWith('image/')) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const storeImageFile = selectedImage;
+        selectedImageFile.current = storeImageFile;
+        setUpdatedStore(selectedStore);
       };
+      reader.readAsDataURL(selectedImage);
+    } else {
+      alert('이미지 파일을 선택해주세요.');
+      event.target.value && (event.target.value = '');
+    }
+  };
 
-      const formData = new FormData();
-      if (selectedImageFile.current) {
-        formData.append('storeImage', selectedImageFile.current);
-        console.log(selectedImageFile.current);
-      }
-      formData.append(
-        'storeInfo',
-        new Blob([JSON.stringify(updatedStoreInfo)], { type: 'application/json' })
-      );
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+  };
 
-      API.put(`stores/${selectedStore?.storeId}`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      })
-        .then((response: any) => {
-          console.log(response.data);
-          navigate(`/owstore/${selectedStore?.storeId}`);
-        })
-        .catch((error: any) => {
-          console.error(error);
-        });
+  const handleUpdate = () => {
+    const updatedStoreInfo: OwStoreUpdate = {
+      ...updatedStore!,
+      storeId: updatedStore?.storeId || 0,
+      storeName: (
+        document.getElementsByName('storeName')[0] as HTMLInputElement
+      ).value,
+      storeAddress: (
+        document.getElementsByName('storeLocation')[0] as HTMLInputElement
+      ).value,
+      storePhoneNumber: (
+        document.getElementsByName('storePhoneNumber')[0] as HTMLInputElement
+      ).value,
+      storeInfo: (
+        document.getElementsByName('storeInfo')[0] as HTMLInputElement
+      ).value,
+      storeOpenTime: updatedStore?.storeOpenTime ?? null,
+      storeAlwaysShare: true,
     };
-  }
+
+    const formData = new FormData();
+    if (selectedImageFile.current) {
+      formData.append('storeImage', selectedImageFile.current);
+      console.log(selectedImageFile.current);
+    }
+    formData.append(
+      'storeInfo',
+      new Blob([JSON.stringify(updatedStoreInfo)], { type: 'application/json' })
+    );
+
+    API.put(`stores/${selectedStore?.storeId}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+      .then((response: any) => {
+        console.log(response.data);
+        navigate(`/owstore/${selectedStore?.storeId}`);
+      })
+      .catch((error: any) => {
+        console.error(error);
+      });
+  };
 
   return (
     <Container id="container">
       <FormStyle id="form" onSubmit={handleSubmit}>
         <InputBox>
           <ImgBox>
-            {/* {selectedStore?.storeImage ? (
+            {selectedStore?.storeImage ? (
               <PreviewImage id="previewImage" src="" />
-            ) : ( */}
-            <NoImage>이미지 없음</NoImage>
-            {/* )} */}
+            ) : (
+              <NoImage>이미지 없음</NoImage>
+            )}
           </ImgBox>
           <InputLabel>대표이미지 등록</InputLabel>
           <InputField
