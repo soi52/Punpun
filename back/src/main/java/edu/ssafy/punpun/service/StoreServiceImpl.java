@@ -4,6 +4,7 @@ import edu.ssafy.punpun.dto.request.StoreDetailRequestDTO;
 import edu.ssafy.punpun.dto.response.MenuChildResponseDTO;
 import edu.ssafy.punpun.entity.*;
 import edu.ssafy.punpun.entity.enumurate.UserRole;
+import edu.ssafy.punpun.exception.NotDeleteEntityException;
 import edu.ssafy.punpun.exception.NotStoreOwnerException;
 import edu.ssafy.punpun.repository.*;
 import edu.ssafy.punpun.s3.S3Uploader;
@@ -119,10 +120,13 @@ public class StoreServiceImpl implements StoreService {
     public void deleteStoreByMember(Long storeId, Member member) {
         Store store = storeRepository.findById(storeId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 가게 입니다."));
-
         if (store.getOwner() == null || member.getId() != store.getOwner().getId()) {
             throw new NotStoreOwnerException("가게의 주인이 아닙니다.");
         }
+        if (store.getSupports() != null) {
+            throw new NotDeleteEntityException("연관된 내역이 있어 가게 삭제가 불가능합니다. 관리자에게 문의 바랍니다.");
+        }
+
         store.deleteOwner();
 
         if (member.getStores() == null) {

@@ -1,5 +1,7 @@
 package edu.ssafy.punpun.controller;
 
+import edu.ssafy.punpun.dto.request.MenuRegisterRequestDTO;
+import edu.ssafy.punpun.dto.request.MenuUpdateRequestDTO;
 import edu.ssafy.punpun.dto.request.StoreDetailRequestDTO;
 import edu.ssafy.punpun.dto.response.*;
 import edu.ssafy.punpun.entity.*;
@@ -88,8 +90,10 @@ public class StoreController {
     @ApiOperation(value = "가게 상세 정보 수정 - 사장 입장")
     @RequestMapping(value = "/{storeId}" , method = RequestMethod.PUT , consumes = {MediaType.APPLICATION_JSON_VALUE , MediaType.MULTIPART_FORM_DATA_VALUE})
     @ResponseStatus(code = HttpStatus.OK)
-    public void updateStoreDetail(@AuthenticationPrincipal PrincipalMemberDetail principalMemberDetail, @PathVariable ("storeId") Long storeId,
-                                  @RequestPart("storeInfo") StoreDetailRequestDTO storeDetailRequestDTO, @RequestPart(name = "storeImage", required = false) MultipartFile image) throws IOException {
+    public void updateStoreDetail(@AuthenticationPrincipal PrincipalMemberDetail principalMemberDetail,
+                                  @PathVariable ("storeId") Long storeId,
+                                  @RequestPart("storeInfo") StoreDetailRequestDTO storeDetailRequestDTO,
+                                  @RequestPart(name = "storeImage", required = false) MultipartFile image) {
         Member member = principalMemberDetail.getMember();
         storeService.updateStoreDetail(storeId, member, storeDetailRequestDTO, image);
     }
@@ -100,6 +104,42 @@ public class StoreController {
     public void deleteStore(@AuthenticationPrincipal PrincipalMemberDetail principalMemberDetail, @PathVariable("storeId") Long storeId) {
         Member member = principalMemberDetail.getMember();
         storeService.deleteStoreByMember(storeId, member);
+    }
+
+
+    @ApiOperation(value = "가게 메뉴 추가 - 사장 입장")
+    @PostMapping("/menu")
+    @RequestMapping(value = "/menu" , method = RequestMethod.POST , consumes = {MediaType.APPLICATION_JSON_VALUE , MediaType.MULTIPART_FORM_DATA_VALUE})
+    @ResponseStatus(code = HttpStatus.CREATED)
+    public void registerMenuDetail(@AuthenticationPrincipal PrincipalMemberDetail principalMemberDetail,
+                                   @RequestPart("menuRegist") MenuRegisterRequestDTO menuRegisterRequestDTO,
+                                   @RequestPart(name = "menuImage", required = false) MultipartFile image) {
+        Member member = principalMemberDetail.getMember();
+
+        Long storeId = menuRegisterRequestDTO.getStoreId();
+        String name = menuRegisterRequestDTO.getMenuName();
+        Long price = menuRegisterRequestDTO.getMenuPrice();
+
+        menuService.registerMenuDetail(storeId, name, price, image, member);
+    }
+
+    @ApiOperation(value = "가게 메뉴 정보 수정 - 사장 입장")
+    @RequestMapping(value = "/menu/{menuId}" , method = RequestMethod.PUT , consumes = {MediaType.APPLICATION_JSON_VALUE , MediaType.MULTIPART_FORM_DATA_VALUE})
+    @ResponseStatus(code = HttpStatus.OK)
+    public void updateMenuDetail(@AuthenticationPrincipal PrincipalMemberDetail principalMemberDetail,
+                                 @PathVariable ("menuId") Long menuId,
+                                 @RequestPart("menuUpdate") MenuUpdateRequestDTO menuUpdateRequestDTO,
+                                 @RequestPart(name = "menuImage", required = false) MultipartFile image) {
+        Member member = principalMemberDetail.getMember();
+        menuService.updateMenuDetail(menuId, menuUpdateRequestDTO, image, member);
+    }
+
+    @ApiOperation(value = "가게에 등록된 메뉴 삭제 - 사장 입장")
+    @DeleteMapping("/menu/{menuId}")
+    @ResponseStatus(code = HttpStatus.OK)
+    public void deleteMenu(@AuthenticationPrincipal PrincipalMemberDetail principalMemberDetail, @PathVariable ("menuId") Long menuId) {
+        Member member = principalMemberDetail.getMember();
+        menuService.deleteMenu(menuId, member);
     }
 
 }
