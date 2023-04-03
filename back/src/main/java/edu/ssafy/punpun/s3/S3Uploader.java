@@ -61,7 +61,7 @@ public class S3Uploader {
         if (targetFile.delete()) {
             log.debug("로컬 파일이 삭제되었습니다.");
         } else {
-            log.debug("로컬 파일이 삭제되지 못했습니다.");
+            log.warn("로컬 파일이 삭제되지 못했습니다.");
         }
     }
 
@@ -69,9 +69,8 @@ public class S3Uploader {
         File convertFile = new File(file.getOriginalFilename());
         try {
             if (convertFile.createNewFile()) {
-                try (FileOutputStream fos = new FileOutputStream(convertFile)) {
-                    fos.write(file.getBytes());
-                }
+                FileOutputStream fos = new FileOutputStream(convertFile)
+                fos.write(file.getBytes());
                 return Optional.of(convertFile);
             }
         } catch (IOException e) {
