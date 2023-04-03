@@ -49,4 +49,16 @@ public class Store extends BaseEntity {
         this.licenseNumber = licenseNumber;
     }
     public void deleteOwner() { this.owner = null; }
+    public void updateStoreDetail(String name, String openTime, String info, String address, String phoneNumber, boolean alwaysShare) {
+        this.name = name;
+        this.openTime = openTime;
+        this.info = info;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.alwaysShare = alwaysShare;
+    }
+    public void updateImage(Image image) {
+        this.image = image;
+    }
+
 }
