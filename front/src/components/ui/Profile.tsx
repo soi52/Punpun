@@ -1,11 +1,17 @@
 import styled from 'styled-components';
-import { useRecoilState } from 'recoil';
-import { userAreaState, UserInfo, userInfoState } from '../../store/atoms';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import {
+  isOwnerState,
+  selectedStoreState,
+  userAreaState,
+  UserInfo,
+  userInfoState,
+} from '../../store/atoms';
 // import profileImg from '../../resources/images/temp_profile.png';
 import { useEffect } from 'react';
 import API from '../../store/API';
 import useGeolocation from '../../common/UseGeolocation';
-import defaultUserImage from '../../resources/images/profileDefault.png';
+import profileImg from '../../resources/images/profileDefault.png';
 
 const ProfileBox = styled.div`
   display: flex;
@@ -22,11 +28,15 @@ const ImgBox = styled.div`
   border: 0.3rem solid black;
 `;
 
-const ProImg = styled.img`
+interface ProImgProps {
+  imgSrc: string;
+}
+
+const ProImg = styled.div<ProImgProps>`
   width: 100%;
   height: 100%;
   object-fit: cover;
-
+  background: ${({ imgSrc }) => `url(${imgSrc})`} no-repeat center;
   background-size: 100%;
 `;
 
@@ -35,9 +45,16 @@ const InfoBox = styled.div`
   margin-top: 10px;
 `;
 
+const storeImage = '이미지 파일 경로';
+
 function Profile() {
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
   const [userArea, setUserArea] = useRecoilState(userAreaState);
+  const selectedStore = useRecoilValue(selectedStoreState);
+  const isOwner = useRecoilValue(isOwnerState);
+  const profileImage = isOwner
+    ? selectedStore?.storeImage || profileImg
+    : profileImg;
 
   const role = localStorage.getItem('role');
 
@@ -93,7 +110,7 @@ function Profile() {
     } else {
       API.get('users/member')
         .then((response: any) => {
-          console.log(response.data);
+          // console.log(response.data);
           // API 요청에서 받아온 데이터를 memberInfoState에 업데이트
           const newUserInfo: UserInfo = {
             userId: response.data.id,
@@ -119,7 +136,7 @@ function Profile() {
     <div>
       <ProfileBox>
         <ImgBox id="profileimg">
-          <ProImg src={userInfo.userProfileImage || defaultUserImage}/>
+          <ProImg imgSrc={profileImage} />
         </ImgBox>
         <InfoBox>
           <span>

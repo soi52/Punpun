@@ -116,7 +116,7 @@ export interface Reviews {
   reviewText: string;
 }
 
-export interface OwStore {
+export interface Store {
   storeId: number;
   storeName: string;
   storeOpenTime: string | null;
@@ -127,7 +127,17 @@ export interface OwStore {
   storeImageName: string | null;
   storeImage: string | null;
   storePhoneNumber: string | null;
-  menuDTOList: MenuDTO[];
+  menuDTO: MenuDTO[];
+}
+
+export interface OwStoreUpdate {
+  storeId: number;
+  storeName: string;
+  storeOpenTime: string | null;
+  storeInfo: string | null;
+  storeAddress: string;
+  storePhoneNumber: string | null;
+  storeAlwaysShare: Boolean;
 }
 
 export type MenuDTO = {
@@ -135,16 +145,28 @@ export type MenuDTO = {
   menuName: string;
   menuPrice: number;
   menuCount: number;
+  menuImage: string;
+  menuImageName: string;
 };
 
-export const owStoreState = atom<OwStore[]>({
+export const owStoreState = atom<Store[]>({
   key: 'owStoreState',
   default: [],
 });
 
-export const selectedMyStoreState = atom<OwStore | null>({
+export const selectedMyStoreState = atom<Store | null>({
   key: 'selectedMyStoreState',
   default: null,
+});
+
+export const updatedStoreState = atom<OwStoreUpdate | Store | null>({
+  key: 'selectedMyStoreState',
+  default: null,
+});
+
+export const isUpdatedState = atom<Boolean>({
+  key: 'isUpdatedState',
+  default: false,
 });
 
 export const isRegisterStoreState = atom<Boolean>({
@@ -152,7 +174,7 @@ export const isRegisterStoreState = atom<Boolean>({
   default: false,
 });
 
-export const selectedStoreState = atom<OwStore | null>({
+export const selectedStoreState = atom<Store | null>({
   key: 'selectedStoreState',
   default: null,
 });

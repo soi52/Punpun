@@ -2,14 +2,12 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import Logo from './Logo';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import {
   isLoggedInState,
   isOwnerState,
   isSupporterState,
   owStoreState,
-  selectedStoreState,
-  userInfoState,
 } from '../../store/atoms';
 import ChildHeader from '../header/ChildHeader';
 import OwnerHeader from '../header/OwnerHeader';
@@ -100,7 +98,7 @@ function Header(props: HeaderProps) {
       .catch((error: any) => {
         console.error(error);
       });
-  }, [setOwStores]);
+  }, []);
 
   const renderNav = () => {
     if (isLoggedIn) {
@@ -143,7 +141,7 @@ function Header(props: HeaderProps) {
   };
   return (
     <Wrapper>
-      <Logo onClick={toMain}/>
+      <Logo />
       <Contents>
         <nav>{renderNav()}</nav>
       </Contents>

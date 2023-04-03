@@ -2,8 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
-import API from '../../store/API';
-import { OwStore, owStoreState, selectedStoreState } from '../../store/atoms';
+import { Store, owStoreState, selectedStoreState } from '../../store/atoms';
 import UserTypeSelector from './UserTypeSelector';
 
 const NavUl = styled.ul`
@@ -56,7 +55,7 @@ interface OwnerHeaderProps {
 
 function OwnerHeader(props: OwnerHeaderProps) {
   const [stores, setStores] = useRecoilState(owStoreState);
-  const [selectedStore, setSelectedStore] = useRecoilState<OwStore | null>(
+  const [selectedStore, setSelectedStore] = useRecoilState<null | Store>(
     selectedStoreState
   );
   const [storeDrop, setStoreDrop] = useState(false);
@@ -65,7 +64,6 @@ function OwnerHeader(props: OwnerHeaderProps) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // selectedStore가 업데이트되면 헤더를 다시 그림
     console.log('selectedStore updated', selectedStore);
   }, [selectedStore]);
 
@@ -73,14 +71,16 @@ function OwnerHeader(props: OwnerHeaderProps) {
     navigate(`/owstore/${selectedStore?.storeId ?? ''}/booking`);
   };
 
-  const selectStore = (store: OwStore | null) => {
+  const selectStore = (store: Store | null) => {
     setSelectedStore(store);
     setStoreDrop(true);
-    if (!store) {
-      navigate(`/owstore/${stores[0].storeId}`);
-    } else {
-      navigate(`/owstore/${store.storeId}`);
-    }
+    setTimeout(() => {
+      if (!store) {
+        navigate(`/owstore/${stores[0].storeId}`);
+      } else {
+        navigate(`/owstore/${store.storeId}`);
+      }
+    });
   };
 
   return (

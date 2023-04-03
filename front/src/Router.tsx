@@ -23,6 +23,7 @@ import FullPage from './pages/Fullpage';
 import TestPage from './pages/Test';
 import AddNumberPage from './pages/AddNumberPage';
 import TestCopy from './pages/TestCopy';
+import StoreUpdatePage from './pages/owner/StoreUpdatePage';
 
 function Router() {
   return (
@@ -50,6 +51,10 @@ function Router() {
           />
           <Route path="/owstorelist" element={<OwManagePage />} />
           <Route path="/owregister" element={<StoreRegisterPage />} />
+          <Route
+            path="/owstore/:store_id/update"
+            element={<StoreUpdatePage />}
+          />
 
           {/* 공통페이지 (식당상세) */}
           <Route path="/store/:storeId" element={<ChStoreDetailPage />} />

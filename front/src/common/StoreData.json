@@ -10,150 +10,198 @@
     "storeImageName": null,
     "storeImage": null,
     "storePhoneNumber": null,
-    "menuDTOList": [
+    "menuDTO": [
       {
         "menuId": 47456,
         "menuName": "참치(스페샬)",
         "menuPrice": 30000,
-        "menuCount": 0
+        "menuCount": 0,
+        "menuImage": "",
+        "menuImageName": ""
       },
       {
         "menuId": 47457,
         "menuName": "참치(실장)",
         "menuPrice": 50000,
-        "menuCount": 0
+        "menuCount": 0,
+        "menuImage": "",
+        "menuImageName": ""
       },
       {
         "menuId": 47458,
         "menuName": "참치(Vip)",
         "menuPrice": 70000,
-        "menuCount": 0
+        "menuCount": 0,
+        "menuImage": "",
+        "menuImageName": ""
       },
       {
         "menuId": 47459,
         "menuName": "참치(VVip)",
         "menuPrice": 100000,
-        "menuCount": 0
+        "menuCount": 0,
+        "menuImage": "",
+        "menuImageName": ""
       },
       {
         "menuId": 47460,
         "menuName": "참치(쌀롱)",
         "menuPrice": 40000,
-        "menuCount": 0
+        "menuCount": 0,
+        "menuImage": "",
+        "menuImageName": ""
       },
       {
         "menuId": 47461,
         "menuName": "참치+회 (모듬)(소)",
         "menuPrice": 35000,
-        "menuCount": 0
+        "menuCount": 0,
+        "menuImage": "",
+        "menuImageName": ""
       },
       {
         "menuId": 47462,
         "menuName": "참치+회 (모듬)(중)",
         "menuPrice": 50000,
-        "menuCount": 0
+        "menuCount": 0,
+        "menuImage": "",
+        "menuImageName": ""
       },
       {
         "menuId": 47464,
         "menuName": "참치+회 (모듬)(대)",
         "menuPrice": 70000,
-        "menuCount": 0
+        "menuCount": 0,
+        "menuImage": "",
+        "menuImageName": ""
       },
       {
         "menuId": 47465,
         "menuName": "광어회(小)",
         "menuPrice": 35000,
-        "menuCount": 0
+        "menuCount": 0,
+        "menuImage": "",
+        "menuImageName": ""
       },
       {
         "menuId": 47466,
         "menuName": "광어회(中)",
         "menuPrice": 50000,
-        "menuCount": 0
+        "menuCount": 0,
+        "menuImage": "",
+        "menuImageName": ""
       },
       {
         "menuId": 47467,
         "menuName": "광어회(大)",
         "menuPrice": 70000,
-        "menuCount": 0
+        "menuCount": 0,
+        "menuImage": "",
+        "menuImageName": ""
       },
       {
         "menuId": 47468,
         "menuName": "모듬회(小)",
         "menuPrice": 35000,
-        "menuCount": 0
+        "menuCount": 0,
+        "menuImage": "",
+        "menuImageName": ""
       },
       {
         "menuId": 47469,
         "menuName": "모듬회(中)",
         "menuPrice": 50000,
-        "menuCount": 0
+        "menuCount": 0,
+        "menuImage": "",
+        "menuImageName": ""
       },
       {
         "menuId": 47470,
         "menuName": "모듬회(大)",
         "menuPrice": 70000,
-        "menuCount": 0
+        "menuCount": 0,
+        "menuImage": "",
+        "menuImageName": ""
       },
       {
         "menuId": 47471,
         "menuName": "참치(스페샬)",
         "menuPrice": 30000,
-        "menuCount": 0
+        "menuCount": 0,
+        "menuImage": "",
+        "menuImageName": ""
       },
       {
         "menuId": 47472,
         "menuName": "참치(쌀롱)",
         "menuPrice": 40000,
-        "menuCount": 0
+        "menuCount": 0,
+        "menuImage": "",
+        "menuImageName": ""
       },
       {
         "menuId": 47473,
         "menuName": "참치(실장)",
         "menuPrice": 50000,
-        "menuCount": 0
+        "menuCount": 0,
+        "menuImage": "",
+        "menuImageName": ""
       },
       {
         "menuId": 47474,
         "menuName": "참치(Vip)",
         "menuPrice": 70000,
-        "menuCount": 0
+        "menuCount": 0,
+        "menuImage": "",
+        "menuImageName": ""
       },
       {
         "menuId": 47475,
         "menuName": "참치(VVip)",
         "menuPrice": 100000,
-        "menuCount": 0
+        "menuCount": 0,
+        "menuImage": "",
+        "menuImageName": ""
       },
       {
         "menuId": 47476,
         "menuName": "광어회(小)",
         "menuPrice": 35000,
-        "menuCount": 0
+        "menuCount": 0,
+        "menuImage": "",
+        "menuImageName": ""
       },
       {
         "menuId": 47477,
         "menuName": "광어회(大)",
         "menuPrice": 70000,
-        "menuCount": 0
+        "menuCount": 0,
+        "menuImage": "",
+        "menuImageName": ""
       },
       {
         "menuId": 47478,
         "menuName": "광어회(中)",
         "menuPrice": 50000,
-        "menuCount": 0
+        "menuCount": 0,
+        "menuImage": "",
+        "menuImageName": ""
       },
       {
         "menuId": 47479,
         "menuName": "우럭회(小)",
         "menuPrice": 35000,
-        "menuCount": 0
+        "menuCount": 0,
+        "menuImage": "",
+        "menuImageName": ""
       },
       {
         "menuId": 47480,
         "menuName": "우럭회(中)",
         "menuPrice": 50000,
-        "menuCount": 0
+        "menuCount": 0,
+        "menuImage": "",
+        "menuImageName": ""
       }
     ]
   },
@@ -168,66 +216,86 @@
     "storeImageName": null,
     "storeImage": null,
     "storePhoneNumber": null,
-    "menuDTOList": [
+    "menuDTO": [
       {
         "menuId": 47481,
         "menuName": "돌통 옛날통닭",
         "menuPrice": 8000,
-        "menuCount": 0
+        "menuCount": 0,
+        "menuImage": "",
+        "menuImageName": ""
       },
       {
         "menuId": 47482,
         "menuName": "야채똥집튀김(강추!!)",
         "menuPrice": 12000,
-        "menuCount": 0
+        "menuCount": 0,
+        "menuImage": "",
+        "menuImageName": ""
       },
       {
         "menuId": 47483,
         "menuName": "조각후라이드",
         "menuPrice": 12000,
-        "menuCount": 0
+        "menuCount": 0,
+        "menuImage": "",
+        "menuImageName": ""
       },
       {
         "menuId": 47484,
         "menuName": "양념통닭 (달콤.매콤달콤)",
         "menuPrice": 13000,
-        "menuCount": 0
+        "menuCount": 0,
+        "menuImage": "",
+        "menuImageName": ""
       },
       {
         "menuId": 47485,
         "menuName": "마늘간장통닭",
         "menuPrice": 13000,
-        "menuCount": 0
+        "menuCount": 0,
+        "menuImage": "",
+        "menuImageName": ""
       },
       {
         "menuId": 47486,
         "menuName": "불고기양념통닭",
         "menuPrice": 13000,
-        "menuCount": 0
+        "menuCount": 0,
+        "menuImage": "",
+        "menuImageName": ""
       },
       {
         "menuId": 47487,
         "menuName": "닭다리(5조각)",
         "menuPrice": 8500,
-        "menuCount": 0
+        "menuCount": 0,
+        "menuImage": "",
+        "menuImageName": ""
       },
       {
         "menuId": 47488,
         "menuName": "통날개",
         "menuPrice": 8500,
-        "menuCount": 0
+        "menuCount": 0,
+        "menuImage": "",
+        "menuImageName": ""
       },
       {
         "menuId": 47489,
         "menuName": "국물떡볶이",
         "menuPrice": 9000,
-        "menuCount": 0
+        "menuCount": 0,
+        "menuImage": "",
+        "menuImageName": ""
       },
       {
         "menuId": 47490,
         "menuName": "무뼈닭발튀김",
         "menuPrice": 15000,
-        "menuCount": 0
+        "menuCount": 0,
+        "menuImage": "",
+        "menuImageName": ""
       }
     ]
   },
@@ -242,36 +310,46 @@
     "storeImageName": null,
     "storeImage": null,
     "storePhoneNumber": null,
-    "menuDTOList": [
+    "menuDTO": [
       {
         "menuId": 47491,
         "menuName": "통 해장국",
         "menuPrice": 9000,
-        "menuCount": 0
+        "menuCount": 0,
+        "menuImage": "",
+        "menuImageName": ""
       },
       {
         "menuId": 47492,
         "menuName": "동죽칼국수",
         "menuPrice": 8000,
-        "menuCount": 0
+        "menuCount": 0,
+        "menuImage": "",
+        "menuImageName": ""
       },
       {
         "menuId": 47493,
         "menuName": "보쌈",
         "menuPrice": 13000,
-        "menuCount": 0
+        "menuCount": 0,
+        "menuImage": "",
+        "menuImageName": ""
       },
       {
         "menuId": 47494,
         "menuName": "매운 오징어",
         "menuPrice": 20000,
-        "menuCount": 0
+        "menuCount": 0,
+        "menuImage": "",
+        "menuImageName": ""
       },
       {
         "menuId": 47495,
         "menuName": "곱도리탕",
         "menuPrice": 29000,
-        "menuCount": 0
+        "menuCount": 0,
+        "menuImage": "",
+        "menuImageName": ""
       }
     ]
   },
@@ -286,7 +364,7 @@
     "storeImageName": null,
     "storeImage": null,
     "storePhoneNumber": null,
-    "menuDTOList": []
+    "menuDTO": []
   },
   {
     "storeId": 1646721,
@@ -299,7 +377,7 @@
     "storeImageName": null,
     "storeImage": null,
     "storePhoneNumber": null,
-    "menuDTOList": []
+    "menuDTO": []
   },
   {
     "storeId": 1646722,
@@ -312,7 +390,7 @@
     "storeImageName": null,
     "storeImage": null,
     "storePhoneNumber": null,
-    "menuDTOList": []
+    "menuDTO": []
   },
   {
     "storeId": 1646723,
@@ -325,7 +403,7 @@
     "storeImageName": null,
     "storeImage": null,
     "storePhoneNumber": null,
-    "menuDTOList": []
+    "menuDTO": []
   },
   {
     "storeId": 1646724,
@@ -338,7 +416,7 @@
     "storeImageName": null,
     "storeImage": null,
     "storePhoneNumber": null,
-    "menuDTOList": []
+    "menuDTO": []
   },
   {
     "storeId": 1646725,
@@ -351,7 +429,7 @@
     "storeImageName": null,
     "storeImage": null,
     "storePhoneNumber": null,
-    "menuDTOList": []
+    "menuDTO": []
   },
   {
     "storeId": 1646726,
@@ -364,7 +442,7 @@
     "storeImageName": null,
     "storeImage": null,
     "storePhoneNumber": null,
-    "menuDTOList": []
+    "menuDTO": []
   },
   {
     "storeId": 1646727,
@@ -377,7 +455,7 @@
     "storeImageName": null,
     "storeImage": null,
     "storePhoneNumber": null,
-    "menuDTOList": []
+    "menuDTO": []
   },
   {
     "storeId": 1646728,
@@ -390,7 +468,6 @@
     "storeImageName": null,
     "storeImage": null,
     "storePhoneNumber": null,
-    "menuDTOList": []
+    "menuDTO": []
   }
-
 ]
