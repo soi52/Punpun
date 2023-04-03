@@ -21,7 +21,8 @@ public class Member extends BaseEntity {
     private String phoneNumber;
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Image profile;
-    private UserRole role;
+    @Builder.Default
+    private UserRole role = UserRole.SUPPORTER;
     @Builder.Default
     private Long supportedPoint = 0L;
     @Builder.Default
@@ -33,23 +34,24 @@ public class Member extends BaseEntity {
     @ToString.Exclude
     private List<Support> supports;
 
+    public void changeRole(UserRole role) {
+        this.role = role;
+    }
+    public void updateMemberInfo(String name, String phoneNumber) {
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+    }
+    public void updateProfileImage(Image profile) {
+        this.profile = profile;
+    }
     public Long chargePoint(Long point) {
         this.remainPoint += point;
         return this.remainPoint;
     }
-
     public Long support(Long point) {
         this.supportedPoint += point;
         this.remainPoint -= point;
         return this.remainPoint;
     }
 
-    public void changeRole(UserRole role) {
-        this.role = role;
-    }
-
-    public void updateMemberInfo(String name, String phoneNumber) {
-        this.name = name;
-        this.phoneNumber = phoneNumber;
-    }
 }

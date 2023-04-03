@@ -13,6 +13,8 @@ public class MemberResponseDTO {
     private Long id;
     private String name;
     private String email;
+    private String profileName;
+    private String profileImage;
     private String phoneNumber;
     private UserRole role;
     private Long supportedPoint;
@@ -23,6 +25,10 @@ public class MemberResponseDTO {
         this.name = member.getName();
         this.email = member.getEmail();
         this.phoneNumber = member.getPhoneNumber();
+        if (member.getProfile() != null) {
+            this.profileName = member.getProfile().getName();
+            this.profileImage = member.getProfile().getUrl();
+        }
         this.role = member.getRole();
         this.supportedPoint = member.getSupportedPoint();
         this.remainPoint = member.getRemainPoint();

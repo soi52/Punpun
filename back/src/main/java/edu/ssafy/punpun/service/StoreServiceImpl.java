@@ -5,18 +5,13 @@ import edu.ssafy.punpun.dto.response.MenuChildResponseDTO;
 import edu.ssafy.punpun.entity.*;
 import edu.ssafy.punpun.entity.enumurate.UserRole;
 import edu.ssafy.punpun.exception.NotStoreOwnerException;
-import edu.ssafy.punpun.exception.UpdateStoreDetailException;
-import edu.ssafy.punpun.repository.FavoriteMenuRepository;
-import edu.ssafy.punpun.repository.ImageRepository;
-import edu.ssafy.punpun.repository.MenuRepository;
-import edu.ssafy.punpun.repository.StoreRepository;
+import edu.ssafy.punpun.repository.*;
 import edu.ssafy.punpun.s3.S3Uploader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -32,6 +27,7 @@ public class StoreServiceImpl implements StoreService {
     private final FavoriteMenuRepository favoriteMenuRepository;
     private final ImageRepository imageRepository;
     private final S3Uploader s3Uploader;
+    private final MemberRepository memberRepository;
 
     @Override
     public Store findById(Long id) {
@@ -76,6 +72,9 @@ public class StoreServiceImpl implements StoreService {
 
         String licenseNumber = "117-12-12345";
         store.registOwner(member, licenseNumber);
+
+        member = memberRepository.findById(member.getId())
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
         member.changeRole(UserRole.OWNER);
     }
 
