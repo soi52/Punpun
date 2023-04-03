@@ -1,4 +1,13 @@
+import StoreInfo from '../StoreInfo';
+import PrevBookings from './PrevBookings';
+
 function BookingToday() {
-  return <h1>오늘의 예약</h1>;
+  return (
+    <>
+      <StoreInfo/>
+      <h2>이전 예약 내역</h2>
+      <PrevBookings/>
+    </>
+  );
 }
 export default BookingToday;

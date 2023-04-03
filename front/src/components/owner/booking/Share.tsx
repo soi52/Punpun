@@ -65,15 +65,16 @@ const Share: React.FC = () => {
   };
 
   return (
-    <Wrapper>
+    <>
       <StoreInfo />
+      <h2>나눔 등록</h2>
       <MenuDropdown menuList={menuList} onMenuSelect={handleMenuSelect} />
       <SelectedMenuList
         selectedMenus={selectedMenus}
         onQuantityChange={handleQuantityChange}
         onClearClick={handleClearClick}
       />
-    </Wrapper>
+    </>
   );
 };
 
