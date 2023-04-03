@@ -1,4 +1,8 @@
 import styled from 'styled-components';
+import API from '../../../store/API';
+import { useState } from 'react';
+import MenuModal from './MenuModal';
+import defaultMenuImage from '../../../resources/images/profileDefault.png';
 
 interface StoreMenuProps {
   storeMenus: {
@@ -33,17 +37,42 @@ const MenuCardPrice = styled.p`
   font-weight: bold;
 `;
 
+const MenuCardImage = styled.img`
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+`;
+
 function StoreMenu({ storeMenus }: StoreMenuProps) {
+  const [showModal, setShowModal] = useState(false); // 모달 표시 여부를 관리하는 상태
+
+  const handleModalClose = () => {
+    setShowModal(false); // 모달을 닫는 함수
+  };
+
   return (
-    <MenuCardContainer>
-      {storeMenus.map((menu) => (
-        <MenuCard key={menu.menuId}>
-          <MenuCardTitle>{menu.menuName}</MenuCardTitle>
-          <MenuCardPrice>{menu.menuPrice}원</MenuCardPrice>
-          <button>수정하기</button>
+    <>
+      <MenuCardContainer>
+        {storeMenus.map((menu) => (
+          <MenuCard key={menu.menuId}>
+            <MenuCardImage
+              src={menu.menuImage || defaultMenuImage}
+              alt={menu.menuName}
+            />
+            <MenuCardTitle>{menu.menuName}</MenuCardTitle>
+            <MenuCardPrice>{menu.menuPrice}원</MenuCardPrice>
+            <button>수정하기</button>
+          </MenuCard>
+        ))}
+        <MenuCard onClick={() => setShowModal(true)}>
+          <MenuCardTitle>메뉴 추가하기</MenuCardTitle>
+          <MenuCardPrice>➕</MenuCardPrice>
         </MenuCard>
-      ))}
-    </MenuCardContainer>
+      </MenuCardContainer>
+
+      {/* 모달 */}
+      {showModal && <MenuModal onClose={handleModalClose} />}
+    </>
   );
 }
 

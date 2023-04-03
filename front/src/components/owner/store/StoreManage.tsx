@@ -23,22 +23,21 @@ function StoreManage() {
   const [isRegister, setIsRegister] = useRecoilState(isRegisterState);
   const [isUpdated, setIsUpdated] = useRecoilState(isUpdatedState);
   const [selectedStore, setSelectedStore] = useRecoilState(selectedStoreState);
-  const updatedStore = useRecoilValue(updatedStoreState);
 
-  // useEffect(() => {
-  //   setIsUpdated(!isUpdated);
-  // }, []);
+  useEffect(() => {
+    setIsUpdated(!isUpdated);
+  }, []);
 
   useEffect(() => {
     API.get(`stores/${selectedStore?.storeId}`)
       .then((response) => {
-        setStoreMenus(response.data.menuMemberResponseDTOList);
         setSelectedStore(response.data);
+        setStoreMenus(response.data.menuMemberResponseDTOList);
       })
       .catch((error) => {
         console.error(error);
       });
-  }, [updatedStore]);
+  }, [isUpdated]);
 
   const handleStoreUpdate = () => {
     navigate(`/owstore/${selectedStore?.storeId}/update`);

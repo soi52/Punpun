@@ -105,7 +105,7 @@ function Profile() {
     } else {
       API.get('users/member')
         .then((response: any) => {
-          console.log(response.data);
+          // console.log(response.data);
           // API 요청에서 받아온 데이터를 memberInfoState에 업데이트
           const newUserInfo: UserInfo = {
             userId: response.data.id,
