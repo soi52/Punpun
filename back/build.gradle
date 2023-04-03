@@ -61,12 +61,6 @@ dependencies {
 	implementation 'io.springfox:springfox-swagger-ui:3.0.0'
 
 	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
-	// https://mvnrepository.com/artifact/io.findify/s3mock
-	testImplementation 'io.findify:s3mock_2.13:0.2.6'
-	//testcontainer
-	testImplementation 'org.testcontainers:junit-jupiter'
-	//localstack
-	testImplementation 'org.testcontainers:localstack'
 
 }
 
