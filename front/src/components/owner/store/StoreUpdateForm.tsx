@@ -2,10 +2,7 @@ import { useState, ChangeEvent, useEffect } from 'react';
 import styled from 'styled-components';
 import StoreSearchModal from './StoreSearchModal';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import {
-  isRegisterStoreState,
-  selectedMyStoreState,
-} from '../../../store/atoms';
+import { selectedStoreState } from '../../../store/atoms';
 import API from '../../../store/API';
 import { useNavigate } from 'react-router-dom';
 
@@ -113,10 +110,8 @@ export type MenuDTO = {
   menuCount: number;
 };
 
-const StoreRegisterForm = () => {
-  const selectedMyStore = useRecoilValue(selectedMyStoreState);
-  const [isRegisterStore, setIsRegisterStore] =
-    useRecoilState(isRegisterStoreState);
+const StoreUpdateForm = () => {
+  const selectedStore = useRecoilValue(selectedStoreState);
   const [registerStore, setRegisterStore] = useState<Store>({
     storeId: 0,
     storeName: '',
@@ -133,17 +128,6 @@ const StoreRegisterForm = () => {
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    API.get(`stores/${selectedMyStore?.storeId}`)
-      .then((response: any) => {
-        console.log(response.data);
-        setRegisterStore(response.data);
-      })
-      .catch((error: any) => {
-        console.error(error);
-      });
-  }, [selectedMyStore]);
-
   const handleSearch = () => {
     setShowModal(true);
   };
@@ -152,23 +136,38 @@ const StoreRegisterForm = () => {
     setShowModal(false);
   };
 
+  const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const selectedImage = event.target.files && event.target.files[0];
+    setRegisterStore({ ...registerStore, storeImage: selectedImage });
+
+    if (selectedImage) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const previewImageElement = document.getElementById(
+          'previewImage'
+        ) as HTMLImageElement;
+        previewImageElement.setAttribute('src', event.target?.result as string);
+      };
+      reader.readAsDataURL(selectedImage);
+    }
+  };
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     // 폼 제출 코드
   };
 
-  const handleRegister = () => {
-    API.post(`stores/${registerStore?.storeId}`, {
-      storeId: registerStore?.storeId,
+  const handleUpdate = () => {
+    API.put(`stores/${selectedStore?.storeId}`, {
+      storeId: selectedStore?.storeId,
     })
       .then((response: any) => {
         console.log(response.data);
-        setIsRegisterStore(true);
       })
       .catch((error: any) => {
         console.error(error);
       });
-    navigate('/owstorelist');
+    navigate(`/owstore/${selectedStore?.storeId}`);
   };
 
   return (
@@ -176,19 +175,26 @@ const StoreRegisterForm = () => {
       <FormStyle id="form" onSubmit={handleSubmit}>
         <InputBox>
           <ImgBox>
-            {registerStore?.storeImage ? (
+            {selectedStore?.storeImage ? (
               <PreviewImage id="previewImage" src="" />
             ) : (
               <NoImage>이미지 없음</NoImage>
             )}
           </ImgBox>
+          <InputLabel>대표이미지 등록</InputLabel>
+          <InputField
+            type="file"
+            name="image"
+            accept="image/*"
+            onChange={handleImageChange}
+          />
         </InputBox>
         <InputBox>
           <InputLabel>가게명</InputLabel>
           <InputField
             type="text"
             name="storeName"
-            defaultValue={registerStore?.storeName}
+            defaultValue={selectedStore?.storeName}
           />
           <button onClick={handleSearch}>가게명 검색하기</button>
         </InputBox>
@@ -198,7 +204,7 @@ const StoreRegisterForm = () => {
           <InputField
             type="text"
             name="storeLocation"
-            defaultValue={registerStore?.storeAddress}
+            defaultValue={selectedStore?.storeAddress}
           />
         </InputBox>
         <InputBox>
@@ -206,7 +212,7 @@ const StoreRegisterForm = () => {
           <InputField
             type="text"
             name="storePhoneNumber"
-            defaultValue={registerStore?.storePhoneNumber ?? ''}
+            defaultValue={selectedStore?.storePhoneNumber ?? ''}
           />
         </InputBox>
         <InputBox>
@@ -214,7 +220,7 @@ const StoreRegisterForm = () => {
           <InputField
             type="text"
             name="storeInfo"
-            defaultValue={registerStore?.storeInfo ?? ''}
+            defaultValue={selectedStore?.storeInfo ?? ''}
           />
         </InputBox>
         {/* <InputBox>
@@ -237,10 +243,10 @@ const StoreRegisterForm = () => {
         <span>결식아동들이 항상 예약을 요청할 수 있어요.</span>
       </FormStyle>
       <SubmitBox>
-        <SubmitButton onClick={handleRegister}>등록하기</SubmitButton>
+        <SubmitButton onClick={handleUpdate}>등록하기</SubmitButton>
       </SubmitBox>
     </Container>
   );
 };
 
-export default StoreRegisterForm;
+export default StoreUpdateForm;

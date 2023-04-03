@@ -1,6 +1,12 @@
 import styled from 'styled-components';
-import { useRecoilState } from 'recoil';
-import { userAreaState, UserInfo, userInfoState } from '../../store/atoms';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import {
+  isOwnerState,
+  selectedStoreState,
+  userAreaState,
+  UserInfo,
+  userInfoState,
+} from '../../store/atoms';
 import profileImg from '../../resources/images/temp_profile.png';
 import { useEffect } from 'react';
 import API from '../../store/API';
@@ -20,12 +26,15 @@ const ImgBox = styled.div`
   overflow: hidden;
   border: 0.5rem solid black;
 `;
+interface ProImgProps {
+  imgSrc: string;
+}
 
-const ProImg = styled.div`
+const ProImg = styled.div<ProImgProps>`
   width: 100%;
   height: 100%;
   object-fit: cover;
-  background: url(${profileImg}) no-repeat center;
+  background: ${({ imgSrc }) => `url(${imgSrc})`} no-repeat center;
   background-size: 100%;
 `;
 
@@ -34,10 +43,16 @@ const InfoBox = styled.div`
   margin-top: 10px;
 `;
 
+const storeImage = '이미지 파일 경로';
+
 function Profile() {
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
   const [userArea, setUserArea] = useRecoilState(userAreaState);
-
+  const selectedStore = useRecoilValue(selectedStoreState);
+  const isOwner = useRecoilValue(isOwnerState);
+  const profileImage = isOwner
+    ? selectedStore?.storeImage || profileImg
+    : profileImg;
   const role = localStorage.getItem('role');
 
   const location = useGeolocation();
@@ -114,7 +129,7 @@ function Profile() {
     <div>
       <ProfileBox>
         <ImgBox id="profileimg">
-          <ProImg />
+          <ProImg imgSrc={profileImage} />
         </ImgBox>
         <InfoBox>
           <span>

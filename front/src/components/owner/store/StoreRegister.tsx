@@ -1,9 +1,8 @@
 import styled from 'styled-components';
-
-import MainTitle from '../../ui/MainTitle';
-import MainMessage from '../../ui/MainMessage';
 import StoreRegisterForm from './StoreRegisterForm';
-import StoreInfo from '../StoreInfo';
+import { useRecoilValue } from 'recoil';
+import { isRegisterState } from '../../../store/atoms';
+import StoreUpdateForm from './StoreUpdateForm';
 
 const ComponentStyle = styled.div`
   padding: 20px;
@@ -15,11 +14,15 @@ const RegisterForm = styled.div`
 `;
 
 function StoreRegister() {
+  const isRegister = useRecoilValue(isRegisterState);
+  console.log(isRegister);
+  const pageTitle = isRegister ? '가맹점 등록' : '가맹점 정보 수정';
+
   return (
     <ComponentStyle>
-      <h1>가맹점 등록</h1>
+      <h1>{isRegister ? '가맹점 등록' : '가맹점 정보 수정'}</h1>
       <RegisterForm>
-        <StoreRegisterForm />
+        {isRegister ? <StoreRegisterForm /> : <StoreUpdateForm />}
       </RegisterForm>
     </ComponentStyle>
   );
