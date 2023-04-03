@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MenuRegisterRequestDTO {
+    private Long storeId;
     private String menuName;
     private Long menuPrice;
 }

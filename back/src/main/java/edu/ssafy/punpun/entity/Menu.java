@@ -34,7 +34,15 @@ public class Menu extends BaseEntity {
     @ToString.Exclude
     private List<Reservation> reservations;
 
+    public void updateDetail(String name, Long price) {
+        this.name = name;
+        this.price = price;
+    }
+    public void updateImage(Image image) {
+        this.image = image;
+    }
     public void support(Long menuCount) {
         this.sponsoredCount+=menuCount;
     }
+
 }
