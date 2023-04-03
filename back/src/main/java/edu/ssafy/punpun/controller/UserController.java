@@ -26,14 +26,14 @@ public class UserController {
     @ResponseStatus(code = HttpStatus.OK)
     public ChildResponseDTO getChildDetail(@AuthenticationPrincipal PrincipalChildDetail principalChildDetail) {
         Child child = principalChildDetail.getChild();
-        return new ChildResponseDTO(child);
+        return userService.getChildDetail(child);
     }
 
     @GetMapping("/member")
     @ResponseStatus(code = HttpStatus.OK)
     public MemberResponseDTO getMemberDetail(@AuthenticationPrincipal PrincipalMemberDetail principalMemberDetail) {
         Member member = principalMemberDetail.getMember();
-        return new MemberResponseDTO(member);
+        return userService.getMemberDetail(member);
     }
 
     @PatchMapping("/member/update")

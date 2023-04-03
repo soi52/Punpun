@@ -5,10 +5,7 @@ import edu.ssafy.punpun.dto.response.MenuChildResponseDTO;
 import edu.ssafy.punpun.entity.*;
 import edu.ssafy.punpun.entity.enumurate.UserRole;
 import edu.ssafy.punpun.exception.NotStoreOwnerException;
-import edu.ssafy.punpun.repository.FavoriteMenuRepository;
-import edu.ssafy.punpun.repository.ImageRepository;
-import edu.ssafy.punpun.repository.MenuRepository;
-import edu.ssafy.punpun.repository.StoreRepository;
+import edu.ssafy.punpun.repository.*;
 import edu.ssafy.punpun.s3.S3Uploader;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -44,6 +41,8 @@ public class StoreServiceImplTest {
     private ImageRepository imageRepository;
     @Mock
     private S3Uploader s3Uploader;
+    @Mock
+    private MemberRepository memberRepository;
 
     @InjectMocks
     private StoreServiceImpl storeService;
@@ -261,6 +260,7 @@ public class StoreServiceImplTest {
                     .id(1L)
                     .build();
 
+            doReturn(Optional.of(member)).when(memberRepository).findById(1L);
             doReturn(Optional.of(store)).when(storeRepository).findById(1L);
 
             // when
