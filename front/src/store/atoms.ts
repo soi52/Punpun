@@ -1,5 +1,5 @@
 import Cookies from 'js-cookie';
-import { atom, useRecoilState } from 'recoil';
+import { atom } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
 
 const { persistAtom } = recoilPersist();

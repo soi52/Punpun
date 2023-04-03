@@ -6,7 +6,7 @@ import { pointState } from '../../store/atoms';
 const Box = styled.div`
   width: 70%;
   margin: 20px auto;
-  border: 1px solid grey;
+  // border: 1px solid grey;
   border-radius: 25px;
   background-color: #f9f9f9;
 `;
@@ -22,7 +22,7 @@ const CartTitle = styled.h2`
 
 const StyledLi = styled.li`
   display: flex;
-  flex-direction: column;
+  // flex-direction: column;
   justify-content: space-between;
   padding: 10px;
   border-bottom: 1px solid #ddd;
@@ -30,6 +30,53 @@ const StyledLi = styled.li`
 
 const CartContent = styled.div`
   display: flex;
+`;
+
+const QuantityButton = styled.button`
+  width: 25px;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: #fff;
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    background-color: #ccc;
+    color: #fff;
+    border-color: #ccc;
+  }
+`;
+
+const ButtonGroup = styled.div`
+  display: flex;
+  align-items: center;
+
+  & > button {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+  }
+`;
+
+const Button = styled.button`
+  border: none;
+  background-color: transparent;
+  color: #aaa;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    color: #333;
+  }
 `;
 
 const ItemImage = styled.img`
@@ -61,6 +108,7 @@ const TotalPriceLabel = styled.span`
 
 const TotalPrice = styled.span`
   font-weight: bold;
+  margin-left: 10px;
 `;
 
 const DonateButton = styled.button`
@@ -71,15 +119,21 @@ const DonateButton = styled.button`
   font-size: 16px;
   font-weight: 600;
   padding: 10px 20px;
+  margin: 10px;
   border-radius: 25px;
-  margin-top: 20px;
   cursor: pointer;
+  align-items: center;
 `;
 
 const EmptyCartMessage = styled.div`
   padding: 20px;
 `;
 
+const FooterDiv = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+`;
 
 interface CartItem {
   id: number;
@@ -142,25 +196,29 @@ const MenuCart: React.FC<MenuCartProps> = ({
               <CartContent>
                 {/* <ItemImage src={item.image} alt={item.title} /> */}
                 <ItemTitle>{item.title}</ItemTitle>
-                <ItemPrice>{item.price}원</ItemPrice>
-                <button onClick={() => deleteCart(item.id)}>X</button>
+                <ItemPrice> ( {item.price}원 )</ItemPrice>
               </CartContent>
-              <div>
-                갯수: {item.quantity}
-                <button onClick={() => updateCart(item.id, item.quantity - 1)}>
+              <ButtonGroup>
+                <QuantityButton
+                  onClick={() => updateCart(item.id, item.quantity - 1)}
+                >
                   -
-                </button>
-                <button onClick={() => updateCart(item.id, item.quantity + 1)}>
+                </QuantityButton>
+                {item.quantity}
+                <QuantityButton
+                  onClick={() => updateCart(item.id, item.quantity + 1)}
+                >
                   +
-                </button>
-              </div>
+                </QuantityButton>
+                <Button onClick={() => deleteCart(item.id)}>삭제</Button>
+              </ButtonGroup>
             </StyledLi>
           ))}
-          <div>
+          <FooterDiv>
             <TotalPriceLabel>총 합계</TotalPriceLabel>
             <TotalPrice>{totalPrice.toLocaleString()}원</TotalPrice>
             <DonateButton onClick={handleDonateClick}> 후원하기</DonateButton>
-          </div>
+          </FooterDiv>
         </>
       )}
     </Box>
