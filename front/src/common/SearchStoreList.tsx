@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import SearchBar from './SearchBar';
 import FilteredList from './FilteredList';
 import API from '../store/API';
+import { Store } from '../store/atoms';
 
 const ComponentDiv = styled.div`
   display: flex;
@@ -45,27 +46,6 @@ const TabButton = styled.button<{ isActive: boolean }>`
 const SearchBarDiv = styled.div`
   padding-bottom: 10px;
 `;
-
-type MenuDTO = {
-  menuId: number;
-  menuName: string;
-  menuPrice: number;
-  menuCount: number;
-};
-
-type Store = {
-  storeId: number;
-  storeName: string;
-  storeOpenTime: string | null;
-  storeInfo: string | null;
-  storeAddress: string;
-  storeLon: number;
-  storeLat: number;
-  storeImageName: string | null;
-  storeImage: string | null;
-  storePhoneNumber: string | null;
-  menuDTOList: MenuDTO[];
-};
 
 const SearchStoreList = ({ stores }: { stores: Store[] }) => {
   const [keyword, setKeyword] = useState('');

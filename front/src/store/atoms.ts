@@ -123,7 +123,7 @@ export interface Store {
   storeImageName: string | null;
   storeImage: string | null;
   storePhoneNumber: string | null;
-  menuDTOList: MenuDTO[];
+  menuDTO: MenuDTO[];
 }
 
 export interface OwStoreUpdate {
@@ -141,6 +141,8 @@ export type MenuDTO = {
   menuName: string;
   menuPrice: number;
   menuCount: number;
+  menuImage: string;
+  menuImageName: string;
 };
 
 export const owStoreState = atom<Store[]>({

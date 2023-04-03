@@ -2,10 +2,8 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
-import { isRegisterState, selectedMyStoreState } from '../store/atoms';
-import StoreRegisterItem, {
-  Store,
-} from '../components/owner/store/StoreRegisterItem';
+import { Store, isRegisterState, selectedMyStoreState } from '../store/atoms';
+import StoreRegisterItem from '../components/owner/store/StoreRegisterItem';
 
 const StyledLink = styled(Link)`
   text-decoration: none;

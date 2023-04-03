@@ -1,8 +1,12 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import API from '../../../store/API';
 import { useRecoilState } from 'recoil';
-import { isUpdatedState, selectedStoreState } from '../../../store/atoms';
+import {
+  MenuDTO,
+  isUpdatedState,
+  selectedStoreState,
+} from '../../../store/atoms';
 
 const ModalOverlay = styled.div`
   position: fixed;
@@ -105,15 +109,34 @@ const ImgBox = styled.div`
   margin: 10px;
 `;
 
-type MenuModalProps = {
-  onClose: () => void;
-};
+const ModalFooter = styled.div``;
 
-function MenuModal({ onClose }: MenuModalProps) {
+export interface Menu {
+  menuCount: number;
+  menuId: number;
+  menuImage: string;
+  menuImageName: string;
+  menuName: string;
+  menuPrice: number;
+}
+
+interface MenuModalProps {
+  onClose: () => void;
+  mode: 'register' | 'update'; // mode 속성 추가
+  menu?: Menu; // menu 속성 추가
+}
+
+function MenuModal({ onClose, mode, menu }: MenuModalProps) {
   const [selectedStore, setSelectedStore] = useRecoilState(selectedStoreState);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [isUpdated, setIsUpdated] = useRecoilState(isUpdatedState);
   const selectedImageFile = useRef<File | null>(null);
+
+  useEffect(() => {
+    if (menu?.menuImage) {
+      setPreviewImage(menu.menuImage);
+    }
+  }, [menu]);
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
@@ -132,28 +155,64 @@ function MenuModal({ onClose }: MenuModalProps) {
         document.getElementsByName('menuPrice')[0] as HTMLInputElement
       ).value,
     };
-    const formData = new FormData();
-    if (selectedImageFile.current) {
-      formData.append('menuImage', selectedImageFile.current);
-      console.log(selectedImageFile.current);
-    }
-    formData.append(
-      'menuRegist',
-      new Blob([JSON.stringify(menuRegist)], { type: 'application/json' })
-    );
 
-    API.post('stores/menu', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    })
-      .then((response: any) => {
-        setIsUpdated(!isUpdated);
-        console.log('메뉴 등록 완료');
+    const menuUpdate = {
+      menuId: menu?.menuId ?? '',
+      menuName: (document.getElementsByName('menuName')[0] as HTMLInputElement)
+        .value,
+      menuPrice: (
+        document.getElementsByName('menuPrice')[0] as HTMLInputElement
+      ).value,
+    };
+
+    if (mode === 'update' && menu) {
+      const formData = new FormData();
+      if (selectedImageFile.current) {
+        formData.append('menuImage', selectedImageFile.current);
+      }
+      formData.append(
+        'menuUpdate',
+        new Blob([JSON.stringify(menuUpdate)], { type: 'application/json' })
+      );
+
+      API.put(`stores/menu/${menu?.menuId}`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
       })
-      .catch((error: any) => {
-        console.error(error);
-      });
+        .then((response: any) => {
+          setIsUpdated(!isUpdated);
+          console.log(mode === 'update' ? '메뉴 수정 완료' : '메뉴 등록 완료');
+        })
+        .catch((error: any) => {
+          console.error(error);
+        });
+    } else {
+      const formData = new FormData();
+      if (selectedImageFile.current) {
+        formData.append('menuImage', selectedImageFile.current);
+      }
+      formData.append(
+        'menuRegist',
+        new Blob([JSON.stringify(menuRegist)], { type: 'application/json' })
+      );
+
+      API.post('stores/menu', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+        .then((response: any) => {
+          setIsUpdated(!isUpdated);
+          console.log(
+            mode === 'register' ? '메뉴 등록 완료' : '메뉴 수정 완료'
+          );
+        })
+        .catch((error: any) => {
+          console.error(error);
+        });
+    }
+
     onClose();
   };
 
@@ -161,23 +220,24 @@ function MenuModal({ onClose }: MenuModalProps) {
     <ModalOverlay>
       <ModalContent>
         <ModalHeader>
-          <ModalTitle>메뉴 추가하기</ModalTitle>
+          <ModalTitle>
+            {mode === 'register' ? '메뉴 등록하기' : '메뉴 수정하기'}
+          </ModalTitle>
         </ModalHeader>
         <ModalBody>
           <InputBox>
             <ImgBox>
-              <label htmlFor="uploadImage">
-                {selectedImageFile.current ? (
-                  <PreviewImage
-                    id="previewImage"
-                    src={URL.createObjectURL(selectedImageFile.current)}
-                  />
+              <label htmlFor="menuImage">
+                {previewImage ? (
+                  <PreviewImage src={previewImage} alt="메뉴 이미지 미리보기" />
                 ) : (
-                  <NoImage>이미지 없음</NoImage>
+                  <NoImage>
+                    <span>이미지를 선택해주세요</span>
+                  </NoImage>
                 )}
               </label>
               <InputField
-                id="uploadImage"
+                id="menuImage"
                 type="file"
                 name="image"
                 accept="image/*"
@@ -192,18 +252,30 @@ function MenuModal({ onClose }: MenuModalProps) {
             </ImgBox>
           </InputBox>
           <InputBox>
-            <InputLabel>메뉴명</InputLabel>
-            <InputField type="text" name="menuName" required />
+            <InputLabel>메뉴 이름</InputLabel>
+            <InputField
+              type="text"
+              name="menuName"
+              placeholder="메뉴 이름 입력"
+              defaultValue={menu?.menuName}
+            />
           </InputBox>
           <InputBox>
             <InputLabel>가격</InputLabel>
-            <InputField type="text" name="menuPrice" required />
+            <InputField
+              type="number"
+              name="menuPrice"
+              placeholder="가격 입력"
+              defaultValue={menu?.menuPrice}
+            />
           </InputBox>
         </ModalBody>
-        <ButtonDiv>
-          <ModalButton onClick={onClose}>닫기</ModalButton>
-          <ModalButton onClick={handleModalSubmit}>확인</ModalButton>
-        </ButtonDiv>
+        <ModalFooter>
+          <ModalButton onClick={onClose}>취소</ModalButton>
+          <ModalButton onClick={handleModalSubmit}>
+            {mode === 'register' ? '등록하기' : '수정하기'}
+          </ModalButton>
+        </ModalFooter>
       </ModalContent>
     </ModalOverlay>
   );

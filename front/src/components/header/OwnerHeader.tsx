@@ -74,11 +74,13 @@ function OwnerHeader(props: OwnerHeaderProps) {
   const selectStore = (store: Store | null) => {
     setSelectedStore(store);
     setStoreDrop(true);
-    if (!store) {
-      navigate(`/owstore/${stores[0].storeId}`);
-    } else {
-      navigate(`/owstore/${store.storeId}`);
-    }
+    setTimeout(() => {
+      if (!store) {
+        navigate(`/owstore/${stores[0].storeId}`);
+      } else {
+        navigate(`/owstore/${store.storeId}`);
+      }
+    });
   };
 
   return (

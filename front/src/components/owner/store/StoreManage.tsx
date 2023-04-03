@@ -31,13 +31,12 @@ function StoreManage() {
   useEffect(() => {
     API.get(`stores/${selectedStore?.storeId}`)
       .then((response) => {
-        setSelectedStore(response.data);
         setStoreMenus(response.data.menuMemberResponseDTOList);
       })
       .catch((error) => {
         console.error(error);
       });
-  }, [isUpdated]);
+  }, [isUpdated, selectedStore]);
 
   const handleStoreUpdate = () => {
     navigate(`/owstore/${selectedStore?.storeId}/update`);

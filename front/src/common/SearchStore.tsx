@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-// import { storeState } from '../store/atoms';
 import StoreData from './StoreData.json';
 import Map from './Map';
 import SearchStoreList from './SearchStoreList';

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import StoreSearchModal from './StoreSearchModal';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import {
+  Store,
   isRegisterStoreState,
   selectedMyStoreState,
 } from '../../../store/atoms';
@@ -92,27 +93,6 @@ const SubmitButton = styled.button`
   cursor: pointer;
 `;
 
-export interface Store {
-  storeId: number;
-  storeName: string;
-  storeOpenTime: string | null;
-  storeInfo: string | null;
-  storeAddress: string;
-  storeLon: number;
-  storeLat: number;
-  storeImageName: string | null;
-  storeImage: string | File | null;
-  storePhoneNumber: string | null;
-  menuDTOList: MenuDTO[];
-}
-
-export type MenuDTO = {
-  menuId: number;
-  menuName: string;
-  menuPrice: number;
-  menuCount: number;
-};
-
 const StoreRegisterForm = () => {
   const selectedMyStore = useRecoilValue(selectedMyStoreState);
   const [isRegisterStore, setIsRegisterStore] =
@@ -128,7 +108,7 @@ const StoreRegisterForm = () => {
     storeImageName: null,
     storeImage: null,
     storePhoneNumber: null,
-    menuDTOList: [],
+    menuDTO: [],
   });
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
