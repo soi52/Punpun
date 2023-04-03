@@ -43,34 +43,13 @@ public class SupportController {
     @PostMapping("/payment")
     @ResponseStatus(code= HttpStatus.OK)
     public void supportPayment (@AuthenticationPrincipal PrincipalMemberDetail memberDetail, @RequestBody SupportRequestDTO supportRequestDTO){
-        List<Support> supports=dtoToEntity(memberDetail.getMember(), supportRequestDTO, 0);
-        supportService.saveSupport(supports, supportRequestDTO.getMenuId(), supportRequestDTO.getMenuCount(), memberDetail.getMember(), supportRequestDTO.getUsePoint());
+        supportService.saveSupport(memberDetail.getMember(), supportRequestDTO, 0);
     }
 
     @PostMapping("/share")
     @ResponseStatus(code= HttpStatus.OK)
     public void ownerShare(@AuthenticationPrincipal PrincipalMemberDetail memberDetail, @RequestBody SupportRequestDTO supportRequestDTO){
-        List<Support> supports=dtoToEntity(memberDetail.getMember(), supportRequestDTO, 1);
-        supportService.saveSupport(supports, supportRequestDTO.getMenuId(), supportRequestDTO.getMenuCount(), memberDetail.getMember(), 0L);
-    }
-
-    public List<Support> dtoToEntity(Member member, SupportRequestDTO supportRequestDTO, int type){
-        List<Support> supports=new LinkedList<>();
-        for(int i=0; i<supportRequestDTO.getMenuId().size(); i++) {
-            Support support = Support.builder()
-                    .supportState(SupportState.SUPPORT)
-                    .supporter(member)
-                    .build();
-            if(type == 0) {
-                support.setSupportType(SupportType.SUPPORT);
-            }
-            else{
-                support.setSupportType(SupportType.SHARE);
-            }
-
-            supports.add(support);
-        }
-        return supports;
+        supportService.saveSupport(memberDetail.getMember(), supportRequestDTO, 1);
     }
 
     @GetMapping("/{storeId}")
