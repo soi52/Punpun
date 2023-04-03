@@ -36,6 +36,7 @@ const bounce = keyframes`
 
 const LogoImgWrapper = styled.div`
   display: flex;
+  margin-left: 10px;
 `;
 
 const LogoImg = styled.div`

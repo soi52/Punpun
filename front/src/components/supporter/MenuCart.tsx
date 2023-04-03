@@ -8,10 +8,16 @@ const Box = styled.div`
   margin: 20px auto;
   border: 1px solid grey;
   border-radius: 25px;
+  background-color: #f9f9f9;
 `;
 
 const CartTitle = styled.h2`
   font-weight: bold;
+  color: #2d2d2d;
+  margin: 0;
+  padding: 20px;
+  border-radius: 25px 25px 0 0;
+  background-color: #e6e6e6;
 `;
 
 const StyledLi = styled.li`
@@ -39,11 +45,13 @@ const ItemImage = styled.img`
 const ItemTitle = styled.h4`
   font-size: 16px;
   font-weight: 600;
+  margin: 0;
 `;
 
 const ItemPrice = styled.span`
   font-size: 14px;
   font-weight: 500;
+  margin-left: auto;
 `;
 
 const TotalPriceLabel = styled.span`
@@ -54,6 +62,24 @@ const TotalPriceLabel = styled.span`
 const TotalPrice = styled.span`
   font-weight: bold;
 `;
+
+const DonateButton = styled.button`
+  border: none;
+  outline: none;
+  background-color: #2ecc71;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: 25px;
+  margin-top: 20px;
+  cursor: pointer;
+`;
+
+const EmptyCartMessage = styled.div`
+  padding: 20px;
+`;
+
 
 interface CartItem {
   id: number;
@@ -108,7 +134,7 @@ const MenuCart: React.FC<MenuCartProps> = ({
     <Box>
       <CartTitle>장바구니</CartTitle>
       {cartItems.length === 0 ? (
-        <div>장바구니가 비어있습니다.</div>
+        <EmptyCartMessage>장바구니가 비어있습니다.</EmptyCartMessage>
       ) : (
         <>
           {cartItems.map((item, index) => (
@@ -133,7 +159,7 @@ const MenuCart: React.FC<MenuCartProps> = ({
           <div>
             <TotalPriceLabel>총 합계</TotalPriceLabel>
             <TotalPrice>{totalPrice.toLocaleString()}원</TotalPrice>
-            <button onClick={handleDonateClick}> 후원하기</button>
+            <DonateButton onClick={handleDonateClick}> 후원하기</DonateButton>
           </div>
         </>
       )}

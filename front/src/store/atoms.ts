@@ -39,6 +39,8 @@ export interface UserInfo {
   userSupportedPoint: number | null;
   userRemainPoint: number | null;
   userArea: string | null;
+  userProfileName: string | null;
+  userProfileImage: string | null;
 }
 
 export const userInfoState = atom<UserInfo>({
@@ -52,6 +54,8 @@ export const userInfoState = atom<UserInfo>({
     userSupportedPoint: 0,
     userRemainPoint: 0,
     userArea: '',
+    userProfileName: '',
+    userProfileImage: '',
   },
 });
 

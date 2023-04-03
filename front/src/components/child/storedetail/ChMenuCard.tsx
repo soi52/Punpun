@@ -30,6 +30,11 @@ const MenuCardContainer = styled.div`
   padding: 16px;
   max-width: 300px;
   cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  &:hover {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
 `;
 
 const MenuCardImage = styled.div<MenuCardImageProps>`
@@ -103,7 +108,7 @@ const ChMenuCard: React.FC<ChMenu> = ({ id, title, price, favoriteMenu }) => {
         <div onClick={handleClick}>
           {/* <MenuCardImage image={image}> */}
           <HeartButtonWrapper>
-            <button onClick={toggleLike}>{liked ? '💖' : '🖤'}</button>
+            <span onClick={toggleLike}>{liked ? '💖' : '🖤'}</span>
           </HeartButtonWrapper>
           {/* </MenuCardImage> */}
           <div>

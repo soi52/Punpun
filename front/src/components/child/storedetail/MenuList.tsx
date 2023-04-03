@@ -47,10 +47,13 @@ const MenuList: React.FC<MenuListProps> = (props) => { // MenuListProps | ChMenu
     if (alreadyInCart) {
       return;
     }
-    setCartItems([...cartItems, item]);
+    setCartItems([...cartItems, {...item, quantity: 1}]);
   };
 
   const updateCart = (id: number, quantity: number) => {
+    if (quantity < 1) {
+      quantity = 1;
+    }
     const newCartItems = cartItems.map((item) => {
       if (item.id === id) {
         return { ...item, quantity };

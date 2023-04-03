@@ -21,11 +21,11 @@ const ImgBox = styled.div`
   border: 0.5rem solid black;
 `;
 
-const ProImg = styled.div`
+const ProImg = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
-  background: url(${profileImg}) no-repeat center;
+  // background: url(${profileImg}) no-repeat center;
   background-size: 100%;
 `;
 
@@ -81,6 +81,8 @@ function Profile() {
             userSupportedPoint: null,
             userRemainPoint: null,
             userArea: response.data.area,
+            userProfileName: response.data.profileName,
+            userProfileImage: response.data.profileImage,
           };
           setUserInfo(newUserInfo);
         })
@@ -101,6 +103,8 @@ function Profile() {
             userSupportedPoint: response.data.supportedPoint,
             userRemainPoint: response.data.remainPoint,
             userArea: null,
+            userProfileName: response.data.profileName,
+            userProfileImage: response.data.profileImage,
           };
           setUserInfo(newUserInfo);
         })
@@ -113,7 +117,7 @@ function Profile() {
   return (
     <div>
       <ProfileBox>
-        <ImgBox id="profileimg">
+        <ImgBox src={userInfo.userProfileImage} id="profileimg">
           <ProImg />
         </ImgBox>
         <InfoBox>
