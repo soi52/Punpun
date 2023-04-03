@@ -1,10 +1,11 @@
 import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
 import { userAreaState, UserInfo, userInfoState } from '../../store/atoms';
-import profileImg from '../../resources/images/temp_profile.png';
+// import profileImg from '../../resources/images/temp_profile.png';
 import { useEffect } from 'react';
 import API from '../../store/API';
 import useGeolocation from '../../common/UseGeolocation';
+import defaultUserImage from '../../resources/images/profileDefault.png';
 
 const ProfileBox = styled.div`
   display: flex;
@@ -18,14 +19,14 @@ const ImgBox = styled.div`
   height: 150px;
   border-radius: 70%;
   overflow: hidden;
-  border: 0.5rem solid black;
+  border: 0.3rem solid black;
 `;
 
 const ProImg = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
-  // background: url(${profileImg}) no-repeat center;
+
   background-size: 100%;
 `;
 
@@ -117,8 +118,8 @@ function Profile() {
   return (
     <div>
       <ProfileBox>
-        <ImgBox src={userInfo.userProfileImage} id="profileimg">
-          <ProImg />
+        <ImgBox id="profileimg">
+          <ProImg src={userInfo.userProfileImage || defaultUserImage}/>
         </ImgBox>
         <InfoBox>
           <span>

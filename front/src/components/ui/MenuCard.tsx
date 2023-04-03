@@ -36,7 +36,8 @@ const MenuCardContainer = styled.div`
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
   border-radius: 4px;
   padding: 16px;
-  max-width: 300px;
+  max-width: 250px;
+  width: 100%;
   cursor: pointer;
   transition: transform 0.2s ease, opacity 0.2s ease;
   &:hover {
