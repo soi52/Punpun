@@ -26,10 +26,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -441,7 +438,11 @@ public class MenuServiceImplTest {
                     .name("test")
                     .price(1000L)
                     .store(store)
+                    .favoriteMenus(new ArrayList<>())
+                    .supports(new ArrayList<>())
+                    .reservations(new ArrayList<>())
                     .build();
+
             doReturn(Optional.of(menu)).when(menuRepository).findById(1L);
 
             // when
@@ -512,6 +513,8 @@ public class MenuServiceImplTest {
                     .price(1000L)
                     .store(store)
                     .supports(List.of(support))
+                    .favoriteMenus(new ArrayList<>())
+                    .reservations(new ArrayList<>())
                     .build();
             doReturn(Optional.of(menu)).when(menuRepository).findById(1L);
 
@@ -541,6 +544,8 @@ public class MenuServiceImplTest {
                     .price(1000L)
                     .store(store)
                     .reservations(List.of(reservation))
+                    .supports(new ArrayList<>())
+                    .favoriteMenus(new ArrayList<>())
                     .build();
             doReturn(Optional.of(menu)).when(menuRepository).findById(1L);
 
@@ -570,6 +575,8 @@ public class MenuServiceImplTest {
                     .price(1000L)
                     .store(store)
                     .favoriteMenus(List.of(favoriteMenu))
+                    .reservations(new ArrayList<>())
+                    .supports(new ArrayList<>())
                     .build();
             doReturn(Optional.of(menu)).when(menuRepository).findById(1L);
 
