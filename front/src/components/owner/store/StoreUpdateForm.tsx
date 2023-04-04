@@ -11,7 +11,7 @@ import {
 import API from '../../../store/API';
 import { useNavigate } from 'react-router-dom';
 
-const redColor = 'rgba(140, 150, 181, 1)';
+const redColor = '#8088A2';
 const transition = 'all 0.25s cubic-bezier(0.53, 0.01, 0.35, 1.5)';
 const maxWidth = '700px';
 const minWidth = '500px';
@@ -35,7 +35,7 @@ const FormStyle = styled.form`
 
 const TitleStyle = styled.h1`
   color: ${redColor};
-  font-weight: 100;
+  font-weight: 300;
   letter-spacing: 0.01em;
   margin: 0px 0px 35px 0px;
   text-transform: uppercase;
@@ -80,7 +80,7 @@ const InputBox = styled.div`
 const InputLabel = styled.label`
   transform-origin: left center;
   color: ${redColor};
-  font-weight: 100;
+  font-weight: 500;
   letter-spacing: 0.01em;
   font-size: 17px;
   box-sizing: border-box;
@@ -306,12 +306,10 @@ const StoreUpdateForm = () => {
             accept="image/*"
             onChange={handleImageChange}
             style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
               opacity: 0,
+              position: 'absolute',
+              top: '-9999px',
+              left: '-9999px',
             }}
           />
         </ImgBox>
