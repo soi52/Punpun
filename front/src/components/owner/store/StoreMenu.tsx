@@ -3,11 +3,7 @@ import API from '../../../store/API';
 import { useEffect, useState } from 'react';
 import MenuModal, { Menu } from './MenuModal';
 import defaultMenuImage from '../../../resources/images/profileDefault.png';
-import {
-  MenuDTO,
-  isUpdatedState,
-  selectedStoreState,
-} from '../../../store/atoms';
+import { MenuDTO, isUpdatedState } from '../../../store/atoms';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 interface StoreMenuProps {
@@ -28,6 +24,7 @@ const MenuCard = styled.div`
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
   border-radius: 20px;
   padding: 16px;
+  margin: 0.5rem 1rem 1rem 0.5rem;
   max-width: 175px;
   width: 100%;
   height: 200px;
@@ -39,7 +36,6 @@ const MenuCard = styled.div`
   &:hover {
     transform: rotateY(180deg);
   }
-  margin: 0.5rem 1rem 1rem 0.5rem;
 `;
 
 const MenuCardTitle = styled.h4`
@@ -59,6 +55,7 @@ const MenuCardImage = styled.img`
   object-fit: cover;
   border-radius: 50%;
 `;
+
 const MenuCardFront = styled.div`
   position: absolute;
   top: 0;
@@ -89,7 +86,6 @@ const MenuCardBack = styled.div`
 `;
 
 const MenuCardButtonContainer = styled.div`
-  // 추가
   display: flex;
   justify-content: center;
   margin-top: 20px;
