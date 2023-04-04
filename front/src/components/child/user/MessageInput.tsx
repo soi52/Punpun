@@ -49,7 +49,7 @@ const Button = styled.button`
   color: white;
   border-radius: 25px;
   border: none;
-  background-color: #00adb5;
+  background-color: #5D5A88;
 `;
 
 const MessageButtonDiv = styled.div`
