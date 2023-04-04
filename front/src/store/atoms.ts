@@ -160,7 +160,7 @@ export const selectedMyStoreState = atom<Store | null>({
 });
 
 export const updatedStoreState = atom<OwStoreUpdate | Store | null>({
-  key: 'selectedMyStoreState',
+  key: 'updatedStoreState',
   default: null,
 });
 

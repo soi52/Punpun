@@ -28,9 +28,9 @@ const MenuCard = styled.div`
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
   border-radius: 20px;
   padding: 16px;
-  max-width: 225px;
+  max-width: 175px;
   width: 100%;
-  height: 300px;
+  height: 200px;
   cursor: pointer;
   transition: transform 0.75s ease, opacity 0.2s ease;
   perspective: 1000px;
@@ -43,21 +43,21 @@ const MenuCard = styled.div`
 `;
 
 const MenuCardTitle = styled.h4`
-  margin-bottom: 0.5rem;
+  margin: 10px 0px 5px 0px;
   text-align: center;
 `;
 
 const MenuCardPrice = styled.p`
   font-weight: bold;
   text-align: center;
+  margin: 0px 0px 10px 0px;
 `;
 
 const MenuCardImage = styled.img`
-  width: 200px;
-  height: 200px;
+  width: 120px;
+  height: 120px;
   object-fit: cover;
   border-radius: 50%;
-  margin-bottom: 10px;
 `;
 const MenuCardFront = styled.div`
   position: absolute;
@@ -100,7 +100,7 @@ const MenuCardButton = styled.button`
   color: #4caf50;
   border: 2px solid #4caf50;
   border-radius: 4px;
-  padding: 10px 20px;
+  padding: 5px 10px;
   margin: 5px;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -111,7 +111,6 @@ const MenuCardButton = styled.button`
 `;
 
 function StoreMenu({ storeMenus }: StoreMenuProps) {
-  const selectedStore = useRecoilValue(selectedStoreState);
   const [isUpdated, setIsUpdated] = useRecoilState(isUpdatedState);
   const [showModal, setShowModal] = useState<{
     mode: 'register' | 'update';
@@ -169,8 +168,7 @@ function StoreMenu({ storeMenus }: StoreMenuProps) {
         ))}
         <MenuCard onClick={() => setShowModal({ mode: 'register' })}>
           <MenuCardFront>
-            <MenuCardTitle>메뉴 추가하기</MenuCardTitle>
-            <MenuCardPrice>➕</MenuCardPrice>
+            <MenuCardPrice>메뉴를 추가하고 싶다면</MenuCardPrice>
           </MenuCardFront>
           <MenuCardBack>
             <MenuCardTitle>메뉴 추가하기</MenuCardTitle>
