@@ -67,7 +67,7 @@ const HeartButtonWrapper = styled.div`
 
 const ChMenuCard: React.FC<ChMenu> = ({ id, title, price, favoriteMenu }) => {
   const [showModal, setShowModal] = useState(false);
-  const [liked, setLiked] = useState(false);
+  const [liked, setLiked] = useState(favoriteMenu);
 
   const onClose = () => {
     setShowModal(false);
@@ -82,6 +82,7 @@ const ChMenuCard: React.FC<ChMenu> = ({ id, title, price, favoriteMenu }) => {
       API.delete('favors', { data: { menuId: id } })
         .then((response) => {
           console.log(response.data);
+          setLiked(false); // favoriteMenu가 false가 됨에 따라 하트 모양 바꿈
         })
         .catch((error) => {
           console.error(error);
@@ -90,6 +91,7 @@ const ChMenuCard: React.FC<ChMenu> = ({ id, title, price, favoriteMenu }) => {
       API.post('favors', { menuId: id })
         .then((response) => {
           console.log(response.data);
+          setLiked(true); // favoriteMenu가 true가 됨에 따라 하트 모양 바꿈
         })
         .catch((error) => {
           console.error(error);
@@ -106,11 +108,9 @@ const ChMenuCard: React.FC<ChMenu> = ({ id, title, price, favoriteMenu }) => {
     <>
       <MenuCardContainer>
         <div onClick={handleClick}>
-          {/* <MenuCardImage image={image}> */}
           <HeartButtonWrapper>
             <span onClick={toggleLike}>{liked ? '💖' : '🖤'}</span>
           </HeartButtonWrapper>
-          {/* </MenuCardImage> */}
           <div>
             <MenuCardTitle>{title}</MenuCardTitle>
             <MenuCardPrice>{price}원</MenuCardPrice>

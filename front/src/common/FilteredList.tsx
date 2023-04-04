@@ -99,7 +99,7 @@ const FilteredList = ({ stores, keyword }: FilteredListProps) => {
 
   // 현재 페이지에 해당하는 아이템들만 슬라이스해서 보여줍니다.
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
+  const endIndex = Math.min(startIndex + itemsPerPage, filteredList.length);
   const currentItems = filteredList.slice(startIndex, endIndex);
 
   const handleSelectStore = (store: Store | null) => {
@@ -145,6 +145,7 @@ const FilteredList = ({ stores, keyword }: FilteredListProps) => {
     return pageButtons;
   };
 
+
   return (
     <div>
       {isRegister ? (
@@ -162,31 +163,31 @@ const FilteredList = ({ stores, keyword }: FilteredListProps) => {
       ) : (
         // isOwner가 false일 경우 가게로 이동하는 코드를 렌더링합니다.
         <List>
-          {stores.map((store) => (
-            <ListItem key={store.storeId}>
-              <StyledLink to={`/store/${store.storeId}`}>
-                <StoreName>{store.storeName}</StoreName>
-              </StyledLink>
-            </ListItem>
-          ))}
-        </List>
+        {currentItems.map((store, index) => (
+          <ListItem key={index}>
+            <StyledLink to={`/store/${store.storeId}`}>
+          <StoreName>{store.storeName}</StoreName>
+      </StyledLink>
+        </ListItem>
+  ))}
+</List>
       )}
       {/* 페이지네이션 UI를 만듭니다. */}
       <Pagination>
-        <button
-          onClick={() => setCurrentPage(currentPage - 1)}
-          disabled={currentPage === 1}
-        >
-          Prev
-        </button>
-        {getPageButtons()}
-        <button
-          onClick={() => setCurrentPage(currentPage + 1)}
-          disabled={currentPage === pageCount}
-        >
-          Next
-        </button>
-      </Pagination>
+  <button
+    onClick={() => setCurrentPage(currentPage - 1)}
+    disabled={currentPage === 1}
+  >
+    Prev
+  </button>
+  {getPageButtons()}
+  <button
+    onClick={() => setCurrentPage(currentPage + 1)}
+    disabled={currentPage === pageCount}
+  >
+    Next
+  </button>
+</Pagination>
     </div>
   );
 };

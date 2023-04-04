@@ -42,7 +42,7 @@ function StoreInfo() {
         <MainTitle title={`${storeInfo.title} ${selectedStore?.storeName}`} />
       </h2>
       <MainMessage
-        message={`${userInfo.userName} 사장님, ${storeInfo.message}`}
+        message={`　${userInfo.userName} 사장님, ${storeInfo.message}`}
       />
     </>
   );
