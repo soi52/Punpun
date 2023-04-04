@@ -6,7 +6,7 @@ import edu.ssafy.punpun.entity.Menu;
 import edu.ssafy.punpun.entity.Store;
 import edu.ssafy.punpun.entity.Support;
 import edu.ssafy.punpun.entity.enumurate.SupportState;
-import edu.ssafy.punpun.entity.enumurate.SupportType;
+import edu.ssafy.punpun.exception.PointLackException;
 import edu.ssafy.punpun.repository.MemberRepository;
 import edu.ssafy.punpun.repository.MenuRepository;
 import edu.ssafy.punpun.repository.SupportRepository;
@@ -19,11 +19,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -111,34 +110,7 @@ public class SupportServiceImplTest {
                 .price(8000L)
                 .build();
         SupportRequestDTO supportRequestDTO=new SupportRequestDTO(23000L, List.of(1L, 2L), List.of(2L,1L));
-        Support support1=Support.builder()
-                .supportType(SupportType.SUPPORT)
-                .supportState(SupportState.SUPPORT)
-                .supporter(member)
-                .store(Store.builder()
-                        .name("test1")
-                        .build())
-                .menu(menu1)
-                .build();
 
-        Support support2=Support.builder()
-                .supportType(SupportType.SUPPORT)
-                .supportState(SupportState.SUPPORT)
-                .supporter(member)
-                .store(Store.builder()
-                        .name("test2")
-                        .build())
-                .menu(menu2)
-                .build();
-        List<Support> supports =new LinkedList<>();
-        supports.add(support1);
-        supports.add(support2);
-
-        List<Long> menuId=new LinkedList<>();
-        menuId.add(menu1.getId());
-        menuId.add(menu2.getId());
-
-        List<Long> menuCount=new LinkedList<>(Arrays.asList(2L, 1L));
         Long usePoint = 23000L;
 
         doReturn(Optional.of(member)).when(memberRepository).findById(member.getId());
@@ -148,8 +120,38 @@ public class SupportServiceImplTest {
 
         Assertions.assertEquals(member.getRemainPoint(), 2000L);
         Assertions.assertEquals(member.getSupportedPoint(), usePoint);
-        verify(menuService, times(supports.size())).addSponsoredCount(anyLong(), anyLong());
+        verify(menuService, times(supportRequestDTO.getMenuId().size())).addSponsoredCount(anyLong(), anyLong());
         verify(supportRepository, times(3)).save(any(Support.class));
+    }
+
+    @Test
+    @DisplayName("후원 결제 포인트 부족 예외처리 - 서비스")
+    void saveSupportException(){
+
+        Member member2= Member.builder()
+                .supportedPoint(0L)
+                .remainPoint(5000L)
+                .build();
+
+        Menu menu1=Menu.builder()
+                .id(1L)
+                .name("menuTest1")
+                .price(7500L)
+                .build();
+        Menu menu2=Menu.builder()
+                .id(2L)
+                .name("menuTest2")
+                .price(8000L)
+                .build();
+
+        SupportRequestDTO supportRequestDTO=new SupportRequestDTO(23000L, List.of(1L, 2L), List.of(2L,1L));
+
+        doReturn(Optional.of(member2)).when(memberRepository).findById(member2.getId());
+        doReturn(Optional.of(menu1)).when(menuRepository).findById(menu1.getId());
+        doReturn(Optional.of(menu2)).when(menuRepository).findById(menu2.getId());
+
+        assertThatThrownBy(() -> supportService.saveSupport(member2, supportRequestDTO, 0))
+                .isInstanceOf(PointLackException.class);
     }
 
     @Test
