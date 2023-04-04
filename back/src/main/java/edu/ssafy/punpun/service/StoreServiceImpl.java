@@ -9,6 +9,9 @@ import edu.ssafy.punpun.exception.NotStoreOwnerException;
 import edu.ssafy.punpun.repository.*;
 import edu.ssafy.punpun.s3.S3Uploader;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,6 +21,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -29,6 +33,7 @@ public class StoreServiceImpl implements StoreService {
     private final ImageRepository imageRepository;
     private final S3Uploader s3Uploader;
     private final MemberRepository memberRepository;
+    private static final int CHILD_DISTANCE_RADIUS = 200;
 
     @Override
     public Store findById(Long id) {
@@ -49,6 +54,25 @@ public class StoreServiceImpl implements StoreService {
                 })
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<Store> getStoreDistanceJava(double lon, double lat, String sort) {
+        // 위도(latitude), 경도(longitude)
+        long beforeTime = System.currentTimeMillis();
+        List<Store> storeList = storeRepository.findAll().parallelStream()
+                .filter(store -> getDistance(lat, lon, store.getLat(), store.getLon()) <= CHILD_DISTANCE_RADIUS)
+                .collect(Collectors.toList());
+        long afterTime = System.currentTimeMillis();
+        long secDiffTime = (afterTime - beforeTime) / 1000; // 초 단위
+        log.info("[StoreService] getStoreDistanceJava 함수 실행 시간 : " + secDiffTime);
+
+        return storeList;
+    }
+
+//    @Override
+//    public Page<Store> getStoreDistance(float lon, float lat, String sort, PageRequest page) {
+//        return storeRepository.findByEarthDistanceTest(page, lon, lat, CHILD_DISTANCE_RADIUS);
+//    }
 
     @Override
     public List<Store> findByNameContaining(String name) {
@@ -133,5 +157,29 @@ public class StoreServiceImpl implements StoreService {
             // 사장이 소유한 가게가 하나도 없다면, 후원자로 Role 변경
             member.changeRole(UserRole.SUPPORTER);
         }
+    }
+
+    private static double getDistance(double lat1, double lon1, double lat2, double lon2) {
+
+        double theta = lon1 - lon2;
+        double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
+
+        dist = Math.acos(dist);
+        dist = rad2deg(dist);
+        dist = dist * 60 * 1.1515;
+
+        dist = dist * 1609.344;
+
+        return (dist);
+    }
+
+    // This function converts decimal degrees to radians
+    private static double deg2rad(double deg) {
+        return (deg * Math.PI / 180.0);
+    }
+
+    // This function converts radians to decimal degrees
+    private static double rad2deg(double rad) {
+        return (rad * 180 / Math.PI);
     }
 }
