@@ -6,10 +6,10 @@ import theme from './theme';
 function App() {
   return (
     <>
-      <GlobalStyle/>
-        <ThemeProvider theme={theme}>
-          <Router />
-        </ThemeProvider>
+      <GlobalStyle />
+      <ThemeProvider theme={theme}>
+        <Router />
+      </ThemeProvider>
     </>
   );
 }
