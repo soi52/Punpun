@@ -31,18 +31,21 @@ function StoreManage() {
   }, []);
 
   useEffect(() => {
-    API.get(`stores/${selectedStore?.storeId}`)
-      .then((response) => {
-        setStore(response.data);
-        setStoreMenus(response.data.menuMemberResponseDTOList);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    if (selectedStore) {
+      API.get(`stores/${selectedStore.storeId}`)
+        .then((response) => {
+          setStore(response.data);
+          setStoreMenus(response.data.menuMemberResponseDTOList);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
   }, [isUpdated, selectedStore]);
 
   const handleStoreUpdate = () => {
     navigate(`/owstore/${selectedStore?.storeId}/update`);
+    setSelectedStore(store || null);
     setIsRegister(false);
   };
 
