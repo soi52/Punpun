@@ -127,7 +127,7 @@ public class MenuServiceImpl implements MenuService {
         // 후원 내역이 있는 경우, 나눔이 있는 경우
         // 예약이 있는 경우
         // 좋아하는 메뉴로 등록된 경우 처리 결정
-        if (menu.getSupports() != null || menu.getReservations() != null || menu.getFavoriteMenus() != null) {
+        if (menu.getSupports().size() > 0 || menu.getReservations().size() > 0 || menu.getFavoriteMenus().size() > 0) {
             throw new NotDeleteEntityException("연관된 내역이 있어 메뉴 삭제가 불가능합니다. 관리자에게 문의 바랍니다.");
         }
 
