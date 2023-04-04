@@ -41,6 +41,7 @@ public class SupportServiceImplTest {
     private MenuServiceImpl menuService;
 
     private static Member member;
+
     @BeforeAll
     public static void BeforeAll(){
         member= Member.builder()
@@ -120,6 +121,37 @@ public class SupportServiceImplTest {
 
         Assertions.assertEquals(member.getRemainPoint(), 2000L);
         Assertions.assertEquals(member.getSupportedPoint(), usePoint);
+        verify(menuService, times(supportRequestDTO.getMenuId().size())).addSponsoredCount(anyLong(), anyLong());
+        verify(supportRepository, times(3)).save(any(Support.class));
+    }
+
+    @Test
+    @DisplayName("사장님 나눔 - 서비스")
+    void saveSupportOwner(){
+        Member member2= Member.builder()
+                .supportedPoint(0L)
+                .remainPoint(5000L)
+                .build();
+
+        Menu menu1=Menu.builder()
+                .id(1L)
+                .name("menuTest1")
+                .price(7500L)
+                .build();
+        Menu menu2=Menu.builder()
+                .id(2L)
+                .name("menuTest2")
+                .price(8000L)
+                .build();
+        SupportRequestDTO supportRequestDTO=new SupportRequestDTO(0L, List.of(1L, 2L), List.of(2L,1L));
+
+        doReturn(Optional.of(member2)).when(memberRepository).findById(member2.getId());
+        doReturn(Optional.of(menu1)).when(menuRepository).findById(menu1.getId());
+        doReturn(Optional.of(menu2)).when(menuRepository).findById(menu2.getId());
+        supportService.saveSupport(member2, supportRequestDTO, 1  );
+
+        Assertions.assertEquals(member2.getRemainPoint(), 5000L);
+        Assertions.assertEquals(member2.getSupportedPoint(), 0L);
         verify(menuService, times(supportRequestDTO.getMenuId().size())).addSponsoredCount(anyLong(), anyLong());
         verify(supportRepository, times(3)).save(any(Support.class));
     }
