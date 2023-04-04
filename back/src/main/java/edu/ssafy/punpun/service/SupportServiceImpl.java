@@ -38,6 +38,9 @@ public class SupportServiceImpl implements SupportService{
 
     @Override
     public void saveSupport(Member member, SupportRequestDTO supportRequestDTO, int type) {
+        Member supporter=memberRepository.findById(member.getId())
+                .orElseThrow(()->new IllegalArgumentException("멤버가 없습니다."));
+
         for(int i=0; i<supportRequestDTO.getMenuId().size(); i++){
             Menu menu=menuRepository.findById(supportRequestDTO.getMenuId().get(i))
                     .orElseThrow(()->new IllegalArgumentException("없는 메뉴 입니다."));
@@ -64,14 +67,10 @@ public class SupportServiceImpl implements SupportService{
         }
 
         // supporter use point
-        Member supporter=memberRepository.findById(member.getId())
-                .orElseThrow(IllegalArgumentException::new);
-
         if(supporter.getRemainPoint() < supportRequestDTO.getUsePoint()){
             throw new PointLackException("포인트가 부족합니다.");
         }
         supporter.support(supportRequestDTO.getUsePoint());
-
     }
 
     @Override
