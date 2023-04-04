@@ -15,8 +15,6 @@ const RegisterForm = styled.div`
 
 function StoreRegister() {
   const isRegister = useRecoilValue(isRegisterState);
-  console.log(isRegister);
-  const pageTitle = isRegister ? '가맹점 등록' : '가맹점 정보 수정';
 
   return (
     <ComponentStyle>

@@ -302,7 +302,7 @@ const StoreUpdateForm = () => {
         <span>결식아동들이 항상 예약을 요청할 수 있어요.</span>
       </FormStyle>
       <SubmitBox>
-        <SubmitButton onClick={handleUpdate}>등록하기</SubmitButton>
+        <SubmitButton onClick={handleUpdate}>수정하기</SubmitButton>
       </SubmitBox>
     </Container>
   );
