@@ -12,7 +12,7 @@ const ComponentStyle = styled.div`
 function OwManagePage() {
   return (
     <ComponentStyle>
-      <MainComponent width={80}>{<StoreList />}</MainComponent>
+      <MainComponent width={68}>{<StoreList />}</MainComponent>
     </ComponentStyle>
   );
 }
