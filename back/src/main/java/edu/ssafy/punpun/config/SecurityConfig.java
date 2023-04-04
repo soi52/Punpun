@@ -96,11 +96,13 @@ public class SecurityConfig {
         // setAllowedOrigins : A list of origins for which cross-origin requests are allowed.
         corsConfiguration.setAllowedOrigins(List.of(
                 "http://localhost:3000",
-                "https://j8d109.p.ssafy.io/"));
+                "https://j8d109.p.ssafy.io/",
+                "http://192.168.100.138:3000/",
+                "http://192.168.100.126:3000/"));
         // setAllowedMethods : Set the HTTP methods to allow
-        corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PATCH", "PUT", "DELETE"));
+        corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"));
         // setAllowedHeaders : Set the list of headers that a pre-flight request can list as allowed for use during an actual request.
-        corsConfiguration.setAllowedHeaders(List.of("Accept", "Accept-Language", "Authorization", "Content-Language", "Content-Type"));
+        corsConfiguration.setAllowedHeaders(List.of("Accept", "Accept-Language", "Authorization", "Content-Language", "Content-Type", "x-requdsted-with", "Access-Control-Allow-Origin"));
         // setAllowedCredentials : Whether user credentials are supported.
         corsConfiguration.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
