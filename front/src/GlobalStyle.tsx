@@ -8,7 +8,7 @@ const GlobalStyle = createGlobalStyle`
   body {
     font-family: "Helvetica", "Arial", sans-serif;
     line-height: 1.5;
-    background-color: #F4F4F4;
+    background-color: #f0f0f0;
   }
 
   ::-webkit-scrollbar {
@@ -26,7 +26,6 @@ const GlobalStyle = createGlobalStyle`
     // background: rgba(33, 122, 244, .1);  /*스크롤바 뒷 배경 색상*/
   }
 
- 
 `;
 
 export default GlobalStyle;
