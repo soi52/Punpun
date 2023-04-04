@@ -90,14 +90,16 @@ function Header(props: HeaderProps) {
   };
 
   useEffect(() => {
-    API.get('stores/list')
-      .then((response: any) => {
-        console.log(response.data);
-        setOwStores(response.data);
-      })
-      .catch((error: any) => {
-        console.error(error);
-      });
+    if (role === 'OWNER') {
+      API.get('stores/list')
+        .then((response: any) => {
+          console.log(response.data);
+          setOwStores(response.data);
+        })
+        .catch((error: any) => {
+          console.error(error);
+        });
+    }
   }, []);
 
   const renderNav = () => {
