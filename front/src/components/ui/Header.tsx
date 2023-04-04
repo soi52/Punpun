@@ -43,8 +43,31 @@ const NavUl = styled.ul`
 `;
 
 const NavLi = styled.li`
+  position: relative;
   margin: 30px;
+  text-decoration: none;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 0;
+    height: 2px;
+    background-color: #5D5A88;
+    transition: width 0.3s ease-in-out;
+  }
+
+  &:hover::before {
+    width: 100%;
+  }
+
+  &:not(:hover)::before {
+    right: 0;
+    left: auto;
+  }
 `;
+
 
 type HeaderProps = {
   onSelect: (item: string) => void;
@@ -60,7 +83,8 @@ function Header(props: HeaderProps) {
   const navigate = useNavigate();
 
   const toLogin = () => {
-    navigate('/login');
+    const kakaoLogin = 'http://j8d109.p.ssafy.io/api/oauth2/authorization/kakao';
+    window.location.replace(kakaoLogin)
   };
 
   const toMain = () => {

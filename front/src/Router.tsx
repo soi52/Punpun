@@ -1,7 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 //후원자페이지
 import MainPage from './pages/MainPage';
-import LoginPage from './pages/LoginPage';
 import RedirectPage from './pages/RedirectPage';
 import SuUserPage from './pages/supporter/SuUserPage';
 import SuSearchStore from './pages/supporter/SuSearchStore';
@@ -33,7 +32,6 @@ function Router() {
         <Route path="/" element={<Layout />}>
           {/* 후원페이지 */}
           <Route path="/" element={<MainPage />} />
-          <Route path="/login" element={<LoginPage />} />
           <Route path="/kakaoLogin" element={<RedirectPage />} />
           <Route path="/sumain" element={<MainPage />} />
           <Route path="/suuser" element={<SuUserPage />} />
