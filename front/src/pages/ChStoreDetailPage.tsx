@@ -82,7 +82,7 @@ function ChStoreDetailPage() {
       title: '💌 감사 메세지',
       component: () => <ThanksMessage myStoreId={myStoreId} />,
     },
-    { title: '충전하기', component: () => <SuPointAdd /> },
+    // { title: '충전하기', component: () => <SuPointAdd /> },
   ];
 
 

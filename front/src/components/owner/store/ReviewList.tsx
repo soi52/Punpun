@@ -10,9 +10,10 @@ const Wrapper = styled.div`
   padding: 20px;
 `;
 
-type Review = {
+export type Review = {
   reviewId: number;
   reviewContent: string;
+  reviewCreatedTime: string;
   keywords: {
     content: string;
     createdDateTime: string;

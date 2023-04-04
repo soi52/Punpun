@@ -8,7 +8,7 @@ const Box = styled.div`
   margin: 20px auto;
   // border: 1px solid grey;
   border-radius: 25px;
-  background-color: #f9f9f9;
+  // background-color: #f9f9f9;
 `;
 
 const CartTitle = styled.h2`
@@ -17,7 +17,7 @@ const CartTitle = styled.h2`
   margin: 0;
   padding: 20px;
   border-radius: 25px 25px 0 0;
-  background-color: #e6e6e6;
+  // background-color: #e6e6e6;
 `;
 
 const StyledLi = styled.li`
@@ -102,13 +102,14 @@ const ItemPrice = styled.span`
 `;
 
 const TotalPriceLabel = styled.span`
-  font-weight: bold;
+  // font-weight: bold;
   margin-right: 10px;
 `;
 
 const TotalPrice = styled.span`
   font-weight: bold;
-  margin-left: 10px;
+  // margin-right: 20px;
+  // margin-bottom: 10px;
 `;
 
 const DonateButton = styled.button`
@@ -119,10 +120,11 @@ const DonateButton = styled.button`
   font-size: 16px;
   font-weight: 600;
   padding: 10px 20px;
-  margin: 10px;
+  margin-right: 10px;
   border-radius: 25px;
   cursor: pointer;
   align-items: center;
+  width: 20%
 `;
 
 const EmptyCartMessage = styled.div`
@@ -131,8 +133,14 @@ const EmptyCartMessage = styled.div`
 
 const FooterDiv = styled.div`
   display: flex;
-  justify-content: flex-end;
-  align-items: center;
+  // flex-direction: column;
+  justify-content: space-between;
+  // align-items: space-between;
+  margin: 10px;
+`;
+
+const TotalPriceDiv = styled.div`
+
 `;
 
 interface CartItem {
@@ -187,6 +195,7 @@ const MenuCart: React.FC<MenuCartProps> = ({
   return (
     <Box>
       <CartTitle>장바구니</CartTitle>
+      <hr />
       {cartItems.length === 0 ? (
         <EmptyCartMessage>장바구니가 비어있습니다.</EmptyCartMessage>
       ) : (
@@ -196,7 +205,7 @@ const MenuCart: React.FC<MenuCartProps> = ({
               <CartContent>
                 {/* <ItemImage src={item.image} alt={item.title} /> */}
                 <ItemTitle>{item.title}</ItemTitle>
-                <ItemPrice> ( {item.price}원 )</ItemPrice>
+                <ItemPrice>　( {item.price}원 )</ItemPrice>
               </CartContent>
               <ButtonGroup>
                 <QuantityButton
@@ -215,8 +224,10 @@ const MenuCart: React.FC<MenuCartProps> = ({
             </StyledLi>
           ))}
           <FooterDiv>
-            <TotalPriceLabel>총 합계</TotalPriceLabel>
-            <TotalPrice>{totalPrice.toLocaleString()}원</TotalPrice>
+            <TotalPriceDiv>
+              <TotalPriceLabel>총 합계</TotalPriceLabel>
+              <TotalPrice>{totalPrice.toLocaleString()}원</TotalPrice>
+            </TotalPriceDiv>
             <DonateButton onClick={handleDonateClick}> 후원하기</DonateButton>
           </FooterDiv>
         </>

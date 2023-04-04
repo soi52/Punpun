@@ -6,7 +6,6 @@ import { useRecoilState } from 'recoil';
 import { userInfoState } from '../../../store/atoms';
 import defaultUserImage from '../../../resources/images/profileDefault.png';
 
-
 const ReviewItem = styled.div`
   display: flex;
   align-items: center;
@@ -14,8 +13,9 @@ const ReviewItem = styled.div`
   padding: 10px;
   background-color: #ffffff;
   border-radius: 20px;
-  flex-direction: column;
+  // flex-direction: column;
 `;
+
 
 const Review = styled.div`
   display: flex;
@@ -50,6 +50,22 @@ type Message = {
   reviewContent: string;
   keywords: KeywordType[];
   reviewId: number;
+  reviewCreatedTime: string;
+};
+
+export type Review = {
+  reviewId: number;
+  reviewContent: string;
+  reviewCreatedTime: string;
+  keywords: {
+    content: string;
+    createdDateTime: string;
+    lastModifiedDateTime: string;
+    id: number;
+  }[];
+  childId: number;
+  childName: string;
+  childProfileUrl: string;
 };
 
 const UserImage = styled.img`
@@ -86,26 +102,23 @@ const ThanksMessageList = () => {
             src={userInfo.userProfileImage || defaultUserImage}
             alt="User Image"
           />
-          <ReviewText>{message.reviewContent}</ReviewText>
-          {message.keywords.map((keyword, index) => (
-            <>
-              <p>
-                {new Date(message.keywords[0].createdDateTime).toLocaleString(
-                  'ko-KR',
-                  {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                    hour: 'numeric',
-                    minute: 'numeric',
-                    // second: 'numeric',
-                    hour12: false,
-                  }
-                )}
-              </p>
-              <MessageButton>{message.keywords[0].content}</MessageButton>
-            </>
-          ))}
+          <div>
+            <ReviewText>{message.reviewContent}</ReviewText>
+            <p>
+              {new Date(message.reviewCreatedTime).toLocaleString('ko-KR', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: 'numeric',
+                minute: 'numeric',
+                // second: 'numeric',
+                hour12: false,
+              })}
+            </p>
+            {message.keywords.map((keyword, index) => (
+              <MessageButton key={index}>{keyword.content}</MessageButton>
+            ))}
+          </div>
         </ReviewItem>
       ))}
     </Review>
