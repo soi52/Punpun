@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import StoreList from '../../components/owner/store/StoreList';
+import StoreRegister from '../../components/owner/store/StoreRegister';
 import MainComponent from '../../components/ui/MainComponent';
 
 const ComponentStyle = styled.div`
@@ -9,12 +9,12 @@ const ComponentStyle = styled.div`
   justify-content: center;
 `;
 
-function OwManagePage() {
+function StoreUpdatePage() {
   return (
     <ComponentStyle>
-      <MainComponent width={68}>{<StoreList />}</MainComponent>
+      <MainComponent width={68}>{<StoreRegister />}</MainComponent>
     </ComponentStyle>
   );
 }
 
-export default OwManagePage;
+export default StoreUpdatePage;

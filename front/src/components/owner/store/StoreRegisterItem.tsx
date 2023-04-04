@@ -1,28 +1,7 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { selectedMyStoreState } from '../../../store/atoms';
+import { Store, selectedMyStoreState } from '../../../store/atoms';
 import { useRecoilState } from 'recoil';
-
-export type MenuDTO = {
-  menuId: number;
-  menuName: string;
-  menuPrice: number;
-  menuCount: number;
-};
-
-export type Store = {
-  storeId: number;
-  storeName: string;
-  storeOpenTime: string | null;
-  storeInfo: string | null;
-  storeAddress: string;
-  storeLon: number;
-  storeLat: number;
-  storeImageName: string | null;
-  storeImage: string | null;
-  storePhoneNumber: string | null;
-  menuDTOList: MenuDTO[];
-};
 
 type StoreRegisterItemProps = {
   store: Store;

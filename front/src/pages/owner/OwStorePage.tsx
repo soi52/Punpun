@@ -27,7 +27,7 @@ function OwBookingPage() {
         currentMenuItemIndex={currentMenuItemIndex}
         setCurrentMenuItemIndex={setCurrentMenuItemIndex}
       />
-      <MainComponent width={70}>
+      <MainComponent width={53.7}>
         {menuItems[currentMenuItemIndex].component()}
       </MainComponent>
     </ComponentStyle>

@@ -1,9 +1,16 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import API from '../../../store/API';
-import { owStoreMenuState, selectedStoreState } from '../../../store/atoms';
+import {
+  Store,
+  isRegisterState,
+  isUpdatedState,
+  owStoreMenuState,
+  selectedStoreState,
+  updatedStoreState,
+} from '../../../store/atoms';
 import StoreInfo from '../StoreInfo';
 import StoreMenu from './StoreMenu';
 
@@ -13,27 +20,44 @@ const Wrapper = styled.div`
 
 function StoreManage() {
   const navigate = useNavigate();
+  const [store, setStore] = useState<Store>();
   const [storeMenus, setStoreMenus] = useRecoilState(owStoreMenuState);
-  const selectedStore = useRecoilValue(selectedStoreState);
+  const [isRegister, setIsRegister] = useRecoilState(isRegisterState);
+  const [isUpdated, setIsUpdated] = useRecoilState(isUpdatedState);
+  const [selectedStore, setSelectedStore] = useRecoilState(selectedStoreState);
 
   useEffect(() => {
-    API.get(`stores/${selectedStore?.storeId}`)
-      .then((response) => {
-        // console.log(response.data);
-        console.log(response.data.menuMemberResponseDTOList);
-        setStoreMenus(response.data.menuMemberResponseDTOList);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, [selectedStore]);
+    setIsUpdated(!isUpdated);
+  }, []);
+
+  useEffect(() => {
+    if (selectedStore) {
+      API.get(`stores/${selectedStore.storeId}`)
+        .then((response) => {
+          setStore(response.data);
+          setStoreMenus(response.data.menuMemberResponseDTOList);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  }, [isUpdated, selectedStore]);
+
+  const handleStoreUpdate = () => {
+    navigate(`/owstore/${selectedStore?.storeId}/update`);
+    setSelectedStore(store || null);
+    setIsRegister(false);
+  };
 
   return (
     <Wrapper>
       <StoreInfo />
       <h2>가게 정보</h2>
       <StoreMenu storeMenus={storeMenus} />
-      <button onClick={() => navigate('/owregister')}>수정하기</button>
+      <p>{store?.storePhoneNumber}</p>
+      <p>{store?.storeInfo}</p>
+      <p>{store?.storeOpenTime}</p>
+      <button onClick={handleStoreUpdate}>수정하기</button>
     </Wrapper>
   );
 }
