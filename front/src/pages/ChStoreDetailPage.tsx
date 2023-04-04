@@ -11,6 +11,8 @@ import StoreMenu from '../components/child/storedetail/StoreMenu';
 import StoreInfo from '../components/child/storedetail/StoreInfo';
 import ThanksMessage from '../components/child/storedetail/StoreThanksMessage';
 import SuPointAdd from '../components/supporter/SuPointAdd';
+import { useRecoilState } from 'recoil';
+import { selectedStoreState } from '../store/atoms';
 
 // 아이콘
 
@@ -69,7 +71,8 @@ function ChStoreDetailPage() {
   const [currentMenuItemIndex, setCurrentMenuItemIndex] = useState(0);
   const [stores, setStores] = useState<Store>();
   const [chStores, setChStores] = useState<ChStore>();
-  
+  const [selectedStore, setSelectedStore] = useRecoilState(selectedStoreState);
+
   const role = localStorage.getItem('role');
 
   const menuItems = [
@@ -85,7 +88,6 @@ function ChStoreDetailPage() {
     // { title: '충전하기', component: () => <SuPointAdd /> },
   ];
 
-
   useEffect(() => {
     async function fetchStores() {
       if (role === 'CHILD') {
@@ -93,6 +95,7 @@ function ChStoreDetailPage() {
           const response = await API.get(`stores/child/${myStoreId}`);
           console.log(response.data);
           setChStores(response.data);
+          setSelectedStore(response.data);
         } catch (error) {
           console.log(error);
         }
@@ -100,8 +103,8 @@ function ChStoreDetailPage() {
         try {
           const response = await API.get(`stores/${myStoreId}`);
           console.log(response.data);
-
           setStores(response.data);
+          setSelectedStore(response.data);
         } catch (error) {
           console.log(error);
         }
@@ -129,7 +132,6 @@ function ChStoreDetailPage() {
         </MainComponent>
       </ComponentStyle>
     );
-
   } else {
     if (!stores) {
       return <Loading />;

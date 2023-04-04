@@ -3,43 +3,33 @@ import styled from 'styled-components';
 import MenuCard from '../../ui/MenuCard';
 import MenuCart from '../../supporter/MenuCart';
 import Loading from '../../ui/Loading';
+import { MenuDTO, isUpdatedState } from '../../../store/atoms';
+import { useRecoilState } from 'recoil';
 
 const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  padding: 20px;
 `;
 
-const MenuListContainer = styled.div`
-  width: 70%;
+const MenuCardContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  margin: 20px auto;
-  gap: 20px;
+  justify-content: start;
 `;
 
-type MenuDTO = {
-  menuId: number;
-  menuName: string;
-  menuPrice: number;
-  menuCount: number;
-  menuImage: string | null;
-  menuImageName: string | null;
-};
-
 type MenuListProps = {
-  menuList: MenuDTO[];
+  menuDTOList: MenuDTO[];
 };
 
-interface CartItem {
+export interface CartItem {
   id: number;
   title: string;
   price: number;
   quantity: number;
+  image: string;
 }
 
-const MenuList: React.FC<MenuListProps> = (props) => { // MenuListProps | ChMenuListProps로 수정
+function MenuList({ menuDTOList }: MenuListProps) {
+  // MenuListProps | ChMenuListProps로 수정
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
   const addToCart = (item: CartItem) => {
@@ -47,7 +37,7 @@ const MenuList: React.FC<MenuListProps> = (props) => { // MenuListProps | ChMenu
     if (alreadyInCart) {
       return;
     }
-    setCartItems([...cartItems, {...item, quantity: 1}]);
+    setCartItems([...cartItems, { ...item, quantity: 1 }]);
   };
 
   const updateCart = (id: number, quantity: number) => {
@@ -74,33 +64,24 @@ const MenuList: React.FC<MenuListProps> = (props) => { // MenuListProps | ChMenu
     }
   };
 
-  if (!props.menuList) {
+  if (!menuDTOList) {
     return <Loading />;
   }
 
   return (
-    <Container>
-      <MenuListContainer>
-        {props.menuList.map((menu, index) => {
-          return(
-            <MenuCard
-              key={index}
-              id={menu.menuId}
-              title={menu.menuName}
-              price={menu.menuPrice}
-              quantity={menu.menuCount}
-              addToCart={addToCart}
-            />
-          )
+    <>
+      <MenuCardContainer>
+        {menuDTOList.map((menu) => {
+          return <MenuCard addToCart={addToCart} menu={menu} />;
         })}
-      </MenuListContainer>
+      </MenuCardContainer>
       <MenuCart
         cartItems={cartItems}
         updateCart={updateCart}
         deleteCart={deleteCart}
       />
-    </Container>
+    </>
   );
-};
+}
 
 export default MenuList;
