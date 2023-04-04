@@ -11,6 +11,7 @@ type Props = {
 type Review = {
   reviewId: number;
   reviewContent: string;
+  reviewCreatedTime: string;
   keywords: {
     content: string;
     createdDateTime: string;
