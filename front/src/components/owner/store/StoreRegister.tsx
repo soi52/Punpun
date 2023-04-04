@@ -8,20 +8,12 @@ const ComponentStyle = styled.div`
   padding: 20px;
 `;
 
-const RegisterForm = styled.div`
-  display: flex;
-  justify-content: center;
-`;
-
 function StoreRegister() {
   const isRegister = useRecoilValue(isRegisterState);
 
   return (
     <ComponentStyle>
-      <h1>{isRegister ? '가맹점 등록' : '가맹점 정보 수정'}</h1>
-      <RegisterForm>
-        {isRegister ? <StoreRegisterForm /> : <StoreUpdateForm />}
-      </RegisterForm>
+      {isRegister ? <StoreRegisterForm /> : <StoreUpdateForm />}
     </ComponentStyle>
   );
 }
