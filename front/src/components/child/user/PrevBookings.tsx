@@ -2,6 +2,7 @@ import API from '../../../store/API';
 import styled, { DefaultTheme, ThemedStyledProps } from 'styled-components';
 import { useEffect, useState } from 'react';
 import Loading from '../../ui/Loading';
+import { useNavigate } from 'react-router-dom';
 
 const Wrapper = styled.div`
     display; flex;
@@ -9,12 +10,22 @@ const Wrapper = styled.div`
     margin: 30px;
 `;
 
-const PostIt = styled.div`
+const PostIt = styled.div<{ reservationState: "END" | "CANCEL" | "BOOKING" }>`
   position: relative;
   width: 90%;
   height: 200px;
-  background-color: #FCFCFF;
-  //   border: 2px solid #ffd700;
+  background-color: ${props => {
+    switch (props.reservationState) {
+      case "END":
+        return "#FCFCFF";
+      case "CANCEL":
+        return "#F8C1C1";
+      case "BOOKING":
+        return "#F2F2F2";
+      default:
+        return "#F2F2F2";
+    }
+  }};
   border-radius: 5px;
   margin: 10px;
   padding: 20px;
@@ -43,9 +54,27 @@ const StatusIcon2 = styled.span`
   color: white;
 `;
 
+const StatusIcon3 = styled.span`
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  border-radius: 50%;
+  // background-color: #E86B6B;
+  text-align: center;
+  color: white;
+`;
+
 const StoreName = styled.div`
   font-size: 20px;
   font-weight: bold;
+  cursor: pointer;
+
+  &:hover {
+    // background-color: #ff3b3b;
+    opacity: 0.8;
+    transform: scale(1.01);
+  }
 `;
 
 const ReservationHeader = styled.div`
@@ -78,7 +107,7 @@ const HrDiv = styled.hr`
 
 type Booking = {
   reservationId: number;
-  reservationState: string;
+  reservationState: any;
   reservationTime: string;
   menuId: number;
   menuName: string;
@@ -115,6 +144,12 @@ const PrevBookings = () => {
       reservationTime: formattedTime
     };
   }).reverse();
+
+  
+  const Navigate = useNavigate();
+  const toStore = (storeId: number) => {
+    Navigate(`/store/${storeId}`);
+  };
   
   console.log(formattedBookings);
 
@@ -127,19 +162,22 @@ const PrevBookings = () => {
         {formattedBookings && formattedBookings.length > 0 ? (
           formattedBookings.map((booking) => (
             <Wrapper key={booking.reservationId}>
-              <PostIt>
+              <PostIt reservationState={booking.reservationState}>
                 <ReservationInfo>
                   <ReservationHeader>
-                    { booking.reservationState === 'END' ?
-                    <StatusIcon1>✔</StatusIcon1>
-                    :
-                    <StatusIcon2>✖</StatusIcon2>}
+                  {booking.reservationState === 'END' ? (
+                  <StatusIcon1>✔</StatusIcon1>
+                  ) : booking.reservationState === 'CANCEL' ? (
+                  <StatusIcon2>✖</StatusIcon2>
+                  ) : (
+                  <StatusIcon3>💬</StatusIcon3>
+                  )}
                     <IdDiv>
                       <span>예약번호 </span>
                       <ReservationId># {booking.reservationId}</ReservationId>
                     </IdDiv>
                   </ReservationHeader>
-                  <StoreName>{booking.storeName}</StoreName>
+                  <StoreName onClick={() => toStore(booking.storeId)}>{booking.storeName}</StoreName>
                   <HrDiv></HrDiv>
                 </ReservationInfo>
                 <MenuInfo>{`메뉴: ${booking.menuName}`}</MenuInfo>

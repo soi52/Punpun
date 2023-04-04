@@ -10,7 +10,7 @@ import ThanksMessage from '../../components/supporter/ThanksMessage';
 import SuPointAdd from '../../components/supporter/SuPointAdd';
 
 const ComponentStyle = styled.div`
-  padding: 30px 30px 0px 30px;
+  padding: 15px 30px 0px 30px;
   display: flex;
   justify-content: center;
 `;

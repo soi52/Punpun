@@ -72,6 +72,9 @@ const LikedMenu = () => {
   // const [isLiked, setIsLiked] = useState(true);
 
   const Navigate = useNavigate();
+  const toStore = (storeId: number) => {
+    Navigate(`/store/${storeId}`);
+  };
 
   const handleDelete = (menuId: number) => {
     setMenus((prev) => prev.filter((menu) => menu.menuId !== menuId)); // 목록에서 해당 메뉴 삭제
@@ -97,10 +100,6 @@ const LikedMenu = () => {
         console.error(error);
       });
     // setIsLiked((prev) => !prev);
-  };
-
-  const toStore = (storeId: number) => {
-    Navigate(`/store/${storeId}`);
   };
 
   if (menus.length === 0) {

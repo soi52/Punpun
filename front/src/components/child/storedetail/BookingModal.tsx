@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import API from '../../../store/API';
 import styled, { keyframes } from 'styled-components';
+import Swal from 'sweetalert2';
 
 const fadeIn = keyframes`
   from {
@@ -167,6 +168,11 @@ const BookingModal: React.FC<ModalProps> = ({ menu, onClose }) => {
     .then((response) => {
       console.log(response.data);
       onClose(); // API 요청이 성공적으로 처리되면 모달을 닫는다.
+      Swal.fire(
+        '예약 신청이 완료되었습니다!',
+        '사장님이 수락을 누르면 예약이 확정됩니다.',
+        'success'
+      )
     })
     .catch((error) => {
       console.log(error);
