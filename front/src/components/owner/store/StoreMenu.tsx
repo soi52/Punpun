@@ -20,14 +20,20 @@ const MenuCardContainer = styled.div`
 `;
 
 const MenuCard = styled.div`
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  margin-right: 0.5rem;
-  margin-bottom: 0.5em;
-  padding: 0.5rem;
-  width: 150px;
-  height: 280px; // 추가된 속성
-  text-align: center; // 추가된 속성
+display: flex;
+flex-direction: column;
+align-items: center;
+background-color: #ffffff;
+box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
+border-radius: 4px;
+padding: 16px;
+max-width: 250px;
+width: 50%;
+cursor: pointer;
+transition: transform 0.2s ease, opacity 0.2s ease;
+&:hover {
+  opacity: 0.8;
+  transform: scale(1.05);
 `;
 
 const MenuCardTitle = styled.h4`

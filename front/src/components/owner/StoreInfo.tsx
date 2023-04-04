@@ -8,6 +8,7 @@ import {
 import MainMessage from '../ui/MainMessage';
 import MainTitle from '../ui/MainTitle';
 import styled from 'styled-components';
+import API from '../../store/API';
 
 const Wrapper = styled.div`
   padding: 20px;
@@ -28,15 +29,26 @@ function StoreInfo() {
   useEffect(() => {
     if (!selectedStore) {
       setSelectedStore(stores[0]);
+    } else {
+      API.get(`stores/${selectedStore.storeId}`)
+        .then((response: any) => {
+          console.log(response.data);
+          setSelectedStore(response.data);
+        })
+        .catch((error: any) => {
+          console.error(error);
+        });
     }
-  }, [selectedStore, setSelectedStore, stores]);
+  }, [setSelectedStore, stores]);
 
   return (
     <Wrapper>
       <h2>
         <MainTitle title={`${storeInfo.title} ${selectedStore?.storeName}`} />
       </h2>
-      <MainMessage message={`${userInfo.userName} 사장님, ${storeInfo.message}`} />
+      <MainMessage
+        message={`${userInfo.userName} 사장님, ${storeInfo.message}`}
+      />
     </Wrapper>
   );
 }
