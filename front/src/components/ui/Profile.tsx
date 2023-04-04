@@ -25,7 +25,12 @@ const ImgBox = styled.div`
   height: 150px;
   border-radius: 70%;
   overflow: hidden;
-  border: 0.3rem solid black;
+  // border: 2px solid;
+  // border-image: linear-gradient(to right, #84fab0 0%, #8fd3f4 51%, #84fab0 100%);
+  // border-image-slice: 1;
+  &:hover {
+    
+  }
 `;
 
 interface ProImgProps {
