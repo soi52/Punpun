@@ -26,7 +26,6 @@ const GlobalStyle = createGlobalStyle`
     // background: rgba(33, 122, 244, .1);  /*스크롤바 뒷 배경 색상*/
   }
 
- 
 `;
 
 export default GlobalStyle;
