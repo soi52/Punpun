@@ -9,11 +9,14 @@ import defaultUserImage from '../../../resources/images/profileDefault.png';
 const ReviewItem = styled.div`
   display: flex;
   align-items: center;
+  width: 50%;
   margin: 10px;
   padding: 10px;
   background-color: #ffffff;
+  border: 1px solid black;
   border-radius: 20px;
   // flex-direction: column;
+  word-wrap: break-word; /* word-wrap 속성 적용 */
 `;
 
 
@@ -96,30 +99,37 @@ const ThanksMessageList = () => {
 
   return (
     <Review>
-      {messages.map((message, index) => (
-        <ReviewItem key={index}>
-          <UserImage
-            src={userInfo.userProfileImage || defaultUserImage}
-            alt="User Image"
-          />
-          <div>
-            <ReviewText>{message.reviewContent}</ReviewText>
-            <p>
-              {new Date(message.reviewCreatedTime).toLocaleString('ko-KR', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-                hour: 'numeric',
-                minute: 'numeric',
-                // second: 'numeric',
-                hour12: false,
-              })}
-            </p>
-            {message.keywords.map((keyword, index) => (
-              <MessageButton key={index}>{keyword.content}</MessageButton>
-            ))}
-          </div>
-        </ReviewItem>
+      {messages.reduce((rows: JSX.Element[][], message: Message, index: number) => {
+        if (index % 2 === 0) rows.push([]);
+        rows[rows.length - 1].push(
+          <ReviewItem key={index}>
+            <UserImage
+              src={userInfo.userProfileImage || defaultUserImage}
+              alt="User Image"
+            />
+            <div>
+              <ReviewText>{message.reviewContent}</ReviewText>
+              <p>
+                {new Date(message.reviewCreatedTime).toLocaleString('ko-KR', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                  hour: 'numeric',
+                  minute: 'numeric',
+                  hour12: false,
+                })}
+              </p>
+              {message.keywords.map((keyword, index) => (
+                <MessageButton key={index}>{keyword.content}</MessageButton>
+              ))}
+            </div>
+          </ReviewItem>
+        );
+        return rows;
+      }, []).map((row, index) => (
+        <div key={index} style={{ display: 'flex' }}>
+          {row}
+        </div>
       ))}
     </Review>
   );

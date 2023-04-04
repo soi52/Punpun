@@ -11,7 +11,7 @@ const SidebarStyle = styled.div`
   background-color: white;
   border-radius: 1rem;
   width: 13rem;
-  height: 38rem;
+  height: 39rem;
   // box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   float: left;
   margin-right: 1.3rem;

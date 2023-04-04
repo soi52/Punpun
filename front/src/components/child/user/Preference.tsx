@@ -7,12 +7,18 @@ const ComponentStyle = styled.div`
   padding: 20px;
 `;
 
+const BookingDiv = styled.div`
+  padding-top: 20px;
+`;
+
 const Preference = () => {
   return (
     <ComponentStyle>
       <ChMainMessage/>
-      <h2>선호 메뉴</h2>
-      <LikedMenu/>
+      <BookingDiv>
+        <h2>선호 메뉴</h2>
+        <LikedMenu/>
+      </BookingDiv>
     </ComponentStyle>
   );
 };
