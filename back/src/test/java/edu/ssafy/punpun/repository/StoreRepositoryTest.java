@@ -4,12 +4,12 @@ import edu.ssafy.punpun.entity.Image;
 import edu.ssafy.punpun.entity.Member;
 import edu.ssafy.punpun.entity.Store;
 import edu.ssafy.punpun.entity.enumurate.UserRole;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.List;
@@ -18,7 +18,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.*;
 
 @DataJpaTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@AutoConfigureTestDatabase(replace = Replace.NONE)
 @DisplayName("가게 레포지토리 테스트")
 public class StoreRepositoryTest {
     @Autowired
@@ -94,8 +94,8 @@ public class StoreRepositoryTest {
         storeRepository.save(store3);
 
         // when
-        Float longitude = 36.106795F;
-        Float latitude = 128.421046F;
+        Float longitude = 128.421046F;
+        Float latitude = 36.106795F;
         Integer radius = 200;
         List<Store> results = storeRepository.findByEarthDistancePostgres(longitude, latitude, radius);
 
