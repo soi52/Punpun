@@ -12,7 +12,7 @@ const ComponentStyle = styled.div`
 function StoreUpdatePage() {
   return (
     <ComponentStyle>
-      <MainComponent width={80}>{<StoreRegister />}</MainComponent>
+      <MainComponent width={68}>{<StoreRegister />}</MainComponent>
     </ComponentStyle>
   );
 }
