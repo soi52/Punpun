@@ -4,6 +4,7 @@ import API from '../../../store/API';
 import { useParams } from 'react-router';
 import { useRecoilValue } from 'recoil';
 import { selectedStoreState } from '../../../store/atoms';
+import styled from 'styled-components';
 
 interface MenuSupport {
   supportId: null | number;
@@ -14,6 +15,10 @@ interface MenuSupport {
   totalCount: number;
   useCount: number;
 }
+
+const Wrapper = styled.div`
+  padding: 20px;
+`;
 
 function ShareList() {
   const { storeId: myStoreId } = useParams();
@@ -37,17 +42,19 @@ function ShareList() {
       });
   }, []);
   return (
-    <>
+    <Wrapper>
       <StoreInfo />
       <h2>나눔 목록</h2>
       {shareList?.map((share, index) => (
         <>
           <p>{share.supportType}</p>
           <p>{share.menuName}</p>
-          <p>남은 갯수: {share.useCount} / {share.totalCount}</p>
+          <p>
+            남은 갯수: {share.useCount} / {share.totalCount}
+          </p>
         </>
       ))}
-    </>
+    </Wrapper>
   );
 }
 export default ShareList;

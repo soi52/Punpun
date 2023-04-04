@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import MainComponent from '../../components/ui/MainComponent';
-import BookingList from '../../components/owner/booking/BookingToday';
-
-import BookingToday from '../../components/owner/booking/BookingList';
 import Share from '../../components/owner/booking/Share';
 import ShareList from '../../components/owner/booking/ShareList';
 import Sidebar from '../../components/ui/Sidebar';
+import BookingToday from '../../components/owner/booking/BookingToday';
+import BookingList from '../../components/owner/booking/BookingList';
 
 const ComponentStyle = styled.div`
   padding: 15px 30px 0px 30px;

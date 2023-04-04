@@ -1,6 +1,7 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
+import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { Store } from '../store/atoms';
+import { selectedStoreState, Store } from '../store/atoms';
 
 const Div = styled.div`
   width: 400px;
@@ -27,6 +28,8 @@ type MapProps = {
 
 const Map = ({ latitude, longitude, stores }: MapProps) => {
   const mapRef = useRef<kakao.maps.Map | null>(null);
+  const [currentLocationMarker, setCurrentLocationMarker] =
+    useState<kakao.maps.Marker | null>(null);
 
   const initMap = () => {
     if (latitude && longitude && mapRef.current === null) {
@@ -42,10 +45,13 @@ const Map = ({ latitude, longitude, stores }: MapProps) => {
         latitude,
         longitude
       );
-      const currentLocationMarker = new kakao.maps.Marker({
+
+      const marker = new kakao.maps.Marker({
         position: currentLocationPosition,
       });
-      currentLocationMarker.setMap(map);
+      marker.setMap(map);
+
+      setCurrentLocationMarker(marker);
 
       // 각 가게들의 위치에 마커를 찍는 로직 추가
       stores.forEach((store) => {
@@ -64,6 +70,13 @@ const Map = ({ latitude, longitude, stores }: MapProps) => {
       const center = new kakao.maps.LatLng(latitude, longitude);
       (mapRef.current as kakao.maps.Map).setCenter(center);
       (mapRef.current as kakao.maps.Map).setLevel(4);
+      if (currentLocationMarker) {
+        const currentLocationPosition = new kakao.maps.LatLng(
+          latitude,
+          longitude
+        );
+        currentLocationMarker.setPosition(currentLocationPosition);
+      }
     }
   };
 
@@ -71,7 +84,7 @@ const Map = ({ latitude, longitude, stores }: MapProps) => {
     if (latitude && longitude) {
       kakao.maps.load(() => initMap());
     }
-  }, [latitude, longitude]);
+  }, [latitude, longitude, selectedStoreState]);
 
   return (
     <Div id="map">
