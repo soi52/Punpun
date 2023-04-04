@@ -1,5 +1,5 @@
 import { useState, ChangeEvent, useEffect } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import StoreSearchModal from './StoreSearchModal';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import {
@@ -10,40 +10,124 @@ import {
 import API from '../../../store/API';
 import { useNavigate } from 'react-router-dom';
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 50%;
-`;
+const redColor = 'rgba(140, 150, 181, 1)';
+const transition = 'all 0.25s cubic-bezier(0.53, 0.01, 0.35, 1.5)';
+const maxWidth = '700px';
+const minWidth = '500px';
+const borderRadius = '40px';
+const submitButtonBorderRadius = '60px';
 
 const FormStyle = styled.form`
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  margin-top: 50px;
-  padding: auto;
+  position: relative;
+  display: inline-block;
+  max-width: ${maxWidth};
+  min-width: ${minWidth};
+  box-sizing: border-box;
+  // padding: 30px 25px;
+  background-color: white;
+  border-radius: ${borderRadius};
+  margin: 40px 0;
+  left: 50%;
+  transform: translate(-50%, 0);
+  text-align: center;
+`;
+
+const TitleStyle = styled.h1`
+  color: ${redColor};
+  font-weight: 100;
+  letter-spacing: 0.01em;
+  margin: 0px 0px 35px 0px;
+  text-transform: uppercase;
+  text-align: center;
+`;
+
+const SubmitButton = styled.button`
+  margin-top: 35px;
+  background-color: white;
+  border: 1px solid ${redColor};
+  line-height: 0;
+  font-size: 17px;
+  display: inline-block;
+  box-sizing: border-box;
+  padding: 20px 15px;
+  border-radius: ${submitButtonBorderRadius};
+  color: ${redColor};
+  font-weight: 100;
+  letter-spacing: 0.01em;
+  position: relative;
+  transition: ${transition};
+
+  &:hover,
+  &:focus {
+    color: white;
+    background-color: ${redColor};
+  }
 `;
 
 const InputBox = styled.div`
-  margin-bottom: 20px;
-  display: flex;
-  flex-direction: column;
-`;
+  position: relative;
+  padding: 10px 0;
 
+  &:first-of-type {
+    padding-top: 0;
+  }
+
+  &:last-of-type {
+    padding-bottom: 0;
+  }
+`;
 const InputLabel = styled.label`
-  font-size: 16px;
-  font-weight: bold;
-  margin-right: 20px;
+  transform-origin: left center;
+  color: ${redColor};
+  font-weight: 100;
+  letter-spacing: 0.01em;
+  font-size: 17px;
+  box-sizing: border-box;
+  padding: 10px 15px;
+  display: block;
+  position: absolute;
+  margin-top: -10px;
+  pointer-events: none;
+  transition: ${transition};
 `;
 
 const InputField = styled.input`
-  width: 40vw;
-  height: 30px;
-  border-radius: 5px;
-  border: 1px solid gray;
-  padding: 5px;
-  font-size: 14px;
-  margin-right: 20px;
+  appearance: none;
+  background-color: none;
+  border: 1px solid ${redColor};
+  line-height: 0;
+  font-size: 17px;
+  width: 100%;
+  display: block;
+  box-sizing: border-box;
+  padding: 10px 15px;
+  border-radius: ${submitButtonBorderRadius};
+  color: ${redColor};
+  font-weight: 100;
+  letter-spacing: 0.01em;
+  position: relative;
+  transition: ${transition};
+
+  &:focus {
+    outline: none;
+    background: ${redColor};
+    color: white;
+    margin-top: 30px;
+  }
+
+  &:valid {
+    margin-top: 30px;
+  }
+
+  &:focus ~ label {
+    transform: translate(0, -35px);
+  }
+
+  &:valid ~ label {
+    text-transform: uppercase;
+    font-style: italic;
+    transform: translate(5px, -35px);
+  }
 `;
 
 const PreviewImage = styled.img`
@@ -51,19 +135,20 @@ const PreviewImage = styled.img`
   height: 150px;
   border-radius: 70%;
   overflow: hidden;
-  border: 2px solid black;
+  border: 2px solid #8c96b5;
+  color: #8c96b5;
 `;
 
 const NoImage = styled.div`
   width: 150px;
   height: 150px;
   border-radius: 70%;
-  border: 2px solid black;
+  border: 2px solid #8c96b5;
   text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: black;
+  color: #8c96b5;
 `;
 
 const ImgBox = styled.div`
@@ -71,26 +156,44 @@ const ImgBox = styled.div`
   justify-content: center;
   align-items: center;
   margin: 10px;
+  color: #8c96b5;
 `;
 
 const CheckBoxBox = styled.div`
   display: flex;
+  align-items: center;
+  margin-bottom: 20px;
 `;
 
-const SubmitBox = styled.div`
-  display: flex;
-  justify-content: center;
+const CheckBox = styled.input`
+  margin-right: 10px;
 `;
 
-const SubmitButton = styled.button`
-  width: 100px;
-  height: 40px;
-  background-color: #000000;
-  border-radius: 25px;
-  border: none;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
+const CheckBoxLabel = styled.label`
+  font-size: 16px;
+`;
+
+const SearchButton = styled.div`
+  margin-top: 10px;
+  background-color: white;
+  border: 1px solid ${redColor};
+  line-height: 0;
+  font-size: 15px;
+  display: inline-block;
+  box-sizing: border-box;
+  padding: 15px 10px;
+  border-radius: 60px;
+  color: ${redColor};
+  font-weight: 100;
+  letter-spacing: 0.01em;
+  position: relative;
+  transition: ${transition};
+
+  &:hover,
+  &:focus {
+    color: white;
+    background-color: ${redColor};
+  }
 `;
 
 const StoreRegisterForm = () => {
@@ -152,52 +255,55 @@ const StoreRegisterForm = () => {
   };
 
   return (
-    <Container id="container">
-      <FormStyle id="form" onSubmit={handleSubmit}>
-        <InputBox>
-          <ImgBox>
-            {registerStore?.storeImage ? (
-              <PreviewImage id="previewImage" src="" />
-            ) : (
-              <NoImage>이미지 없음</NoImage>
-            )}
-          </ImgBox>
-        </InputBox>
-        <InputBox>
-          <InputLabel>가게명</InputLabel>
-          <InputField
-            type="text"
-            name="storeName"
-            defaultValue={registerStore?.storeName}
-          />
-          <button onClick={handleSearch}>가게명 검색하기</button>
-        </InputBox>
-        {showModal && <StoreSearchModal onClose={handleCloseModal} />}
-        <InputBox>
-          <InputLabel>주소</InputLabel>
-          <InputField
-            type="text"
-            name="storeLocation"
-            defaultValue={registerStore?.storeAddress}
-          />
-        </InputBox>
-        <InputBox>
-          <InputLabel>전화번호</InputLabel>
-          <InputField
-            type="text"
-            name="storePhoneNumber"
-            defaultValue={registerStore?.storePhoneNumber ?? ''}
-          />
-        </InputBox>
-        <InputBox>
-          <InputLabel>가게 설명</InputLabel>
-          <InputField
-            type="text"
-            name="storeInfo"
-            defaultValue={registerStore?.storeInfo ?? ''}
-          />
-        </InputBox>
-        {/* <InputBox>
+    <FormStyle id="form" onSubmit={handleSubmit}>
+      <TitleStyle>가맹점 등록</TitleStyle>
+      <InputBox className="InputBox">
+        <ImgBox>
+          {registerStore?.storeImage ? (
+            <PreviewImage id="previewImage" src="" />
+          ) : (
+            <NoImage>이미지 없음</NoImage>
+          )}
+        </ImgBox>
+      </InputBox>
+      <InputBox className="InputBox">
+        <InputLabel>가게명</InputLabel>
+        <InputField
+          type="text"
+          name="storeName"
+          defaultValue={registerStore?.storeName}
+        />
+        <SearchButton onClick={handleSearch}>가게명 검색</SearchButton>
+      </InputBox>
+      {showModal && <StoreSearchModal onClose={handleCloseModal} />}
+      <InputBox className="InputBox">
+        <InputLabel htmlFor="storeLocation">주소</InputLabel>
+        <InputField
+          type="text"
+          id="storeLocation"
+          name="storeLocation"
+          defaultValue={registerStore?.storeAddress}
+        />
+      </InputBox>
+      <InputBox className="InputBox">
+        <InputLabel htmlFor="storePhoneNumber">전화번호</InputLabel>
+        <InputField
+          type="text"
+          id="storePhoneNumber"
+          name="storePhoneNumber"
+          defaultValue={registerStore?.storePhoneNumber ?? ''}
+        />
+      </InputBox>
+      <InputBox className="InputBox">
+        <InputLabel htmlFor="storeInfo">가게 설명</InputLabel>
+        <InputField
+          type="text"
+          id="storeInfo"
+          name="storeInfo"
+          defaultValue={registerStore?.storeInfo ?? ''}
+        />
+      </InputBox>
+      {/* <InputBox>
           <InputLabel>사업자 등록증 첨부</InputLabel>
           <InputField
             type="file"
@@ -206,20 +312,15 @@ const StoreRegisterForm = () => {
             required
           />
         </InputBox> */}
-        <CheckBoxBox>
-          <InputLabel>항상 나눔하고 싶어요</InputLabel>
-          <InputField
-            type="checkbox"
-            name="businessCertificate"
-            accept="image/*"
-          />
-        </CheckBoxBox>
-        <span>결식아동들이 항상 예약을 요청할 수 있어요.</span>
-      </FormStyle>
-      <SubmitBox>
-        <SubmitButton onClick={handleRegister}>등록하기</SubmitButton>
-      </SubmitBox>
-    </Container>
+      <CheckBoxBox>
+        <CheckBoxLabel>항상 나눔하고 싶어요</CheckBoxLabel>
+        <CheckBox type="checkbox" name="businessCertificate" accept="image/*" />
+      </CheckBoxBox>
+      <p>결식아동들이 항상 예약을 요청할 수 있어요.</p>
+      <SubmitButton id="button" onClick={handleRegister}>
+        등록하기
+      </SubmitButton>
+    </FormStyle>
   );
 };
 

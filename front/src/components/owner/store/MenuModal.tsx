@@ -8,6 +8,13 @@ import {
   selectedStoreState,
 } from '../../../store/atoms';
 
+const redColor = 'rgba(140, 150, 181, 1)';
+const transition = 'all 0.25s cubic-bezier(0.53, 0.01, 0.35, 1.5)';
+const maxWidth = '700px';
+const minWidth = '500px';
+const borderRadius = '40px';
+const submitButtonBorderRadius = '60px';
+
 const ModalOverlay = styled.div`
   position: fixed;
   top: 0;
@@ -61,25 +68,69 @@ const ButtonDiv = styled.div`
 `;
 
 const InputBox = styled.div`
-  margin-bottom: 20px;
-  display: flex;
-  flex-direction: column;
-`;
+  position: relative;
+  padding: 10px 0;
 
+  &:first-of-type {
+    padding-top: 0;
+  }
+
+  &:last-of-type {
+    padding-bottom: 0;
+  }
+`;
 const InputLabel = styled.label`
-  font-size: 16px;
-  font-weight: bold;
-  margin-right: 20px;
+  transform-origin: left center;
+  color: ${redColor};
+  font-weight: 100;
+  letter-spacing: 0.01em;
+  font-size: 17px;
+  box-sizing: border-box;
+  padding: 10px 15px;
+  display: block;
+  position: absolute;
+  margin-top: -10px;
+  pointer-events: none;
+  transition: ${transition};
 `;
 
 const InputField = styled.input`
-  width: 40vw;
-  height: 30px;
-  border-radius: 5px;
-  border: 1px solid gray;
-  padding: 5px;
-  font-size: 14px;
-  margin-right: 20px;
+  appearance: none;
+  background-color: none;
+  border: 1px solid ${redColor};
+  line-height: 0;
+  font-size: 17px;
+  width: 100%;
+  display: block;
+  box-sizing: border-box;
+  padding: 10px 15px;
+  border-radius: ${submitButtonBorderRadius};
+  color: ${redColor};
+  font-weight: 100;
+  letter-spacing: 0.01em;
+  position: relative;
+  transition: ${transition};
+
+  &:focus {
+    outline: none;
+    background: ${redColor};
+    color: white;
+    margin-top: 30px;
+  }
+
+  &:valid {
+    margin-top: 30px;
+  }
+
+  &:focus ~ label {
+    transform: translate(0, -35px);
+  }
+
+  &:valid ~ label {
+    text-transform: uppercase;
+    font-style: italic;
+    transform: translate(5px, -35px);
+  }
 `;
 
 const PreviewImage = styled.img`
@@ -87,19 +138,20 @@ const PreviewImage = styled.img`
   height: 150px;
   border-radius: 70%;
   overflow: hidden;
-  border: 2px solid black;
+  border: 2px solid #8c96b5;
+  color: #8c96b5;
 `;
 
 const NoImage = styled.div`
   width: 150px;
   height: 150px;
   border-radius: 70%;
-  border: 2px solid black;
+  border: 2px solid #8c96b5;
   text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: black;
+  color: #8c96b5;
 `;
 
 const ImgBox = styled.div`
@@ -107,6 +159,7 @@ const ImgBox = styled.div`
   justify-content: center;
   align-items: center;
   margin: 10px;
+  color: #8c96b5;
 `;
 
 const ModalFooter = styled.div``;
