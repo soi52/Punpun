@@ -123,7 +123,7 @@ public class StoreServiceImpl implements StoreService {
         if (store.getOwner() == null || member.getId() != store.getOwner().getId()) {
             throw new NotStoreOwnerException("가게의 주인이 아닙니다.");
         }
-        if (store.getSupports() != null) {
+        if (store.getSupports().size() > 0) {
             throw new NotDeleteEntityException("연관된 내역이 있어 가게 삭제가 불가능합니다. 관리자에게 문의 바랍니다.");
         }
 

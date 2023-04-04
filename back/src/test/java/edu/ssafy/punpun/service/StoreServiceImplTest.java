@@ -19,10 +19,7 @@ import org.springframework.mock.web.MockMultipartFile;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -495,6 +492,7 @@ public class StoreServiceImplTest {
                     .lat(36.13917919014956)
                     .alwaysShare(true)
                     .owner(member)
+                    .supports(new ArrayList<>())
                     .build();
 
             doReturn(Optional.of(store1)).when(storeRepository).findById(1L);
