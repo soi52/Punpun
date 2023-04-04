@@ -101,6 +101,7 @@ class ReviewControllerTest {
                     .content("content")
                     .reviewKeywords(List.of())
                     .build();
+            review.setCreatedDateTime(LocalDateTime.now());
             PageRequest pageable = PageRequest.of(0, 10);
             PageImpl<Review> reviewPage = new PageImpl<>(List.of(review), pageable, 1);
             doReturn(reviewPage).when(reviewService).findAllByChild(any(Child.class), eq(0));

@@ -15,15 +15,17 @@ import java.util.stream.Collectors;
 public class ReviewChildResponseDTO {
     private Long reviewId;
     private String reviewContent;
+    private String reviewCreatedTime;
     private List<Keyword> keywords;
 
     public static ReviewChildResponseDTO entityToDto(Review review) {
         Long reviewId = review.getId();
         String reviewContent = review.getContent();
+        String reviewCreatedTime = review.getCreatedDateTime().toString();
         List<Keyword> keywords = review.getReviewKeywords().stream()
                 .map(ReviewKeyword::getKeyword)
                 .collect(Collectors.toList());
 
-        return new ReviewChildResponseDTO(reviewId, reviewContent, keywords);
+        return new ReviewChildResponseDTO(reviewId, reviewContent, reviewCreatedTime, keywords);
     }
 }
