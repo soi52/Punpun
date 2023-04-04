@@ -4,14 +4,20 @@ import StoreBanner from './Storebanner';
 import ChMenuList from './ChMenuList';
 import MenuList from './MenuList';
 import API from '../../../store/API';
+import { useRecoilValue } from 'recoil';
+import { selectedStoreState } from '../../../store/atoms';
+
+const Wrapper = styled.div`
+  padding: 20px;
+`;
 
 type MenuDTO = {
   menuId: number;
   menuName: string;
   menuPrice: number;
   menuCount: number;
-  menuImage: string | null;
-  menuImageName: string | null;
+  menuImage: string;
+  menuImageName: string;
 };
 
 type ChMenuDTO = {
@@ -31,6 +37,7 @@ const StoreMenu = ({ myStoreId }: Props) => {
   const [menuDTOList, setMenuDTOList] = useState<MenuDTO[]>([]);
   const [chMenuDTOList, setChMenuDTOList] = useState<ChMenuDTO[]>([]);
   const [storeName, setStoreName] = useState<string | undefined>();
+  const selectedStore = useRecoilValue(selectedStoreState);
 
   const role = localStorage.getItem('role');
 
@@ -52,22 +59,24 @@ const StoreMenu = ({ myStoreId }: Props) => {
           .then((response) => {
             setMenuDTOList(response.data.menuMemberResponseDTOList);
             setStoreName(response.data.storeName);
+            console.log(response.data.menuMemberResponseDTOList);
           })
           .catch((error) => {
             console.log(error);
           });
       }
     }
-  }, [myStoreId]);
+  }, [myStoreId, selectedStore]);
 
   return (
-    <>
+    <Wrapper>
       <StoreBanner storeName={storeName} />
-      {(role==='CHILD') ?
-      <ChMenuList chMenuList={chMenuDTOList} />
-      : <MenuList menuList={menuDTOList} />
-      }
-    </>
+      {role === 'CHILD' ? (
+        <ChMenuList chMenuList={chMenuDTOList} />
+      ) : (
+        <MenuList menuDTOList={menuDTOList} />
+      )}
+    </Wrapper>
   );
 };
 

@@ -4,7 +4,7 @@ import { useRecoilState } from 'recoil';
 import { pointState } from '../../store/atoms';
 
 const Box = styled.div`
-  width: 70%;
+  width: 85%;
   margin: 20px auto;
   // border: 1px solid grey;
   border-radius: 25px;
@@ -124,7 +124,7 @@ const DonateButton = styled.button`
   border-radius: 25px;
   cursor: pointer;
   align-items: center;
-  width: 20%
+  width: 20%;
 `;
 
 const EmptyCartMessage = styled.div`
@@ -139,9 +139,7 @@ const FooterDiv = styled.div`
   margin: 10px;
 `;
 
-const TotalPriceDiv = styled.div`
-
-`;
+const TotalPriceDiv = styled.div``;
 
 interface CartItem {
   id: number;

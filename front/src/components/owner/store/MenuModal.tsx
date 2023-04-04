@@ -30,6 +30,7 @@ const ModalOverlay = styled.div`
 const ModalContent = styled.div`
   background-color: white;
   padding: 2rem;
+  width: 350px;
   border-radius: 0.5rem;
   box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
   display: flex;
@@ -46,25 +47,34 @@ const ModalHeader = styled.div`
 
 const ModalTitle = styled.h2`
   font-size: 1.5rem;
-  font-weight: 600;
+  font-weight: 500;
+  color: ${redColor};
+  margin: 0px 0px 0px 0px;
 `;
 
 const ModalBody = styled.div``;
 
 const ModalButton = styled.button`
-  border: none;
-  background-color: transparent;
-  font-size: 1.2rem;
-  cursor: pointer;
+  margin-top: 35px;
+  background-color: white;
+  border: 1px solid ${redColor};
+  line-height: 0;
+  font-size: 15px;
+  display: inline-block;
+  box-sizing: border-box;
+  padding: 15px 10px;
+  border-radius: ${submitButtonBorderRadius};
+  color: ${redColor};
+  font-weight: 100;
+  letter-spacing: 0.01em;
+  position: relative;
+  transition: ${transition};
 
-  &:hover {
-    color: gray;
+  &:hover,
+  &:focus {
+    color: white;
+    background-color: ${redColor};
   }
-`;
-
-const ButtonDiv = styled.div`
-  display: flex;
-  justify-content: space-between;
 `;
 
 const InputBox = styled.div`
@@ -162,7 +172,10 @@ const ImgBox = styled.div`
   color: #8c96b5;
 `;
 
-const ModalFooter = styled.div``;
+const ModalFooter = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
 
 export interface Menu {
   menuCount: number;
@@ -285,7 +298,7 @@ function MenuModal({ onClose, mode, menu }: MenuModalProps) {
                   <PreviewImage src={previewImage} alt="메뉴 이미지 미리보기" />
                 ) : (
                   <NoImage>
-                    <span>이미지를 선택해주세요</span>
+                    <span>이미지 선택</span>
                   </NoImage>
                 )}
               </label>
