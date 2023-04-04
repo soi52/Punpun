@@ -25,6 +25,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.mockito.Mockito.*;
@@ -134,6 +135,7 @@ class ReviewControllerTest {
                     .reviewKeywords(List.of())
                     .child(child)
                     .build();
+            review.setCreatedDateTime(LocalDateTime.now());
             PageRequest pageable = PageRequest.of(0, 10);
             PageImpl<Review> reviewPage = new PageImpl<>(List.of(review), pageable, 1);
             doReturn(reviewPage).when(reviewService).findAllBySupporter(any(Member.class), eq(0));
@@ -168,6 +170,7 @@ class ReviewControllerTest {
                     .reviewKeywords(List.of())
                     .child(child)
                     .build();
+            review.setCreatedDateTime(LocalDateTime.now());
             PageRequest pageable = PageRequest.of(0, 10);
             PageImpl<Review> reviewPage = new PageImpl<>(List.of(review), pageable, 1);
             doReturn(reviewPage).when(reviewService).findAllByStore(1L, 0);

@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 public class ReviewResponseDTO {
     private Long reviewId;
     private String reviewContent;
+    private String reviewCreatedTime;
     private List<Keyword> keywords;
     private Long childId;
     private String childName;
@@ -23,6 +24,7 @@ public class ReviewResponseDTO {
     public static ReviewResponseDTO entityToDto(Review review) {
         Long reviewId = review.getId();
         String reviewContent = review.getContent();
+        String reviewCreatedTime = review.getCreatedDateTime().toString();
         List<Keyword> keywords = review.getReviewKeywords().stream()
                 .map(ReviewKeyword::getKeyword)
                 .collect(Collectors.toList());
@@ -32,6 +34,6 @@ public class ReviewResponseDTO {
         if (review.getChild().getProfile() != null) {
             childProfileUrl = review.getChild().getProfile().getUrl();
         }
-        return new ReviewResponseDTO(reviewId, reviewContent, keywords, childId, childName, childProfileUrl);
+        return new ReviewResponseDTO(reviewId, reviewContent, reviewCreatedTime, keywords, childId, childName, childProfileUrl);
     }
 }
