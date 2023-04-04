@@ -89,7 +89,7 @@ const BookingItem: React.FC<BookingItemProps> = ({
             <p>{booking.reservationTime}</p>
             {/* <p>{booking.time}</p> */}
           </BookingItemContent>
-          {isRequest && (
+          {isRequest && booking.reservationSate === 'BOOKING' && (
             <>
               <button onClick={handleButtonClickAdd}>수락</button>
               <button onClick={handleButtonClickDelete}>거절</button>

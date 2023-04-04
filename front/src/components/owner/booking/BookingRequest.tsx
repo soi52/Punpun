@@ -10,6 +10,7 @@ const BookingListContainer = styled.div`
   padding: 20px;
   display: flex;
   flex-direction: column;
+  border: 1px solid black;
 `;
 
 const BookingRequest: React.FC<BookingListProps> = ({ bookings }) => {
