@@ -18,7 +18,7 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public void updatePoints(Member member, Long point) {
         Member user=memberRepository.findById(member.getId())
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(()->new IllegalArgumentException("멤버가 없습니다."));
         user.chargePoint(point);
     }
 }
