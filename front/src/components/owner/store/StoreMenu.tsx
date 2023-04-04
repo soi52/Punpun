@@ -97,15 +97,15 @@ const MenuCardButtonContainer = styled.div`
 
 const MenuCardButton = styled.button`
   background-color: white;
-  color: #4caf50;
-  border: 2px solid #4caf50;
+  color: #546391;
+  border: 2px solid #546391;
   border-radius: 4px;
   padding: 5px 10px;
   margin: 5px;
   cursor: pointer;
   transition: all 0.3s ease;
   &:hover {
-    background-color: #4caf50;
+    background-color: #546391;
     color: white;
   }
 `;
