@@ -7,12 +7,7 @@ import {
 } from '../../store/atoms';
 import MainMessage from '../ui/MainMessage';
 import MainTitle from '../ui/MainTitle';
-import styled from 'styled-components';
 import API from '../../store/API';
-
-const Wrapper = styled.div`
-  padding: 20px;
-`;
 
 function StoreInfo() {
   const userInfo = useRecoilValue(userInfoState);
@@ -42,14 +37,14 @@ function StoreInfo() {
   }, [setSelectedStore, stores]);
 
   return (
-    <Wrapper>
+    <>
       <h2>
         <MainTitle title={`${storeInfo.title} ${selectedStore?.storeName}`} />
       </h2>
       <MainMessage
         message={`${userInfo.userName} 사장님, ${storeInfo.message}`}
       />
-    </Wrapper>
+    </>
   );
 }
 
