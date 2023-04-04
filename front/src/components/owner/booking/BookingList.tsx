@@ -56,7 +56,7 @@ function BookingList() {
         </div>
         <div>
           <h2>예약 확정 목록</h2>
-          <BookingFix bookings={bookings} />
+          <BookingFix/>
         </div>
       </BookingContainer>
     </>
