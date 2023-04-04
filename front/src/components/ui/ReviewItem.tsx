@@ -4,6 +4,7 @@ import defaultUserImage from '../../resources/images/profileDefault.png';
 export type Review = {
   reviewId: number;
   reviewContent: string;
+  reviewCreatedTime: string;
   keywords: {
     content: string;
     createdDateTime: string;
@@ -65,20 +66,20 @@ function ReviewItemList({ reviews }: ReviewItemProps) {
         <div>
           <UserName>{review.childName}</UserName>
           <ReviewText>{review.reviewContent}</ReviewText>
+          <p>{new Date(review.keywords[0].createdDateTime).toLocaleString(
+              'ko-KR',
+              {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: 'numeric',
+                minute: 'numeric',
+                // second: 'numeric',
+                hour12: false,
+              }
+            )}</p>
           {review.keywords && review.keywords.length > 0 && (
             <>
-              <p>{new Date(review.keywords[0].createdDateTime).toLocaleString(
-                  'ko-KR',
-                  {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                    hour: 'numeric',
-                    minute: 'numeric',
-                    // second: 'numeric',
-                    hour12: false,
-                  }
-                )}</p>
               <MessageButton>{review.keywords[0].content}</MessageButton>
             </>
           )}

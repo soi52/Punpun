@@ -12,6 +12,7 @@ const ComponentStyle = styled.div`
 interface Reviews {
   reviewId: number;
   reviewContent: string;
+  reviewCreatedTime: string;
   keywords: [];
   childId: number;
   childName: string;
