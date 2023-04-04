@@ -8,7 +8,7 @@ const GlobalStyle = createGlobalStyle`
   body {
     font-family: "Helvetica", "Arial", sans-serif;
     line-height: 1.5;
-    background-color: #ffffff;
+    background-color: #F4F3FF;
   }
 
   ::-webkit-scrollbar {

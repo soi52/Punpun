@@ -7,6 +7,7 @@ import BookingModal from '../child/storedetail/BookingModal';
 import { useRecoilValue } from 'recoil';
 import { isChildState } from '../../store/atoms';
 import { useRecoilState } from 'recoil';
+import defaultImage from '../../resources/images/profileDefault.png';
 
 interface MenuCardProps extends Menu {
   key: number;
@@ -46,13 +47,21 @@ const MenuCardContainer = styled.div`
   }
 `;
 
-const MenuCardImage = styled.div<MenuCardImageProps>`
-  width: 100%;
-  border-radius: 4px;
-  margin-bottom: 16px;
-  background-image: url(${(props) => props.image})
-  background-size: cover;
-  background-position: center;
+// const MenuCardImage = styled.div<MenuCardImageProps>`
+//   width: 100%;
+//   border-radius: 4px;
+//   margin-bottom: 16px;
+//   background-image: url(${(props) => props.image})
+//   background-size: cover;
+//   background-position: center;
+// `;
+
+const MenuCardImage = styled.img`
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 10px;
 `;
 
 const MenuCardTitle = styled.div`
@@ -132,8 +141,7 @@ const MenuCard: React.FC<MenuCardProps> = ({
     <>
       <MenuCardContainer>
         <div onClick={handleClick}>
-          {/* <MenuCardImage image={image}> */}
-          {/* </MenuCardImage> */}
+          <MenuCardImage image={defaultImage} />
           <div>
             <MenuCardTitle>{title}</MenuCardTitle>
             <MenuCardPrice>{price}원</MenuCardPrice>
