@@ -12,7 +12,6 @@ import edu.ssafy.punpun.service.StoreService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -56,25 +55,22 @@ public class StoreController {
     }
 
     @ApiOperation(value = "현 위치 기준 주변 가게 불러오기")
-    @GetMapping("/dist/{lon}/{lat}")
+    @GetMapping("/distTest/{lon}/{lat}")
     @ResponseStatus(code = HttpStatus.OK)
-    public List<StoreInfoResponseDTO> getStoreDistanceJava(@PathVariable(name = "lon") float lon,
+    public List<StoreInfoResponseDTO> getStoreDistanceTest(@PathVariable(name = "lon") float lon,
                                                            @PathVariable(name = "lat") float lat,
-                                                           @RequestParam(name = "sort", required = false) String sort,
-                                                           @RequestParam(name = "mode", required = false) String mode,
-                                                           @RequestParam(name = "page", defaultValue = "0") int page) {
-        PageRequest pageRequest = PageRequest.of(page, SIZE_PER_PAGE);
+                                                           @RequestParam(name = "mode", required = false) String mode) {
         List<StoreInfoResponseDTO> storeInfoResponseDTOList = null;
         if (mode.equals("java")) {
-            storeInfoResponseDTOList = storeService.getStoreDistanceJava(lon, lat, sort).stream()
+            storeInfoResponseDTOList = storeService.getStoreDistanceJava(lon, lat).stream()
                     .map(store -> new StoreInfoResponseDTO(store))
                     .collect(Collectors.toList());
         }
-//        if (mode.equals("postgres")) {
-//            storeInfoResponseDTOList = storeService.getStoreDistance(lon, lat, sort, pageRequest).stream()
-//                    .map(store -> new StoreInfoResponseDTO(store))
-//                    .collect(Collectors.toList());
-//        }
+        if (mode.equals("postgres")) {
+            storeInfoResponseDTOList = storeService.getStoreDistancePostgres(lon, lat).stream()
+                    .map(store -> new StoreInfoResponseDTO(store))
+                    .collect(Collectors.toList());
+        }
 
         return storeInfoResponseDTOList;
     }
