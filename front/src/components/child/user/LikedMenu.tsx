@@ -2,33 +2,76 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import API from '../../../store/API';
 import { useNavigate } from 'react-router';
+import defaultMenuImage from '../../../resources/images/profileDefault.png';
 
 const MenuList = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
+  padding: 20px;
 `;
 
-const Card = styled.div`
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  width: 300px;
-  &:hover {
-    // background-color: #ff3b3b;
-    // opacity: 0.8;
-    transform: scale(1.05);
-  }
-`;
-
-const CardHeader = styled.div`
+const MenuCard = styled.div`
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
-  background-color: #f5f5f5;
-  padding: 10px;
-  border-bottom: 1px solid #ccc;
+  background-color: #ffffff;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+  padding: 16px;
+  max-width: 175px;
+  width: 100%;
+  height: 200px;
+  cursor: pointer;
+  transition: transform 0.75s ease, opacity 0.2s ease;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+  position: relative;
+  &:hover {
+    transform: rotateY(180deg);
+  }
+  margin: 0.5rem 1rem 1rem 0.5rem;
+`;
+
+const MenuCardFront = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+const MenuCardBack = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  background-color: #e7e6f2;
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transform: rotateY(180deg);
+`;
+
+const MenuCardImage = styled.img`
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+`;
+
+const MenuCardTitle = styled.h4`
+  margin: 10px 0px 5px 0px;
+  text-align: center;
 `;
 
 const LikeButton = styled.button`
@@ -47,7 +90,7 @@ const LikeButton = styled.button`
 `;
 
 const CardBody = styled.div`
-  padding: 10px;
+  // padding: 10px;
 `;
 
 const StoreName = styled.p`
@@ -65,6 +108,8 @@ type MenuType = {
   menuName: string;
   storeId: number;
   storeName: string;
+  menuImageName: string | null;
+  menuImage: string | null;
 };
 
 const LikedMenu = () => {
@@ -109,21 +154,27 @@ const LikedMenu = () => {
   return (
     <MenuList>
       {menus.map((menu) => (
-        <Card key={menu.menuId}>
-          <CardHeader>
-            <h3>{menu.menuName}</h3>
-            <LikeButton onClick={() => toggleLike(menu.menuId)}>
-              {/* {isLiked ?  */}
-              좋아요 취소
-              {/* //  : '좋아요'} */}
-            </LikeButton>
-          </CardHeader>
-          <CardBody>
-            <StoreName onClick={() => toStore(menu.storeId)}>
-              {menu.storeName}
-            </StoreName>
-          </CardBody>
-        </Card>
+        <MenuCard key={menu.menuId}>
+          <MenuCardFront>
+              <MenuCardImage
+                src={menu.menuImage || defaultMenuImage}
+                alt={menu.menuName}
+              />
+              <MenuCardTitle>{menu.menuName}</MenuCardTitle>
+          </MenuCardFront>
+          <MenuCardBack>
+              <LikeButton onClick={() => toggleLike(menu.menuId)}>
+                {/* {isLiked ?  */}
+                좋아요 취소
+                {/* //  : '좋아요'} */}
+              </LikeButton>
+            <CardBody>
+              <StoreName onClick={() => toStore(menu.storeId)}>
+                {menu.storeName}
+              </StoreName>
+            </CardBody>
+          </MenuCardBack>
+        </MenuCard>
       ))}
     </MenuList>
   );
