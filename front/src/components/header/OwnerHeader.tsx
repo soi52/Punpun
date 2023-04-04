@@ -63,9 +63,7 @@ function OwnerHeader(props: OwnerHeaderProps) {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    console.log('selectedStore updated', selectedStore);
-  }, [selectedStore]);
+  useEffect(() => {}, [selectedStore]);
 
   const toOwBooking = () => {
     navigate(`/owstore/${selectedStore?.storeId ?? ''}/booking`);
