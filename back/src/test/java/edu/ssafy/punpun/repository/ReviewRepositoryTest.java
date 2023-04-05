@@ -149,26 +149,31 @@ public class ReviewRepositoryTest {
         //리뷰
         Review review1 = Review.builder()
                 .store(store)
+                .content("good")
                 .reservation(reservation1)
                 .reviewKeywords(new ArrayList<>())
                 .build();
         Review review2 = Review.builder()
                 .store(store)
+                .content("good")
                 .reservation(reservation2)
                 .reviewKeywords(new ArrayList<>())
                 .build();
         Review review3 = Review.builder()
                 .store(store)
+                .content("good")
                 .reservation(reservation3)
                 .reviewKeywords(new ArrayList<>())
                 .build();
         Review review4 = Review.builder()
                 .store(store)
+                .content("good")
                 .reservation(reservation4)
                 .reviewKeywords(new ArrayList<>())
                 .build();
         Review review5 = Review.builder()
                 .store(store)
+                .content("good")
                 .reservation(reservation5)
                 .reviewKeywords(new ArrayList<>())
                 .build();
