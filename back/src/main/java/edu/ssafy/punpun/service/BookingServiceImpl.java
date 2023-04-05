@@ -61,6 +61,7 @@ public class BookingServiceImpl implements BookingService {
                 .state(SupportReservationState.BOOKING)
                 .build();
         supportReservationRepository.save(supportReservation);
+        reservation.setSupportReservation(supportReservation);
 
         publisher.publish(reservation, EventType.RESERVATION);
         return reservation;
