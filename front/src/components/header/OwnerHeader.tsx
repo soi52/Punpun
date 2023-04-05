@@ -23,7 +23,7 @@ const NavLi = styled.li`
     bottom: -2px;
     width: 0;
     height: 2px;
-    background-color: #5D5A88;
+    background-color: #5d5a88;
     transition: width 0.3s ease-in-out;
   }
 
@@ -105,7 +105,6 @@ function OwnerHeader(props: OwnerHeaderProps) {
 
   return (
     <NavUl>
-      <NavLi onClick={toOwStore}>가게운영</NavLi>
       <NavLi onClick={() => setStoreDrop(!storeDrop)}>
         {selectedStore?.storeName ?? '가게 선택'}
         {storeDrop && (
@@ -124,6 +123,7 @@ function OwnerHeader(props: OwnerHeaderProps) {
           </StoreDropdown>
         )}
       </NavLi>
+      <NavLi onClick={toOwStore}>가게운영</NavLi>
       <NavLi onClick={toOwBooking}>예약관리</NavLi>
       <NavLi onClick={onLogout}>로그아웃</NavLi>
       <UserTypeSelector
