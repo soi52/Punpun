@@ -41,7 +41,6 @@ public class Support extends BaseEntity {
     public void setSupportType(SupportType supportType) {
         this.supportType = supportType;
     }
-
     public void setMenu(Menu menu) {
         this.menu = menu;
     }
@@ -52,5 +51,8 @@ public class Support extends BaseEntity {
 
     public void appendSupportReservation(SupportReservation supportReservation) {
         this.supportReservations.add(supportReservation);
+    }
+    public void setSupportState(SupportState supportState){
+        this.supportState=supportState;
     }
 }
