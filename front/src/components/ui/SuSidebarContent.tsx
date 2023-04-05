@@ -62,23 +62,46 @@ const SuSidebarContent: FC<SuSidebarContentProps> = ({
         <h3>현재 포인트</h3>
         <PointDetail>
           <span>{formattedPoint} P</span>
-          {menuItems.map((menuItem, index) =>
-            index === 2 ? (
-              <StyledLi
-                key={index}
-                onClick={() => onMenuItemClick(index)}
-                style={{
-                  fontWeight:
-                    currentMenuItemIndex === index ? 'bold' : 'normal',
-                  cursor: 'pointer',
-                }}
-              >
-                <Button>{menuItem.title}</Button>
-              </StyledLi>
-            ) : (
-              ''
-            )
-          )}
+          {menuItems.map((menuItem, index) => {
+  if (window.location.href.includes("suuser")) {
+    if (index === 2) {
+      return (
+        <StyledLi
+          key={index}
+          onClick={() => onMenuItemClick(index)}
+          style={{
+            fontWeight:
+              currentMenuItemIndex === index ? "bold" : "normal",
+            cursor: "pointer",
+          }}
+        >
+          <Button>{menuItem.title}</Button>
+        </StyledLi>
+      );
+    } else {
+      return "";
+    }
+  } else {
+    if (index === 3) {
+      return (
+        <StyledLi
+          key={index}
+          onClick={() => onMenuItemClick(index)}
+          style={{
+            fontWeight:
+              currentMenuItemIndex === index ? "bold" : "normal",
+            cursor: "pointer",
+          }}
+        >
+          <Button>{menuItem.title}</Button>
+        </StyledLi>
+      );
+    } else {
+      return "";
+    }
+  }
+})}
+
         </PointDetail>
       </PointDiv>
     </>
