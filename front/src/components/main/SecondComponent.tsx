@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import useScrollFadeInPage from '../../pages/owner/useScrollFadeInPage';
-import second from '../../resources/images/main2.png';
+import second from '../../resources/images/image2.png';
 import { Fade } from 'react-awesome-reveal';
 
 const ComponentStyle = styled.div`
@@ -11,38 +10,45 @@ const ComponentStyle = styled.div`
   display: flex;
 `;
 
-const ContentStyle = styled.h4`
-  margin-top: 75px;
+const ContentDivStyle = styled.div`
+  height: 50%;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-direction: row;
   justify-content: center;
-  text-align: center;
-  height: 100%;
+  align-items: center;
+  background-color: #a3c3f2;
+`;
+
+const TitleStyle = styled.h2`
+  margin: 0 auto;
+  width: 50%;
+`;
+
+const ContentStyle = styled.h4`
+  margin: 0 auto;
+  width: 40%;
 `;
 
 function SecondComponent() {
   return (
     <ComponentStyle>
-      <Fade duration={2000} direction="left">
-        {
+      <ContentDivStyle>
+        <Fade duration={1000} direction={'left'}>
+          <TitleStyle>
+            상생하는 세상 꿈꾸는 ‘선한영향력’ 에 동행 하실 분들을 모집합니다!
+          </TitleStyle>
+        </Fade>
+        <Fade duration={1000} direction={'right'}>
           <ContentStyle>
-            <div>우리나라에 결식 아동이 아직 있나요?</div>
-            <div>
-              현재, 전국 결식 우려 아동은
-              <br />
-              <b>무려 33만명입니다.</b>
-            </div>
-            <div>
-              더 이상 아이들이 먹는 것에 눈치보지 않도록 많은 후원 부탁드립니다.
-            </div>
-            <button>후원하기</button>
+            선한영향력가게는 결식 아동을 자발적으로 지원하는 가게입니다. 지난
+            2019년 서울시 마포에 위치한 ‘진짜파스타’ 매장에서 시작한 이 캠페인은
+            결식아동들을 위한 따듯한 손길이 모여 ‘선한영향력’ 이라는 단체로
+            만들어졌습니다. 음식점 뿐만 아니라 아이들에게 도움이 될 수 있는
+            선한영향력을 함께하는 다양한 분야의 점주님들이 함께하고 있습니다.
+            세상을 위한 좋은 변화를 위해 함께 하실 분들은 신청해 주세요!
           </ContentStyle>
-        }
-      </Fade>
-      <Fade duration={2000} direction="right">
-        <img src={second} />
-      </Fade>
+        </Fade>
+      </ContentDivStyle>
     </ComponentStyle>
   );
 }
