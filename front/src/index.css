@@ -2,9 +2,13 @@
   font-family: 'MICE_medium';
   src: url('./resources/fonts/MICEGothic.ttf');
 }
+@font-face {
+  font-family: 'MICE_bold';
+  src: url('./resources/fonts/MICEGothicBold.ttf');
+}
 
 * {
-  font-family: 'MICE_medium';
+  font-family: 'MICE_medium', 'MICE_bold';
   box-sizing: border-box;
 }
 

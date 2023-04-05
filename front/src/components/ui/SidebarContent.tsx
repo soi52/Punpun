@@ -27,7 +27,7 @@ const SidebarContent: FC<SidebarContentProps> = ({
     <>
       {menuItems.map((menuItem, index) =>
         role !== 'CHILD' && isSupporter ? (
-          index !== 3 ? (
+          index !== 2 ? (
             <StyledLi
               key={index}
               onClick={() => onMenuItemClick(index)}
