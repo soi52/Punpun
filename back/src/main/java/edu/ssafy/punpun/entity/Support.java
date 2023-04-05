@@ -52,7 +52,7 @@ public class Support extends BaseEntity {
     public void appendSupportReservation(SupportReservation supportReservation) {
         this.supportReservations.add(supportReservation);
     }
-    public void setSupportState(SupportState supportState){
-        this.supportState=supportState;
+    public void SupportStateUnused(){
+        this.supportState=SupportState.UNUSED;
     }
 }

@@ -30,12 +30,10 @@ public class SchedulerServiceImpl {
         List<Support> supports=supportRepository.findBySupportTypeAndSupportDate(SupportType.SHARE, date.minusDays(1));
 
         for (Support support : supports) {
-            System.out.println(support.getMenu().getId());
             Menu menu = menuRepository.findById(support.getMenu().getId())
                     .orElseThrow(() -> new IllegalArgumentException("메뉴가 없습니다."));
             menu.reservationApprove();
-            support.setSupportState(SupportState.UNUSED);
-
+            support.SupportStateUnused();
         }
     }
 }
