@@ -5,6 +5,7 @@ import edu.ssafy.punpun.entity.Review;
 import edu.ssafy.punpun.entity.ReviewKeyword;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 import java.util.stream.Collectors;
