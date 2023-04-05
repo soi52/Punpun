@@ -27,6 +27,7 @@ const SidebarContent: FC<SidebarContentProps> = ({
     <>
       {menuItems.map((menuItem, index) =>
         role !== 'CHILD' && isSupporter ? (
+          window.location.href.includes("suuser") ? (
           index !== 2 ? (
             <StyledLi
               key={index}
@@ -38,8 +39,18 @@ const SidebarContent: FC<SidebarContentProps> = ({
             >
               {menuItem.title}
             </StyledLi>
-          ) : (
-            ''
+          ): '') : (index !== 3 ? (
+            <StyledLi
+              key={index}
+              onClick={() => onMenuItemClick(index)}
+              style={{
+                fontWeight: currentMenuItemIndex === index ? 'bold' : 'normal',
+                cursor: 'pointer',
+              }}
+            >
+              {menuItem.title}
+            </StyledLi>
+          ) : ''
           )
         ) : (
           <StyledLi

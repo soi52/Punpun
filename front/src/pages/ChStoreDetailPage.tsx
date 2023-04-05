@@ -18,7 +18,7 @@ import StoreDetailInfo from '../components/ui/StoreDetailInfo';
 // 아이콘
 
 const ComponentStyle = styled.div`
-  padding: 30px 30px 0px 30px;
+  padding: 15px 30px 0px 30px;
   display: flex;
   justify-content: center;
 `;
@@ -86,7 +86,7 @@ function ChStoreDetailPage() {
       title: '💌 감사 메세지',
       component: () => <ThanksMessage myStoreId={myStoreId} />,
     },
-    // { title: '충전하기', component: () => <SuPointAdd /> },
+    { title: '충전하기', component: () => <SuPointAdd /> },
   ];
 
   useEffect(() => {
