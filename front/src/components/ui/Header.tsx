@@ -22,9 +22,7 @@ const Wrapper = styled.div`
   top: 0;
   width: 100%;
   height: 80px;
-  // border-bottom: solid;
-  // border-bottom-width: 2px;
-  // border-bottom-color: #dcdde1;
+  padding: 0px 30px 0px 30px;
   justify-content: space-between;
   z-index: 5;
 `;
@@ -54,7 +52,7 @@ const NavLi = styled.li`
     bottom: -2px;
     width: 0;
     height: 2px;
-    background-color: #5D5A88;
+    background-color: #5d5a88;
     transition: width 0.3s ease-in-out;
   }
 
@@ -67,7 +65,6 @@ const NavLi = styled.li`
     left: auto;
   }
 `;
-
 
 type HeaderProps = {
   onSelect: (item: string) => void;
@@ -83,8 +80,9 @@ function Header(props: HeaderProps) {
   const navigate = useNavigate();
 
   const toLogin = () => {
-    const kakaoLogin = 'http://j8d109.p.ssafy.io/api/oauth2/authorization/kakao';
-    window.location.replace(kakaoLogin)
+    const kakaoLogin =
+      'http://j8d109.p.ssafy.io/api/oauth2/authorization/kakao';
+    window.location.replace(kakaoLogin);
   };
 
   const toMain = () => {
@@ -167,7 +165,7 @@ function Header(props: HeaderProps) {
   };
   return (
     <Wrapper>
-      <Logo/>
+      <Logo />
       <Contents>
         <nav>{renderNav()}</nav>
       </Contents>

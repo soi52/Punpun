@@ -3,7 +3,29 @@ import styled from 'styled-components';
 import Dropdown from '../ui/Dropdown';
 
 const NavLi = styled.li`
+  position: relative;
   margin: 30px;
+  text-decoration: none;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 0;
+    height: 2px;
+    background-color: #5d5a88;
+    transition: width 0.3s ease-in-out;
+  }
+
+  &:hover::before {
+    width: 100%;
+  }
+
+  &:not(:hover)::before {
+    right: 0;
+    left: auto;
+  }
 `;
 
 interface UserTypeSelectorProps {
@@ -18,7 +40,11 @@ function UserTypeSelector(props: UserTypeSelectorProps) {
   const { onSelect, items, selectedItem, role } = props;
 
   return (
-    <NavLi onClick={() => role === 'OWNER' && setDrop(!drop)}>
+    <NavLi
+      onClick={() => role === 'OWNER' && setDrop(!drop)}
+      onMouseEnter={() => role === 'OWNER' && setDrop(true)}
+      onMouseLeave={() => role === 'OWNER' && setDrop(false)}
+    >
       {selectedItem}{' '}
       {drop && (
         <Dropdown
