@@ -2,11 +2,20 @@ import styled from 'styled-components';
 import Map from './Map';
 import SearchStoreList from './SearchStoreList';
 import useGeolocation from './UseGeolocation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
-import { isRegisterState } from '../store/atoms';
+import { isRegisterState, isUpdatedState } from '../store/atoms';
 import StoreData from './StoreData.json';
 import API from '../store/API';
+
+export interface SearchStore {
+  storeAlwaysShare: Boolean;
+  storeId: number;
+  storeLat: number;
+  storeLon: number;
+  storeName: string;
+  storeSupport: Boolean;
+}
 
 type SearchStoreProps = {
   message: string;
@@ -35,6 +44,8 @@ const MapDiv = styled.div`
 
 const SearchStore = ({ message }: SearchStoreProps) => {
   const [isRegister, setIsRegister] = useRecoilState(isRegisterState);
+  const [isUpdated, setIsUpdated] = useRecoilState(isUpdatedState);
+  const [searchStoreList, setSearchStoreList] = useState([]);
 
   const location = useGeolocation();
   console.log(location);
@@ -43,22 +54,19 @@ const SearchStore = ({ message }: SearchStoreProps) => {
 
   useEffect(() => {
     setIsRegister(false);
+    setIsUpdated(!isUpdated);
   }, []);
 
   useEffect(() => {
-    const mode = {
-      params: {
-        mode: 500,
-      },
-    };
-    API.get(`stores/distTest/${longitude}/${latitude}`, mode)
+    API.get(`stores/dist/${longitude}/${latitude}`)
       .then((response: any) => {
         console.log(response.data);
+        setSearchStoreList(response.data);
       })
       .catch((error: any) => {
         console.error(error);
       });
-  }, [latitude, longitude]);
+  }, [latitude, longitude, isUpdated]);
 
   return (
     <Wrapper>
@@ -68,7 +76,7 @@ const SearchStore = ({ message }: SearchStoreProps) => {
         <MapDiv>
           <Map latitude={latitude} longitude={longitude} stores={StoreData} />
         </MapDiv>
-        <SearchStoreList stores={StoreData} />
+        <SearchStoreList stores={searchStoreList} />
       </ContentDiv>
     </Wrapper>
   );
