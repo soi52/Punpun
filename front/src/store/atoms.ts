@@ -184,6 +184,21 @@ export const owStoreMenuState = atom({
   default: [],
 });
 
+export interface MenuSupport {
+  supportId: null | number;
+  supportType: string;
+  supportDate: string;
+  menuId: number;
+  menuName: string;
+  totalCount: number;
+  useCount: number;
+}
+
+export const ShareListState = atom<MenuSupport[]>({
+  key: 'ShareListState',
+  default: [],
+});
+
 export const tokenState = atom<String>({
   key: 'tokenState',
   default: '',
