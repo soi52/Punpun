@@ -9,6 +9,10 @@ const ComponentStyle = styled.div`
   padding: 20px;
 `;
 
+const Div = styled.div`
+  padding-top: 20px;
+`;
+
 interface Reviews {
   reviewId: number;
   reviewContent: string;
@@ -36,8 +40,10 @@ function ThanksMessage() {
   return (
     <ComponentStyle>
       <SuMainMessage />
-      <h2>감사 메세지</h2>
-      <ReviewItem reviews={supportMessage} />
+      <Div>
+        <h2>감사 메세지</h2>
+        <ReviewItem reviews={supportMessage} />
+      </Div>
     </ComponentStyle>
   );
 }
