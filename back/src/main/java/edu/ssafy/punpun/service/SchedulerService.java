@@ -19,7 +19,7 @@ import java.util.List;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class SchedulerServiceImpl {
+public class SchedulerService {
     private final SupportRepository supportRepository;
     private final MenuRepository menuRepository;
 
