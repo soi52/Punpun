@@ -6,6 +6,15 @@ import { useRecoilState } from 'recoil';
 import { userInfoState } from '../../store/atoms';
 import { useNavigate } from 'react-router';
 
+
+
+const H2 = styled.h2`
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  color: #363261;
+`;
+
 const Form = styled.form`
   display: flex;
   flex-direction: column;
@@ -22,13 +31,16 @@ const Button = styled.button`
   padding: 0.5rem 1rem;
   border: none;
   border-radius: 4px;
-  background-color: #0077ff;
+  background-color: #5D5A88;
   color: white;
   font-size: 1rem;
   cursor: pointer;
+  width: 96%;
+  margin-top: 10px;
+  margin-bottom: 50px;
 
   &:hover {
-    background-color: #0060b6;
+    background-color: #9795B5;
   }
 `;
 
@@ -84,6 +96,11 @@ const NumberForm = () => {
         userName: formattedName,
         userNumber: formattedPhoneNumber,
       }));
+      Swal.fire(
+        '가입이 완료 되었습니다!',
+        'PUNPUN의 가족이 되신 것을 환영합니다 :)',
+        'success'
+      )
       navigate('/');
       // 서버 응답 데이터 처리
     } catch (error) {
@@ -102,6 +119,7 @@ const NumberForm = () => {
 
   return (
     <>
+      <H2>추가 정보 입력</H2>
       <Form onSubmit={handleSubmit}>
         <InputLabel htmlFor="name-input">이름 입력</InputLabel>
         <StyledInput

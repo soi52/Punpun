@@ -16,6 +16,11 @@ export type Review = {
   childProfileUrl: string;
 };
 
+const Wrapper = styled.div`
+  margin: 30px;
+`;
+
+
 const ReviewItem = styled.div`
   display: flex;
   align-items: center;
@@ -55,9 +60,10 @@ export type ReviewItemProps = {
 
 function ReviewItemList({ reviews }: ReviewItemProps) {
   if (reviews.length === 0) {
-    return <div>리뷰가 없습니다.</div>;
+    return <Wrapper><div>아직 받은 감사 메세지가 없어요 :(</div></Wrapper>
   } else {
     const reviewList = reviews.map((review) => (
+      
       <ReviewItem key={review.reviewId}>
         <UserImage
           src={review.childProfileUrl || defaultUserImage}

@@ -27,9 +27,10 @@ function SuMainMessage() {
   const mainMessage = {
     title: '',
     ownerName: `${userInfo.userName} 후원자님`,
-    message: `어느새 후원한 금액이 ${formattedPoint}원 이네요!`,
+    message: formattedPoint ? `어느새 후원한 금액이 ${formattedPoint}원 이네요!` : '따뜻한 마음을 나누어 보세요 :)',
     name: `${userInfo.userName} 후원자님`,
   };
+  
   return (
     <>
       <h2>
