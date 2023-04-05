@@ -54,9 +54,9 @@ const FullPage = () => {
       // customPageNumber={currentPage ?? undefined}
       >
         <FirstComponent />
-        <SectionContainer height={50}>
+        {/* <SectionContainer height={50}> */}
           <SecondComponent />
-        </SectionContainer>
+        {/* </SectionContainer> */}
         <ThirdComponent />
         <FourthComponent />
         <FifthComponent />
