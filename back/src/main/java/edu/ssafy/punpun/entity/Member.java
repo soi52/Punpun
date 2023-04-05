@@ -41,9 +41,6 @@ public class Member extends BaseEntity {
         this.name = name;
         this.phoneNumber = phoneNumber;
     }
-    public void updateProfileImage(Image profile) {
-        this.profile = profile;
-    }
     public Long chargePoint(Long point) {
         this.remainPoint += point;
         return this.remainPoint;
