@@ -10,6 +10,7 @@
     "storeImageName": null,
     "storeImage": null,
     "storePhoneNumber": null,
+    "storeAlwaysShare": false,
     "menuDTO": [
       {
         "menuId": 47456,
@@ -216,6 +217,7 @@
     "storeImageName": null,
     "storeImage": null,
     "storePhoneNumber": null,
+    "storeAlwaysShare": false,
     "menuDTO": [
       {
         "menuId": 47481,
@@ -310,6 +312,7 @@
     "storeImageName": null,
     "storeImage": null,
     "storePhoneNumber": null,
+    "storeAlwaysShare": false,
     "menuDTO": [
       {
         "menuId": 47491,
@@ -364,6 +367,7 @@
     "storeImageName": null,
     "storeImage": null,
     "storePhoneNumber": null,
+    "storeAlwaysShare": false,
     "menuDTO": []
   },
   {
@@ -377,6 +381,7 @@
     "storeImageName": null,
     "storeImage": null,
     "storePhoneNumber": null,
+    "storeAlwaysShare": false,
     "menuDTO": []
   },
   {
@@ -390,6 +395,7 @@
     "storeImageName": null,
     "storeImage": null,
     "storePhoneNumber": null,
+    "storeAlwaysShare": false,
     "menuDTO": []
   },
   {
@@ -403,6 +409,7 @@
     "storeImageName": null,
     "storeImage": null,
     "storePhoneNumber": null,
+    "storeAlwaysShare": false,
     "menuDTO": []
   },
   {
@@ -416,6 +423,7 @@
     "storeImageName": null,
     "storeImage": null,
     "storePhoneNumber": null,
+    "storeAlwaysShare": false,
     "menuDTO": []
   },
   {
@@ -429,6 +437,7 @@
     "storeImageName": null,
     "storeImage": null,
     "storePhoneNumber": null,
+    "storeAlwaysShare": false,
     "menuDTO": []
   },
   {
@@ -442,6 +451,7 @@
     "storeImageName": null,
     "storeImage": null,
     "storePhoneNumber": null,
+    "storeAlwaysShare": false,
     "menuDTO": []
   },
   {
@@ -455,6 +465,7 @@
     "storeImageName": null,
     "storeImage": null,
     "storePhoneNumber": null,
+    "storeAlwaysShare": false,
     "menuDTO": []
   },
   {
@@ -468,6 +479,7 @@
     "storeImageName": null,
     "storeImage": null,
     "storePhoneNumber": null,
+    "storeAlwaysShare": false,
     "menuDTO": []
   }
 ]

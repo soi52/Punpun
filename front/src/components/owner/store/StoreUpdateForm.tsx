@@ -163,13 +163,19 @@ const ImgBox = styled.div`
 const CheckBoxBox = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
+  margin: 15px 0px 10px 5px;
 `;
 
 const CheckBox = styled.input`
   margin-right: 10px;
 `;
 
+const CheckBoxTitle = styled.h6`
+  font-size: 15px;
+  font-weight: 100;
+  text-align: start;
+  margin: 0px 0px 0px 5px;
+`;
 const CheckBoxLabel = styled.label`
   font-size: 16px;
 `;
@@ -253,7 +259,9 @@ const StoreUpdateForm = () => {
       storeOpenTime: (
         document.getElementsByName('storeOpenTime')[0] as HTMLInputElement
       ).value,
-      storeAlwaysShare: true,
+      storeAlwaysShare:
+        (document.getElementsByName('storeAlwaysShare')[0] as HTMLInputElement)
+          .value === 'true',
     };
 
     const formData = new FormData();
@@ -366,17 +374,17 @@ const StoreUpdateForm = () => {
             />
           </InputBox> */}
       <CheckBoxBox>
-        <CheckBoxLabel htmlFor="businessCertificate">
+        <CheckBoxLabel htmlFor="storeAlwaysShare">
           항상 나눔하고 싶어요
         </CheckBoxLabel>
         <CheckBox
           type="checkbox"
-          name="businessCertificate"
+          name="storeAlwaysShare"
           accept="image/*"
-          id="businessCertificate"
+          checked={selectedStore?.storeAlwaysShare ? true : false}
         />
       </CheckBoxBox>
-      <p>결식아동들이 항상 예약을 요청할 수 있어요.</p>
+      <CheckBoxTitle>결식 아동들이 항상 예약을 요청할 수 있어요.</CheckBoxTitle>
       <SubmitButton id="button" onClick={handleUpdate}>
         수정하기
       </SubmitButton>

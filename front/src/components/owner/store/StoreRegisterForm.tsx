@@ -4,6 +4,7 @@ import StoreSearchModal from './StoreSearchModal';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import {
   Store,
+  isRegisterState,
   isRegisterStoreState,
   selectedMyStoreState,
 } from '../../../store/atoms';
@@ -86,9 +87,9 @@ const InputLabel = styled.label`
   padding: 10px 15px;
   display: block;
   position: absolute;
-  margin-top: -10px;
   pointer-events: none;
   transition: ${transition};
+  z-index: 1;
 `;
 
 const InputField = styled.input`
@@ -112,21 +113,31 @@ const InputField = styled.input`
     outline: none;
     background: ${redColor};
     color: white;
-    margin-top: 30px;
+    margin-top: 40px;
   }
 
   &:valid {
-    margin-top: 30px;
+    margin-top: 40px;
   }
 
   &:focus ~ label {
-    transform: translate(0, -35px);
+    transform: translate(5px, -30px);
   }
 
   &:valid ~ label {
     text-transform: uppercase;
     font-style: italic;
-    transform: translate(5px, -35px);
+    transform: translate(5px, -30px);
+  }
+
+  &:not(:placeholder-shown) ~ label {
+    /* 인풋박스가 비어있을 때 라벨을 다시 아래로 내려감 */
+    transform: translate(5px, -30px);
+  }
+
+  &.hasValue ~ label {
+    /* 인풋필드 값이 있으면 라벨에 active 클래스 추가 */
+    margin-top: 40px;
   }
 `;
 
@@ -197,7 +208,9 @@ const SearchButton = styled.div`
 `;
 
 const StoreRegisterForm = () => {
-  const selectedMyStore = useRecoilValue(selectedMyStoreState);
+  const [selectedMyStore, setSelectedMyStore] =
+    useRecoilState(selectedMyStoreState);
+  const [isRegister, setIsRegister] = useRecoilState(isRegisterState);
   const [isRegisterStore, setIsRegisterStore] =
     useRecoilState(isRegisterStoreState);
   const [registerStore, setRegisterStore] = useState<Store>({
@@ -211,7 +224,7 @@ const StoreRegisterForm = () => {
     storeImageName: null,
     storeImage: null,
     storePhoneNumber: null,
-    // storeAlwaysShare: false,
+    storeAlwaysShare: false,
     menuDTO: [],
   });
   const [showModal, setShowModal] = useState(false);
@@ -222,6 +235,7 @@ const StoreRegisterForm = () => {
       API.get(`stores/${selectedMyStore?.storeId}`)
         .then((response: any) => {
           console.log(response.data);
+          console.log(isRegister);
           setRegisterStore(response.data);
         })
         .catch((error: any) => {
@@ -250,6 +264,8 @@ const StoreRegisterForm = () => {
       .then((response: any) => {
         console.log(response.data);
         setIsRegisterStore(true);
+        setSelectedMyStore(null);
+        setIsRegister(false);
       })
       .catch((error: any) => {
         console.error(error);
@@ -269,23 +285,25 @@ const StoreRegisterForm = () => {
           )}
         </ImgBox>
       </InputBox>
+      <SearchButton onClick={handleSearch}>가게명 검색</SearchButton>
+      {showModal && <StoreSearchModal onClose={handleCloseModal} />}
       <InputBox className="InputBox">
         <InputLabel>가게명</InputLabel>
         <InputField
           type="text"
           name="storeName"
-          defaultValue={registerStore?.storeName}
+          value={registerStore?.storeName}
+          readonly
         />
-        <SearchButton onClick={handleSearch}>가게명 검색</SearchButton>
       </InputBox>
-      {showModal && <StoreSearchModal onClose={handleCloseModal} />}
       <InputBox className="InputBox">
         <InputLabel htmlFor="storeLocation">주소</InputLabel>
         <InputField
           type="text"
           id="storeLocation"
           name="storeLocation"
-          defaultValue={registerStore?.storeAddress}
+          value={registerStore?.storeAddress}
+          readonly
         />
       </InputBox>
       <InputBox className="InputBox">
@@ -294,7 +312,8 @@ const StoreRegisterForm = () => {
           type="text"
           id="storePhoneNumber"
           name="storePhoneNumber"
-          defaultValue={registerStore?.storePhoneNumber ?? ''}
+          value={registerStore?.storePhoneNumber ?? ''}
+          readonly
         />
       </InputBox>
       <InputBox className="InputBox">
@@ -303,7 +322,8 @@ const StoreRegisterForm = () => {
           type="text"
           id="storeInfo"
           name="storeInfo"
-          defaultValue={registerStore?.storeInfo ?? ''}
+          value={registerStore?.storeInfo ?? ''}
+          readonly
         />
       </InputBox>
       {/* <InputBox>
@@ -319,7 +339,13 @@ const StoreRegisterForm = () => {
         <CheckBoxLabel htmlFor="storeAlwaysShare">
           항상 나눔하고 싶어요
         </CheckBoxLabel>
-        <CheckBox type="checkbox" name="storeAlwaysShare" accept="image/*" />
+        <CheckBox
+          type="checkbox"
+          name="storeAlwaysShare"
+          accept="image/*"
+          value={registerStore?.storeAlwaysShare ? 'true' : 'false'}
+          readOnly
+        />
       </CheckBoxBox>
       <p>결식아동들이 항상 예약을 요청할 수 있어요.</p>
       <SubmitButton id="button" onClick={handleRegister}>

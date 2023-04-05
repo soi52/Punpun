@@ -1,11 +1,12 @@
 import styled from 'styled-components';
-import StoreData from './StoreData.json';
 import Map from './Map';
 import SearchStoreList from './SearchStoreList';
 import useGeolocation from './UseGeolocation';
 import { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import { isRegisterState } from '../store/atoms';
+import StoreData from './StoreData.json';
+import API from '../store/API';
 
 type SearchStoreProps = {
   message: string;
@@ -34,7 +35,6 @@ const MapDiv = styled.div`
 
 const SearchStore = ({ message }: SearchStoreProps) => {
   const [isRegister, setIsRegister] = useRecoilState(isRegisterState);
-  console.log(StoreData);
 
   const location = useGeolocation();
   console.log(location);
@@ -43,7 +43,22 @@ const SearchStore = ({ message }: SearchStoreProps) => {
 
   useEffect(() => {
     setIsRegister(false);
-  });
+  }, []);
+
+  useEffect(() => {
+    const mode = {
+      params: {
+        mode: 500,
+      },
+    };
+    API.get(`stores/distTest/${longitude}/${latitude}`, mode)
+      .then((response: any) => {
+        console.log(response.data);
+      })
+      .catch((error: any) => {
+        console.error(error);
+      });
+  }, [latitude, longitude]);
 
   return (
     <Wrapper>

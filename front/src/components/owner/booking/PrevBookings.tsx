@@ -121,8 +121,6 @@ const PrevBookings = () => {
     })
     .reverse();
 
-  console.log(formattedBookings);
-
   if (!formattedBookings) {
     return <Loading />;
   }
