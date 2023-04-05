@@ -40,7 +40,6 @@ const StoreName = styled.td`
   padding: 15px 10px;
   cursor: pointer;
   &:hover {
-    // background-color: #ff3b3b;
     opacity: 0.8;
     transform: scale(1.01);
   }
@@ -59,8 +58,8 @@ interface SupportData {
 
 const SupportHistory = () => {
   const [supportData, setSupportData] = useState<SupportData[]>([]);
-
   const Navigate = useNavigate();
+
   const toStore = (storeId: number) => {
     Navigate(`/store/${storeId}`);
   };
@@ -76,6 +75,8 @@ const SupportHistory = () => {
       });
   }, []);
 
+  const filteredData = supportData.filter((support) => support.supportState === "SUPPORT");
+
   return (
     <Wrapper>
       <Table>
@@ -89,7 +90,7 @@ const SupportHistory = () => {
           </TableRow>
         </TableHeader>
         <tbody>
-          {supportData.map((support) => (
+          {filteredData.map((support) => (
             <TableRow key={support.supportId}>
               <TableCell>{`# ${support.supportId}`}</TableCell>
               <StoreName onClick={() => toStore(support.storeId)}>{support.storeName}</StoreName>

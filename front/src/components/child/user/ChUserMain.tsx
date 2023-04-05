@@ -33,13 +33,16 @@ const ChUserMain = () => {
   useEffect(() => {
     API.get('bookings/child')
       .then((response) => {
-        console.log("Today's bookings:", response.data.content);
+        // console.log("Today's bookings:", response.data.content);
         setBookings(response.data.content);
       })
       .catch((error) => {
         console.error("Error fetching today's bookings:", error);
       });
   }, []);
+
+  console.log(bookings);
+  
 
   const filteredBookings = bookings.filter((booking) => {
     const reservationTime = new Date(booking.reservationTime);
