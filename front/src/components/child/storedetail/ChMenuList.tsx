@@ -25,21 +25,28 @@ type ChMenuDTO = {
   favoriteMenu: boolean;
   menuImage: string | null;
   menuImageName: string | null;
+  menuSponsoredCount: number;
 };
 
 type ChMenuListProps = {
   chMenuList: ChMenuDTO[];
 };
 
+
 const ChMenuList: React.FC<ChMenuListProps> = (props) => {
-  if (!props.chMenuList) {
+
+  const sortedMenuList = props.chMenuList.sort(
+    (a, b) => b.menuSponsoredCount - a.menuSponsoredCount
+  );
+
+  if (!sortedMenuList) {
     return <Loading />;
   }
 
   return (
     <Container>
       <MenuListContainer>
-        {props.chMenuList.map((menu, index) => {
+        {sortedMenuList.map((menu, index) => {
           return (
             <ChMenuCard
               key={index}
@@ -47,6 +54,9 @@ const ChMenuList: React.FC<ChMenuListProps> = (props) => {
               title={menu.menuName}
               price={menu.menuPrice}
               favoriteMenu={menu.favoriteMenu}
+              menuCount={menu.menuSponsoredCount}
+              menuImage={menu.menuImage}
+              menuImageName={menu.menuImageName}
             />
           );
         })}
