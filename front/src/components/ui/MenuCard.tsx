@@ -86,7 +86,7 @@ const MenuCard: React.FC<MenuCardProps> = ({ menu, addToCart }) => {
     <MenuCardContent onClick={handleClick}>
       <MenuCardImage image={menu?.menuImage} />
       <MenuCardTitle>{menu.menuName}</MenuCardTitle>
-      <MenuCardPrice>{menu.menuPrice}원</MenuCardPrice>
+      <MenuCardPrice>{menu.menuPrice.toLocaleString()}원</MenuCardPrice>
     </MenuCardContent>
   );
 };

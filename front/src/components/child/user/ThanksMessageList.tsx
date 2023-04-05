@@ -54,12 +54,14 @@ type Message = {
   keywords: KeywordType[];
   reviewId: number;
   reviewCreatedTime: string;
+  storeName: string;
 };
 
 export type Review = {
   reviewId: number;
   reviewContent: string;
   reviewCreatedTime: string;
+  storeName: string;
   keywords: {
     content: string;
     createdDateTime: string;
@@ -119,6 +121,7 @@ const ThanksMessageList = () => {
                   hour12: false,
                 })}
               </p>
+              <p>{message.storeName}</p>
               {message.keywords.map((keyword, index) => (
                 <MessageButton key={index}>{keyword.content}</MessageButton>
               ))}

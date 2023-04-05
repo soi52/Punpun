@@ -1,56 +1,49 @@
 import { useEffect, useState } from 'react';
 import API from '../../store/API';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router';
 
 const Wrapper = styled.div`
-    display; flex;
-    align-items: center;
-    margin: 30px;
+  margin: 30px;
 `;
 
-const PostIt = styled.div`
-  position: relative;
-  width: 90%;
-  // height: 200px;
+const Table = styled.table`
+  width: 100%;
+  border-collapse: collapse;
+  box-shadow: 0px 3px 3px #ccc;
+  margin-top: 30px;
+`;
+
+const TableHeader = styled.thead`
   background-color: #fcfcff;
-  //   border: 2px solid #ffd700;
-  border-radius: 5px;
-  margin: 10px;
-  padding: 20px;
-  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
 `;
 
-const StoreName = styled.div`
-  font-size: 20px;
+const TableRow = styled.tr`
+  border-bottom: 1px solid #eee;
+
+  &:hover {
+    background-color: #f6f6f6;
+  }
+`;
+
+const TableHeaderCell = styled.th`
+  text-align: left;
   font-weight: bold;
+  padding: 10px;
 `;
 
-const ReservationHeader = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 10px;
+const TableCell = styled.td`
+  padding: 15px 10px;
 `;
 
-const SupportInfo = styled.div`
-  font-size: 16px;
-  margin-bottom: 10px;
-`;
-
-const IdDiv = styled.div`
-  text-align: right;
-`;
-
-const SupportId = styled.span`
-  font-weight: bold;
-`;
-
-const MenuInfo = styled.div`
-  margin-bottom: 5px;
-`;
-
-const HrDiv = styled.hr`
-  margin-bottom: 30px;
+const StoreName = styled.td`
+  padding: 15px 10px;
+  cursor: pointer;
+  &:hover {
+    // background-color: #ff3b3b;
+    opacity: 0.8;
+    transform: scale(1.01);
+  }
 `;
 
 interface SupportData {
@@ -67,17 +60,11 @@ interface SupportData {
 const SupportHistory = () => {
   const [supportData, setSupportData] = useState<SupportData[]>([]);
 
-  // useEffect(() => {
-  //   const fetchSupportData = async () => {
-  //     try {
-  //       const response = await axios.get('/supports');
-  //       setSupportData(response.data);
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   };
-  //   fetchSupportData();
-  // }, []);
+  const Navigate = useNavigate();
+  const toStore = (storeId: number) => {
+    Navigate(`/store/${storeId}`);
+  };
+
   useEffect(() => {
     API.get('supports')
       .then((response: any) => {
@@ -91,22 +78,28 @@ const SupportHistory = () => {
 
   return (
     <Wrapper>
-      {supportData.map((support) => (
-        <PostIt key={support.supportId}>
-          <SupportInfo>
-            <IdDiv>
-              <span>후원번호 </span>
-              <SupportId># {support.supportId}</SupportId>
-            </IdDiv>
-          </SupportInfo>
-          {/* <p>Support State: {support.supportState}</p> */}
-          <StoreName>{support.storeName}</StoreName>
-          <HrDiv></HrDiv>
-          <p>후원 날짜: {support.supportCreationDate}</p>
-          <MenuInfo>메뉴명: {support.menuName}</MenuInfo>
-          <p>가격: {support.menuPrice}</p>
-        </PostIt>
-      ))}
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHeaderCell>후원번호</TableHeaderCell>
+            <TableHeaderCell>가게 이름</TableHeaderCell>
+            <TableHeaderCell>메뉴명</TableHeaderCell>
+            <TableHeaderCell>가격</TableHeaderCell>
+            <TableHeaderCell>후원 날짜</TableHeaderCell>
+          </TableRow>
+        </TableHeader>
+        <tbody>
+          {supportData.map((support) => (
+            <TableRow key={support.supportId}>
+              <TableCell>{`# ${support.supportId}`}</TableCell>
+              <StoreName onClick={() => toStore(support.storeId)}>{support.storeName}</StoreName>
+              <TableCell>{support.menuName}</TableCell>
+              <TableCell>{support.menuPrice.toLocaleString()}원</TableCell>
+              <TableCell>{support.supportCreationDate}</TableCell>
+            </TableRow>
+          ))}
+        </tbody>
+      </Table>
     </Wrapper>
   );
 };

@@ -115,7 +115,7 @@ const TotalPrice = styled.span`
 const DonateButton = styled.button`
   border: none;
   outline: none;
-  background-color: #2ecc71;
+  background-color: #5D5A88;
   color: white;
   font-size: 16px;
   font-weight: 600;

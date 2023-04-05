@@ -4,6 +4,10 @@ import StoreBanner from './Storebanner';
 import API from '../../../store/API';
 import { useEffect, useState } from 'react';
 
+const Wrapper = styled.div`
+  padding: 20px;
+`;
+
 type Props = {
   myStoreId: string | undefined;
 };
@@ -48,10 +52,10 @@ const StoreThanksMessage = ({ myStoreId }: Props) => {
   }, []);
 
   return (
-    <>
+    <Wrapper>
       <StoreBanner storeName={storeName} />
       <ReviewItem reviews={reviews} />
-    </>
+    </Wrapper>
   );
 };
 
