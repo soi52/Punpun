@@ -13,12 +13,12 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Long> {
-    @EntityGraph(attributePaths = {"reviewKeywords.keyword"})
+    @EntityGraph(attributePaths = {"reviewKeywords.keyword","store"})
     @Query(value = "select r from Review r where r.child = ?1"
             , countQuery = "select count(r) from Review r where r.child = ?1")
     Page<Review> findAllByChild(Child child, Pageable pageable);
 
-    @EntityGraph(attributePaths = {"reviewKeywords.keyword"})
+    @EntityGraph(attributePaths = {"reviewKeywords.keyword","store"})
     @Query(value = "select r from Review r " +
             "inner join r.reservation res " +
             "inner join res.supportReservation sr " +
@@ -29,7 +29,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
                     "inner join sr.support sup where sup.supporter = ?1")
     Page<Review> findAllBySupporter(Member supporter, Pageable pageable);
 
-    @EntityGraph(attributePaths = {"reviewKeywords.keyword"})
+    @EntityGraph(attributePaths = {"reviewKeywords.keyword","store"})
     @Query(value = "select r from Review r where r.store = ?1")
     Page<Review> findAllByStore(Store store, Pageable pageable);
 }
