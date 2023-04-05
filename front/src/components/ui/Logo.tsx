@@ -3,6 +3,7 @@ import logoIMG from '../../resources/images/logo.png';
 import logoIMG1 from '../../resources/images/logo (1).png';
 import logoIMG2 from '../../resources/images/logo (2).png';
 import logoIMG3 from '../../resources/images/logo (3).png';
+import { useNavigate } from 'react-router';
 
 const bounce = keyframes`
   0% {
@@ -37,6 +38,11 @@ const bounce = keyframes`
 const LogoImgWrapper = styled.div`
   display: flex;
   margin-left: 10px;
+  &:hover {
+    // background-color: #ff3b3b;
+    opacity: 0.8;
+    transform: scale(1.01);
+  }
 `;
 
 const LogoImg = styled.div`
@@ -48,12 +54,18 @@ const LogoImg = styled.div`
   background-size: contain;
   background-position: center;
   animation: ${bounce} 1s ease-in-out infinite;
+  cursor: pointer;
 `;
 
 function Logo() {
+  const navigate = useNavigate();
+  const toMain = () => {
+    navigate('/sumain');
+  };
+
   return (
     <>
-      <LogoImgWrapper>
+      <LogoImgWrapper onClick={toMain}>
         <LogoImg style={{ backgroundImage: `url(${logoIMG1})`, animationDelay: '0s' }} />
         <LogoImg style={{ backgroundImage: `url(${logoIMG1})`, animationDelay: '0.2s' }} />
         <LogoImg style={{ backgroundImage: `url(${logoIMG2})`, animationDelay: '0.4s' }} />

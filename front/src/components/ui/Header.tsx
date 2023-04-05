@@ -167,7 +167,7 @@ function Header(props: HeaderProps) {
   };
   return (
     <Wrapper>
-      <Logo />
+      <Logo/>
       <Contents>
         <nav>{renderNav()}</nav>
       </Contents>

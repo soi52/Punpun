@@ -3,8 +3,6 @@ import styled from 'styled-components';
 import MenuCard from '../../ui/MenuCard';
 import MenuCart from '../../supporter/MenuCart';
 import Loading from '../../ui/Loading';
-import { MenuDTO, isUpdatedState } from '../../../store/atoms';
-import { useRecoilState } from 'recoil';
 
 const Container = styled.div`
   padding: 20px;
@@ -16,6 +14,15 @@ const MenuCardContainer = styled.div`
   justify-content: start;
 `;
 
+type MenuDTO = {
+  menuId: number;
+  menuName: string;
+  menuPrice: number;
+  menuCount: number;
+  menuImage: string | null;
+  menuImageName: string | null;
+};
+
 type MenuListProps = {
   menuDTOList: MenuDTO[];
 };
@@ -25,7 +32,7 @@ export interface CartItem {
   title: string;
   price: number;
   quantity: number;
-  image: string;
+  image: string | null;
 }
 
 function MenuList({ menuDTOList }: MenuListProps) {
@@ -72,7 +79,7 @@ function MenuList({ menuDTOList }: MenuListProps) {
     <>
       <MenuCardContainer>
         {menuDTOList.map((menu) => {
-          return <MenuCard addToCart={addToCart} menu={menu} />;
+          return <MenuCard addToCart={addToCart} menu={menu} key={menu.menuId}/>;
         })}
       </MenuCardContainer>
       <MenuCart
