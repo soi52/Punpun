@@ -36,6 +36,13 @@ const TableCell = styled.td`
   padding: 15px 10px;
 `;
 
+const NoContent = styled.td`
+  display: flex;
+  justify-content: center;
+  padding: auto;
+  margin : 30px;
+`;
+
 const StoreName = styled.td`
   padding: 15px 10px;
   cursor: pointer;
@@ -79,30 +86,50 @@ const SupportHistory = () => {
 
   return (
     <Wrapper>
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHeaderCell>후원번호</TableHeaderCell>
-            <TableHeaderCell>가게 이름</TableHeaderCell>
-            <TableHeaderCell>메뉴명</TableHeaderCell>
-            <TableHeaderCell>가격</TableHeaderCell>
-            <TableHeaderCell>후원 날짜</TableHeaderCell>
-          </TableRow>
-        </TableHeader>
-        <tbody>
-          {filteredData.map((support) => (
-            <TableRow key={support.supportId}>
-              <TableCell>{`# ${support.supportId}`}</TableCell>
-              <StoreName onClick={() => toStore(support.storeId)}>{support.storeName}</StoreName>
-              <TableCell>{support.menuName}</TableCell>
-              <TableCell>{support.menuPrice.toLocaleString()}원</TableCell>
-              <TableCell>{support.supportCreationDate}</TableCell>
+      {filteredData.length > 0 ? (
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHeaderCell>후원번호</TableHeaderCell>
+              <TableHeaderCell>가게 이름</TableHeaderCell>
+              <TableHeaderCell>메뉴명</TableHeaderCell>
+              <TableHeaderCell>가격</TableHeaderCell>
+              <TableHeaderCell>후원 날짜</TableHeaderCell>
             </TableRow>
-          ))}
-        </tbody>
-      </Table>
+          </TableHeader>
+          <tbody>
+            {filteredData.map((support) => (
+              <TableRow key={support.supportId}>
+                <TableCell>{`# ${support.supportId}`}</TableCell>
+                <StoreName onClick={() => toStore(support.storeId)}>
+                  {support.storeName}
+                </StoreName>
+                <TableCell>{support.menuName}</TableCell>
+                <TableCell>{support.menuPrice.toLocaleString()}원</TableCell>
+                <TableCell>{support.supportCreationDate}</TableCell>
+              </TableRow>
+            ))}
+          </tbody>
+        </Table>
+      ) : (
+        <>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHeaderCell>후원번호</TableHeaderCell>
+              <TableHeaderCell>가게 이름</TableHeaderCell>
+              <TableHeaderCell>메뉴명</TableHeaderCell>
+              <TableHeaderCell>가격</TableHeaderCell>
+              <TableHeaderCell>후원 날짜</TableHeaderCell>
+            </TableRow>
+          </TableHeader>
+        </Table>
+        <NoContent>아직 후원내역이 없어요 :(</NoContent>
+        </>
+      )}
     </Wrapper>
   );
-};
+  
+};  
 
 export default SupportHistory;
