@@ -15,7 +15,6 @@ import org.springframework.kafka.test.context.EmbeddedKafka;
 
 import java.time.LocalDateTime;
 
-// TODO : 비지니스 로직 생기면 테스트 완성시키기
 @EmbeddedKafka(partitions = 1,
         brokerProperties = {"listener=PLAINTEXT://localhost:9092"},
         ports = {9092})

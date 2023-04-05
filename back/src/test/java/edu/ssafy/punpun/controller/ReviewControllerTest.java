@@ -9,6 +9,7 @@ import edu.ssafy.punpun.dto.response.ReviewResponseDTO;
 import edu.ssafy.punpun.entity.Child;
 import edu.ssafy.punpun.entity.Member;
 import edu.ssafy.punpun.entity.Review;
+import edu.ssafy.punpun.entity.Store;
 import edu.ssafy.punpun.exception.NotMatchChildException;
 import edu.ssafy.punpun.service.ReviewService;
 import edu.ssafy.testutil.WIthCustomChild;
@@ -96,10 +97,15 @@ class ReviewControllerTest {
         @WIthCustomChild
         @DisplayName("성공")
         void getAllReviewSuccess() throws Exception {
+            Store store = Store.builder()
+                    .id(1L)
+                    .name("test")
+                    .build();
             Review review = Review.builder()
                     .id(1L)
                     .content("content")
                     .reviewKeywords(List.of())
+                    .store(store)
                     .build();
             review.setCreatedDateTime(LocalDateTime.now());
             PageRequest pageable = PageRequest.of(0, 10);
@@ -130,11 +136,16 @@ class ReviewControllerTest {
                     .id(1L)
                     .name("name")
                     .build();
+            Store store = Store.builder()
+                    .id(1L)
+                    .name("test")
+                    .build();
             Review review = Review.builder()
                     .id(1L)
                     .content("content")
                     .reviewKeywords(List.of())
                     .child(child)
+                    .store(store)
                     .build();
             review.setCreatedDateTime(LocalDateTime.now());
             PageRequest pageable = PageRequest.of(0, 10);
@@ -165,11 +176,16 @@ class ReviewControllerTest {
                     .id(1L)
                     .name("name")
                     .build();
+            Store store = Store.builder()
+                    .id(1L)
+                    .name("test")
+                    .build();
             Review review = Review.builder()
                     .id(1L)
                     .content("content")
                     .reviewKeywords(List.of())
                     .child(child)
+                    .store(store)
                     .build();
             review.setCreatedDateTime(LocalDateTime.now());
             PageRequest pageable = PageRequest.of(0, 10);
