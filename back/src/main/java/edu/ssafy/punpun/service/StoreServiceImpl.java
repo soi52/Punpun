@@ -105,7 +105,7 @@ public class StoreServiceImpl implements StoreService {
                     break;
                 }
             }
-            storeDistResponseDTOList.add(new StoreDistResponseDTO(store.getId(), store.getName(), store.getLon(), store.getLat(), store.isAlwaysShare(), isSupport));
+            storeDistResponseDTOList.add(new StoreDistResponseDTO(store, isSupport));
         }
 
         return storeDistResponseDTOList;
