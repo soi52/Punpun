@@ -3,11 +3,7 @@ package edu.ssafy.punpun.controller;
 import edu.ssafy.punpun.dto.request.SupportRequestDTO;
 import edu.ssafy.punpun.dto.response.ShareResponseDTO;
 import edu.ssafy.punpun.dto.response.SupportResponseDTO;
-import edu.ssafy.punpun.entity.Member;
-import edu.ssafy.punpun.entity.Menu;
-import edu.ssafy.punpun.entity.Store;
 import edu.ssafy.punpun.entity.Support;
-import edu.ssafy.punpun.entity.enumurate.SupportState;
 import edu.ssafy.punpun.entity.enumurate.SupportType;
 import edu.ssafy.punpun.security.oauth2.PrincipalMemberDetail;
 import edu.ssafy.punpun.service.SupportService;
@@ -20,7 +16,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
