@@ -5,7 +5,6 @@ import edu.ssafy.punpun.entity.Review;
 import edu.ssafy.punpun.entity.ReviewKeyword;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,6 +15,7 @@ public class ReviewResponseDTO {
     private Long reviewId;
     private String reviewContent;
     private String reviewCreatedTime;
+    private String storeName;
     private List<Keyword> keywords;
     private Long childId;
     private String childName;
@@ -25,6 +25,7 @@ public class ReviewResponseDTO {
         Long reviewId = review.getId();
         String reviewContent = review.getContent();
         String reviewCreatedTime = review.getCreatedDateTime().toString();
+        String storeName = review.getStore().getName();
         List<Keyword> keywords = review.getReviewKeywords().stream()
                 .map(ReviewKeyword::getKeyword)
                 .collect(Collectors.toList());
@@ -34,6 +35,6 @@ public class ReviewResponseDTO {
         if (review.getChild().getProfile() != null) {
             childProfileUrl = review.getChild().getProfile().getUrl();
         }
-        return new ReviewResponseDTO(reviewId, reviewContent, reviewCreatedTime, keywords, childId, childName, childProfileUrl);
+        return new ReviewResponseDTO(reviewId, reviewContent, reviewCreatedTime, storeName, keywords, childId, childName, childProfileUrl);
     }
 }
