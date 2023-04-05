@@ -63,7 +63,7 @@ const SuSidebarContent: FC<SuSidebarContentProps> = ({
         <PointDetail>
           <span>{formattedPoint} P</span>
           {menuItems.map((menuItem, index) =>
-            index === 3 ? (
+            index === 2 ? (
               <StyledLi
                 key={index}
                 onClick={() => onMenuItemClick(index)}

@@ -11,7 +11,6 @@ const GlobalStyle = createGlobalStyle`
     line-height: 1.5;
     background-color: #f0f0f0;
     cursor: url(${Default});
-  }
 
   ::-webkit-scrollbar {
     width: 9px;  /* 스크롤바의 너비 */

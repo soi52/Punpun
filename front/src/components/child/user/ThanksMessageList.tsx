@@ -4,34 +4,59 @@ import Loading from '../../ui/Loading';
 import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
 import { userInfoState } from '../../../store/atoms';
-import defaultUserImage from '../../../resources/images/profileDefault.png';
+
+const Review = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px;
+  padding: 10px;
+  background-color: #ffffff;
+  border-radius: 20px;
+  max-width: 100%;
+`;
 
 const ReviewItem = styled.div`
   display: flex;
   align-items: center;
-  width: 50%;
+  width: 100%;
   margin: 10px;
   padding: 10px;
   background-color: #ffffff;
-  border: 1px solid black;
+  box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.1);
   border-radius: 20px;
-  // flex-direction: column;
-  word-wrap: break-word; /* word-wrap 속성 적용 */
+  word-wrap: break-word;
+  flex-basis: calc(33.333% - 20px);
+  max-width: calc(33.333% - 20px);
+`;
+const ReviewContent = styled.div`
+  width: 100%;
 `;
 
-
-const Review = styled.div`
-  display: flex;
-  align-items: center;
-  margin: 10px;
-  padding: 10px;
-  background-color: #ffffff;
-  border-radius: 20px;
-  flex-direction: column;
+const ReviewStoreName = styled.p`
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0px 0px 10px 0px;
 `;
 
 const ReviewText = styled.p`
   font-size: 16px;
+  text-align: center;
+`;
+
+const ReviewTextDeco = styled.span`
+  font-size: 20px;
+  color: gray;
+`;
+
+const ReviewDate = styled.p`
+  font-size: 14px;
+  text-align: center;
+`;
+
+const ButtonDiv = styled.div`
+  text-align: center;
 `;
 
 const MessageButton = styled.button`
@@ -73,13 +98,6 @@ export type Review = {
   childProfileUrl: string;
 };
 
-const UserImage = styled.img`
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  margin-right: 20px;
-`;
-
 const ThanksMessageList = () => {
   const [userInfo] = useRecoilState(userInfoState);
   const [messages, setMessages] = useState<Message[]>([]);
@@ -101,17 +119,26 @@ const ThanksMessageList = () => {
 
   return (
     <Review>
-      {messages.reduce((rows: JSX.Element[][], message: Message, index: number) => {
-        if (index % 2 === 0) rows.push([]);
-        rows[rows.length - 1].push(
+      <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+        {messages.map((message, index) => (
           <ReviewItem key={index}>
-            <UserImage
+            {/* <UserImage
               src={userInfo.userProfileImage || defaultUserImage}
               alt="User Image"
-            />
-            <div>
-              <ReviewText>{message.reviewContent}</ReviewText>
-              <p>
+            /> */}
+            <ReviewContent>
+              <ReviewStoreName>{message.storeName}</ReviewStoreName>
+              <ReviewText>
+                <ReviewTextDeco>❝ </ReviewTextDeco>
+                {message.reviewContent}
+                <ReviewTextDeco> ❞</ReviewTextDeco>
+              </ReviewText>
+              <ButtonDiv>
+                {message.keywords.map((keyword, index) => (
+                  <MessageButton key={index}>{keyword.content}</MessageButton>
+                ))}
+              </ButtonDiv>
+              <ReviewDate>
                 {new Date(message.reviewCreatedTime).toLocaleString('ko-KR', {
                   year: 'numeric',
                   month: 'long',
@@ -120,20 +147,11 @@ const ThanksMessageList = () => {
                   minute: 'numeric',
                   hour12: false,
                 })}
-              </p>
-              <p>{message.storeName}</p>
-              {message.keywords.map((keyword, index) => (
-                <MessageButton key={index}>{keyword.content}</MessageButton>
-              ))}
-            </div>
+              </ReviewDate>
+            </ReviewContent>
           </ReviewItem>
-        );
-        return rows;
-      }, []).map((row, index) => (
-        <div key={index} style={{ display: 'flex' }}>
-          {row}
-        </div>
-      ))}
+        ))}
+      </div>
     </Review>
   );
 };
