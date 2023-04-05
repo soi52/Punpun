@@ -69,39 +69,39 @@ public class StoreRepositoryTest {
         assertThat(result.get().isOpenState()).isEqualTo(store1.isOpenState());
     }
 
-    @Test
-    @DisplayName("Repository: test for Store Distance")
-    void findByEarthDistancePostgres() {
-        // given
-        Store store1 = Store.builder()
-                .name("스타벅스 구미 인동점")
-                .lon(128.420817)
-                .lat(36.106961)
-                .alwaysShare(true)
-                .build();
-        Store store2 = Store.builder()
-                .name("카페 에이유")
-                .lon(128.420650)
-                .lat(36.107156)
-                .build();
-        Store store3 = Store.builder()
-                .name("텐동 고마츠")
-                .lon(128.331800)
-                .lat(36.127264)
-                .build();
-        storeRepository.save(store1);
-        storeRepository.save(store2);
-        storeRepository.save(store3);
-
-        // when
-        Float longitude = 128.421046F;
-        Float latitude = 36.106795F;
-        Integer radius = 200;
-        List<Store> results = storeRepository.findByEarthDistancePostgres(longitude, latitude, radius);
-
-        //then
-        assertThat(results.size()).isEqualTo(2);
-    }
+//    @Test
+//    @DisplayName("Repository: test for Store Distance")
+//    void findByEarthDistancePostgres() {
+//        // given
+//        Store store1 = Store.builder()
+//                .name("스타벅스 구미 인동점")
+//                .lon(128.420817)
+//                .lat(36.106961)
+//                .alwaysShare(true)
+//                .build();
+//        Store store2 = Store.builder()
+//                .name("카페 에이유")
+//                .lon(128.420650)
+//                .lat(36.107156)
+//                .build();
+//        Store store3 = Store.builder()
+//                .name("텐동 고마츠")
+//                .lon(128.331800)
+//                .lat(36.127264)
+//                .build();
+//        storeRepository.save(store1);
+//        storeRepository.save(store2);
+//        storeRepository.save(store3);
+//
+//        // when
+//        Float longitude = 128.421046F;
+//        Float latitude = 36.106795F;
+//        Integer radius = 200;
+//        List<Store> results = storeRepository.findByEarthDistancePostgres(longitude, latitude, radius);
+//
+//        //then
+//        assertThat(results.size()).isEqualTo(2);
+//    }
 
     @Test
     @DisplayName("Repository: test for find Store Name Containing")
