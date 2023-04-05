@@ -1,3 +1,5 @@
+import styled from 'styled-components';
+
 type StoreHourProps = {
   storeAddress: string | null;
   storeInfo: string | null;
@@ -5,24 +7,39 @@ type StoreHourProps = {
   storePhoneNumber: string | null;
 };
 
-const StoreHour = ({   storeAddress
-  , storeInfo, storeOpenTime, storePhoneNumber }: StoreHourProps) => {
+const StoreInfo = styled.div`
+  border-radius: 10px;
+  padding: 0px 20px 0px 20px;
+  margin: 0px 0px 0px 0px;
+  width: 300px;
+`;
 
+const Label = styled.p`
+  font-weight: bold;
+  margin-bottom: 10px;
+`;
+
+const Info = styled.span`
+  font-size: 16px;
+`;
+
+const StoreHour = ({
+  storeAddress,
+  storeInfo,
+  storeOpenTime,
+  storePhoneNumber,
+}: StoreHourProps) => {
   return (
-    <div>
-      { (storeInfo === null) ? 
-      <p>정보: 준비 중 입니다 :)</p> :
-      <p>정보: {storeInfo}</p>
-       }
-       { (storeOpenTime === null) ? 
-      <p>영업시간: 준비 중 입니다 :)</p> :
-      <p>영업시간: {storeOpenTime}</p>
-       }
-       { (storePhoneNumber === null) ? 
-      <p>전화번호: 준비 중 입니다 :)</p> :
-      <p>전화번호: {storePhoneNumber}</p>
-       }
-    </div>
+    <StoreInfo>
+      <Label>정보</Label>
+      <Info>{storeInfo ? storeInfo : '준비 중 입니다'}</Info>
+      <Label>위치</Label>
+      <Info>{storeAddress ? storeAddress : '준비 중 입니다'}</Info>
+      <Label>영업시간</Label>
+      <Info>{storeOpenTime ? storeOpenTime : '준비 중 입니다'}</Info>
+      <Label>전화번호</Label>
+      <Info>{storePhoneNumber ? storePhoneNumber : '준비 중 입니다'}</Info>
+    </StoreInfo>
   );
 };
 

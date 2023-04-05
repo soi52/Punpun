@@ -8,11 +8,12 @@ import Sidebar from '../components/ui/Sidebar';
 import MainComponent from '../components/ui/MainComponent';
 
 import StoreMenu from '../components/child/storedetail/StoreMenu';
-import StoreInfo from '../components/child/storedetail/StoreInfo';
+// import StoreInfo from '../components/child/storedetail/StoreInfo';
 import ThanksMessage from '../components/child/storedetail/StoreThanksMessage';
 import SuPointAdd from '../components/supporter/SuPointAdd';
 import { useRecoilState } from 'recoil';
 import { selectedStoreState } from '../store/atoms';
+import StoreDetailInfo from '../components/ui/StoreDetailInfo';
 
 // 아이콘
 
@@ -79,7 +80,7 @@ function ChStoreDetailPage() {
     { title: '🍝 메뉴', component: () => <StoreMenu myStoreId={myStoreId} /> },
     {
       title: '🗺 가게 정보',
-      component: () => <StoreInfo myStoreId={myStoreId} />,
+      component: () => <StoreDetailInfo myStoreId={myStoreId} />,
     },
     {
       title: '💌 감사 메세지',

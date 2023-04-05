@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import Map from '../../../common/Map';
@@ -11,6 +11,7 @@ import {
   owStoreMenuState,
   selectedStoreState,
 } from '../../../store/atoms';
+import StoreDetailInfo from '../../ui/StoreDetailInfo';
 import StoreInfo from '../StoreInfo';
 
 const Wrapper = styled.div`
@@ -20,8 +21,6 @@ const Wrapper = styled.div`
 const StoreInfoDiv = styled.div`
   display: flex;
 `;
-
-const StoreDetailInfo = styled.div``;
 
 const SubmitBox = styled.div`
   display: flex;
@@ -73,21 +72,7 @@ function StoreManage() {
   return (
     <Wrapper>
       <StoreInfo />
-      <h2>가게 정보</h2>
-      <StoreInfoDiv>
-        {selectedStore?.storeLat && selectedStore?.storeLon && (
-          <Map
-            latitude={selectedStore.storeLat}
-            longitude={selectedStore.storeLon}
-            stores={[]}
-          />
-        )}
-        <StoreDetailInfo>
-          <p>{store?.storePhoneNumber}</p>
-          <p>{store?.storeInfo}</p>
-          <p>{store?.storeOpenTime}</p>
-        </StoreDetailInfo>
-      </StoreInfoDiv>
+      <StoreDetailInfo storeId={store?.storeId} />
       <SubmitBox>
         <SubmitButton onClick={handleStoreUpdate}>수정하기</SubmitButton>
       </SubmitBox>
