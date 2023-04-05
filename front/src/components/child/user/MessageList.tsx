@@ -16,6 +16,7 @@ const StyledLi = styled.li`
 
 const ListContent = styled.div`
   display: flex;
+  // flex-direction: column;
 `;
 
 const Button = styled.button`

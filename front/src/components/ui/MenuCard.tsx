@@ -1,19 +1,25 @@
 import React, { useState } from 'react';
 import API from '../../store/API';
-import { DetailedHTMLProps, ImgHTMLAttributes } from 'react';
 
 import styled from 'styled-components';
-import BookingModal from '../child/storedetail/BookingModal';
-import { useRecoilValue } from 'recoil';
-import { MenuDTO, isChildState } from '../../store/atoms';
+import { isChildState } from '../../store/atoms';
 import { useRecoilState } from 'recoil';
-import defaultImage from '../../resources/images/profileDefault.png';
+import defaultMenuImage from '../../resources/images/profileDefault.png';
 import { CartItem } from '../child/storedetail/MenuList';
 
 // interface MenuCardProps extends Menu {
 //   key: number;
 //   addToCart: (Item: Menu) => void;
 // }
+
+type MenuDTO = {
+  menuId: number;
+  menuName: string;
+  menuPrice: number;
+  menuCount: number;
+  menuImage: string | null;
+  menuImageName: string | null;
+};
 
 export interface MenuCardProps {
   addToCart: (menu: CartItem) => void;
@@ -84,7 +90,7 @@ const MenuCard: React.FC<MenuCardProps> = ({ menu, addToCart }) => {
 
   return (
     <MenuCardContent onClick={handleClick}>
-      <MenuCardImage image={menu?.menuImage} />
+      <MenuCardImage src={menu.menuImage || defaultMenuImage} alt={menu.menuName} />
       <MenuCardTitle>{menu.menuName}</MenuCardTitle>
       <MenuCardPrice>{menu.menuPrice.toLocaleString()}원</MenuCardPrice>
     </MenuCardContent>

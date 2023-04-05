@@ -17,7 +17,6 @@ const BookingList = () => {
     <ComponentStyle>
       <ChMainMessage/>
       <BookingDiv>
-        <h2>이전 예약 내역</h2>
         <PrevBookings/>
       </BookingDiv>
     </ComponentStyle>
