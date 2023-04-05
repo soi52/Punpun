@@ -37,10 +37,9 @@ const HrDIv2 = styled.hr`
 `;
 
 const RegisterButton = styled.button`
-  font-size: 15px;
+  font-size: 13px;
   color: #fff;
   background-color: #5d5a88;
-  border: none;
   border-radius: 15px;
   padding: 8px 16px;
   cursor: pointer;
@@ -75,6 +74,7 @@ const Sidebar: FC<SidebarProps> = ({
 
   const toStoreRegister = () => {
     setIsRegister(true);
+    console.log(isRegister);
     navigate('/owregister');
   };
 

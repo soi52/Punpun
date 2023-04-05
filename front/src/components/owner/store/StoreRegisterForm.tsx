@@ -211,20 +211,23 @@ const StoreRegisterForm = () => {
     storeImageName: null,
     storeImage: null,
     storePhoneNumber: null,
+    // storeAlwaysShare: false,
     menuDTO: [],
   });
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    API.get(`stores/${selectedMyStore?.storeId}`)
-      .then((response: any) => {
-        console.log(response.data);
-        setRegisterStore(response.data);
-      })
-      .catch((error: any) => {
-        console.error(error);
-      });
+    if (selectedMyStore) {
+      API.get(`stores/${selectedMyStore?.storeId}`)
+        .then((response: any) => {
+          console.log(response.data);
+          setRegisterStore(response.data);
+        })
+        .catch((error: any) => {
+          console.error(error);
+        });
+    }
   }, [selectedMyStore]);
 
   const handleSearch = () => {
@@ -313,8 +316,10 @@ const StoreRegisterForm = () => {
           />
         </InputBox> */}
       <CheckBoxBox>
-        <CheckBoxLabel>항상 나눔하고 싶어요</CheckBoxLabel>
-        <CheckBox type="checkbox" name="businessCertificate" accept="image/*" />
+        <CheckBoxLabel htmlFor="storeAlwaysShare">
+          항상 나눔하고 싶어요
+        </CheckBoxLabel>
+        <CheckBox type="checkbox" name="storeAlwaysShare" accept="image/*" />
       </CheckBoxBox>
       <p>결식아동들이 항상 예약을 요청할 수 있어요.</p>
       <SubmitButton id="button" onClick={handleRegister}>

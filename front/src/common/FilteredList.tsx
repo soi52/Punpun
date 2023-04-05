@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
@@ -106,6 +106,10 @@ const FilteredList = ({ stores, keyword }: FilteredListProps) => {
     setSelectedMyStore(store);
   };
 
+  useEffect(() => {
+    console.log(isRegister);
+  }, []);
+
   // 페이지네이션 UI를 만듭니다.
   const getPageButtons = () => {
     const pageButtons = [];
@@ -145,7 +149,6 @@ const FilteredList = ({ stores, keyword }: FilteredListProps) => {
     return pageButtons;
   };
 
-
   return (
     <div>
       {isRegister ? (
@@ -161,33 +164,32 @@ const FilteredList = ({ stores, keyword }: FilteredListProps) => {
           ))}
         </List>
       ) : (
-        // isOwner가 false일 경우 가게로 이동하는 코드를 렌더링합니다.
         <List>
-        {currentItems.map((store, index) => (
-          <ListItem key={index}>
-            <StyledLink to={`/store/${store.storeId}`}>
-          <StoreName>{store.storeName}</StoreName>
-      </StyledLink>
-        </ListItem>
-  ))}
-</List>
+          {currentItems.map((store, index) => (
+            <ListItem key={index}>
+              <StyledLink to={`/store/${store.storeId}`}>
+                <StoreName>{store.storeName}</StoreName>
+              </StyledLink>
+            </ListItem>
+          ))}
+        </List>
       )}
       {/* 페이지네이션 UI를 만듭니다. */}
       <Pagination>
-  <button
-    onClick={() => setCurrentPage(currentPage - 1)}
-    disabled={currentPage === 1}
-  >
-    Prev
-  </button>
-  {getPageButtons()}
-  <button
-    onClick={() => setCurrentPage(currentPage + 1)}
-    disabled={currentPage === pageCount}
-  >
-    Next
-  </button>
-</Pagination>
+        <button
+          onClick={() => setCurrentPage(currentPage - 1)}
+          disabled={currentPage === 1}
+        >
+          Prev
+        </button>
+        {getPageButtons()}
+        <button
+          onClick={() => setCurrentPage(currentPage + 1)}
+          disabled={currentPage === pageCount}
+        >
+          Next
+        </button>
+      </Pagination>
     </div>
   );
 };
