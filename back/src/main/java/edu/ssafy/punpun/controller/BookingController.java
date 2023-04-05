@@ -40,7 +40,7 @@ public class BookingController {
                                                      @RequestParam(required = false) String localDateTime) {
         LocalDateTime date = localDateTime == null ? null : LocalDateTime.parse(localDateTime);
         return bookingService.findReservations(childDetail.getChild(), date, page)
-                .map(BookingChildResponseDTO::entityToDto);
+               .map(BookingChildResponseDTO::entityToDto);
     }
 
     @GetMapping("/store/{storeId}")
