@@ -2,6 +2,7 @@ package edu.ssafy.punpun.service;
 
 import edu.ssafy.punpun.dto.request.StoreDetailRequestDTO;
 import edu.ssafy.punpun.dto.response.MenuChildResponseDTO;
+import edu.ssafy.punpun.dto.response.StoreDistResponseDTO;
 import edu.ssafy.punpun.entity.*;
 import edu.ssafy.punpun.entity.enumurate.UserRole;
 import edu.ssafy.punpun.exception.NotStoreOwnerException;
@@ -183,6 +184,52 @@ public class StoreServiceImplTest {
 
         // then
         assertThat(results.size()).isEqualTo(2);
+    }
+
+    @Test
+    @DisplayName("현재 위치 기준 주변 가게 검색 - spark")
+    void getStoreDistance() {
+        // given
+        Store store1 = Store.builder()
+                .id(1L)
+                .name("스타벅스 구미 인동점")
+                .lon(128.420817)
+                .lat(36.106961)
+                .alwaysShare(true)
+                .build();
+        Store store2 = Store.builder()
+                .id(2L)
+                .name("카페 에이유")
+                .lon(128.420650)
+                .lat(36.107156)
+                .alwaysShare(true)
+                .build();
+        Menu menu1 = Menu.builder()
+                .id(1L)
+                .store(store1)
+                .build();
+        Menu menu2 = Menu.builder()
+                .id(2L)
+                .store(store2)
+                .build();
+
+        doReturn(Optional.of(store1)).when(storeRepository).findById(1L);
+        doReturn(Optional.of(store2)).when(storeRepository).findById(2L);
+        doReturn(List.of(menu1)).when(menuRepository).findByStore(store1);
+        doReturn(List.of(menu2)).when(menuRepository).findByStore(store2);
+
+        List<StoreDistResponseDTO> storeDistResponseDTOList = new ArrayList<>();
+        storeDistResponseDTOList.add(new StoreDistResponseDTO(store1.getId(), store1.getName(), store1.getLon(), store1.getLat(), store1.isAlwaysShare(), false));
+        storeDistResponseDTOList.add(new StoreDistResponseDTO(store2.getId(), store2.getName(), store2.getLon(), store2.getLat(), store2.isAlwaysShare(), true));
+
+        // when
+        Float longitude = 128.421046F;
+        Float latitude = 36.106795F;
+        List<StoreDistResponseDTO> results = storeService.getStoreDistance(longitude, latitude);
+
+        // then
+        assertThat(results.get(0).getStoreId()).isEqualTo(eq(1L));
+        assertThat(results.get(1).getStoreId()).isEqualTo(eq(2L));
     }
 
     @Test
