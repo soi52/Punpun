@@ -382,7 +382,6 @@ const StoreUpdateForm = () => {
           name="storeAlwaysShare"
           accept="image/*"
           checked={selectedStore?.storeAlwaysShare ? true : false}
-          readOnly
         />
       </CheckBoxBox>
       <CheckBoxTitle>결식 아동들이 항상 예약을 요청할 수 있어요.</CheckBoxTitle>
