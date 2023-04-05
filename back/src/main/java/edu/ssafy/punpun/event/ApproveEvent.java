@@ -5,10 +5,8 @@ import edu.ssafy.punpun.entity.enumurate.ReservationState;
 import lombok.*;
 
 @Getter
-@Setter
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
 public class ApproveEvent implements AlarmEvent {
     private EventType type;
     private String childName;

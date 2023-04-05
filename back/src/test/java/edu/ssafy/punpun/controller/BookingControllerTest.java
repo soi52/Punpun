@@ -195,7 +195,7 @@ class BookingControllerTest {
 
             PageRequest pageable = PageRequest.of(0, 10);
             Page<Reservation> result = new PageImpl<>(List.of(res1), pageable, 1);
-            doReturn(result).when(bookingService).findReservations(any(Child.class), any(LocalDateTime.class), eq(0));
+            doReturn(result).when(bookingService).findReservations(any(Child.class), isNull(), eq(0));
 
             Page<BookingChildResponseDTO> response = result
                     .map(BookingChildResponseDTO::entityToDto);
@@ -214,7 +214,7 @@ class BookingControllerTest {
         void findReservationChangePage() throws Exception {
             PageRequest pageable = PageRequest.of(1, 10);
             Page<Reservation> result = new PageImpl<>(List.of(), pageable, 0);
-            doReturn(result).when(bookingService).findReservations(any(Child.class), any(LocalDateTime.class), eq(1));
+            doReturn(result).when(bookingService).findReservations(any(Child.class), isNull(), eq(1));
 
             Page<BookingChildResponseDTO> response = result
                     .map(BookingChildResponseDTO::entityToDto);

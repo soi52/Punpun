@@ -9,27 +9,31 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Long> {
-    @EntityGraph(attributePaths = {"reviewKeywords.keyword"})
+    @EntityGraph(attributePaths = {"reviewKeywords.keyword","store"})
     @Query(value = "select r from Review r where r.child = ?1"
             , countQuery = "select count(r) from Review r where r.child = ?1")
     Page<Review> findAllByChild(Child child, Pageable pageable);
 
-    @EntityGraph(attributePaths = {"reviewKeywords.keyword"})
+    //TODO : pagenation에 문제가 있음
+    @EntityGraph(attributePaths = {"reviewKeywords.keyword","store"})
     @Query(value = "select r from Review r " +
             "inner join r.reservation res " +
             "inner join res.supportReservation sr " +
-            "inner join sr.support sup where sup.supporter = ?1",
+            "inner join sr.support sup " +
+            "where sup.supporter = :supporter",
             countQuery = "select count(r) from Review r " +
                     "inner join r.reservation res " +
                     "inner join res.supportReservation sr " +
-                    "inner join sr.support sup where sup.supporter = ?1")
-    Page<Review> findAllBySupporter(Member supporter, Pageable pageable);
+                    "inner join sr.support sup " +
+                    "where sup.supporter = :supporter")
+    Page<Review> findAllBySupporter(@Param("supporter") Member supporter, Pageable pageable);
 
-    @EntityGraph(attributePaths = {"reviewKeywords.keyword"})
+    @EntityGraph(attributePaths = {"reviewKeywords.keyword","store"})
     @Query(value = "select r from Review r where r.store = ?1")
     Page<Review> findAllByStore(Store store, Pageable pageable);
 }

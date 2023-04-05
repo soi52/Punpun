@@ -16,7 +16,7 @@ import javax.persistence.*;
 public class SupportReservation extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "support_review_id")
+    @Column(name = "support_reservation_id")
     private Long id;
     private SupportReservationState state;
     @ManyToOne(fetch = FetchType.LAZY)

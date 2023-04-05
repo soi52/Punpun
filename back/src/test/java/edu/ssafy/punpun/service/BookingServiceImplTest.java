@@ -192,6 +192,7 @@ class BookingServiceImplTest {
                 .build();
         Menu menu = Menu.builder()
                 .id(1L)
+                .sponsoredCount(1L)
                 .store(store1)
                 .build();
         Reservation reservation = Reservation.builder()

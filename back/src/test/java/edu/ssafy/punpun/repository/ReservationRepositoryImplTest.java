@@ -66,10 +66,10 @@ class ReservationRepositoryImplTest {
 
         @AfterEach
         void deleteAll() {
-            reservationRepository.deleteAll();
-            storeRepository.deleteAll();
-            menuRepository.deleteAll();
             childRepository.deleteAll();
+            menuRepository.deleteAll();
+            storeRepository.deleteAll();
+            reservationRepository.deleteAll();
         }
 
         @Test
@@ -178,10 +178,10 @@ class ReservationRepositoryImplTest {
 
         @AfterEach
         public void deleteAll() {
-            reservationRepository.deleteAll();
-            storeRepository.deleteAll();
-            menuRepository.deleteAll();
             childRepository.deleteAll();
+            menuRepository.deleteAll();
+            storeRepository.deleteAll();
+            reservationRepository.deleteAll();
         }
 
         @Test

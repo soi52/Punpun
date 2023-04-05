@@ -6,7 +6,6 @@ import lombok.*;
 @Getter
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
 public class ReservationEvent implements AlarmEvent {
     private EventType type;
     private String storeName;
