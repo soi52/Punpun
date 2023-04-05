@@ -167,6 +167,35 @@ public class StoreControllerTest {
                     .andDo(print());
         }
 
+        @Test
+        @WIthCustomSupporter
+        @DisplayName("Spark")
+        void getStoreDistanceTest3() throws Exception {
+            Store store1 = Store.builder()
+                    .name("스타벅스 구미 인동점")
+                    .lon(128.420817F)
+                    .lat(36.106961F)
+                    .build();
+            Store store2 = Store.builder()
+                    .name("카페 에이유")
+                    .lon(128.420650F)
+                    .lat(36.107156F)
+                    .build();
+            List<StoreDistResponseDTO> storeDistResponseDTOList = new ArrayList<>();
+            storeDistResponseDTOList.add(new StoreDistResponseDTO(store1, true));
+            storeDistResponseDTOList.add(new StoreDistResponseDTO(store2, false));
+            String output = new ObjectMapper().writeValueAsString(storeDistResponseDTOList);
+
+            doReturn(storeDistResponseDTOList).when(storeService).getStoreDistance(128.421046F, 36.106795F);
+
+            mockMvc.perform(get("/stores/dist/128.421046/36.106795")
+                            .with(csrf()))
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentType("application/json;charset=UTF-8"))
+                    .andExpect(content().string(output))
+                    .andDo(print());
+        }
+
     }
 
     @Test
