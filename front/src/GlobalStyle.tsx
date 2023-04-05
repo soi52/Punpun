@@ -9,7 +9,7 @@ const GlobalStyle = createGlobalStyle`
   body {
     font-family: "Helvetica", "Arial", sans-serif;
     line-height: 1.5;
-    background-color: #f0f0f0;
+    background-color: #F1F3F4;
     cursor: url(${Default});
 
   ::-webkit-scrollbar {

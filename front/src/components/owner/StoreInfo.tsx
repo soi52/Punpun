@@ -22,7 +22,7 @@ function StoreInfo() {
     } else {
       API.get(`stores/${selectedStore.storeId}`)
         .then((response: any) => {
-          console.log(response.data);
+          // console.log(response.data);
           setSelectedStore(response.data);
         })
         .catch((error: any) => {
@@ -41,7 +41,7 @@ function StoreInfo() {
     API.get(`supports/${selectedStore?.storeId}`, config)
       .then((response) => {
         setShareList(response.data.content);
-        console.log(response.data.content);
+        // console.log(response.data.content);
       })
       .catch((error) => {
         console.log(error);
