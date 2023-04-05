@@ -1,22 +1,31 @@
 package edu.ssafy.punpun.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
+import com.nimbusds.jose.shaded.json.JSONObject;
 import edu.ssafy.punpun.dto.request.StoreDetailRequestDTO;
 import edu.ssafy.punpun.dto.response.MenuChildResponseDTO;
+import edu.ssafy.punpun.dto.response.StoreDistResponseDTO;
 import edu.ssafy.punpun.entity.*;
 import edu.ssafy.punpun.entity.enumurate.UserRole;
 import edu.ssafy.punpun.exception.NotDeleteEntityException;
 import edu.ssafy.punpun.exception.NotStoreOwnerException;
+import edu.ssafy.punpun.exception.SearchStoreException;
 import edu.ssafy.punpun.repository.*;
 import edu.ssafy.punpun.s3.S3Uploader;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.transaction.Transactional;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -76,6 +85,30 @@ public class StoreServiceImpl implements StoreService {
         log.debug("[StoreService] getStoreDistanceJava 함수 실행 시간 : " + secDiffTime);
 
         return storeList;
+    }
+
+    @Override
+    public List<StoreDistResponseDTO> getStoreDistance(float lon, float lat) {
+        JsonArray storeJsons = getDistData(lon, lat);
+
+        List<StoreDistResponseDTO> storeDistResponseDTOList = new ArrayList<>();
+
+        for (int i = 0; i < storeJsons.size(); i++) {
+            Long id = storeJsons.get(i).getAsJsonArray().get(0).getAsLong();
+            Store store = storeRepository.findById(id)
+                    .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 가게입니다."));
+            List<Menu> menus = menuRepository.findByStore(store);
+            boolean isSupport = false;
+            for (Menu menu : menus) {
+                if (menu.getSponsoredCount() > 0) {
+                    isSupport = true;
+                    break;
+                }
+            }
+            storeDistResponseDTOList.add(new StoreDistResponseDTO(store, isSupport));
+        }
+
+        return storeDistResponseDTOList;
     }
 
     @Override
@@ -161,6 +194,41 @@ public class StoreServiceImpl implements StoreService {
             // 사장이 소유한 가게가 하나도 없다면, 후원자로 Role 변경
             member.changeRole(UserRole.SUPPORTER);
         }
+    }
+
+    private JsonArray getDistData(float lon, float lat) {
+
+        String url = "http://cluster.p.ssafy.io:8999/filter";
+
+        //Spring restTemplate
+        HashMap<String, Object> result = new HashMap<String, Object>();
+        RestTemplate restTemplate = new RestTemplate();
+
+        HttpHeaders header = new HttpHeaders();
+        header.setContentType(MediaType.APPLICATION_JSON);
+        JSONObject personJsonObject = new JSONObject();
+        personJsonObject.put("lon", lon);
+        personJsonObject.put("lat", lat);
+        HttpEntity<?> entity = new HttpEntity<>(personJsonObject.toString(), header);
+
+        UriComponents uri = UriComponentsBuilder.fromHttpUrl(url).build();
+
+        ResponseEntity<?> resultMap = restTemplate.exchange(uri.toString(), HttpMethod.POST, entity, Object.class);
+
+        result.put("statusCode", resultMap.getStatusCodeValue()); //http status code를 확인
+        result.put("header", resultMap.getHeaders()); //헤더 정보 확인
+        result.put("body", resultMap.getBody()); //실제 데이터 정보 확인
+
+        String jsonInString = "";
+        try {
+            jsonInString = new ObjectMapper().writeValueAsString(resultMap.getBody());
+        } catch (JsonProcessingException e) {
+            log.warn("[StoreService - getDistData] :" + e.getMessage());
+            throw new SearchStoreException("주변 가게 탐색 중 오류가 발생하였습니다.");
+        }
+        JsonArray jsonArray = JsonParser.parseString(jsonInString).getAsJsonArray();
+
+        return jsonArray;
     }
 
     private static double getDistance(double lat1, double lon1, double lat2, double lon2) {

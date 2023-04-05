@@ -73,6 +73,14 @@ public class StoreController {
         return storeInfoResponseDTOList;
     }
 
+    @ApiOperation(value = "현 위치 기준 주변 가게 불러오기")
+    @GetMapping("/dist/{lon}/{lat}")
+    @ResponseStatus(code = HttpStatus.OK)
+    public List<StoreDistResponseDTO> getStoreDistance(@PathVariable(name = "lon") float lon, @PathVariable(name = "lat") float lat) {
+
+        return storeService.getStoreDistance(lon, lat);
+    }
+
     @ApiOperation(value = "가게 검색 - 이름으로")
     @GetMapping("/search")
     @ResponseStatus(code = HttpStatus.OK)

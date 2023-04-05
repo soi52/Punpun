@@ -92,4 +92,15 @@ public class ExceptionHandleAdvice {
         return new ErrorDTO(e.getClass().getName(), e.getMessage());
     }
 
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(value = {SearchStoreException.class})
+    public ErrorDTO SearchStoreException(HttpServletRequest request, Exception e) {
+        String UUID = (String) request.getAttribute("uuid");
+        String uri = request.getRequestURI();
+        String method = request.getMethod();
+        log.error("[{}][{}][{}] error = {} message = {}", UUID, uri, method, e.getClass().getName(), e.getMessage());
+
+        return new ErrorDTO(e.getClass().getName(), e.getMessage());
+    }
+
 }
