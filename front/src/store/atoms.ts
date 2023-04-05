@@ -127,6 +127,7 @@ export interface Store {
   storeImageName: string | null;
   storeImage: string | null;
   storePhoneNumber: string | null;
+  // storeAlwaysShare: Boolean;
   menuDTO: MenuDTO[];
 }
 
