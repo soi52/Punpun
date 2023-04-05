@@ -38,7 +38,7 @@ public class BookingController {
     public Page<BookingChildResponseDTO> getBookings(@AuthenticationPrincipal PrincipalChildDetail childDetail,
                                                      @RequestParam(required = false, defaultValue = "0") int page,
                                                      @RequestParam(required = false) String localDateTime) {
-        LocalDateTime date = localDateTime == null ? LocalDateTime.now() : LocalDateTime.parse(localDateTime);
+        LocalDateTime date = localDateTime == null ? null : LocalDateTime.parse(localDateTime);
         return bookingService.findReservations(childDetail.getChild(), date, page)
                 .map(BookingChildResponseDTO::entityToDto);
     }
