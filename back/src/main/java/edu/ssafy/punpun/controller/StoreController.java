@@ -18,7 +18,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -53,6 +52,27 @@ public class StoreController {
         return new StoreDetailChildResponseDTO(store, menuChildResponseDTOList);
     }
 
+    @ApiOperation(value = "현 위치 기준 주변 가게 불러오기")
+    @GetMapping("/distTest/{lon}/{lat}")
+    @ResponseStatus(code = HttpStatus.OK)
+    public List<StoreInfoResponseDTO> getStoreDistanceTest(@PathVariable(name = "lon") float lon,
+                                                           @PathVariable(name = "lat") float lat,
+                                                           @RequestParam(name = "mode", required = false) String mode) {
+        List<StoreInfoResponseDTO> storeInfoResponseDTOList = null;
+        if (mode.equals("java")) {
+            storeInfoResponseDTOList = storeService.getStoreDistanceJava(lon, lat).stream()
+                    .map(store -> new StoreInfoResponseDTO(store))
+                    .collect(Collectors.toList());
+        }
+        if (mode.equals("postgres")) {
+            storeInfoResponseDTOList = storeService.getStoreDistancePostgres(lon, lat).stream()
+                    .map(store -> new StoreInfoResponseDTO(store))
+                    .collect(Collectors.toList());
+        }
+
+        return storeInfoResponseDTOList;
+    }
+
     @ApiOperation(value = "가게 검색 - 이름으로")
     @GetMapping("/search")
     @ResponseStatus(code = HttpStatus.OK)
@@ -82,16 +102,16 @@ public class StoreController {
     @PostMapping("/{storeId}")
     @ResponseStatus(code = HttpStatus.CREATED)
     // public void registerStore(@AuthenticationPrincipal PrincipalMemberDetail principalMemberDetail, @PathVariable ("storeId") Long storeId, @RequestParam("licenseNumber") MultipartFile image) {
-    public void registerStore(@AuthenticationPrincipal PrincipalMemberDetail principalMemberDetail, @PathVariable ("storeId") Long storeId) {
+    public void registerStore(@AuthenticationPrincipal PrincipalMemberDetail principalMemberDetail, @PathVariable("storeId") Long storeId) {
         Member member = principalMemberDetail.getMember();
         storeService.registerStore(storeId, member);
     }
 
     @ApiOperation(value = "가게 상세 정보 수정 - 사장 입장")
-    @RequestMapping(value = "/{storeId}" , method = RequestMethod.PUT , consumes = {MediaType.APPLICATION_JSON_VALUE , MediaType.MULTIPART_FORM_DATA_VALUE})
+    @RequestMapping(value = "/{storeId}", method = RequestMethod.PUT, consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     @ResponseStatus(code = HttpStatus.OK)
     public void updateStoreDetail(@AuthenticationPrincipal PrincipalMemberDetail principalMemberDetail,
-                                  @PathVariable ("storeId") Long storeId,
+                                  @PathVariable("storeId") Long storeId,
                                   @RequestPart("storeInfo") StoreDetailRequestDTO storeDetailRequestDTO,
                                   @RequestPart(name = "storeImage", required = false) MultipartFile image) {
         Member member = principalMemberDetail.getMember();
@@ -109,7 +129,7 @@ public class StoreController {
 
     @ApiOperation(value = "가게 메뉴 추가 - 사장 입장")
     @PostMapping("/menu")
-    @RequestMapping(value = "/menu" , method = RequestMethod.POST , consumes = {MediaType.APPLICATION_JSON_VALUE , MediaType.MULTIPART_FORM_DATA_VALUE})
+    @RequestMapping(value = "/menu", method = RequestMethod.POST, consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     @ResponseStatus(code = HttpStatus.CREATED)
     public void registerMenuDetail(@AuthenticationPrincipal PrincipalMemberDetail principalMemberDetail,
                                    @RequestPart("menuRegist") MenuRegisterRequestDTO menuRegisterRequestDTO,
@@ -124,10 +144,10 @@ public class StoreController {
     }
 
     @ApiOperation(value = "가게 메뉴 정보 수정 - 사장 입장")
-    @RequestMapping(value = "/menu/{menuId}" , method = RequestMethod.PUT , consumes = {MediaType.APPLICATION_JSON_VALUE , MediaType.MULTIPART_FORM_DATA_VALUE})
+    @RequestMapping(value = "/menu/{menuId}", method = RequestMethod.PUT, consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     @ResponseStatus(code = HttpStatus.OK)
     public void updateMenuDetail(@AuthenticationPrincipal PrincipalMemberDetail principalMemberDetail,
-                                 @PathVariable ("menuId") Long menuId,
+                                 @PathVariable("menuId") Long menuId,
                                  @RequestPart("menuUpdate") MenuUpdateRequestDTO menuUpdateRequestDTO,
                                  @RequestPart(name = "menuImage", required = false) MultipartFile image) {
         Member member = principalMemberDetail.getMember();
@@ -137,7 +157,7 @@ public class StoreController {
     @ApiOperation(value = "가게에 등록된 메뉴 삭제 - 사장 입장")
     @DeleteMapping("/menu/{menuId}")
     @ResponseStatus(code = HttpStatus.OK)
-    public void deleteMenu(@AuthenticationPrincipal PrincipalMemberDetail principalMemberDetail, @PathVariable ("menuId") Long menuId) {
+    public void deleteMenu(@AuthenticationPrincipal PrincipalMemberDetail principalMemberDetail, @PathVariable("menuId") Long menuId) {
         Member member = principalMemberDetail.getMember();
         menuService.deleteMenu(menuId, member);
     }

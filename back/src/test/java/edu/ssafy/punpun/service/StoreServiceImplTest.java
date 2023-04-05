@@ -127,6 +127,65 @@ public class StoreServiceImplTest {
     }
 
     @Test
+    @DisplayName("현재 위치 기준 주변 가게 검색 - 자바")
+    void getStoreDistanceJava() {
+        // given
+        Store store1 = Store.builder()
+                .name("스타벅스 구미 인동점")
+                .lon(128.420817)
+                .lat(36.106961)
+                .alwaysShare(true)
+                .build();
+        Store store2 = Store.builder()
+                .name("카페 에이유")
+                .lon(128.420650)
+                .lat(36.107156)
+                .build();
+        Store store3 = Store.builder()
+                .name("텐동 고마츠")
+                .lon(128.331800)
+                .lat(36.127264)
+                .build();
+        doReturn(List.of(store1, store2, store3)).when(storeRepository).findAll();
+
+        // when
+        double longitude = 128.421046;
+        double latitude = 36.106795;
+        List<Store> results = storeService.getStoreDistanceJava(longitude, latitude);
+
+        // then
+        assertThat(results.size()).isEqualTo(2);
+    }
+
+    @Test
+    @DisplayName("현재 위치 기준 주변 가게 검색 - postgres")
+    void getStoreDistancePostgres() {
+        // given
+        Store store1 = Store.builder()
+                .name("스타벅스 구미 인동점")
+                .lon(128.420817)
+                .lat(36.106961)
+                .alwaysShare(true)
+                .build();
+        Store store2 = Store.builder()
+                .name("카페 에이유")
+                .lon(128.420650)
+                .lat(36.107156)
+                .build();
+
+        Float longitude = 128.421046F;
+        Float latitude = 36.106795F;
+        Integer radius = 300;
+        doReturn(List.of(store1, store2)).when(storeRepository).findByEarthDistancePostgres(longitude, latitude, radius);
+
+        // when
+        List<Store> results = storeService.getStoreDistancePostgres(longitude, latitude);
+
+        // then
+        assertThat(results.size()).isEqualTo(2);
+    }
+
+    @Test
     @DisplayName("검색어(가게 이름)가 포함된 가게 찾기")
     void findByNameContaining() {
         // given

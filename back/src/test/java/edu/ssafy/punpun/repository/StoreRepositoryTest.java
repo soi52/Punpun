@@ -4,17 +4,21 @@ import edu.ssafy.punpun.entity.Image;
 import edu.ssafy.punpun.entity.Member;
 import edu.ssafy.punpun.entity.Store;
 import edu.ssafy.punpun.entity.enumurate.UserRole;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.List;
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.*;
+
 @DataJpaTest
+@AutoConfigureTestDatabase(replace = Replace.NONE)
 @DisplayName("가게 레포지토리 테스트")
 public class StoreRepositoryTest {
     @Autowired
@@ -53,17 +57,51 @@ public class StoreRepositoryTest {
         // when
         Optional<Store> result = storeRepository.findById(store1.getId());
         //then
-        Assertions.assertThat(result.get().getId()).isEqualTo(store1.getId());
-        Assertions.assertThat(result.get().getName()).isEqualTo(store1.getName());
-        Assertions.assertThat(result.get().getOpenTime()).isEqualTo(store1.getOpenTime());
-        Assertions.assertThat(result.get().getInfo()).isEqualTo(store1.getInfo());
-        Assertions.assertThat(result.get().getAddress()).isEqualTo(store1.getAddress());
-        Assertions.assertThat(result.get().getLon()).isEqualTo(store1.getLon());
-        Assertions.assertThat(result.get().getLat()).isEqualTo(store1.getLat());
-        Assertions.assertThat(result.get().getImage()).isEqualTo(store1.getImage());
-        Assertions.assertThat(result.get().isAlwaysShare()).isEqualTo(store1.isAlwaysShare());
-        Assertions.assertThat(result.get().isOpenState()).isEqualTo(store1.isOpenState());
+        assertThat(result.get().getId()).isEqualTo(store1.getId());
+        assertThat(result.get().getName()).isEqualTo(store1.getName());
+        assertThat(result.get().getOpenTime()).isEqualTo(store1.getOpenTime());
+        assertThat(result.get().getInfo()).isEqualTo(store1.getInfo());
+        assertThat(result.get().getAddress()).isEqualTo(store1.getAddress());
+        assertThat(result.get().getLon()).isEqualTo(store1.getLon());
+        assertThat(result.get().getLat()).isEqualTo(store1.getLat());
+        assertThat(result.get().getImage()).isEqualTo(store1.getImage());
+        assertThat(result.get().isAlwaysShare()).isEqualTo(store1.isAlwaysShare());
+        assertThat(result.get().isOpenState()).isEqualTo(store1.isOpenState());
     }
+
+//    @Test
+//    @DisplayName("Repository: test for Store Distance")
+//    void findByEarthDistancePostgres() {
+//        // given
+//        Store store1 = Store.builder()
+//                .name("스타벅스 구미 인동점")
+//                .lon(128.420817)
+//                .lat(36.106961)
+//                .alwaysShare(true)
+//                .build();
+//        Store store2 = Store.builder()
+//                .name("카페 에이유")
+//                .lon(128.420650)
+//                .lat(36.107156)
+//                .build();
+//        Store store3 = Store.builder()
+//                .name("텐동 고마츠")
+//                .lon(128.331800)
+//                .lat(36.127264)
+//                .build();
+//        storeRepository.save(store1);
+//        storeRepository.save(store2);
+//        storeRepository.save(store3);
+//
+//        // when
+//        Float longitude = 128.421046F;
+//        Float latitude = 36.106795F;
+//        Integer radius = 200;
+//        List<Store> results = storeRepository.findByEarthDistancePostgres(longitude, latitude, radius);
+//
+//        //then
+//        assertThat(results.size()).isEqualTo(2);
+//    }
 
     @Test
     @DisplayName("Repository: test for find Store Name Containing")
@@ -106,27 +144,27 @@ public class StoreRepositoryTest {
         // when
         List<Store> results = storeRepository.findByNameContaining("store");
         //then 1
-        Assertions.assertThat(results.get(0).getId()).isEqualTo(store1.getId());
-        Assertions.assertThat(results.get(0).getName()).isEqualTo(store1.getName());
-        Assertions.assertThat(results.get(0).getOpenTime()).isEqualTo(store1.getOpenTime());
-        Assertions.assertThat(results.get(0).getInfo()).isEqualTo(store1.getInfo());
-        Assertions.assertThat(results.get(0).getAddress()).isEqualTo(store1.getAddress());
-        Assertions.assertThat(results.get(0).getLon()).isEqualTo(store1.getLon());
-        Assertions.assertThat(results.get(0).getLat()).isEqualTo(store1.getLat());
-        Assertions.assertThat(results.get(0).getImage()).isEqualTo(store1.getImage());
-        Assertions.assertThat(results.get(0).isAlwaysShare()).isEqualTo(store1.isAlwaysShare());
-        Assertions.assertThat(results.get(0).isOpenState()).isEqualTo(store1.isOpenState());
+        assertThat(results.get(0).getId()).isEqualTo(store1.getId());
+        assertThat(results.get(0).getName()).isEqualTo(store1.getName());
+        assertThat(results.get(0).getOpenTime()).isEqualTo(store1.getOpenTime());
+        assertThat(results.get(0).getInfo()).isEqualTo(store1.getInfo());
+        assertThat(results.get(0).getAddress()).isEqualTo(store1.getAddress());
+        assertThat(results.get(0).getLon()).isEqualTo(store1.getLon());
+        assertThat(results.get(0).getLat()).isEqualTo(store1.getLat());
+        assertThat(results.get(0).getImage()).isEqualTo(store1.getImage());
+        assertThat(results.get(0).isAlwaysShare()).isEqualTo(store1.isAlwaysShare());
+        assertThat(results.get(0).isOpenState()).isEqualTo(store1.isOpenState());
         //then 2
-        Assertions.assertThat(results.get(1).getId()).isEqualTo(store2.getId());
-        Assertions.assertThat(results.get(1).getName()).isEqualTo(store2.getName());
-        Assertions.assertThat(results.get(1).getOpenTime()).isEqualTo(store2.getOpenTime());
-        Assertions.assertThat(results.get(1).getInfo()).isEqualTo(store2.getInfo());
-        Assertions.assertThat(results.get(1).getAddress()).isEqualTo(store2.getAddress());
-        Assertions.assertThat(results.get(1).getLon()).isEqualTo(store2.getLon());
-        Assertions.assertThat(results.get(1).getLat()).isEqualTo(store2.getLat());
-        Assertions.assertThat(results.get(1).getImage()).isEqualTo(store2.getImage());
-        Assertions.assertThat(results.get(1).isAlwaysShare()).isEqualTo(store2.isAlwaysShare());
-        Assertions.assertThat(results.get(1).isOpenState()).isEqualTo(store2.isOpenState());
+        assertThat(results.get(1).getId()).isEqualTo(store2.getId());
+        assertThat(results.get(1).getName()).isEqualTo(store2.getName());
+        assertThat(results.get(1).getOpenTime()).isEqualTo(store2.getOpenTime());
+        assertThat(results.get(1).getInfo()).isEqualTo(store2.getInfo());
+        assertThat(results.get(1).getAddress()).isEqualTo(store2.getAddress());
+        assertThat(results.get(1).getLon()).isEqualTo(store2.getLon());
+        assertThat(results.get(1).getLat()).isEqualTo(store2.getLat());
+        assertThat(results.get(1).getImage()).isEqualTo(store2.getImage());
+        assertThat(results.get(1).isAlwaysShare()).isEqualTo(store2.isAlwaysShare());
+        assertThat(results.get(1).isOpenState()).isEqualTo(store2.isOpenState());
     }
 
     @Test
@@ -169,27 +207,27 @@ public class StoreRepositoryTest {
         // when
         List<Store> results = storeRepository.findByOwner(member);
         //then 1
-        Assertions.assertThat(results.get(0).getId()).isEqualTo(store1.getId());
-        Assertions.assertThat(results.get(0).getName()).isEqualTo(store1.getName());
-        Assertions.assertThat(results.get(0).getOpenTime()).isEqualTo(store1.getOpenTime());
-        Assertions.assertThat(results.get(0).getInfo()).isEqualTo(store1.getInfo());
-        Assertions.assertThat(results.get(0).getAddress()).isEqualTo(store1.getAddress());
-        Assertions.assertThat(results.get(0).getLon()).isEqualTo(store1.getLon());
-        Assertions.assertThat(results.get(0).getLat()).isEqualTo(store1.getLat());
-        Assertions.assertThat(results.get(0).getImage()).isEqualTo(store1.getImage());
-        Assertions.assertThat(results.get(0).isAlwaysShare()).isEqualTo(store1.isAlwaysShare());
-        Assertions.assertThat(results.get(0).isOpenState()).isEqualTo(store1.isOpenState());
+        assertThat(results.get(0).getId()).isEqualTo(store1.getId());
+        assertThat(results.get(0).getName()).isEqualTo(store1.getName());
+        assertThat(results.get(0).getOpenTime()).isEqualTo(store1.getOpenTime());
+        assertThat(results.get(0).getInfo()).isEqualTo(store1.getInfo());
+        assertThat(results.get(0).getAddress()).isEqualTo(store1.getAddress());
+        assertThat(results.get(0).getLon()).isEqualTo(store1.getLon());
+        assertThat(results.get(0).getLat()).isEqualTo(store1.getLat());
+        assertThat(results.get(0).getImage()).isEqualTo(store1.getImage());
+        assertThat(results.get(0).isAlwaysShare()).isEqualTo(store1.isAlwaysShare());
+        assertThat(results.get(0).isOpenState()).isEqualTo(store1.isOpenState());
         //then 2
-        Assertions.assertThat(results.get(1).getId()).isEqualTo(store2.getId());
-        Assertions.assertThat(results.get(1).getName()).isEqualTo(store2.getName());
-        Assertions.assertThat(results.get(1).getOpenTime()).isEqualTo(store2.getOpenTime());
-        Assertions.assertThat(results.get(1).getInfo()).isEqualTo(store2.getInfo());
-        Assertions.assertThat(results.get(1).getAddress()).isEqualTo(store2.getAddress());
-        Assertions.assertThat(results.get(1).getLon()).isEqualTo(store2.getLon());
-        Assertions.assertThat(results.get(1).getLat()).isEqualTo(store2.getLat());
-        Assertions.assertThat(results.get(1).getImage()).isEqualTo(store2.getImage());
-        Assertions.assertThat(results.get(1).isAlwaysShare()).isEqualTo(store2.isAlwaysShare());
-        Assertions.assertThat(results.get(1).isOpenState()).isEqualTo(store2.isOpenState());
+        assertThat(results.get(1).getId()).isEqualTo(store2.getId());
+        assertThat(results.get(1).getName()).isEqualTo(store2.getName());
+        assertThat(results.get(1).getOpenTime()).isEqualTo(store2.getOpenTime());
+        assertThat(results.get(1).getInfo()).isEqualTo(store2.getInfo());
+        assertThat(results.get(1).getAddress()).isEqualTo(store2.getAddress());
+        assertThat(results.get(1).getLon()).isEqualTo(store2.getLon());
+        assertThat(results.get(1).getLat()).isEqualTo(store2.getLat());
+        assertThat(results.get(1).getImage()).isEqualTo(store2.getImage());
+        assertThat(results.get(1).isAlwaysShare()).isEqualTo(store2.isAlwaysShare());
+        assertThat(results.get(1).isOpenState()).isEqualTo(store2.isOpenState());
     }
 
 }
