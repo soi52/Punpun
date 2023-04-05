@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+import Default from './resources/images/default.png';
 
 const GlobalStyle = createGlobalStyle`
   *, *::before, *::after {
@@ -8,8 +9,8 @@ const GlobalStyle = createGlobalStyle`
   body {
     font-family: "Helvetica", "Arial", sans-serif;
     line-height: 1.5;
-    background-color: #F1F3F4;
-  }
+    background-color: #f0f0f0;
+    cursor: url(${Default});
 
   ::-webkit-scrollbar {
     width: 9px;  /* 스크롤바의 너비 */

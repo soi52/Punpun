@@ -50,6 +50,7 @@ const Button = styled.button`
   border-radius: 25px;
   border: none;
   background-color: #5D5A88;
+  cursor: pointer;
 `;
 
 const MessageButtonDiv = styled.div`
@@ -61,14 +62,15 @@ const MessageButtonDiv = styled.div`
 
 const BtnDiv = styled.div<{ selected: boolean }>`
   display: inline-block;
-  background-color: ${(props) => (props.selected ? '#f1c40f' : '#fff')};
-  color: ${(props) => (props.selected ? '#fff' : '#f1c40f')};
+  background-color: ${(props) => (props.selected ? '#5D5A88' : '#fff')};
+  color: ${(props) => (props.selected ? '#fff' : '#5D5A88')};
   font-size: 14px;
   padding: 5px 10px;
-  border: 1px solid #f1c40f;
+  border: 1px solid #5D5A88;
   border-radius: 20px;
   margin-right: 10px;
   margin-bottom: 10px;
+  cursor: pointer;
 `;
 
 
