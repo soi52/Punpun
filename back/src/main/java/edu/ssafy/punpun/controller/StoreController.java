@@ -29,8 +29,6 @@ public class StoreController {
     private final StoreService storeService;
     private final MenuService menuService;
 
-    private static final int SIZE_PER_PAGE = 10;
-
     @ApiOperation(value = "가게 상세 정보 보기 - 사장, 후원자 입장")
     @GetMapping("/{storeId}")
     @ResponseStatus(code = HttpStatus.OK)
