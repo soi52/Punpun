@@ -11,7 +11,7 @@ import {
 import { useEffect } from 'react';
 import API from '../../store/API';
 import useGeolocation from '../../common/UseGeolocation';
-import profileImg from '../../resources/images/profileDefault.png';
+import DefaultStoreImage from '../../resources/images/profileDefault.png';
 
 const ProfileBox = styled.div`
   display: flex;
@@ -29,7 +29,6 @@ const ImgBox = styled.div`
   // border-image: linear-gradient(to right, #84fab0 0%, #8fd3f4 51%, #84fab0 100%);
   // border-image-slice: 1;
   &:hover {
-    
   }
 `;
 
@@ -45,6 +44,14 @@ const ProImg = styled.div<ProImgProps>`
   background-size: 100%;
 `;
 
+const UserImage = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-right: 20px;
+`;
+
 const InfoBox = styled.div`
   text-align: center;
   margin-top: 10px;
@@ -58,8 +65,8 @@ function Profile() {
   const selectedStore = useRecoilValue(selectedStoreState);
   const isOwner = useRecoilValue(isOwnerState);
   const profileImage = isOwner
-    ? selectedStore?.storeImage || profileImg
-    : profileImg;
+    ? selectedStore?.storeImage || DefaultStoreImage
+    : userInfo.userProfileImage;
 
   const role = localStorage.getItem('role');
 

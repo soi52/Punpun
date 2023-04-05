@@ -4,7 +4,6 @@ import Loading from '../../ui/Loading';
 import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
 import { userInfoState } from '../../../store/atoms';
-import defaultUserImage from '../../../resources/images/profileDefault.png';
 
 const Review = styled.div`
   display: flex;
@@ -98,13 +97,6 @@ export type Review = {
   childName: string;
   childProfileUrl: string;
 };
-
-const UserImage = styled.img`
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  margin-right: 20px;
-`;
 
 const ThanksMessageList = () => {
   const [userInfo] = useRecoilState(userInfoState);
