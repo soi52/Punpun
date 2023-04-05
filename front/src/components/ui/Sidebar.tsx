@@ -18,6 +18,7 @@ const SidebarStyle = styled.div`
   display: block;
   flex-direction: column;
   align-items: center;
+  text-align: center;
 `;
 
 const ProfileDiv = styled.div`
@@ -37,13 +38,26 @@ const HrDIv2 = styled.hr`
 `;
 
 const RegisterButton = styled.button`
+  margin-top: 60px;
+  width: 10rem;
+  background-color: #e7e6f2;
+  line-height: 0;
   font-size: 13px;
-  color: #fff;
-  background-color: #5d5a88;
+  font-weight: bold;
+  box-sizing: border-box;
+  padding: 15px 10px;
   border-radius: 15px;
-  padding: 8px 16px;
-  cursor: pointer;
-  margin-left: auto;
+  border: none;
+  color: black;
+  letter-spacing: 0.01em;
+  position: relative;
+  transition: all 0.25s cubic-bezier(0.53, 0.01, 0.35, 1.5);
+
+  &:hover,
+  &:focus {
+    color: white;
+    background-color: rgba(140, 150, 181, 1);
+  }
 `;
 
 interface SidebarProps {
