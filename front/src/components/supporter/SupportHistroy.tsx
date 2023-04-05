@@ -10,7 +10,7 @@ const Wrapper = styled.div`
 const Table = styled.table`
   width: 100%;
   border-collapse: collapse;
-  box-shadow: 0px 3px 3px #ccc;
+  // box-shadow: 0px 3px 3px #ccc;
   margin-top: 30px;
 `;
 

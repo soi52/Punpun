@@ -31,7 +31,18 @@ type Booking = {
 const ChUserMain = () => {
   const [bookings, setBookings] = useState<Booking[]>([]);
   useEffect(() => {
-    API.get('bookings/child')
+    const now = new Date();
+    const todayStart = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate(),
+      23,
+      59,
+      59
+    );
+    const todayStartString = todayStart.toISOString().slice(0, 19);
+
+    API.get(`bookings/child?localDateTime=${todayStartString}`)
       .then((response) => {
         // console.log("Today's bookings:", response.data.content);
         setBookings(response.data.content);
@@ -42,7 +53,6 @@ const ChUserMain = () => {
   }, []);
 
   console.log(bookings);
-  
 
   const filteredBookings = bookings.filter((booking) => {
     const reservationTime = new Date(booking.reservationTime);

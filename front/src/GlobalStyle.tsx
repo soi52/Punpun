@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+import Default from './resources/images/default.png';
 
 const GlobalStyle = createGlobalStyle`
   *, *::before, *::after {
@@ -9,6 +10,7 @@ const GlobalStyle = createGlobalStyle`
     font-family: "Helvetica", "Arial", sans-serif;
     line-height: 1.5;
     background-color: #f0f0f0;
+    cursor: url(${Default});
   }
 
   ::-webkit-scrollbar {
