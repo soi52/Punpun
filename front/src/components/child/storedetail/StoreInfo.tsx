@@ -16,6 +16,10 @@ const ContentDiv = styled.div`
   display: flex;
 `;
 
+const Wrapper = styled.div`
+  padding: 20px;
+`;
+
 type MenuDTO = {
   menuId: number;
   menuName: string;
@@ -61,7 +65,7 @@ const StoreInfo = () => {
   }
 
   return (
-    <>
+    <Wrapper>
       <StoreBanner storeName={stores.storeName} />
       <ComponentStyle>
         <h2>가게 정보</h2>
@@ -80,7 +84,7 @@ const StoreInfo = () => {
           />
         </ContentDiv>
       </ComponentStyle>
-    </>
+    </Wrapper>
   );
 };
 

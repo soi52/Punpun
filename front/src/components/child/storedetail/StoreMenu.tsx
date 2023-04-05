@@ -27,6 +27,7 @@ type ChMenuDTO = {
   favoriteMenu: boolean;
   menuImage: string | null;
   menuImageName: string | null;
+  menuSponsoredCount: number;
 };
 
 type Props = {
@@ -69,7 +70,7 @@ const StoreMenu = ({ myStoreId }: Props) => {
   }, [myStoreId, selectedStore]);
 
   return (
-    <Wrapper>
+    <Wrapper id="wrapper">
       <StoreBanner storeName={storeName} />
       {role === 'CHILD' ? (
         <ChMenuList chMenuList={chMenuDTOList} />
