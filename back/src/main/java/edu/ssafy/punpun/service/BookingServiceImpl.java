@@ -2,6 +2,7 @@ package edu.ssafy.punpun.service;
 
 import edu.ssafy.punpun.dto.ApproveState;
 import edu.ssafy.punpun.dto.BookingStoreSearchParamDTO;
+import edu.ssafy.punpun.entity.enumurate.SupportType;
 import edu.ssafy.punpun.event.EventType;
 import edu.ssafy.punpun.entity.*;
 import edu.ssafy.punpun.entity.enumurate.ReservationState;
@@ -17,6 +18,8 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -33,10 +36,17 @@ public class BookingServiceImpl implements BookingService {
     public Reservation reservation(Child child, Long menuId, LocalDateTime reservationTime) {
         Menu menu = menuRepository.findById(menuId)
                 .orElseThrow(() -> new IllegalArgumentException("없는 메뉴입니다."));
-        Support support = supportRepository.findAllByMenu(menu).stream()
+        List<Support> supports = supportRepository.findAllByMenu(menu);
+        //SHARE 먼저 검색
+        Support support = supports.stream()
+                .filter(each -> each.getSupportType() == SupportType.SHARE)
                 .filter(each -> each.getSupportState() == SupportState.SUPPORT)
                 .findFirst()
-                .orElseThrow(() -> new AlreadyEndException("이미 모두 예약되었습니다."));
+                .orElseGet(() -> supports.stream()
+                        .filter(each -> each.getSupportState() == SupportState.SUPPORT)
+                        .findFirst()
+                        .orElseThrow(() -> new AlreadyEndException("이미 모두 예약되었습니다.")));
+
         Reservation reservation = Reservation.builder()
                 .reservationTime(reservationTime)
                 .state(ReservationState.BOOKING)
