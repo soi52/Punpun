@@ -3,22 +3,33 @@ import styled from 'styled-components';
 const List = styled.ul`
   position: absolute;
   list-style: none;
+  top: 100%;
   padding: 0;
   margin: 0;
   background-color: white;
-  border-radius: 5px;
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+  border-radius: 1rem;
+  box-shadow: 1px 0px 5px 2px rgba(0, 0, 0, 0.1);
   z-index: 1;
-  padding: 10px;
+  pointer: cursor;
 `;
 
 const Item = styled.li`
-  cursor: pointer;
-  list-style: none;
+  display: block;
+  padding: 0.4rem 1.5rem;
+  clear: both;
+  font-weight: 400;
+  color: #212529;
+  text-align: inherit;
+  white-space: nowrap;
+  background-color: transparent;
+  border-radius: 0.4rem;
+  transition: all 200ms linear;
 
-  &:hover {
-    color: white;
-    background-color: #3f51b5;
+  &:hover,
+  &:focus {
+    color: #fff;
+    background-color: #5d5a88;
+    border-radius: 0.4rem;
   }
 `;
 

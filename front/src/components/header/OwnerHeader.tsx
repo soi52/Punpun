@@ -38,33 +38,53 @@ const NavLi = styled.li`
 `;
 
 const StoreDropdown = styled.ul<{ show: boolean }>`
-  display: none;
   position: absolute;
-  //left: 75%;
-  //transform: translateX(-50%);
-  width: 200px;
-  background-color: white;
-  border-radius: 5px;
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+  top: 100%;
+  left: 0;
   z-index: 1;
-  padding: 10px;
-
-  ${({ show }) =>
-    show &&
-    `
-    display: block;
-  `}
+  display: none;
+  min-width: 10rem;
+  padding: 0.5rem 0;
+  margin: 0.125rem 0 0;
+  font-size: 1rem;
+  color: #212529;
+  text-align: left;
+  list-style: none;
+  background-color: #fff;
+  background-clip: padding-box;
+  box-shadow: 1px 0px 5px 2px rgba(0, 0, 0, 0.1);
+  border-radius: 0.75rem;
+  display: block;
 `;
 
 const StoreDropdownItem = styled.li`
-  cursor: pointer;
-  list-style: none;
+  display: block;
+  padding: 0.25rem 1.5rem;
+  clear: both;
+  font-weight: 400;
+  color: #212529;
+  text-align: inherit;
+  white-space: nowrap;
+  background-color: transparent;
+  border-radius: 0.4rem;
+  transition: all 200ms linear;
 
-  &:hover {
-    color: white;
-    background-color: #3f51b5;
+  &:hover,
+  &:focus {
+    color: #fff;
+    background-color: #5d5a88;
+    border-radius: 0.4rem;
   }
 `;
+
+interface OwnerHeaderProps {
+  toOwStore: () => void;
+  onLogout: () => void;
+  onSelect: (item: string) => void;
+  items: string[];
+  selectedItem: string | undefined;
+  role: string;
+}
 
 interface OwnerHeaderProps {
   toOwStore: () => void;
@@ -105,7 +125,11 @@ function OwnerHeader(props: OwnerHeaderProps) {
 
   return (
     <NavUl>
-      <NavLi onClick={() => setStoreDrop(!storeDrop)}>
+      <NavLi
+        onClick={() => setStoreDrop(!storeDrop)}
+        onMouseEnter={() => setStoreDrop(true)}
+        onMouseLeave={() => setStoreDrop(false)}
+      >
         {selectedStore?.storeName ?? '가게 선택'}
         {storeDrop && (
           <StoreDropdown show={storeDrop}>
@@ -117,6 +141,7 @@ function OwnerHeader(props: OwnerHeaderProps) {
                 {store.storeName}
               </StoreDropdownItem>
             ))}
+            <hr />
             <StoreDropdownItem onClick={() => navigate('/owstorelist')}>
               전체 가게 관리
             </StoreDropdownItem>
