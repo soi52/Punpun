@@ -1,8 +1,5 @@
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-
-// import useGeolocation from '../../../common/UseGeolocation';
-
 import { useEffect, useState } from 'react';
 import API from '../../store/API';
 import Loading from './Loading';
@@ -11,6 +8,7 @@ import Map from '../../common/Map';
 import StoreHour from '../child/storedetail/Storehours';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import {
+  Store,
   isOwnerState,
   isUpdatedState,
   selectedStoreState,
@@ -29,27 +27,6 @@ const ContentDiv = styled.div`
 const Wrapper = styled.div`
   padding: 20px;
 `;
-
-type MenuDTO = {
-  menuId: number;
-  menuName: string;
-  menuPrice: number;
-  menuCount: number;
-};
-
-type Store = {
-  storeId: number;
-  storeName: string;
-  storeOpenTime: string | null;
-  storeInfo: string | null;
-  storeAddress: string;
-  storeLon: number;
-  storeLat: number;
-  storeImageName: string | null;
-  storeImage: string | null;
-  storePhoneNumber: string | null;
-  menuDTOList: MenuDTO[];
-};
 
 const StoreDetailInfo = () => {
   const { storeId: myStoreId } = useParams<{ storeId: string }>();
@@ -91,6 +68,7 @@ const StoreDetailInfo = () => {
             storeInfo={stores.storeInfo}
             storeOpenTime={stores.storeOpenTime}
             storePhoneNumber={stores.storePhoneNumber}
+            storeAlwaysShare={stores.storeAlwaysShare}
           />
           <Map
             latitude={stores.storeLat}

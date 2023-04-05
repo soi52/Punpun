@@ -5,6 +5,7 @@ type StoreHourProps = {
   storeInfo: string | null;
   storeOpenTime: string | null;
   storePhoneNumber: string | null;
+  storeAlwaysShare: Boolean;
 };
 
 const StoreInfo = styled.div`
@@ -28,6 +29,7 @@ const StoreHour = ({
   storeInfo,
   storeOpenTime,
   storePhoneNumber,
+  storeAlwaysShare,
 }: StoreHourProps) => {
   return (
     <StoreInfo>
@@ -39,6 +41,8 @@ const StoreHour = ({
       <Info>{storeOpenTime ? storeOpenTime : '준비 중 입니다'}</Info>
       <Label>전화번호</Label>
       <Info>{storePhoneNumber ? storePhoneNumber : '준비 중 입니다'}</Info>
+      <Info>{storePhoneNumber ? storePhoneNumber : '준비 중 입니다'}</Info>
+      <Label>{storeAlwaysShare ? '항상 후원하는 가게입니다.' : null}</Label>
     </StoreInfo>
   );
 };

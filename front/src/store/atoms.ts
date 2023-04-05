@@ -127,18 +127,8 @@ export interface Store {
   storeImageName: string | null;
   storeImage: string | null;
   storePhoneNumber: string | null;
-  // storeAlwaysShare: Boolean;
-  menuDTO: MenuDTO[];
-}
-
-export interface OwStoreUpdate {
-  storeId: number;
-  storeName: string;
-  storeOpenTime: string | null;
-  storeInfo: string | null;
-  storeAddress: string;
-  storePhoneNumber: string | null;
   storeAlwaysShare: Boolean;
+  menuDTO: MenuDTO[];
 }
 
 export type MenuDTO = {
@@ -149,6 +139,16 @@ export type MenuDTO = {
   menuImage: string;
   menuImageName: string;
 };
+
+export interface OwStoreUpdate {
+  storeId: number;
+  storeName: string;
+  storeOpenTime: string | null;
+  storeInfo: string | null;
+  storeAddress: string;
+  storePhoneNumber: string | null;
+  storeAlwaysShare: Boolean;
+}
 
 export const owStoreState = atom<Store[]>({
   key: 'owStoreState',

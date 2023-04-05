@@ -49,6 +49,7 @@ const DeleteButton = styled.button`
 `;
 
 function StoreListItem({ stores, onDelete }: StoreItemProps) {
+  console.log(stores);
   const navigate = useNavigate();
   const setSelectedStore = useSetRecoilState(selectedStoreState); // 새로 추가된 코드
 
@@ -69,7 +70,11 @@ function StoreListItem({ stores, onDelete }: StoreItemProps) {
         <StoreInfo>{store.storeInfo}</StoreInfo>
         <StoreText>
           항상 나눔
-          <input type="checkbox" />
+          <input
+            type="checkbox"
+            checked={store.storeAlwaysShare ? true : false}
+            readOnly
+          />
         </StoreText>
       </div>
       <div>
