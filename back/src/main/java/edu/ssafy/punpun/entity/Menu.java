@@ -44,5 +44,7 @@ public class Menu extends BaseEntity {
     public void support(Long menuCount) {
         this.sponsoredCount+=menuCount;
     }
-
+    public void reservationApprove(){
+        this.sponsoredCount--;
+    }
 }
