@@ -222,7 +222,6 @@ const StoreUpdateForm = () => {
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedImage = event.target.files?.[0];
-    console.log('왜안떠!!!!!!!!!!!!!!!!!');
     if (selectedImage && selectedImage.type.startsWith('image/')) {
       const reader = new FileReader();
       reader.onload = (event) => {

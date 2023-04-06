@@ -89,7 +89,7 @@ const SelectedMenuList: React.FC<SelectedMenuListProps> = ({
       (acc, menu) => {
         acc.menuId.push(menu.id);
         acc.menuCount.push(menu.quantity);
-        acc.usePoint += menu.quantity * menu.price;
+        acc.usePoint = 0;
         return acc;
       },
       { menuId: [], menuCount: [], usePoint: 0 }
