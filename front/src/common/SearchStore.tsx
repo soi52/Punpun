@@ -47,26 +47,28 @@ const SearchStore = ({ message }: SearchStoreProps) => {
   const [isUpdated, setIsUpdated] = useRecoilState(isUpdatedState);
   const [searchStoreList, setSearchStoreList] = useState([]);
 
+  useEffect(() => {
+    setIsRegister(false);
+  }, []);
+
   const location = useGeolocation();
   console.log(location);
   const { latitude = 0, longitude = 0 } =
     typeof location === 'object' ? location : {};
 
   useEffect(() => {
-    setIsRegister(false);
-    setIsUpdated(!isUpdated);
-  }, []);
-
-  useEffect(() => {
-    API.get(`stores/dist/${longitude}/${latitude}`)
-      .then((response: any) => {
-        console.log(response.data);
-        setSearchStoreList(response.data);
-      })
-      .catch((error: any) => {
-        console.error(error);
-      });
-  }, [latitude, longitude, isUpdated]);
+    if (longitude !== 0 || latitude !== 0) {
+      API.get(`stores/dist/${longitude}/${latitude}`)
+        .then((response: any) => {
+          console.log(response.data);
+          setSearchStoreList(response.data);
+          setIsUpdated((prev) => !prev);
+        })
+        .catch((error: any) => {
+          console.error(error);
+        });
+    }
+  }, [latitude, longitude, setIsUpdated]);
 
   return (
     <Wrapper>
@@ -74,11 +76,16 @@ const SearchStore = ({ message }: SearchStoreProps) => {
       <h3>{message}</h3>
       <ContentDiv>
         <MapDiv>
-          <Map latitude={latitude} longitude={longitude} stores={StoreData} />
+          <Map
+            latitude={latitude}
+            longitude={longitude}
+            stores={searchStoreList}
+          />
         </MapDiv>
         <SearchStoreList stores={searchStoreList} />
       </ContentDiv>
     </Wrapper>
   );
 };
+
 export default SearchStore;
