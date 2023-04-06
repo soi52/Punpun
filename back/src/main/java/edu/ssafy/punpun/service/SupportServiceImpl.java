@@ -68,7 +68,7 @@ public class SupportServiceImpl implements SupportService{
         }
 
         // supporter use point
-        if(supporter.getRemainPoint() < supportRequestDTO.getUsePoint()){
+        if(supportRequestDTO.getUsePoint()!=0 && supporter.getRemainPoint() < supportRequestDTO.getUsePoint()){
             throw new PointLackException("포인트가 부족합니다.");
         }
         supporter.support(supportRequestDTO.getUsePoint());
