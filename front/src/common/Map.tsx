@@ -31,6 +31,7 @@ const Map = ({ latitude, longitude, stores }: MapProps) => {
   const mapRef = useRef<kakao.maps.Map | null>(null);
   const [currentLocationMarker, setCurrentLocationMarker] =
     useState<kakao.maps.Marker | null>(null);
+  const storeMarkers = useRef<kakao.maps.Marker[]>([]);
 
   const initMap = () => {
     if (latitude && longitude && mapRef.current === null) {
@@ -54,18 +55,6 @@ const Map = ({ latitude, longitude, stores }: MapProps) => {
 
       setCurrentLocationMarker(marker);
 
-      // 각 가게들의 위치에 마커를 찍는 로직 추가
-      stores.forEach((store) => {
-        const markerPosition = new kakao.maps.LatLng(
-          store.storeLat,
-          store.storeLon
-        );
-        const marker = new kakao.maps.Marker({
-          position: markerPosition,
-        });
-        marker.setMap(map);
-      });
-
       mapRef.current = map;
     } else if (latitude && longitude && mapRef.current !== null) {
       const center = new kakao.maps.LatLng(latitude, longitude);
@@ -79,13 +68,32 @@ const Map = ({ latitude, longitude, stores }: MapProps) => {
         currentLocationMarker.setPosition(currentLocationPosition);
       }
     }
+
+    // 각 가게들의 위치에 마커를 찍는 로직 추가
+    stores.forEach((store, index) => {
+      if (!storeMarkers.current[index]) {
+        const markerPosition = new kakao.maps.LatLng(
+          store.storeLat,
+          store.storeLon
+        );
+        const marker = new kakao.maps.Marker({
+          position: markerPosition,
+        });
+        marker.setMap(mapRef.current);
+        storeMarkers.current[index] = marker;
+      } else {
+        storeMarkers.current[index].setPosition(
+          new kakao.maps.LatLng(store.storeLat, store.storeLon)
+        );
+      }
+    });
   };
 
   useEffect(() => {
     if (latitude && longitude) {
       kakao.maps.load(() => initMap());
     }
-  }, [latitude, longitude, selectedStoreState]);
+  }, [latitude, longitude, stores]);
 
   return (
     <Div id="map">
