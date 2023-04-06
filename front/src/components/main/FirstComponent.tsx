@@ -42,9 +42,9 @@ function FirstComponent() {
     <ComponentStyle>
       <ContentDivStyle>
         <Fade duration={1500} direction={'left'}>
-          <TitleStyle>아이들이 행복한 세상을 만듭시다.</TitleStyle>
-          <TitleStyle>어쩌고 저쩌고 ~~~~~~~~~~</TitleStyle>
-          <TitleStyle>어쩌고 저쩌고 ~~~~~~~~~~</TitleStyle>
+          <TitleStyle>아이들이 행복 한 세상</TitleStyle>
+          <TitleStyle>PUNPUN과 함께</TitleStyle>
+          <TitleStyle>만들어가요</TitleStyle>
         </Fade>
       </ContentDivStyle>
       {/* <Fade duration={1500} direction={'right'}> */}
