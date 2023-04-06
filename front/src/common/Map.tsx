@@ -70,25 +70,28 @@ const Map = ({ latitude, longitude, stores }: MapProps) => {
     }
 
     // 각 가게들의 위치에 마커를 찍는 로직 추가
-    stores.forEach((store, index) => {
-      if (!storeMarkers.current[index]) {
-        const markerPosition = new kakao.maps.LatLng(
-          store.storeLat,
-          store.storeLon
-        );
-        const marker = new kakao.maps.Marker({
-          position: markerPosition,
-        });
-        marker.setMap(mapRef.current);
-        storeMarkers.current[index] = marker;
-      } else {
-        storeMarkers.current[index].setPosition(
-          new kakao.maps.LatLng(store.storeLat, store.storeLon)
-        );
-      }
-    });
+    if (stores) {
+      stores.forEach((store, index) => {
+        if (!storeMarkers.current[index]) {
+          const markerPosition = new kakao.maps.LatLng(
+            store.storeLat,
+            store.storeLon
+          );
+          const marker = new kakao.maps.Marker({
+            position: markerPosition,
+          });
+          marker.setMap(mapRef.current);
+          storeMarkers.current[index] = marker;
+        } else {
+          storeMarkers.current[index].setPosition(
+            new kakao.maps.LatLng(store.storeLat, store.storeLon)
+          );
+        }
+      });
+    } else {
+      return [];
+    }
   };
-
   useEffect(() => {
     if (latitude && longitude) {
       kakao.maps.load(() => initMap());
