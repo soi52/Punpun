@@ -46,7 +46,7 @@ function StoreInfo() {
       .catch((error) => {
         console.log(error);
       });
-  }, [shareList]);
+  }, []);
 
   return (
     <>
