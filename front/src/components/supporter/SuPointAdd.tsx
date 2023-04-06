@@ -11,22 +11,37 @@ const ComponentStyle = styled.div`
   padding: 20px;
 `;
 
+const Div = styled.div`
+  padding-top: 20px;
+`;
+
+const PaymentDiv = styled.div`
+  margin-top: 40px;
+`;
+
 const PointButton = styled.button`
   margin: 10px;
   width: 100px;
   height: 40px;
   font-size: 16px;
   font-weight: bold;
-  color: black;
+  color: ${({ selected }: { selected: boolean }) =>
+  selected ? 'white' : 'Black'};
   border-radius: 5px;
-  border: ${({ selected }: { selected: boolean }) =>
-    selected ? '1px solid grey' : 'none'};
-  background-color: #ffffff;
+  border: none;
+  background-color: ${({ selected }: { selected: boolean }) =>
+  selected ? 'rgba(140, 150, 181, 1)' : '#ffffff'};
   cursor: pointer;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  &:hover,
+  &:focus {
+    color: white;
+    background-color: rgba(140, 150, 181, 1);
+  }
 `;
 
 const Button = styled.button`
+  margin: 50px;
   width: 90px;
   height: 40px;
   font-size: 16px;
@@ -36,11 +51,23 @@ const Button = styled.button`
   border: none;
   background-color: #e7e6f2;
   cursor: pointer;
+  &:hover,
+  &:focus {
+    color: white;
+    background-color: rgba(140, 150, 181, 1);
+  }
 `;
 
-const ButtonDiv = styled.div``;
+const Button2Div = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
 
-const CheckBoxDiv = styled.div``;
+const CheckBoxDiv = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 70%;
+`;
 
 const SuPointAdd = () => {
   const [selectedPoint, setSelectedPoint] = useState(0);
@@ -89,74 +116,80 @@ const SuPointAdd = () => {
   return (
     <ComponentStyle>
       <SuMainMessage />
-      <h2>충전 포인트</h2>
-      <ButtonDiv>
-        {points.map((point) => (
-          <PointButton
-            key={point.id}
-            name="point"
-            value={point.value}
-            selected={selectedPoint === point.value}
-            onClick={handlePointSelection}
-          >
-            {point.name} P
-          </PointButton>
-        ))}
-      </ButtonDiv>
-      <h2>결제 수단</h2>
-      <CheckBoxDiv>
-        <label htmlFor="checkbox1">
-          <input
-            type="radio"
-            name="payment"
-            value="account"
-            checked={selectedPayment === 'account'}
-            onChange={handlePaymentSelection}
-          />
-          계좌이체
-        </label>
-        <label>
-          <input
-            type="radio"
-            name="payment"
-            value="naverpay"
-            checked={selectedPayment === 'naverpay'}
-            onChange={handlePaymentSelection}
-          />
-          네이버페이
-        </label>
-        <label>
-          <input
-            type="radio"
-            name="payment"
-            value="kakaopay"
-            checked={selectedPayment === 'kakaopay'}
-            onChange={handlePaymentSelection}
-          />
-          카카오페이
-        </label>
-        <label>
-          <input
-            type="radio"
-            name="payment"
-            value="payco"
-            checked={selectedPayment === 'payco'}
-            onChange={handlePaymentSelection}
-          />
-          페이코
-        </label>
-        <label>
-          <input
-            type="radio"
-            name="payment"
-            value="toss"
-            checked={selectedPayment === 'toss'}
-            onChange={handlePaymentSelection}
-          />
-          TOSS
-        </label>
-      </CheckBoxDiv>
-      <Button onClick={handleSubmit}>충전하기</Button>
+      <Div>
+        <h2>충전 포인트</h2>
+        <>
+          {points.map((point) => (
+            <PointButton
+              key={point.id}
+              name="point"
+              value={point.value}
+              selected={selectedPoint === point.value}
+              onClick={handlePointSelection}
+            >
+              {point.name} P
+            </PointButton>
+          ))}
+        </>
+        <PaymentDiv>
+          <h2>결제 수단</h2>
+          <CheckBoxDiv>
+            <label htmlFor="checkbox1">
+              <input
+                type="radio"
+                name="payment"
+                value="account"
+                checked={selectedPayment === 'account'}
+                onChange={handlePaymentSelection}
+              />
+              계좌이체
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="payment"
+                value="naverpay"
+                checked={selectedPayment === 'naverpay'}
+                onChange={handlePaymentSelection}
+              />
+              네이버페이
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="payment"
+                value="kakaopay"
+                checked={selectedPayment === 'kakaopay'}
+                onChange={handlePaymentSelection}
+              />
+              카카오페이
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="payment"
+                value="payco"
+                checked={selectedPayment === 'payco'}
+                onChange={handlePaymentSelection}
+              />
+              페이코
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="payment"
+                value="toss"
+                checked={selectedPayment === 'toss'}
+                onChange={handlePaymentSelection}
+              />
+              TOSS
+            </label>
+          </CheckBoxDiv>
+        </PaymentDiv>
+        <Button2Div>
+          <Button onClick={handleSubmit}>충전하기</Button>
+        </Button2Div>
+      </Div>
     </ComponentStyle>
   );
 };
