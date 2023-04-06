@@ -1,28 +1,48 @@
-import React from 'react';
-import { Fade } from 'react-awesome-reveal';
 import styled from 'styled-components';
-import fourth from '../../resources/images/4.jpg';
+import first from '../../resources/images/main12.jpg';
+import { Fade } from 'react-awesome-reveal';
 
 const ComponentStyle = styled.div`
-  background: url(${fourth}) no-repeat center;
-  background-size: cover;
-  background-color: yellow;
+  position: relative;
   height: 100%;
   width: 100%;
-  display: flex;
+  display: block;
+  background-color: #a3c3f2;
 `;
 
-const TitleStyle = styled.h2`
-  margin: auto;
-  text-align: center;
+const MainImageStyle = styled.img`
+  width: 100%;
+  height: 54%;
+  object-fit: cover;
+`;
+
+const ContentDivStyle = styled.div`
+  height: 46%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+`;
+
+const TitleStyle = styled.text`
+  font-size: 40px;
+  font-weight: 600;
+  width: 100%;
+`;
+
+const ContentStyle = styled.h4`
+  width: 50%;
 `;
 
 function FourthComponent() {
   return (
     <ComponentStyle>
-      <Fade duration={1000} direction={'up'}>
-        <TitleStyle>Fourth Component</TitleStyle>
-      </Fade>
+      <ContentDivStyle>
+        <Fade duration={1500} direction={'down'}>
+          <TitleStyle>'PUNPUN'의 가족이 되어주세요.</TitleStyle>
+        </Fade>
+      </ContentDivStyle>
+      <MainImageStyle src={first} />
     </ComponentStyle>
   );
 }
