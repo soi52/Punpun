@@ -7,6 +7,8 @@ import ThirdComponent from '../components/main/ThirdComponent';
 import FourthComponent from '../components/main/FourthComponent';
 import FifthComponent from '../components/main/FifthComponent';
 import Header from '../components/ui/Header';
+import FirstComponent1 from '../components/main/FirstComponent1';
+import FirstComponent2 from '../components/main/FirstComponent2';
 
 const FullPage = () => {
   const onSelect = (item: string) => {
@@ -17,12 +19,14 @@ const FullPage = () => {
     <>
       <Header onSelect={onSelect} />
       <ReactPageScroller>
+        <FirstComponent />
+        <FirstComponent1 />
+        <FirstComponent2 />
         <SecondComponent />
         <ThirdComponent />
-        {/* <FourthComponent /> */}
-        {/* <FifthComponent /> */}
         {/* <SectionContainer height={50}></SectionContainer> */}
-        <FirstComponent />
+        {/* <FifthComponent /> */}
+        <FourthComponent />
       </ReactPageScroller>
     </>
   );

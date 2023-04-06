@@ -7,7 +7,8 @@ import Confetti from 'react-confetti';
 import useWindowSize from 'react-use/lib/useWindowSize';
 
 const ComponentStyle = styled.div`
-  height: 100%;
+  // background-size: 100%;
+  height: 100%
   display: flex;
   // position: relative;
   background-color: #e2f7c7;
@@ -15,7 +16,6 @@ const ComponentStyle = styled.div`
 
 const ContentStyle = styled.div`
   // position: absolute;
-  margin-top: 75px;
   display: flex;
   flex-direction: row;
   justify-content: center;

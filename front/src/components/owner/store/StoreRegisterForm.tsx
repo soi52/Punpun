@@ -7,6 +7,7 @@ import {
   isRegisterState,
   isRegisterStoreState,
   selectedMyStoreState,
+  userInfoState,
 } from '../../../store/atoms';
 import API from '../../../store/API';
 import { useNavigate } from 'react-router-dom';
@@ -213,6 +214,7 @@ const StoreRegisterForm = () => {
   const [isRegister, setIsRegister] = useRecoilState(isRegisterState);
   const [isRegisterStore, setIsRegisterStore] =
     useRecoilState(isRegisterStoreState);
+  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
   const [registerStore, setRegisterStore] = useState<Store>({
     storeId: 0,
     storeName: '',
@@ -265,6 +267,15 @@ const StoreRegisterForm = () => {
         setIsRegisterStore(true);
         setSelectedMyStore(null);
         setIsRegister(false);
+        API.get('users/member')
+          .then((response: any) => {
+            console.log(response.data.role);
+            localStorage.setItem('role', response.data.role);
+            setUserInfo(response.data);
+          })
+          .catch((error: any) => {
+            console.error(error);
+          });
       })
       .catch((error: any) => {
         console.error(error);

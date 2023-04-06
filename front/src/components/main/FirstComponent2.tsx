@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import first from '../../resources/images/main14.jpg';
+import first from '../../resources/images/main16.png';
 import { Fade } from 'react-awesome-reveal';
 
 const ComponentStyle = styled.div`
@@ -26,7 +26,7 @@ const ContentDivStyle = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  // background-color: #a3c3f2;
+  // background-color: #ddf3ff;
 `;
 
 const TitleStyle = styled.h1`
@@ -37,21 +37,21 @@ const ContentStyle = styled.h4`
   width: 50%;
 `;
 
-function FirstComponent() {
+function FirstComponent2() {
   return (
     <ComponentStyle>
       <ContentDivStyle>
         <Fade duration={1500} direction={'left'}>
-          <TitleStyle>아이들이 행복한 세상을 만듭시다.</TitleStyle>
-          <TitleStyle>어쩌고 저쩌고 ~~~~~~~~~~</TitleStyle>
-          <TitleStyle>어쩌고 저쩌고 ~~~~~~~~~~</TitleStyle>
+          <TitleStyle>메뉴를 골라 후원하고</TitleStyle>
+          <TitleStyle>식사를 마친 아동이 남긴</TitleStyle>
+          <TitleStyle>감사메세지를 읽어보세요.</TitleStyle>
         </Fade>
       </ContentDivStyle>
-      {/* <Fade duration={1500} direction={'right'}> */}
       <MainImageStyle src={first} />
+      {/* <Fade duration={1500} direction={'right'}> */}
       {/* </Fade> */}
     </ComponentStyle>
   );
 }
 
-export default FirstComponent;
+export default FirstComponent2;
