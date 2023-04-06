@@ -83,16 +83,7 @@ interface OwnerHeaderProps {
   onSelect: (item: string) => void;
   items: string[];
   selectedItem: string | undefined;
-  role: string;
-}
-
-interface OwnerHeaderProps {
-  toOwStore: () => void;
-  onLogout: () => void;
-  onSelect: (item: string) => void;
-  items: string[];
-  selectedItem: string | undefined;
-  role: string;
+  isOwnerRole: Boolean;
 }
 
 function OwnerHeader(props: OwnerHeaderProps) {
@@ -101,7 +92,8 @@ function OwnerHeader(props: OwnerHeaderProps) {
     selectedStoreState
   );
   const [storeDrop, setStoreDrop] = useState(false);
-  const { onLogout, toOwStore, onSelect, items, selectedItem, role } = props;
+  const { onLogout, toOwStore, onSelect, items, selectedItem, isOwnerRole } =
+    props;
 
   const navigate = useNavigate();
 
@@ -155,7 +147,7 @@ function OwnerHeader(props: OwnerHeaderProps) {
         onSelect={onSelect}
         items={items}
         selectedItem={selectedItem}
-        role={role}
+        isOwnerRole={isOwnerRole}
       />
     </NavUl>
   );

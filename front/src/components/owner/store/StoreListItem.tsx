@@ -1,9 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { useSetRecoilState } from 'recoil';
-import { Store, selectedStoreState } from '../../../store/atoms';
-import API from '../../../store/API';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import {
+  Store,
+  selectedStoreState,
+  isOwnerRoleState,
+} from '../../../store/atoms';
 
 interface StoreItemProps {
   stores: Store[];
@@ -33,9 +36,10 @@ const StoreInfo = styled.div`
   color: #333;
 `;
 
-const StoreText = styled.p`
+const StoreText = styled.label`
   font-size: 16px;
   color: #666;
+  margin-right: 5px;
 `;
 
 const DeleteButton = styled.button`
@@ -48,13 +52,25 @@ const DeleteButton = styled.button`
   cursor: pointer;
 `;
 
+const CheckBox = styled.input`
+  margin-right: 10px 0px 0px 10px;
+  background-color: #5d5a88;
+`;
+
 function StoreListItem({ stores, onDelete }: StoreItemProps) {
   console.log(stores);
   const navigate = useNavigate();
+  const [isOwnerRole, setIsOwnerRole] = useRecoilState(isOwnerRoleState);
   const setSelectedStore = useSetRecoilState(selectedStoreState); // 새로 추가된 코드
 
   const handleDelete = (id: number) => {
-    onDelete(id);
+    if (stores.length === 1) {
+      onDelete(id);
+      setIsOwnerRole(false);
+      navigate('/sumain');
+    } else {
+      onDelete(id);
+    }
   };
 
   const StoreList = stores.map((store) => (
@@ -68,14 +84,13 @@ function StoreListItem({ stores, onDelete }: StoreItemProps) {
       >
         <StoreName>{store.storeName}</StoreName>
         <StoreInfo>{store.storeInfo}</StoreInfo>
-        <StoreText>
-          항상 나눔
-          <input
-            type="checkbox"
-            checked={store.storeAlwaysShare ? true : false}
-            readOnly
-          />
-        </StoreText>
+        <StoreText htmlFor="alwaysShare">항상 나눔</StoreText>
+        <CheckBox
+          type="checkbox"
+          id="alwaysShare"
+          checked={store.storeAlwaysShare ? true : false}
+          readOnly
+        />
       </div>
       <div>
         <DeleteButton onClick={() => handleDelete(store.storeId)}>

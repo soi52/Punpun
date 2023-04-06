@@ -234,8 +234,8 @@ const StoreRegisterForm = () => {
     if (selectedMyStore) {
       API.get(`stores/${selectedMyStore?.storeId}`)
         .then((response: any) => {
-          console.log(response.data);
-          console.log(isRegister);
+          // console.log(response.data);
+          // console.log(isRegister);
           setRegisterStore(response.data);
         })
         .catch((error: any) => {
@@ -270,7 +270,7 @@ const StoreRegisterForm = () => {
       .catch((error: any) => {
         console.error(error);
       });
-    navigate('/owstorelist');
+    navigate(`/owstore/${registerStore?.storeId}`);
   };
 
   return (
@@ -335,19 +335,6 @@ const StoreRegisterForm = () => {
             required
           />
         </InputBox> */}
-      <CheckBoxBox>
-        <CheckBoxLabel htmlFor="storeAlwaysShare">
-          항상 나눔하고 싶어요
-        </CheckBoxLabel>
-        <CheckBox
-          type="checkbox"
-          name="storeAlwaysShare"
-          accept="image/*"
-          value={registerStore?.storeAlwaysShare ? 'true' : 'false'}
-          readOnly
-        />
-      </CheckBoxBox>
-      <p>결식아동들이 항상 예약을 요청할 수 있어요.</p>
       <SubmitButton id="button" onClick={handleRegister}>
         등록하기
       </SubmitButton>
