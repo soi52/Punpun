@@ -100,8 +100,8 @@ public class SupportServiceImplTest {
                         .build())
                 .build();
 
-        SupportResponseDTO supportResponseDTO=new SupportResponseDTO(support1.getSupportDate().toString(),support1.getStore().getId(), 2L, support1.getStore().getName(),  support1.getMenu().getId(), support1.getMenu().getName(), support1.getMenu().getPrice());
-        SupportResponseDTO supportResponseDTO2=new SupportResponseDTO(support2.getSupportDate().toString(),support2.getStore().getId(), 1L, support2.getStore().getName(),  support2.getMenu().getId(), support2.getMenu().getName(), support2.getMenu().getPrice());
+        SupportResponseDTO supportResponseDTO=new SupportResponseDTO(support1.getSupportDate(),support1.getStore().getId(), 2L, support1.getStore().getName(),  support1.getMenu().getId(), support1.getMenu().getName(), support1.getMenu().getPrice());
+        SupportResponseDTO supportResponseDTO2=new SupportResponseDTO(support2.getSupportDate(),support2.getStore().getId(), 1L, support2.getStore().getName(),  support2.getMenu().getId(), support2.getMenu().getName(), support2.getMenu().getPrice());
         doReturn(List.of(supportResponseDTO ,supportResponseDTO2)).when(supportRepository).findSupport(member);
 
         List<SupportResponseDTO> supportList=supportService.findSupport(member);
