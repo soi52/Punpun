@@ -13,18 +13,27 @@ const Input = styled.input`
 type SearchBarProps = {
   value: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+  onSubmit: (event: React.FormEvent<HTMLFormElement> | React.KeyboardEvent<HTMLInputElement>) => void;
 };
 
-const SearchBar = ({ value, onChange, onSubmit }: SearchBarProps) => (
-  <form onSubmit={onSubmit}>
-    <Input
-      type="text"
-      value={value}
-      onChange={onChange}
-      placeholder="가게명을 입력해주세요."
-    />
-  </form>
-);
+const SearchBar = ({ value, onChange, onSubmit }: SearchBarProps) => {
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      onSubmit(event);
+    }
+  };
+
+  return (
+    <form onSubmit={onSubmit}>
+      <Input
+        type="text"
+        value={value}
+        onChange={onChange}
+        onKeyDown={handleKeyDown}
+        placeholder="가게명을 입력해주세요."
+      />
+    </form>
+  );
+};
 
 export default SearchBar;

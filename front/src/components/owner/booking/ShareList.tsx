@@ -1,9 +1,6 @@
 import StoreInfo from '../StoreInfo';
-import { useState, useEffect } from 'react';
-import API from '../../../store/API';
-import { useParams } from 'react-router';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { selectedStoreState, ShareListState } from '../../../store/atoms';
+import { useRecoilValue } from 'recoil';
+import { ShareListState } from '../../../store/atoms';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
@@ -41,36 +38,9 @@ const TableCell = styled.td`
   border: none;
 `;
 
-const StoreName = styled.td`
-  padding: 15px 10px;
-  cursor: pointer;
-  &:hover {
-    opacity: 0.8;
-    transform: scale(1.01);
-  }
-`;
-
 function ShareList() {
-  const { storeId: myStoreId } = useParams();
   const shareList = useRecoilValue(ShareListState);
-  const selectedStore = useRecoilValue(selectedStoreState);
 
-  // useEffect(() => {
-  //   const config = {
-  //     params: {
-  //       page: 0,
-  //       type: 'SHARE',
-  //     },
-  //   };
-  //   API.get(`supports/${selectedStore?.storeId}`, config)
-  //     .then((response) => {
-  //       setShareList(response.data.content);
-  //       console.log(response.data.content);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // }, []);
   return (
     <Wrapper>
       <StoreInfo />

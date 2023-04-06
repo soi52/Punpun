@@ -9,6 +9,11 @@ const CalendarDiv = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  // justify-content: space-between;
+`;
+
+const CalDiv = styled.div`
+  margin-left: 490px;
 `;
 
 const Wrapper = styled.div`
@@ -205,10 +210,13 @@ const PrevBookings = () => {
     <>
       <CalendarDiv>
         <h2>이전 예약 내역</h2>
-        <Calendar
-          selectedDate={selectedDate}
-          handleDateChange={handleDateChange}
-        />
+        <CalDiv>
+          {/* <p>날짜 검색　</p> */}
+          <Calendar
+            selectedDate={selectedDate}
+            handleDateChange={handleDateChange}
+          />
+        </CalDiv>
       </CalendarDiv>
       {formattedBookings && formattedBookings.length > 0 ? (
         formattedBookings.map((booking) => (

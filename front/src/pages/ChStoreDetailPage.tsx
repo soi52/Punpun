@@ -8,7 +8,6 @@ import Sidebar from '../components/ui/Sidebar';
 import MainComponent from '../components/ui/MainComponent';
 
 import StoreMenu from '../components/child/storedetail/StoreMenu';
-// import StoreInfo from '../components/child/storedetail/StoreInfo';
 import ThanksMessage from '../components/child/storedetail/StoreThanksMessage';
 import SuPointAdd from '../components/supporter/SuPointAdd';
 import { useRecoilState } from 'recoil';
@@ -76,7 +75,7 @@ function ChStoreDetailPage() {
 
   const role = localStorage.getItem('role');
 
-  const menuItems = [
+  let menuItems = [
     { title: '🍝 메뉴', component: () => <StoreMenu myStoreId={myStoreId} /> },
     {
       title: '🗺 가게 정보',
@@ -86,8 +85,11 @@ function ChStoreDetailPage() {
       title: '💌 감사 메세지',
       component: () => <ThanksMessage myStoreId={myStoreId} />,
     },
-    { title: '충전하기', component: () => <SuPointAdd /> },
   ];
+
+  if (role !== 'CHILD') {
+    menuItems.push({ title: '충전하기', component: () => <SuPointAdd /> });
+  }
 
   useEffect(() => {
     async function fetchStores() {
