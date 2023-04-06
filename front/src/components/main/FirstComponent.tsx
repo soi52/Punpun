@@ -7,22 +7,21 @@ const ComponentStyle = styled.div`
   height: 100%;
   width: 100%;
   display: block;
-  background-color: #fff;
+  background-color: #a3c3f2;
 `;
 
 const MainImageStyle = styled.img`
   width: 100%;
-  height: 50%;
+  height: 55%;
   object-fit: cover;
 `;
 
 const ContentDivStyle = styled.div`
-  height: 50%;
+  height: 45%;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  background-color: #a3c3f2;
 `;
 
 const TitleStyle = styled.h1`

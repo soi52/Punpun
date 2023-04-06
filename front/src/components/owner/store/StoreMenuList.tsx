@@ -14,6 +14,10 @@ const Wrapper = styled.div`
   padding: 20px;
 `;
 
+const Div = styled.div`
+  padding-top: 10px;
+`;
+
 function StoreMenuList() {
   const selectedStore = useRecoilValue(selectedStoreState);
   const [storeMenus, setStoreMenus] = useRecoilState(owStoreMenuState);
@@ -38,8 +42,10 @@ function StoreMenuList() {
   return (
     <Wrapper>
       <StoreInfo />
-      <h2>메뉴 관리</h2>
-      <StoreMenu storeMenus={storeMenus} />
+      <Div>
+        <h2>메뉴 관리</h2>
+        <StoreMenu storeMenus={storeMenus} />
+      </Div>
     </Wrapper>
   );
 }
