@@ -28,10 +28,9 @@ function Router() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/full" element={<FullPage />} />
+        <Route path="/" element={<FullPage />} />
         <Route path="/" element={<Layout />}>
           {/* 후원페이지 */}
-          <Route path="/" element={<MainPage />} />
           <Route path="/kakaoLogin" element={<RedirectPage />} />
           <Route path="/addnumber" element={<AddNumberPage />} />
           <Route path="/sumain" element={<MainPage />} />
