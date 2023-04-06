@@ -7,10 +7,27 @@ export interface BookingListProps {
 }
 
 const BookingListContainer = styled.div`
-  padding: 20px;
   display: flex;
   flex-direction: column;
-  border: 1px solid black;
+  align-items: center;
+  background-color: #ffffff;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+  padding: 16px;
+  margin: 0.5rem 1rem 1rem 0.5rem;
+  max-width: 175px;
+  width: 100%;
+  height: 200px;
+  cursor: pointer;
+  perspective: 1000px;
+  position: relative;
+`;
+
+const NoBookingMessage = styled.p`
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 2rem 0;
 `;
 
 const BookingRequest: React.FC<BookingListProps> = ({ bookings }) => {
@@ -26,15 +43,19 @@ const BookingRequest: React.FC<BookingListProps> = ({ bookings }) => {
 
   return (
     <BookingListContainer>
-      {bookings.map((booking) => (
-        <BookingItem
-          key={booking.reservationId}
-          booking={booking}
-          isActive={booking.reservationId === selectedId}
-          onClick={() => onSelect(booking.reservationId)}
-          isRequest={true}
-        />
-      ))}
+      {bookings.length === 0 ? (
+        <NoBookingMessage>신청된 예약이 없습니다.</NoBookingMessage>
+      ) : (
+        bookings.map((booking) => (
+          <BookingItem
+            key={booking.reservationId}
+            booking={booking}
+            isActive={booking.reservationId === selectedId}
+            onClick={() => onSelect(booking.reservationId)}
+            isRequest={true}
+          />
+        ))
+      )}
     </BookingListContainer>
   );
 };

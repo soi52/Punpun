@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import API from '../../store/API';
+import Swal from 'sweetalert2';
 
 import SuMainMessage from './SuMainMessage';
 
@@ -98,10 +99,18 @@ const SuPointAdd = () => {
 
       // point get하고 state 변경
       const response = await API.get('payments');
-      console.log(response.data);
       setPoint(response.data.memberPoint);
+      Swal.fire(
+        '결제가 완료되었습니다!',
+        `${selectedPoint.toLocaleString()}원이 충전되었습니다.`,
+        'success'
+      )
     } catch (error) {
-      console.log(error);
+      Swal.fire({
+        icon: 'error',
+        title: '결제 중 오류가 발생했습니다!',
+        text: '다시 시도해주세요.',
+      })
     }
   };
 
