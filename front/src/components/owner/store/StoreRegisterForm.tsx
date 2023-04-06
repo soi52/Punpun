@@ -335,7 +335,7 @@ const StoreRegisterForm = () => {
             required
           />
         </InputBox> */}
-      <CheckBoxBox>
+      {/* <CheckBoxBox>
         <CheckBoxLabel htmlFor="storeAlwaysShare">
           항상 나눔하고 싶어요
         </CheckBoxLabel>
@@ -344,10 +344,9 @@ const StoreRegisterForm = () => {
           name="storeAlwaysShare"
           accept="image/*"
           value={registerStore?.storeAlwaysShare ? 'true' : 'false'}
-          readOnly
         />
       </CheckBoxBox>
-      <p>결식아동들이 항상 예약을 요청할 수 있어요.</p>
+      <p>결식아동들이 항상 예약을 요청할 수 있어요.</p> */}
       <SubmitButton id="button" onClick={handleRegister}>
         등록하기
       </SubmitButton>
