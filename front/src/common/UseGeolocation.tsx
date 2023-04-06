@@ -2,9 +2,13 @@ import { useState, useMemo } from 'react';
 import { useRecoilState } from 'recoil';
 
 const useGeolocation = () => {
-  const [location, setLocation] = useState<
-    { latitude: number; longitude: number } | string
-  >('');
+  const [location, setLocation] = useState<{
+    latitude: number;
+    longitude: number;
+  }>({
+    latitude: 0,
+    longitude: 0,
+  });
 
   useMemo(() => {
     if (navigator.geolocation) {
