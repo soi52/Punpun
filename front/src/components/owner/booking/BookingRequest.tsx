@@ -7,27 +7,40 @@ export interface BookingListProps {
 }
 
 const BookingListContainer = styled.div`
-  display: flex;
+  /* display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #ffffff;
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
   border-radius: 20px;
   padding: 16px;
   margin: 0.5rem 1rem 1rem 0.5rem;
   max-width: 175px;
   width: 100%;
-  height: 200px;
-  cursor: pointer;
-  perspective: 1000px;
+  height: 200px; */
+  /* cursor: pointer; */
+  /* perspective: 1000px; */
   position: relative;
+
+  display: grid;
+  grid-template-columns: 1fr;
+  /* overflow: auto; */
+  /* row-gap: 5em; */
+  place-items: center;
 `;
 
 const NoBookingMessage = styled.p`
+  /* align-items: center; */
   text-align: center;
-  font-size: 1.2rem;
-  font-weight: 600;
-  margin: 2rem 0;
+  // font-size: 1.2rem;
+  /* margin: 2rem 0; */
+  /*  */
+  width: 100%;
+  height: 200px;
+  border-radius: 20px;
+  margin: 1rem 1rem 1rem 1rem;
+  max-width: 300px;
+  // border: 3px solid pink;
+  padding: 16px;
 `;
 
 const BookingRequest: React.FC<BookingListProps> = ({ bookings }) => {
@@ -48,8 +61,8 @@ const BookingRequest: React.FC<BookingListProps> = ({ bookings }) => {
       ) : (
         bookings.map((booking) => (
           <BookingItem
-            key={booking.reservationId}
             booking={booking}
+            key={booking.reservationId}
             isActive={booking.reservationId === selectedId}
             onClick={() => onSelect(booking.reservationId)}
             isRequest={true}
