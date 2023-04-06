@@ -152,7 +152,7 @@ const PrevBookings = () => {
           </Wrapper>
         ))
       ) : (
-        <p>No bookings found.</p>
+        <p>아직 예약 내역이 없어요 :(</p>
       )}
     </>
   );

@@ -38,6 +38,13 @@ const TableCell = styled.td`
   border: none;
 `;
 
+const NoContent = styled.td`
+  display: flex;
+  justify-content: center;
+  padding: auto;
+  margin : 30px;
+`;
+
 function ShareList() {
   const shareList = useRecoilValue(ShareListState);
 
@@ -45,6 +52,7 @@ function ShareList() {
     <Wrapper>
       <StoreInfo />
       <h2>나눔 목록</h2>
+      {shareList.length > 0 ? (
       <Table>
         <TableHeader>
           <TableRow>
@@ -55,6 +63,7 @@ function ShareList() {
           </TableRow>
         </TableHeader>
         <tbody>
+          
           {shareList?.map((share, index) => (
             <TableRow key={share.supportId}>
               <TableCell># {index+1}</TableCell>
@@ -66,7 +75,22 @@ function ShareList() {
             </TableRow>
           ))}
         </tbody>
-      </Table>
+      </Table>)
+      : (
+        <>
+          <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHeaderCell>나눔번호</TableHeaderCell>
+              <TableHeaderCell>메뉴명</TableHeaderCell>
+              <TableHeaderCell>남는 수량</TableHeaderCell>
+              <TableHeaderCell>날짜</TableHeaderCell>
+            </TableRow>
+          </TableHeader>
+          </Table>
+          <NoContent>아직 나눔 내역이 없어요 :(</NoContent>
+        </>
+      )}
     </Wrapper>
   );
 }

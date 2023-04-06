@@ -52,15 +52,16 @@ const ModalBody = styled.div``;
 
 const ModalButton = styled.button`
   margin-top: 35px;
+  margin-right: 20px;
   background-color: white;
-  border: 1px solid ${redColor};
+  border: 1px solid #DCA9AC;
   line-height: 0;
   font-size: 15px;
   display: inline-block;
   box-sizing: border-box;
   padding: 15px 10px;
   border-radius: ${submitButtonBorderRadius};
-  color: ${redColor};
+  color: #BC777B;
   font-weight: 100;
   letter-spacing: 0.01em;
   position: relative;
@@ -69,7 +70,29 @@ const ModalButton = styled.button`
   &:hover,
   &:focus {
     color: white;
-    background-color: ${redColor};
+    background-color: #DCA9AC;
+  }
+`;
+const ModalButton2 = styled.button`
+  margin-top: 35px;
+  background-color: white;
+  border: 1px solid #A3C5A7;
+  line-height: 0;
+  font-size: 15px;
+  display: inline-block;
+  box-sizing: border-box;
+  padding: 15px 10px;
+  border-radius: ${submitButtonBorderRadius};
+  color: #7BAB80;
+  font-weight: 100;
+  letter-spacing: 0.01em;
+  position: relative;
+  transition: ${transition};
+
+  &:hover,
+  &:focus {
+    color: white;
+    background-color: #A3C5A7;
   }
 `;
 
@@ -334,9 +357,9 @@ function MenuModal({ onClose, mode, menu }: MenuModalProps) {
         </ModalBody>
         <ModalFooter>
           <ModalButton onClick={onClose}>취소</ModalButton>
-          <ModalButton onClick={handleModalSubmit}>
-            {mode === 'register' ? '등록하기' : '수정하기'}
-          </ModalButton>
+          <ModalButton2 onClick={handleModalSubmit}>
+            {mode === 'register' ? '등록' : '수정'}
+          </ModalButton2>
         </ModalFooter>
       </ModalContent>
     </ModalOverlay>

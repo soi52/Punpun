@@ -9,6 +9,7 @@ import FifthComponent from '../components/main/FifthComponent';
 import Header from '../components/ui/Header';
 import FirstComponent1 from '../components/main/FirstComponent1';
 import FirstComponent2 from '../components/main/FirstComponent2';
+import FirstCarosel from '../components/main/FirstCarosel';
 
 const FullPage = () => {
   const onSelect = (item: string) => {
@@ -19,11 +20,12 @@ const FullPage = () => {
     <>
       <Header onSelect={onSelect} />
       <ReactPageScroller>
-        <FirstComponent />
+        <FirstCarosel />
+        {/* <FirstComponent />
         <FirstComponent1 />
-        <FirstComponent2 />
+        <FirstComponent2 /> */}
         <SecondComponent />
-        <ThirdComponent />
+        {/* <ThirdComponent /> */}
         {/* <SectionContainer height={50}></SectionContainer> */}
         {/* <FifthComponent /> */}
         <FourthComponent />
