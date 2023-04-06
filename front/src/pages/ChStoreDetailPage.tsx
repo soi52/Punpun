@@ -76,7 +76,7 @@ function ChStoreDetailPage() {
 
   const role = localStorage.getItem('role');
 
-  const menuItems = [
+  let menuItems = [
     { title: '🍝 메뉴', component: () => <StoreMenu myStoreId={myStoreId} /> },
     {
       title: '🗺 가게 정보',
@@ -86,8 +86,11 @@ function ChStoreDetailPage() {
       title: '💌 감사 메세지',
       component: () => <ThanksMessage myStoreId={myStoreId} />,
     },
-    { title: '충전하기', component: () => <SuPointAdd /> },
   ];
+
+  if (role !== 'CHILD') {
+    menuItems.push({ title: '충전하기', component: () => <SuPointAdd /> });
+  }
 
   useEffect(() => {
     async function fetchStores() {
