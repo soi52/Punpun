@@ -16,6 +16,7 @@ public class Review extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "review_id")
     private Long id;
+    @Column(length = 5000)
     private String content;
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reservation_id")

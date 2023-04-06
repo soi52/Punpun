@@ -3,7 +3,6 @@ package edu.ssafy.punpun.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -16,12 +15,16 @@ public class Store extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String licenseNumber;
+    @Column(length = 5000)
     private String name;
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Image image;
     private boolean openState;
+    @Column(length = 5000)
     private String openTime;
+    @Column(length = 5000)
     private String info;
+    @Column(length = 5000)
     private String address;
     private double lon;
     private double lat;
