@@ -644,6 +644,7 @@ public class StoreServiceImplTest {
                     .email("memberTest@email.com")
                     .phoneNumber("01000000000")
                     .role(UserRole.OWNER)
+                    .stores(new ArrayList<>())
                     .build();
             Store store1 = Store.builder()
                     .id(1L)
@@ -666,6 +667,7 @@ public class StoreServiceImplTest {
             // then
             assertThat(store1.getId()).isEqualTo(1L);
             assertThat(store1.getOwner()).isEqualTo(null);
+            assertThat(member.getRole()).isEqualTo(UserRole.SUPPORTER);
         }
 
         @Test
