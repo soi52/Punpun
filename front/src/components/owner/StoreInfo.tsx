@@ -56,7 +56,11 @@ function StoreInfo() {
         />
       </h2>
       <MainMessage
-        message={shareList.length > 0 ? `　${userInfo.userName} 사장님, 어느 새 ${shareList.length}번의 식사 나눔을 하셨네요!` : `　${userInfo.userName} 사장님, 따뜻한 마음을 나누어 보세요 :)`}
+        message={
+          shareList.length > 0
+            ? `　${userInfo.userName} 사장님, 어느 새 ${shareList.length}번의 식사 나눔을 하셨네요!`
+            : `　${userInfo.userName} 사장님, 따뜻한 마음을 나누어 보세요 :)`
+        }
       />
     </>
   );

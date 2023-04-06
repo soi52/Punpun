@@ -1,6 +1,7 @@
 import Cookies from 'js-cookie';
 import { atom } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
+import { MenuSupport, OwStoreUpdate, Store, UserInfo } from './types';
 
 const { persistAtom } = recoilPersist();
 
@@ -29,19 +30,6 @@ export const userAreaState = atom<string>({
   key: 'userAreaState',
   default: '',
 });
-
-export interface UserInfo {
-  userId: number;
-  userName: string;
-  userEmail: string;
-  userRole: string;
-  userNumber: string;
-  userSupportedPoint: number | null;
-  userRemainPoint: number | null;
-  userArea: string | null;
-  userProfileName: string | null;
-  userProfileImage: string | null;
-}
 
 export const userInfoState = atom<UserInfo>({
   key: 'userInfoState',
@@ -114,46 +102,6 @@ export const isOwnerRoleState = atom<Boolean>({
 });
 
 // 리뷰 atom
-export interface Reviews {
-  id: number;
-  userImage: string;
-  userName: string;
-  reviewText: string;
-}
-
-export interface Store {
-  storeId: number;
-  storeName: string;
-  storeOpenTime: string | null;
-  storeInfo: string | null;
-  storeAddress: string;
-  storeLon: number;
-  storeLat: number;
-  storeImageName: string | null;
-  storeImage: string | null;
-  storePhoneNumber: string | null;
-  storeAlwaysShare: Boolean;
-  menuDTO: MenuDTO[];
-}
-
-export type MenuDTO = {
-  menuId: number;
-  menuName: string;
-  menuPrice: number;
-  menuCount: number;
-  menuImage: string;
-  menuImageName: string;
-};
-
-export interface OwStoreUpdate {
-  storeId: number;
-  storeName: string;
-  storeOpenTime: string | null;
-  storeInfo: string | null;
-  storeAddress: string;
-  storePhoneNumber: string | null;
-  storeAlwaysShare: Boolean;
-}
 
 export const owStoreState = atom<Store[]>({
   key: 'owStoreState',
@@ -189,16 +137,6 @@ export const owStoreMenuState = atom({
   key: 'owStoreMenuState',
   default: [],
 });
-
-export interface MenuSupport {
-  supportId: null | number;
-  supportType: string;
-  supportDate: string;
-  menuId: number;
-  menuName: string;
-  totalCount: number;
-  useCount: number;
-}
 
 export const ShareListState = atom<MenuSupport[]>({
   key: 'ShareListState',

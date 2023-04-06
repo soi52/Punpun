@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { Store, selectedMyStoreState } from '../../../store/atoms';
+import { selectedMyStoreState } from '../../../store/atoms';
 import { useRecoilState } from 'recoil';
+import { Store } from '../../../store/types';
 
 type StoreRegisterItemProps = {
   store: Store;

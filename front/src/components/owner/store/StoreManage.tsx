@@ -5,12 +5,12 @@ import styled from 'styled-components';
 import Map from '../../../common/Map';
 import API from '../../../store/API';
 import {
-  Store,
   isRegisterState,
   isUpdatedState,
   owStoreMenuState,
   selectedStoreState,
 } from '../../../store/atoms';
+import { Store } from '../../../store/types';
 import StoreDetailInfo from '../../ui/StoreDetailInfo';
 import StoreInfo from '../StoreInfo';
 
