@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import API from '../../../store/API';
 import SelectedMenu, { SelectedMenuProps } from './SelectedMenu';
+import Swal from 'sweetalert2';
 
 export interface SelectedMenuListProps {
   selectedMenus: SelectedMenuProps[];
@@ -66,20 +67,6 @@ const SelectedMenuList: React.FC<SelectedMenuListProps> = ({
     onClearClick(id);
   };
 
-  // const shareSubmit = () => {
-  //   const postData = async () => {
-  //     const data = {
-  //       selectedMenus: selectedMenus.map((menu) => ({
-  //         menuId: menu.id,
-  //         menuCount: menu.quantity,
-  //         usePoint: menu.quantity * menu.price,
-  //       })),
-  //     };
-  //     const response = await API.post('supports/share', data);
-  //     console.log(response.data);
-  //   };
-  // };
-
   const postShare = async () => {
     const data = selectedMenus.reduce<{
       menuId: number[];
@@ -96,6 +83,11 @@ const SelectedMenuList: React.FC<SelectedMenuListProps> = ({
     );
 
     const response = await API.post('supports/share', data);
+    Swal.fire(
+      '나눔이 완료되었습니다!',
+      '선택한 메뉴가 예약 활성화 됩니다.',
+      'success'
+    )
     console.log(response.data);
   };
 

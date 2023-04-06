@@ -227,6 +227,7 @@ const StoreRegisterForm = () => {
     storeImage: null,
     storePhoneNumber: null,
     storeAlwaysShare: false,
+    storeSupport: false,
     menuDTO: [],
   });
   const [showModal, setShowModal] = useState(false);

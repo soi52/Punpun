@@ -3,6 +3,8 @@ import { useRecoilValue } from 'recoil';
 import { selectedStoreState } from '../../../store/atoms';
 import defaultImage from '../../../resources/images/profileDefault.png';
 import bannerImage from '../../../resources/images/bannerImage.jpg';
+import supportbadge from '../../../resources/images/support-badge.png';
+import sharebadge from '../../../resources/images/share_badge.png';
 
 const BannerDiv = styled.div`
   width: 100%;
@@ -68,10 +70,14 @@ const BannerImage = styled.img`
 
 const StoreBanner = ({ storeName }: { storeName: string | undefined }) => {
   const selectedStore = useRecoilValue(selectedStoreState);
+  console.log(selectedStore);
+  
+
   return (
     <BannerDiv>
       <BannerOverlay />
       <BannerText>
+        { selectedStore?.storeAlwaysShare ? <img src={sharebadge}/> : ''}
         <h1>{storeName}</h1>
       </BannerText>
       <BannerImageWrapper>
