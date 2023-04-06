@@ -181,6 +181,8 @@ public class StoreServiceImpl implements StoreService {
     public void deleteStoreByMember(Long storeId, Member member) {
         Store store = storeRepository.findById(storeId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 가게 입니다."));
+        member = memberRepository.findById(member.getId())
+                .orElseThrow(() -> new IllegalArgumentException("해당 멤버가 존재하지 않습니다."));
         if (store.getOwner() == null || member.getId() != store.getOwner().getId()) {
             throw new NotStoreOwnerException("가게의 주인이 아닙니다.");
         }
