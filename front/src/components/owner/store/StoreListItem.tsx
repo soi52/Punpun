@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { useSetRecoilState } from 'recoil';
-import { Store, selectedStoreState } from '../../../store/atoms';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { Store, selectedStoreState, userInfoState } from '../../../store/atoms';
 import API from '../../../store/API';
 
 interface StoreItemProps {
@@ -58,9 +58,23 @@ function StoreListItem({ stores, onDelete }: StoreItemProps) {
   console.log(stores);
   const navigate = useNavigate();
   const setSelectedStore = useSetRecoilState(selectedStoreState); // 새로 추가된 코드
-
+  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
   const handleDelete = (id: number) => {
-    onDelete(id);
+    if (stores.length === 1) {
+      onDelete(id);
+      API.get('users/member')
+        .then((response: any) => {
+          console.log(response.data.role);
+          localStorage.setItem('role', response.data.role);
+          setUserInfo(response.data);
+        })
+        .catch((error: any) => {
+          console.error(error);
+        });
+      navigate('/sumain');
+    } else {
+      onDelete(id);
+    }
   };
 
   const StoreList = stores.map((store) => (
