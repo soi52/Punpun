@@ -15,6 +15,7 @@ import ChildHeader from '../header/ChildHeader';
 import OwnerHeader from '../header/OwnerHeader';
 import SupporterHeader from '../header/SupporterHeader';
 import API from '../../store/API';
+import { removeCookie } from '../auth/Cookie';
 
 const Wrapper = styled.div`
   position: absolute;
@@ -98,6 +99,9 @@ function Header(props: HeaderProps) {
   };
 
   const onLogout = () => {
+    localStorage.removeItem('role');
+    removeCookie('accessToken');
+    removeCookie('refreshToken');
     setIsLoggedIn(false);
     toMain();
   };
