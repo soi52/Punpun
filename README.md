@@ -48,7 +48,7 @@ SSAFY 8기 2학기 특화 프로젝트 - 빅데이터 분산 도메인 **PUNPUN 
 
 ### - Kafka를 이용한 이벤트 기반으로 서비스 분리
 
-![예약하기](/uploads/b71cdfd8c290dc429f43275de10104b5/예약하기.png)
+![예약하기](/uploads/1d5d6abba5d229562d0d9a11dff482b1/예약하기.png)
 
 ![예약_문자](/uploads/310f244b7b452b0e814af265e96b15a1/예약_문자.jpg)
 
