@@ -16,8 +16,10 @@ public class Menu extends BaseEntity {
     @Column(name = "menu_id")
     private Long id;
     private String name;
-    private Long price;
-    private Long sponsoredCount;
+    @Builder.Default
+    private Long price = 0L;
+    @Builder.Default
+    private Long sponsoredCount = 0L;
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<FavoriteMenu> favoriteMenus;
