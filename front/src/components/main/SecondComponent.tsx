@@ -17,8 +17,7 @@ const ContentStyle = styled.div`
   // position: absolute;
   margin-top: 75px;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-direction: row;
   justify-content: center;
   text-align: center;
   // height: 100%;
@@ -34,25 +33,17 @@ const ImageDiv = styled.div`
 `;
 
 function SecondComponent() {
-  const { width, height } = useWindowSize()
+  const { width, height } = useWindowSize();
   return (
     <ComponentStyle>
-      <Confetti
-      width={width}
-      height={height}
-    />
+      <Confetti width={width} height={height} />
       <Fade duration={2000} direction="left">
-        {
-          <ContentStyle>
-            냠
-          </ContentStyle>
-        }
+        {<ContentStyle>냠</ContentStyle>}
       </Fade>
       <Fade duration={2000} direction="down">
         {
           <ImageDiv>
-            <img src={main2}
-              style={{ width: '106%', height: '100%' }}/>
+            <img src={main2} style={{ width: '106%', height: '100%' }} />
           </ImageDiv>
         }
       </Fade>
