@@ -92,13 +92,14 @@ public class SupportControllerTest {
                         .build())
                 .build();
 
-        List<Support> supports= List.of(support1, support2);
-        doReturn(List.of(support1, support2)).when(supportService).findSupport(any(Member.class));
+        SupportResponseDTO supportResponseDTO=new SupportResponseDTO(support1.getSupportDate(),support1.getStore().getId(), 2L, support1.getStore().getName(),  support1.getMenu().getId(), support1.getMenu().getName(), support1.getMenu().getPrice());
+        SupportResponseDTO supportResponseDTO2=new SupportResponseDTO( support2.getSupportDate(),support2.getStore().getId(), 1L, support2.getStore().getName(),  support2.getMenu().getId(), support2.getMenu().getName(), support2.getMenu().getPrice());
 
-        List<SupportResponseDTO > supportResponseDTOS= supports.stream()
-                .map(SupportResponseDTO::new)
-                .collect(Collectors.toList());
-        String result=new Gson().toJson(supportResponseDTOS);
+        List<SupportResponseDTO> supports= List.of(supportResponseDTO, supportResponseDTO2);
+        doReturn(supports).when(supportService).findSupport(any(Member.class));
+
+
+        String result=new Gson().toJson(supports);
 
         mockMvc.perform(get("/supports")
                 .with(csrf()))
