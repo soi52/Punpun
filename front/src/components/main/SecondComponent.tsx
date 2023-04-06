@@ -10,7 +10,7 @@ const ComponentStyle = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
-  background-color: #fff;
+  background-color: #8dace5;
   align-items: center;
 `;
 
@@ -41,6 +41,7 @@ const TitleStyle1 = styled.h1`
   position: absolute;
   top: 13%;
   left: 58%;
+  font-weight: bold;
 `;
 
 const ContentStyle1 = styled.h3`
@@ -54,6 +55,7 @@ const TitleStyle2 = styled.h1`
   /* width: 100%; */
   top: 57%;
   left: 26%;
+  font-weight: bold;
 `;
 
 const ContentStyle2 = styled.h3`
@@ -69,6 +71,7 @@ const TitleStyle3 = styled.h1`
   /* width: 100%; */
   top: 57%;
   left: 68%;
+  font-weight: bold;
 `;
 
 const ContentStyle3 = styled.h3`
