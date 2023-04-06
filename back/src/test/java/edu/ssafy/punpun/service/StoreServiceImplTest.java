@@ -640,6 +640,7 @@ public class StoreServiceImplTest {
         void deleteStoreByMember1() {
             // given
             Member member = Member.builder()
+                    .id(1L)
                     .name("memberTest")
                     .email("memberTest@email.com")
                     .phoneNumber("01000000000")
@@ -661,6 +662,7 @@ public class StoreServiceImplTest {
                     .build();
 
             doReturn(Optional.of(store1)).when(storeRepository).findById(1L);
+            doReturn(Optional.of(member)).when(memberRepository).findById(1L);
 
             // when
             storeService.deleteStoreByMember(1L, member);
@@ -675,6 +677,7 @@ public class StoreServiceImplTest {
         void deleteStoreByMember2() {
             // given
             Member member = Member.builder()
+                    .id(1L)
                     .name("memberTest")
                     .role(UserRole.OWNER)
                     .build();
@@ -697,6 +700,7 @@ public class StoreServiceImplTest {
         void deleteStoreByMember3() {
             // given
             Member member1 = Member.builder()
+                    .id(1L)
                     .name("memberTest")
                     .role(UserRole.OWNER)
                     .build();
@@ -706,6 +710,7 @@ public class StoreServiceImplTest {
                     .build();
 
             doReturn(Optional.of(store1)).when(storeRepository).findById(1L);
+            doReturn(Optional.of(member1)).when(memberRepository).findById(1L);
 
             // when
             // then
@@ -734,6 +739,7 @@ public class StoreServiceImplTest {
                     .build();
 
             doReturn(Optional.of(store1)).when(storeRepository).findById(eq(1L));
+            doReturn(Optional.of(member1)).when(memberRepository).findById(1L);
 
             // when
             // then
@@ -746,6 +752,7 @@ public class StoreServiceImplTest {
         void deleteStoreByMember5() {
             // given
             Member member = Member.builder()
+                    .id(1L)
                     .name("memberTest")
                     .email("memberTest@email.com")
                     .phoneNumber("01000000000")
@@ -769,11 +776,35 @@ public class StoreServiceImplTest {
                     .build();
 
             doReturn(Optional.of(store1)).when(storeRepository).findById(1L);
+            doReturn(Optional.of(member)).when(memberRepository).findById(1L);
 
             // when
             // then
             assertThatCode(() -> storeService.deleteStoreByMember(1L, member))
                     .isInstanceOf(NotDeleteEntityException.class);
+        }
+
+        @Test
+        @DisplayName("가게 등록 해제 - 멤버가 없는 경우")
+        void deleteStoreByMember6() {
+            // given
+            Member member = Member.builder()
+                    .id(1L)
+                    .name("memberTest")
+                    .role(UserRole.OWNER)
+                    .build();
+            Store store1 = Store.builder()
+                    .id(1L)
+                    .name("store1")
+                    .owner(member)
+                    .build();
+            doReturn(Optional.of(store1)).when(storeRepository).findById(1L);
+            doReturn(Optional.empty()).when(memberRepository).findById(1L);
+
+            // when
+            // then
+            assertThatThrownBy(() -> storeService.deleteStoreByMember(1L, member))
+                    .isInstanceOf(IllegalArgumentException.class);
         }
         
     }
