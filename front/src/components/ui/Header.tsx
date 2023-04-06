@@ -126,7 +126,7 @@ function Header(props: HeaderProps) {
           console.error(error);
         });
     }
-  }, []);
+  }, [role]);
 
   const renderNav = () => {
     if (isLoggedIn) {
