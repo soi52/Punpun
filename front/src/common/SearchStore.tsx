@@ -58,7 +58,7 @@ const SearchStore = ({ message }: SearchStoreProps) => {
 
   useEffect(() => {
     if (longitude !== 0 || latitude !== 0) {
-      API.get(`stores/distTest/${longitude}/${latitude}?mode='postgres'`)
+      API.get(`stores/distTest/${longitude}/${latitude}?mode=postgres`)
         .then((response: any) => {
           console.log(response.data);
           setSearchStoreList(response.data);
@@ -68,7 +68,7 @@ const SearchStore = ({ message }: SearchStoreProps) => {
           console.error(error);
         });
     }
-  }, [latitude, longitude, setIsUpdated]);
+  }, [latitude, longitude]);
 
   return (
     <Wrapper>
