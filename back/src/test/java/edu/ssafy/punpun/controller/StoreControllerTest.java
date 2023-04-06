@@ -107,41 +107,70 @@ public class StoreControllerTest {
     @DisplayName("get - 현 위치 기준 주변 가게 불러오기")
     public class getStoreDistanceTest {
 
-        @Test
-        @WIthCustomChild
-        @DisplayName("Java")
-        void getStoreDistanceTest1() throws Exception {
-            Store store1 = Store.builder()
-                    .id(1L)
-                    .name("스타벅스 구미 인동점")
-                    .lon(128.420817F)
-                    .lat(36.106961F)
-                    .build();
-            Store store2 = Store.builder()
-                    .id(2L)
-                    .name("카페 에이유")
-                    .lon(128.420650F)
-                    .lat(36.107156F)
-                    .build();
-            doReturn(List.of(store1, store2)).when(storeService).getStoreDistanceJava(128.421046F, 36.106795F);
-
-            List<StoreInfoResponseDTO> storeInfoResponseDTOList = new ArrayList<>();
-            storeInfoResponseDTOList.add(new StoreInfoResponseDTO(store1));
-            storeInfoResponseDTOList.add(new StoreInfoResponseDTO(store2));
-            String output = new ObjectMapper().writeValueAsString(storeInfoResponseDTOList);
-
-            mockMvc.perform(get("/stores/distTest/128.421046/36.106795?mode=java")
-                            .with(csrf()))
-                    .andExpect(status().isOk())
-                    .andExpect(content().contentType("application/json;charset=UTF-8"))
-                    .andExpect(content().string(output))
-                    .andDo(print());
-        }
+//        @Test
+//        @WIthCustomChild
+//        @DisplayName("Java")
+//        void getStoreDistanceTest1() throws Exception {
+//            Store store1 = Store.builder()
+//                    .id(1L)
+//                    .name("스타벅스 구미 인동점")
+//                    .lon(128.420817F)
+//                    .lat(36.106961F)
+//                    .build();
+//            Store store2 = Store.builder()
+//                    .id(2L)
+//                    .name("카페 에이유")
+//                    .lon(128.420650F)
+//                    .lat(36.107156F)
+//                    .build();
+//            doReturn(List.of(store1, store2)).when(storeService).getStoreDistanceJava(128.421046F, 36.106795F);
+//
+//            List<StoreInfoResponseDTO> storeInfoResponseDTOList = new ArrayList<>();
+//            storeInfoResponseDTOList.add(new StoreInfoResponseDTO(store1));
+//            storeInfoResponseDTOList.add(new StoreInfoResponseDTO(store2));
+//            String output = new ObjectMapper().writeValueAsString(storeInfoResponseDTOList);
+//
+//            mockMvc.perform(get("/stores/distTest/128.421046/36.106795?mode=java")
+//                            .with(csrf()))
+//                    .andExpect(status().isOk())
+//                    .andExpect(content().contentType("application/json;charset=UTF-8"))
+//                    .andExpect(content().string(output))
+//                    .andDo(print());
+//        }
+//
+//        @Test
+//        @WIthCustomSupporter
+//        @DisplayName("Postgres")
+//        void getStoreDistanceTest2() throws Exception {
+//            Store store1 = Store.builder()
+//                    .name("스타벅스 구미 인동점")
+//                    .lon(128.420817F)
+//                    .lat(36.106961F)
+//                    .build();
+//            Store store2 = Store.builder()
+//                    .name("카페 에이유")
+//                    .lon(128.420650F)
+//                    .lat(36.107156F)
+//                    .build();
+//            doReturn(List.of(store1, store2)).when(storeService).getStoreDistancePostgres(128.421046F, 36.106795F);
+//
+//            List<StoreInfoResponseDTO> storeInfoResponseDTOList = new ArrayList<>();
+//            storeInfoResponseDTOList.add(new StoreInfoResponseDTO(store1));
+//            storeInfoResponseDTOList.add(new StoreInfoResponseDTO(store2));
+//            String output = new ObjectMapper().writeValueAsString(storeInfoResponseDTOList);
+//
+//            mockMvc.perform(get("/stores/distTest/128.421046/36.106795?mode=postgres")
+//                            .with(csrf()))
+//                    .andExpect(status().isOk())
+//                    .andExpect(content().contentType("application/json;charset=UTF-8"))
+//                    .andExpect(content().string(output))
+//                    .andDo(print());
+//        }
 
         @Test
         @WIthCustomSupporter
-        @DisplayName("Postgres")
-        void getStoreDistanceTest2() throws Exception {
+        @DisplayName("get - 현 위치 기준 주변 가게 불러오기 : Postgres")
+        void getStoreDistanceTest4() throws Exception {
             Store store1 = Store.builder()
                     .name("스타벅스 구미 인동점")
                     .lon(128.420817F)
@@ -152,12 +181,14 @@ public class StoreControllerTest {
                     .lon(128.420650F)
                     .lat(36.107156F)
                     .build();
-            doReturn(List.of(store1, store2)).when(storeService).getStoreDistancePostgres(128.421046F, 36.106795F);
 
-            List<StoreInfoResponseDTO> storeInfoResponseDTOList = new ArrayList<>();
-            storeInfoResponseDTOList.add(new StoreInfoResponseDTO(store1));
-            storeInfoResponseDTOList.add(new StoreInfoResponseDTO(store2));
-            String output = new ObjectMapper().writeValueAsString(storeInfoResponseDTOList);
+            List<StoreDistResponseDTO> storeDistResponseDTOList = new ArrayList<>();
+            storeDistResponseDTOList.add(new StoreDistResponseDTO(store1, true));
+            storeDistResponseDTOList.add(new StoreDistResponseDTO(store2, false));
+
+            doReturn(storeDistResponseDTOList).when(storeService).getStoreDistancePostgres(128.421046F, 36.106795F);
+
+            String output = new ObjectMapper().writeValueAsString(storeDistResponseDTOList);
 
             mockMvc.perform(get("/stores/distTest/128.421046/36.106795?mode=postgres")
                             .with(csrf()))

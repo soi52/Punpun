@@ -52,22 +52,37 @@ public class StoreController {
         return new StoreDetailChildResponseDTO(store, menuChildResponseDTOList);
     }
 
+//    @ApiOperation(value = "현 위치 기준 주변 가게 불러오기")
+//    @GetMapping("/distTest/{lon}/{lat}")
+//    @ResponseStatus(code = HttpStatus.OK)
+//    public List<StoreInfoResponseDTO> getStoreDistanceTest(@PathVariable(name = "lon") float lon,
+//                                                           @PathVariable(name = "lat") float lat,
+//                                                           @RequestParam(name = "mode", required = false) String mode) {
+//        List<StoreInfoResponseDTO> storeInfoResponseDTOList = null;
+//        if (mode.equals("java")) {
+//            storeInfoResponseDTOList = storeService.getStoreDistanceJava(lon, lat).stream()
+//                    .map(store -> new StoreInfoResponseDTO(store))
+//                    .collect(Collectors.toList());
+//        }
+//        if (mode.equals("postgres")) {
+//            storeInfoResponseDTOList = storeService.getStoreDistancePostgres(lon, lat).stream()
+//                    .map(store -> new StoreInfoResponseDTO(store))
+//                    .collect(Collectors.toList());
+//        }
+//
+//        return storeInfoResponseDTOList;
+//    }
+
     @ApiOperation(value = "현 위치 기준 주변 가게 불러오기")
     @GetMapping("/distTest/{lon}/{lat}")
     @ResponseStatus(code = HttpStatus.OK)
-    public List<StoreInfoResponseDTO> getStoreDistanceTest(@PathVariable(name = "lon") float lon,
+    public List<StoreDistResponseDTO> getStoreDistanceTest(@PathVariable(name = "lon") float lon,
                                                            @PathVariable(name = "lat") float lat,
                                                            @RequestParam(name = "mode", required = false) String mode) {
-        List<StoreInfoResponseDTO> storeInfoResponseDTOList = null;
-        if (mode.equals("java")) {
-            storeInfoResponseDTOList = storeService.getStoreDistanceJava(lon, lat).stream()
-                    .map(store -> new StoreInfoResponseDTO(store))
-                    .collect(Collectors.toList());
-        }
+        List<StoreDistResponseDTO> storeInfoResponseDTOList = null;
+
         if (mode.equals("postgres")) {
-            storeInfoResponseDTOList = storeService.getStoreDistancePostgres(lon, lat).stream()
-                    .map(store -> new StoreInfoResponseDTO(store))
-                    .collect(Collectors.toList());
+            storeInfoResponseDTOList = storeService.getStoreDistancePostgres(lon, lat);
         }
 
         return storeInfoResponseDTOList;
