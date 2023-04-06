@@ -172,6 +172,16 @@ public class StoreServiceImplTest {
                 .lat(36.106961)
                 .alwaysShare(true)
                 .build();
+        Menu menu1 = Menu.builder()
+                .id(1L)
+                .store(store1)
+                .sponsoredCount(1L)
+                .build();
+        Menu menu2 = Menu.builder()
+                .id(2L)
+                .store(store1)
+                .sponsoredCount(0L)
+                .build();
         Store store2 = Store.builder()
                 .name("카페 에이유")
                 .lon(128.420650)
@@ -182,9 +192,10 @@ public class StoreServiceImplTest {
         Float latitude = 36.106795F;
         Integer radius = 300;
         doReturn(List.of(store1, store2)).when(storeRepository).findByEarthDistancePostgres(longitude, latitude, radius);
+        doReturn(List.of(menu1, menu2)).when(menuRepository).findByStore(store1);
 
         // when
-        List<Store> results = storeService.getStoreDistancePostgres(longitude, latitude);
+        List<StoreDistResponseDTO> results = storeService.getStoreDistancePostgres(longitude, latitude);
 
         // then
         assertThat(results.size()).isEqualTo(2);
