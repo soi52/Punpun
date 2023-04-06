@@ -31,7 +31,7 @@ const BookingListContainer = styled.div`
 const NoBookingMessage = styled.p`
   /* align-items: center; */
   text-align: center;
-  // font-size: 1.2rem;
+  font-size: 1.2rem;
   /* margin: 2rem 0; */
   /*  */
   width: 100%;

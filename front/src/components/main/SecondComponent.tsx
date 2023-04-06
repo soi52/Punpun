@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import first from '../../resources/images/main/main2-1.png';
 import { Fade } from 'react-awesome-reveal';
-import Confetti from 'react-confetti';
 import useWindowSize from 'react-use/lib/useWindowSize';
 
 const ComponentStyle = styled.div`
@@ -82,7 +81,7 @@ const ContentStyle3 = styled.h3`
 function SecondComponent() {
   return (
     <ComponentStyle>
-      {/* <Fade duration={2000} direction="right"> */}
+      <>PUNPUN'S 3 POINTS</>
       <Component1>
         <TitleStyle1>
           <Fade duration={1500} direction="right">
@@ -98,7 +97,6 @@ function SecondComponent() {
           </Fade>
         </ContentStyle1>
       </Component1>
-      {/* </Fade> */}
       <Component2>
         <TitleStyle2>
           <Fade duration={2200} direction="left">
