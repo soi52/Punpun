@@ -31,13 +31,13 @@ public class ReservationRepositoryImpl implements ReservationCustomRepository {
 
         long totalCount = queryFactory
                 .selectFrom(reservation)
-                .where(betweenDate(localDateTime))
+                .where(betweenDate(localDateTime), reservation.child.eq(child))
                 .fetch()
                 .size();
 
         List<Reservation> reservations = queryFactory
                 .selectFrom(reservation)
-                .where(betweenDate(localDateTime))
+                .where(betweenDate(localDateTime), reservation.child.eq(child))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
