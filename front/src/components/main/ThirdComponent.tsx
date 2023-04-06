@@ -9,6 +9,7 @@ const ComponentStyle = styled.div`
   height: 100%;
   width: 100%;
   display: flex;
+  
 `;
 
 const TitleStyle = styled.h2`

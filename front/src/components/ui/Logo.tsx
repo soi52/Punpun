@@ -60,7 +60,7 @@ const LogoImg = styled.div`
 function Logo() {
   const navigate = useNavigate();
   const toMain = () => {
-    navigate('/sumain');
+    navigate('/');
   };
 
   return (
