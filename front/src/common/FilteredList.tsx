@@ -5,6 +5,13 @@ import styled from 'styled-components';
 import { Store, isRegisterState, selectedMyStoreState } from '../store/atoms';
 import StoreRegisterItem from '../components/owner/store/StoreRegisterItem';
 
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
 const StyledLink = styled(Link)`
   text-decoration: none;
   color: inherit;
@@ -12,7 +19,7 @@ const StyledLink = styled(Link)`
 
 const List = styled.ul`
   list-style: none;
-  margin: 0;
+  margin: 20px;
   padding: 0;
   max-height: 300px;
   overflow-y: auto;
@@ -150,7 +157,7 @@ const FilteredList = ({ stores, keyword }: FilteredListProps) => {
   };
 
   return (
-    <div>
+    <Wrapper>
       {isRegister ? (
         <List>
           {currentItems.map((store, index) => (
@@ -165,13 +172,19 @@ const FilteredList = ({ stores, keyword }: FilteredListProps) => {
         </List>
       ) : (
         <List>
-          {currentItems.map((store, index) => (
-            <ListItem key={index}>
-              <StyledLink to={`/store/${store.storeId}`}>
+          {currentItems.map((store, index) =>
+            window.location.href.includes('register') ? (
+              <ListItem key={index}>
                 <StoreName>{store.storeName}</StoreName>
-              </StyledLink>
-            </ListItem>
-          ))}
+              </ListItem>
+            ) : (
+              <ListItem key={index}>
+                <StyledLink to={`/store/${store.storeId}`}>
+                  <StoreName>{store.storeName}</StoreName>
+                </StyledLink>
+              </ListItem>
+            )
+          )}
         </List>
       )}
       {/* 페이지네이션 UI를 만듭니다. */}
@@ -190,7 +203,7 @@ const FilteredList = ({ stores, keyword }: FilteredListProps) => {
           Next
         </button>
       </Pagination>
-    </div>
+    </Wrapper>
   );
 };
 

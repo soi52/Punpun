@@ -78,7 +78,7 @@ const SearchStoreList = ({ stores }: { stores: Store[] }) => {
       });
   };
 
-  const handleSearchSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSearchSubmit = (event: React.FormEvent<HTMLFormElement> | React.KeyboardEvent<HTMLInputElement>) => {
     event.preventDefault();
     searchStores();
   };

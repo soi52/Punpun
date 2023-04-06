@@ -8,6 +8,10 @@ const Wrapper = styled.div`
   padding: 20px;
 `;
 
+const Div = styled.div`
+  padding-top: 10px;
+`;
+
 type Props = {
   myStoreId: string | undefined;
 };
@@ -54,7 +58,10 @@ const StoreThanksMessage = ({ myStoreId }: Props) => {
   return (
     <Wrapper>
       <StoreBanner storeName={storeName} />
-      <ReviewItem reviews={reviews} />
+      <Div>
+        <h2>감사메세지</h2>
+        <ReviewItem reviews={reviews} />
+      </Div>
     </Wrapper>
   );
 };

@@ -17,14 +17,6 @@ type ChMenu = {
   menuImage: string | null;
 };
 
-interface MenuCardImageProps
-  extends DetailedHTMLProps<
-    ImgHTMLAttributes<HTMLImageElement>,
-    HTMLImageElement
-  > {
-  image: string;
-}
-
 const MenuCardContainer = styled.div<{ isDisabled: boolean }>`
   display: flex;
   flex-direction: column;
@@ -33,7 +25,7 @@ const MenuCardContainer = styled.div<{ isDisabled: boolean }>`
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
   border-radius: 4px;
   padding: 16px;
-  max-width: 300px;
+  width: 30%;
   cursor: ${(props) => (props.isDisabled ? 'default' : 'pointer')};
   transition: transform 0.2s ease, opacity 0.2s ease;
   &:hover {
@@ -61,7 +53,8 @@ const MenuCardPrice = styled.div`
 `;
 
 const HeartButtonWrapper = styled.div`
-  margin-left: 190px;
+  display: flex;
+  justify-content: flex-end;
   background-color: transparent;
   border: none;
   font-size: 20px;
