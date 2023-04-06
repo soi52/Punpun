@@ -28,3 +28,67 @@ export interface KakaoUserInfo {
     gender: string;
   };
 }
+
+export interface MenuSupport {
+  supportId: null | number;
+  supportType: string;
+  supportDate: string;
+  menuId: number;
+  menuName: string;
+  totalCount: number;
+  useCount: number;
+}
+
+export interface Reviews {
+  id: number;
+  userImage: string;
+  userName: string;
+  reviewText: string;
+}
+
+export interface Store {
+  storeId: number;
+  storeName: string;
+  storeOpenTime: string | null;
+  storeInfo: string | null;
+  storeAddress: string;
+  storeLon: number;
+  storeLat: number;
+  storeImageName: string | null;
+  storeImage: string | null;
+  storePhoneNumber: string | null;
+  storeAlwaysShare: Boolean;
+  menuDTO: MenuDTO[];
+}
+
+export type MenuDTO = {
+  menuId: number;
+  menuName: string;
+  menuPrice: number;
+  menuCount: number;
+  menuImage: string;
+  menuImageName: string;
+};
+
+export interface OwStoreUpdate {
+  storeId: number;
+  storeName: string;
+  storeOpenTime: string | null;
+  storeInfo: string | null;
+  storeAddress: string;
+  storePhoneNumber: string | null;
+  storeAlwaysShare: Boolean;
+}
+
+export interface UserInfo {
+  userId: number;
+  userName: string;
+  userEmail: string;
+  userRole: string;
+  userNumber: string;
+  userSupportedPoint: number | null;
+  userRemainPoint: number | null;
+  userArea: string | null;
+  userProfileName: string | null;
+  userProfileImage: string | null;
+}

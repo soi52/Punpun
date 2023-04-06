@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import SearchBar from './SearchBar';
 import FilteredList from './FilteredList';
 import API from '../store/API';
-import { Store } from '../store/atoms';
+import { Store } from '../store/types';
 
 const ComponentDiv = styled.div`
   display: flex;

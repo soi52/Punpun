@@ -1,7 +1,8 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { selectedStoreState, Store } from '../store/atoms';
+import { selectedStoreState } from '../store/atoms';
+import { Store } from '../store/types';
 
 const Div = styled.div`
   width: 400px;

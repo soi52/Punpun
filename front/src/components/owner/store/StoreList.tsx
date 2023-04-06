@@ -3,13 +3,13 @@ import StoreListItem from './StoreListItem';
 import { useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import {
-  Store,
   isRegisterState,
   isRegisterStoreState,
   owStoreState,
 } from '../../../store/atoms';
 import { useNavigate } from 'react-router';
 import API from '../../../store/API';
+import { Store } from '../../../store/types';
 
 const Wrapper = styled.div`
   padding: 20px;

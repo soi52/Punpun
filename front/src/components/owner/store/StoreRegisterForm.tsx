@@ -3,7 +3,6 @@ import styled, { css } from 'styled-components';
 import StoreSearchModal from './StoreSearchModal';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import {
-  Store,
   isRegisterState,
   isRegisterStoreState,
   selectedMyStoreState,
@@ -11,6 +10,7 @@ import {
 } from '../../../store/atoms';
 import API from '../../../store/API';
 import { useNavigate } from 'react-router-dom';
+import { Store } from '../../../store/types';
 
 const redColor = 'rgba(140, 150, 181, 1)';
 const transition = 'all 0.25s cubic-bezier(0.53, 0.01, 0.35, 1.5)';
