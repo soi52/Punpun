@@ -33,6 +33,7 @@ function Router() {
           {/* 후원페이지 */}
           <Route path="/" element={<MainPage />} />
           <Route path="/kakaoLogin" element={<RedirectPage />} />
+          <Route path="/addnumber" element={<AddNumberPage />} />
           <Route path="/sumain" element={<MainPage />} />
           <Route path="/suuser" element={<SuUserPage />} />
           <Route path="/susearch" element={<SuSearchStore />} />
@@ -59,7 +60,6 @@ function Router() {
 
           {/* 디버깅페이지 */}
           <Route path="/test" element={<TestPage />} />
-          <Route path="/addnumber" element={<AddNumberPage />} />
           <Route path="/test1" element={<TestCopy />} />
         </Route>
       </Routes>
