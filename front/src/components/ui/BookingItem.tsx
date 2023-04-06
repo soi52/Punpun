@@ -99,7 +99,7 @@ const BookingItem: React.FC<BookingItemProps> = ({
       {isActive && (
         <>
           <BookingItemContent>
-            <p>{booking.reservationId}</p>
+            <p># {booking.reservationId}</p>
             <p>{booking.menuName}</p>
             <p>{booking.reservationTime}</p>
             {/* <p>{booking.time}</p> */}

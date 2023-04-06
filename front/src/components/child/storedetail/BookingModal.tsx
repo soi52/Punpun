@@ -166,7 +166,6 @@ const BookingModal: React.FC<ModalProps> = ({ menu, onClose }) => {
       reservationTime: formattedDate
     })
     .then((response) => {
-      console.log(response.data);
       onClose(); // API 요청이 성공적으로 처리되면 모달을 닫는다.
       Swal.fire(
         '예약 신청이 완료되었습니다!',
@@ -175,8 +174,6 @@ const BookingModal: React.FC<ModalProps> = ({ menu, onClose }) => {
       )
     })
     .catch((error) => {
-      console.log(error);
-      alert(error.response.data.message)
     });
   }
 

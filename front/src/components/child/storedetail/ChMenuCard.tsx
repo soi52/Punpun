@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import API from '../../../store/API';
 import BookingModal from './BookingModal';
-import { DetailedHTMLProps, ImgHTMLAttributes } from 'react';
+import { useRecoilValue } from 'recoil';
+import { selectedStoreState } from '../../../store/atoms';
 import defaultMenuImage from '../../../resources/images/profileDefault.png';
 
 import styled from 'styled-components';
 import Swal from 'sweetalert2';
+import { log } from 'console';
 
 type ChMenu = {
   id: number;
@@ -80,25 +82,30 @@ const ChMenuCard: React.FC<ChMenu> = ({
   const toggleLike = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     setLiked(!liked);
-    console.log('liked: ' + liked);
 
     if (favoriteMenu) {
       API.delete('favors', { data: { menuId: id } })
         .then((response) => {
-          console.log(response.data);
-          setLiked(false); // favoriteMenu가 false가 됨에 따라 하트 모양 바꿈
+          setLiked(false);
+          Swal.fire(
+            '좋아요 취소!',
+            '선호메뉴에서 해제되었습니다.',
+            'success'
+          )
         })
         .catch((error) => {
-          console.error(error);
         });
     } else {
       API.post('favors', { menuId: id })
         .then((response) => {
-          console.log(response.data);
-          setLiked(true); // favoriteMenu가 true가 됨에 따라 하트 모양 바꿈
+          setLiked(true);
+          Swal.fire(
+            '좋아요!',
+            '선호메뉴로 등록되었습니다.',
+            'success'
+          )
         })
         .catch((error) => {
-          console.error(error);
         });
     }
   };
@@ -116,9 +123,12 @@ const ChMenuCard: React.FC<ChMenu> = ({
     }
   };
 
+  const selectedStore = useRecoilValue(selectedStoreState);
+  const isDisabled = !selectedStore?.storeAlwaysShare && menuCount === 0;
+
   return (
     <>
-      <MenuCardContainer isDisabled={menuCount === 0} onClick={handleClick}>
+      <MenuCardContainer isDisabled={isDisabled} onClick={handleClick}>
         <div>
           <HeartButtonWrapper>
             <span onClick={toggleLike}>{liked ? '💖' : '🖤'}</span>
@@ -139,5 +149,6 @@ const ChMenuCard: React.FC<ChMenu> = ({
     </>
   );
 };
+
 
 export default ChMenuCard;
