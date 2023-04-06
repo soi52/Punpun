@@ -192,7 +192,7 @@ public class StoreServiceImpl implements StoreService {
 
         store.deleteOwner();
 
-        if (member.getStores().size() == 0) {
+        if (member.getStores().size() == 1 || member.getStores().size() == 0) {
             // 사장이 소유한 가게가 하나도 없다면, 후원자로 Role 변경
             member.changeRole(UserRole.SUPPORTER);
         }
