@@ -26,7 +26,7 @@ const ContentDivStyle = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  // background-color: #ddf3ff;
+  // background-color: #a3c3f2;
 `;
 
 const TitleStyle = styled.h1`

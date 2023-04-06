@@ -1,6 +1,7 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 import API from '../../store/API';
+import Swal from 'sweetalert2';
 
 export interface Booking {
   id: number; // id 프로퍼티 추가
@@ -54,12 +55,18 @@ const BookingItem: React.FC<BookingItemProps> = ({
       bookingId: booking.reservationId,
     })
       .then((response) => {
-        // 예약 수락 성공 처리
-        console.log('예약이 수락되었습니다.');
+        Swal.fire(
+          '예약이 확정되었습니다!',
+          `${booking.reservationTime}에 아동이 방문 예정입니다.`,
+          'success'
+        )
       })
       .catch((error) => {
-        // 예약 수락 실패 처리
-        console.error(error);
+        Swal.fire({
+          icon: 'error',
+          title: '오류가 발생했습니다!',
+          text: '다시 시도해주세요.',
+        })
       });
   };
   const handleButtonClickDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -69,10 +76,18 @@ const BookingItem: React.FC<BookingItemProps> = ({
       bookingId: booking.reservationId,
     })
       .then((response) => {
-        console.log('예약이 거절되었습니다.');
+        Swal.fire({
+          icon: 'error',
+          title: '예약이 거절되었습니다!',
+          text: '',
+        })
       })
       .catch((error) => {
-        console.error(error);
+        Swal.fire({
+          icon: 'error',
+          title: '오류가 발생했습니다!',
+          text: '다시 시도해주세요.',
+        })
       });
   };
 

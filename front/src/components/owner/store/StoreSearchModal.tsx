@@ -14,7 +14,7 @@ type StoreSearchModalProps = {
 
 const ModalOverlay = styled.div`
   position: fixed;
-  top: 20px;
+  top: 0;
   left: 0;
   right: 0;
   bottom: 0;
@@ -26,6 +26,10 @@ const ModalOverlay = styled.div`
 `;
 
 const ModalContent = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   background-color: white;
   padding: 2rem;
   border-radius: 0.5rem;

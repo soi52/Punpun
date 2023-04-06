@@ -36,6 +36,7 @@ const SubmitButton = styled.button`
   color: white;
   font-weight: bold;
   cursor: pointer;
+  margin-right: 50px;
 `;
 
 function StoreManage() {

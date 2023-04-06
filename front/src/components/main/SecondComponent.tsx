@@ -11,6 +11,7 @@ const ComponentStyle = styled.div`
   height: 100%
   display: flex;
   // position: relative;
+  background-color: #e2f7c7;
 `;
 
 const ContentStyle = styled.div`
