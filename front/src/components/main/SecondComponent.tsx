@@ -1,52 +1,58 @@
 import React from 'react';
 import styled from 'styled-components';
-import main2 from '../../resources/images/main/main2-1.png';
-import second from '../../resources/images/main2.png';
+import first from '../../resources/images/main/main2-1.png';
 import { Fade } from 'react-awesome-reveal';
 import Confetti from 'react-confetti';
 import useWindowSize from 'react-use/lib/useWindowSize';
 
 const ComponentStyle = styled.div`
-  // background-size: 100%;
-  height: 100%
+  position: relative;
+  height: 100%;
+  width: 100%;
   display: flex;
-  // position: relative;
-  background-color: #e2f7c7;
+  justify-content: space-between;
+  background-color: #fff;
+  align-items: center;
 `;
 
-const ContentStyle = styled.div`
-  // position: absolute;
+const MainImageStyle = styled.img`
+  width: 50%;
+  height: 65%;
+  object-fit: cover;
+  margin-right: 50px;
+`;
+
+const ContentDivStyle = styled.div`
+  height: 100%;
+  width: 50%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
-  text-align: center;
-  // height: 100%;
+  align-items: center;
+  // background-color: #a3c3f2;
 `;
 
-const ImageDiv = styled.div`
-  width: 500px;
-  height: 500px;
-  display: flex;
-  margin-top: 200px;
-  margin-left: 50%;
-  text-align: center;
+const TitleStyle = styled.h1`
+  width: 100%;
+`;
+
+const ContentStyle = styled.h4`
+  width: 50%;
 `;
 
 function SecondComponent() {
-  const { width, height } = useWindowSize();
   return (
     <ComponentStyle>
-      <Confetti width={width} height={height} />
-      <Fade duration={2000} direction="left">
-        {<ContentStyle>냠</ContentStyle>}
-      </Fade>
-      <Fade duration={2000} direction="down">
-        {
-          <ImageDiv>
-            <img src={main2} style={{ width: '106%', height: '100%' }} />
-          </ImageDiv>
-        }
-      </Fade>
+      <MainImageStyle src={first} />
+      <ContentDivStyle>
+        <Fade duration={1500} direction={'right'}>
+          <TitleStyle>결식아동들을 위해</TitleStyle>
+          <TitleStyle>항상 후원하는 가게로</TitleStyle>
+          <TitleStyle>설정해보세요</TitleStyle>
+        </Fade>
+      </ContentDivStyle>
+      {/* <Fade duration={1500} direction={'right'}> */}
+      {/* </Fade> */}
     </ComponentStyle>
   );
 }
