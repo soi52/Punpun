@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 
 @Getter
-@NoArgsConstructor
 public class SupportResponseDTO {
     private String date;
     private Long storeId;
