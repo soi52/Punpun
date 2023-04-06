@@ -18,6 +18,10 @@ const ComponentStyle = styled.div`
   padding: 20px;
 `;
 
+const Div = styled.div`
+  padding-top: 10px;
+`;
+
 const ContentDiv = styled.div`
   display: flex;
   // width: 80%
@@ -60,23 +64,25 @@ const StoreDetailInfo = () => {
   return (
     <Wrapper>
       {isOwner ? null : <StoreBanner storeName={stores.storeName} />}
-      <h2>가게 정보</h2>
-      <ComponentStyle>
-        <ContentDiv>
-          <StoreHour
-            storeAddress={stores.storeAddress}
-            storeInfo={stores.storeInfo}
-            storeOpenTime={stores.storeOpenTime}
-            storePhoneNumber={stores.storePhoneNumber}
-            storeAlwaysShare={stores.storeAlwaysShare}
-          />
-          <Map
-            latitude={stores.storeLat}
-            longitude={stores.storeLon}
-            stores={[]}
-          />
-        </ContentDiv>
-      </ComponentStyle>
+      <Div>
+        <h2>가게 정보</h2>
+        <ComponentStyle>
+          <ContentDiv>
+            <StoreHour
+              storeAddress={stores.storeAddress}
+              storeInfo={stores.storeInfo}
+              storeOpenTime={stores.storeOpenTime}
+              storePhoneNumber={stores.storePhoneNumber}
+              storeAlwaysShare={stores.storeAlwaysShare}
+            />
+            <Map
+              latitude={stores.storeLat}
+              longitude={stores.storeLon}
+              stores={[]}
+            />
+          </ContentDiv>
+        </ComponentStyle>
+      </Div>
     </Wrapper>
   );
 };

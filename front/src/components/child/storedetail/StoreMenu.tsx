@@ -11,6 +11,10 @@ const Wrapper = styled.div`
   padding: 20px;
 `;
 
+const Div = styled.div`
+  padding-top: 20px;
+`;
+
 type MenuDTO = {
   menuId: number;
   menuName: string;
@@ -72,11 +76,13 @@ const StoreMenu = ({ myStoreId }: Props) => {
   return (
     <Wrapper id="wrapper">
       <StoreBanner storeName={storeName} />
-      {role === 'CHILD' ? (
-        <ChMenuList chMenuList={chMenuDTOList} />
-      ) : (
-        <MenuList menuDTOList={menuDTOList} />
-      )}
+      <Div>
+        {role === 'CHILD' ? (
+          <ChMenuList chMenuList={chMenuDTOList} />
+        ) : (
+          <MenuList menuDTOList={menuDTOList} />
+        )}
+      </Div>
     </Wrapper>
   );
 };

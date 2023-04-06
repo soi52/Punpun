@@ -8,7 +8,6 @@ import Sidebar from '../components/ui/Sidebar';
 import MainComponent from '../components/ui/MainComponent';
 
 import StoreMenu from '../components/child/storedetail/StoreMenu';
-// import StoreInfo from '../components/child/storedetail/StoreInfo';
 import ThanksMessage from '../components/child/storedetail/StoreThanksMessage';
 import SuPointAdd from '../components/supporter/SuPointAdd';
 import { useRecoilState } from 'recoil';

@@ -52,11 +52,11 @@ function StoreInfo() {
     <>
       <h2>
         <MainTitle
-          title={`따뜻한 사랑과 건강한 식사를 나눠주시는 ${selectedStore?.storeName}`}
+          title={`사랑과 건강한 식사를 나눠주시는 ${selectedStore?.storeName}`}
         />
       </h2>
       <MainMessage
-        message={shareList ? `　${userInfo.userName} 사장님, 어느새 ${shareList.length}번의 식사 나눔을 하셨네요!` : `　${userInfo.userName} 사장님, 마음을 나누어 보세요 :)`}
+        message={shareList ? `　${userInfo.userName} 사장님, 어느새 ${shareList.length}번의 식사 나눔을 하셨네요!` : `　${userInfo.userName} 사장님, 따뜻한 마음을 나누어 보세요 :)`}
       />
     </>
   );

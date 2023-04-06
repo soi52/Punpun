@@ -10,19 +10,19 @@ import { Store, selectedMyStoreState } from '../../../store/atoms';
 
 type StoreSearchModalProps = {
   onClose: () => void;
-};
+}
 
 const ModalOverlay = styled.div`
   position: fixed;
-  top: 20;
+  top: 20px;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  // background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
-  // align-items: center;
-  z-index: 1;
+  align-items: center;
+  z-index: 5;
 `;
 
 const ModalContent = styled.div`
@@ -55,9 +55,24 @@ const ModalButton = styled.button`
   }
 `;
 
+const SearchButton = styled.button`
+  border: none;
+  background-color: #4f4f4f;
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #3f3f3f;
+  }
+`;
+
 const ButtonDiv = styled.div`
   display: flex;
   justify-content: space-between;
+  margin-top: 20px;
 `;
 
 const StoreSearchModal = (
@@ -89,7 +104,7 @@ const StoreSearchModal = (
       });
   };
 
-  const handleSearchSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSearchSubmit = (event: React.FormEvent<HTMLFormElement> | React.KeyboardEvent<HTMLInputElement>) => {
     event.preventDefault();
     searchStores();
   };
@@ -114,7 +129,7 @@ const StoreSearchModal = (
           onChange={handleSearchInputChange}
           onSubmit={handleSearchSubmit}
         />
-        <button onClick={buttonSearchSubmit}>검색하기</button>
+        {/* <SearchButton onClick={buttonSearchSubmit}>검색하기</SearchButton> */}
         <FilteredList stores={searchedList} keyword={searchKeyword} />
         <ButtonDiv>
           <ModalButton onClick={onClose}>닫기</ModalButton>
