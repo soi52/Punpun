@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import first from '../../resources/images/main/main2-1.png';
 import { Fade } from 'react-awesome-reveal';
-import useWindowSize from 'react-use/lib/useWindowSize';
 
 const ComponentStyle = styled.div`
   position: relative;
