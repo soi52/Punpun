@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import useScrollFadeInPage from '../../pages/owner/useScrollFadeInPage';
 import main2 from '../../resources/images/main/main2-1.png';
 import second from '../../resources/images/main2.png';
 import { Fade } from 'react-awesome-reveal';
