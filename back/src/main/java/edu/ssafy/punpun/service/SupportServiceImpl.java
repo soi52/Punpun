@@ -2,6 +2,7 @@ package edu.ssafy.punpun.service;
 
 import edu.ssafy.punpun.dto.request.SupportRequestDTO;
 import edu.ssafy.punpun.dto.response.ShareResponseDTO;
+import edu.ssafy.punpun.dto.response.SupportResponseDTO;
 import edu.ssafy.punpun.entity.Member;
 import edu.ssafy.punpun.entity.Menu;
 import edu.ssafy.punpun.entity.Support;
@@ -32,8 +33,8 @@ public class SupportServiceImpl implements SupportService{
     private final MenuService menuService;
 
     @Override
-    public List<Support> findSupport(Member supporter) {
-        return supportRepository.findBySupporter(supporter);
+    public List<SupportResponseDTO> findSupport(Member supporter) {
+        return supportRepository.findSupport(supporter);
     }
 
     @Override

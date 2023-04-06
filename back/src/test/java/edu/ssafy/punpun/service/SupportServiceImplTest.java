@@ -1,6 +1,7 @@
 package edu.ssafy.punpun.service;
 
 import edu.ssafy.punpun.dto.request.SupportRequestDTO;
+import edu.ssafy.punpun.dto.response.SupportResponseDTO;
 import edu.ssafy.punpun.entity.Member;
 import edu.ssafy.punpun.entity.Menu;
 import edu.ssafy.punpun.entity.Store;
@@ -19,6 +20,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,47 +56,71 @@ public class SupportServiceImplTest {
     @DisplayName("후원자의 모든 후원 내역 찾아오기 - 서비스")
     void findSupport(){
         Support support1=Support.builder()
+                .supportDate(LocalDate.now())
                 .supportState(SupportState.SUPPORT)
                 .supporter(member)
                 .store(Store.builder()
+                        .id(1L)
                         .name("test1")
                         .build())
                 .menu(Menu.builder()
+                        .id(1L)
                         .name("menuTest1")
                         .price(7500L)
                         .build())
                 .build();
 
         Support support2=Support.builder()
+                .supportDate(LocalDate.now())
                 .supportState(SupportState.SUPPORT)
                 .supporter(member)
                 .store(Store.builder()
+                        .id(2L)
                         .name("test2")
                         .build())
                 .menu(Menu.builder()
+                        .id(2L)
                         .name("menuTest2")
                         .price(8000L)
                         .build())
                 .build();
-        doReturn(List.of(support1,support2)).when(supportRepository).findBySupporter(member);
 
-        List<Support> supportList=supportService.findSupport(member);
+        Support support3=Support.builder()
+                .supportDate(LocalDate.now())
+                .supportState(SupportState.SUPPORT)
+                .supporter(member)
+                .store(Store.builder()
+                        .id(1L)
+                        .name("test3")
+                        .build())
+                .menu(Menu.builder()
+                        .id(1L)
+                        .name("menuTest1")
+                        .price(7500L)
+                        .build())
+                .build();
 
-        Assertions.assertEquals(supportList.get(0).getId(), support1.getId());
-        Assertions.assertEquals(supportList.get(0).getSupportState(), support1.getSupportState());
-        Assertions.assertEquals(supportList.get(0).getCreatedDateTime(), support1.getCreatedDateTime());
-        Assertions.assertEquals(supportList.get(0).getStore().getName(), support1.getStore().getName());
-        Assertions.assertEquals(supportList.get(0).getMenu().getId(), support1.getMenu().getId());
-        Assertions.assertEquals(supportList.get(0).getMenu().getName(), support1.getMenu().getName());
-        Assertions.assertEquals(supportList.get(0).getMenu().getPrice(), support1.getMenu().getPrice());
+        SupportResponseDTO supportResponseDTO=new SupportResponseDTO(support1.getSupportDate(),support1.getStore().getId(), 2L, support1.getStore().getName(),  support1.getMenu().getId(), support1.getMenu().getName(), support1.getMenu().getPrice());
+        SupportResponseDTO supportResponseDTO2=new SupportResponseDTO(support2.getSupportDate(),support2.getStore().getId(), 1L, support2.getStore().getName(),  support2.getMenu().getId(), support2.getMenu().getName(), support2.getMenu().getPrice());
+        doReturn(List.of(supportResponseDTO ,supportResponseDTO2)).when(supportRepository).findSupport(member);
 
-        Assertions.assertEquals(supportList.get(1).getId(), support2.getId());
-        Assertions.assertEquals(supportList.get(1).getSupportState(), support2.getSupportState());
-        Assertions.assertEquals(supportList.get(1).getCreatedDateTime(), support2.getCreatedDateTime());
-        Assertions.assertEquals(supportList.get(1).getStore().getName(), support2.getStore().getName());
-        Assertions.assertEquals(supportList.get(1).getMenu().getId(), support2.getMenu().getId());
-        Assertions.assertEquals(supportList.get(1).getMenu().getName(), support2.getMenu().getName());
-        Assertions.assertEquals(supportList.get(1).getMenu().getPrice(), support2.getMenu().getPrice());
+        List<SupportResponseDTO> supportList=supportService.findSupport(member);
+
+        Assertions.assertEquals(supportList.get(0).getDate(), support1.getSupportDate().toString());
+        Assertions.assertEquals(supportList.get(0).getStoreId(), support1.getStore().getId());
+        Assertions.assertEquals(supportList.get(0).getSponsorCount(), 2L);
+        Assertions.assertEquals(supportList.get(0).getStoreName(), support1.getStore().getName());
+        Assertions.assertEquals(supportList.get(0).getMenuId(), support1.getMenu().getId());
+        Assertions.assertEquals(supportList.get(0).getMenuName(), support1.getMenu().getName());
+        Assertions.assertEquals(supportList.get(0).getMenuPrice(), support1.getMenu().getPrice());
+
+        Assertions.assertEquals(supportList.get(1).getDate(), support2.getSupportDate().toString());
+        Assertions.assertEquals(supportList.get(1).getStoreId(), support2.getStore().getId());
+        Assertions.assertEquals(supportList.get(1).getSponsorCount(), 1L);
+        Assertions.assertEquals(supportList.get(1).getStoreName(), support2.getStore().getName());
+        Assertions.assertEquals(supportList.get(1).getMenuId(), support2.getMenu().getId());
+        Assertions.assertEquals(supportList.get(1).getMenuName(), support2.getMenu().getName());
+        Assertions.assertEquals(supportList.get(1).getMenuPrice(), support2.getMenu().getPrice());
     }
 
     @Test
