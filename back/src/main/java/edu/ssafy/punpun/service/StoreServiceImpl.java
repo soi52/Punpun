@@ -76,15 +76,39 @@ public class StoreServiceImpl implements StoreService {
         return storeList;
     }
 
+//    @Override
+//    public List<Store> getStoreDistancePostgres(float lon, float lat) {
+//        long beforeTime = System.currentTimeMillis();
+//        List<Store> storeList = storeRepository.findByEarthDistancePostgres(lon, lat, CHILD_DISTANCE_RADIUS);
+//        long afterTime = System.currentTimeMillis();
+//        long secDiffTime = (afterTime - beforeTime) / 1000; // 초 단위
+//        log.debug("[StoreService] getStoreDistanceJava 함수 실행 시간 : " + secDiffTime);
+//
+//        return storeList;
+//    }
+
     @Override
-    public List<Store> getStoreDistancePostgres(float lon, float lat) {
+    public List<StoreDistResponseDTO> getStoreDistancePostgres(float lon, float lat) {
         long beforeTime = System.currentTimeMillis();
+        List<StoreDistResponseDTO> storeDistResponseDTOList = new ArrayList<>();
         List<Store> storeList = storeRepository.findByEarthDistancePostgres(lon, lat, CHILD_DISTANCE_RADIUS);
+        for (Store store : storeList) {
+            List<Menu> menus = menuRepository.findByStore(store);
+            boolean isSupport = false;
+            for (Menu menu : menus) {
+                if (menu.getSponsoredCount() > 0) {
+                    isSupport = true;
+                    break;
+                }
+            }
+            storeDistResponseDTOList.add(new StoreDistResponseDTO(store, isSupport));
+        }
+
         long afterTime = System.currentTimeMillis();
         long secDiffTime = (afterTime - beforeTime) / 1000; // 초 단위
         log.debug("[StoreService] getStoreDistanceJava 함수 실행 시간 : " + secDiffTime);
 
-        return storeList;
+        return storeDistResponseDTOList;
     }
 
     @Override
