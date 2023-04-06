@@ -208,6 +208,7 @@ const StoreUpdateForm = () => {
   const selectedStore = useRecoilValue(selectedStoreState);
   const [isUpdated, setIsUpdated] = useRecoilState(isUpdatedState);
   const [updatedStore, setUpdatedStore] = useRecoilState(updatedStoreState);
+  const [isAlwaysShare, setIsAlwaysShare] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
 
@@ -259,9 +260,7 @@ const StoreUpdateForm = () => {
       storeOpenTime: (
         document.getElementsByName('storeOpenTime')[0] as HTMLInputElement
       ).value,
-      storeAlwaysShare:
-        (document.getElementsByName('storeAlwaysShare')[0] as HTMLInputElement)
-          .value === 'true',
+      storeAlwaysShare: isAlwaysShare,
     };
 
     const formData = new FormData();
@@ -381,7 +380,9 @@ const StoreUpdateForm = () => {
           type="checkbox"
           name="storeAlwaysShare"
           accept="image/*"
-          checked={selectedStore?.storeAlwaysShare ? true : false}
+          defaultChecked={selectedStore?.storeAlwaysShare ? true : false}
+          checked={isAlwaysShare}
+          onChange={(e) => setIsAlwaysShare(e.target.checked)}
         />
       </CheckBoxBox>
       <CheckBoxTitle>결식 아동들이 항상 예약을 요청할 수 있어요.</CheckBoxTitle>
