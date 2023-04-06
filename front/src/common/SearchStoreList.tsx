@@ -49,7 +49,7 @@ const SearchBarDiv = styled.div`
 
 const SearchStoreList = ({ stores }: { stores: Store[] }) => {
   const [keyword, setKeyword] = useState('');
-  const [activeTab, setActiveTab] = useState<'search' | 'filter'>('filter');
+  const [activeTab, setActiveTab] = useState<'search' | 'filter'>('search');
   const [searchedList, setSearchedList] = useState<Store[]>([]);
   const [searchKeyword, setSearchKeyword] = useState('');
 
@@ -100,16 +100,16 @@ const SearchStoreList = ({ stores }: { stores: Store[] }) => {
     <ComponentDiv>
       <TabList>
         <TabButton
-          isActive={activeTab === 'filter'}
-          onClick={() => setActiveTab('filter')}
-        >
-          내 주변 가게 보기
-        </TabButton>
-        <TabButton
           isActive={activeTab === 'search'}
           onClick={() => setActiveTab('search')}
         >
           가게 검색하기
+        </TabButton>
+        <TabButton
+          isActive={activeTab === 'filter'}
+          onClick={() => setActiveTab('filter')}
+        >
+          내 주변 가게 보기
         </TabButton>
       </TabList>
       <SearchBarDiv>
