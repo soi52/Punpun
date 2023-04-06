@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import API from '../../../store/API';
 import styled from 'styled-components';
+import Swal from 'sweetalert2';
 
 import MessageInput from './MessageInput';
 import MessageList from './MessageList';
@@ -77,7 +78,11 @@ const Message: React.FC<MessageProps> = ({ reservationId }) => {
 
     API.post('/reviews', message)
       .then((response) => {
-        console.log('Message sent:', response.data);
+        Swal.fire(
+          '감사 메세지가 등록되었습니다!',
+          '식사는 맛있게 하셨나요?',
+          'success'
+        )
         setMessages([
           { inputValue: inputValue, selectedButtons: selectedButtons },
           ...messages,

@@ -203,7 +203,7 @@ const PrevBookings = () => {
   console.log(formattedBookings);
 
   if (!formattedBookings) {
-    return <Loading />;
+    return <div>아직 예약을 하지 않았어요 :(</div>;
   }
 
   return (

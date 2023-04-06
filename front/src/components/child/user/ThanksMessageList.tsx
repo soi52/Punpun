@@ -113,8 +113,8 @@ const ThanksMessageList = () => {
       });
   }, []);
 
-  if (!messages) {
-    return <Loading />;
+  if (!messages || messages.length === 0) {
+    return <div>남긴 메세지가 없어요 :(</div>;
   }
 
   return (
