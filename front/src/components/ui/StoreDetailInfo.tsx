@@ -51,7 +51,7 @@ const StoreDetailInfo = () => {
     }
 
     fetchStores();
-  }, [myStoreId, isUpdated]);
+  }, [myStoreId, isUpdated, selectedStore]);
 
   if (!stores) {
     return <Loading />;
