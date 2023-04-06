@@ -25,7 +25,7 @@ const FullPage = () => {
         <FirstComponent1 />
         <FirstComponent2 /> */}
         <SecondComponent />
-        {/* <ThirdComponent /> */}
+        <ThirdComponent />
         {/* <SectionContainer height={50}></SectionContainer> */}
         {/* <FifthComponent /> */}
         <FourthComponent />

@@ -5,6 +5,8 @@ import Slider, { Settings } from 'react-slick';
 // import 'slick-carousel/slick/slick.css';
 // import 'slick-carousel/slick/slick-theme.css';
 import { GrFormPrevious, GrFormNext } from 'react-icons/gr';
+import Confetti from 'react-confetti';
+import useWindowSize from 'react-use/lib/useWindowSize'
 
 import styled from 'styled-components';
 
@@ -64,9 +66,14 @@ function FirstCarosel() {
       </DivPre>
     ),
   };
+  const { width, height } = useWindowSize()
 
   return (
     <>
+      <Confetti
+      width={width}
+      height={height}
+    />
       <CustomSlider {...settings}>
         <WrapComponent>
           <FirstComponent />
