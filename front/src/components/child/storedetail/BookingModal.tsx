@@ -174,6 +174,8 @@ const BookingModal: React.FC<ModalProps> = ({ menu, onClose }) => {
       )
     })
     .catch((error) => {
+      // console.log(error);
+      
     });
   }
 

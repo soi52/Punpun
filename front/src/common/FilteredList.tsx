@@ -5,6 +5,8 @@ import styled from 'styled-components';
 import { isRegisterState, selectedMyStoreState } from '../store/atoms';
 import StoreRegisterItem from '../components/owner/store/StoreRegisterItem';
 import { Store } from '../store/types';
+import supportbadge from '../resources/images/support-badge.png';
+import sharebadge from '../resources/images/share_badge.png';
 
 const Wrapper = styled.div`
   display: flex;
@@ -42,8 +44,15 @@ const ListItem = styled.li`
 const StoreName = styled.h3`
   font-size: 17px;
   margin: 0 0 5px;
+  margin-right: 10px;
   color: black;
   text-decoration-line: none;
+  
+`;
+
+const ListContent = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 // 페이지네이션
@@ -181,7 +190,11 @@ const FilteredList = ({ stores, keyword }: FilteredListProps) => {
             ) : (
               <ListItem key={index}>
                 <StyledLink to={`/store/${store.storeId}`}>
-                  <StoreName>{store.storeName}</StoreName>
+                  <ListContent>
+                    <StoreName>{store.storeName}</StoreName>
+                    { store.storeAlwaysShare ? <img src={sharebadge}/> : ''}
+                    { store.storeSupport ? <img src={supportbadge}/> : ''}
+                  </ListContent>
                 </StyledLink>
               </ListItem>
             )
