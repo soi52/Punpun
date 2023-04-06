@@ -73,7 +73,7 @@ public class MenuServiceImplTest {
         Mockito.doReturn(List.of(menu1, menu2)).when(menuRepository).findByStore(store1);
 
         // when
-        List<Menu> results = menuRepository.findByStore(store1);
+        List<Menu> results = menuService.findByStore(store1);
 
         //then
         Assertions.assertThat(results.get(0).getId()).isEqualTo(menu1.getId());
@@ -84,7 +84,6 @@ public class MenuServiceImplTest {
         Assertions.assertThat(results.get(1).getPrice()).isEqualTo(menu2.getPrice());
         Assertions.assertThat(results.get(1).getSponsoredCount()).isEqualTo(menu2.getSponsoredCount());
         Assertions.assertThat(results.get(1).getStore()).isEqualTo(menu2.getStore());
-
     }
 
     @Nested
@@ -415,6 +414,38 @@ public class MenuServiceImplTest {
                     .isInstanceOf(IllegalArgumentException.class);
         }
 
+        @Test
+        @DisplayName("메뉴 수정하기 - 오류, 메뉴에 해당하는 가게의 주인이 아닌 경우")
+        void updateMenuDetail7() {
+            // given
+            Member member1 = Member.builder()
+                    .id(1L)
+                    .name("memberTest")
+                    .role(UserRole.OWNER)
+                    .build();
+            Member member2 = Member.builder()
+                    .id(2L)
+                    .name("memberTest2")
+                    .role(UserRole.OWNER)
+                    .build();
+            Store store = Store.builder()
+                    .id(1L)
+                    .owner(member1)
+                    .build();
+            Menu menu = Menu.builder()
+                    .id(1L)
+                    .name("test")
+                    .price(1000L)
+                    .store(store)
+                    .build();
+            doReturn(Optional.of(menu)).when(menuRepository).findById(1L);
+
+            // when
+            // then
+            assertThatThrownBy(() -> menuService.updateMenuDetail(1L, any(MenuUpdateRequestDTO.class), null, member2))
+                    .isInstanceOf(NotStoreOwnerException.class);
+        }
+
     }
 
     @Nested
@@ -586,8 +617,39 @@ public class MenuServiceImplTest {
                     .isInstanceOf(NotDeleteEntityException.class);
         }
 
-    }
+        @Test
+        @DisplayName("메뉴 삭제하기 - 오류, 메뉴에 해당하는 가게의 주인이 아닌 경우")
+        void deleteMenu7() {
+            // given
+            Member member1 = Member.builder()
+                    .id(1L)
+                    .name("memberTest")
+                    .role(UserRole.OWNER)
+                    .build();
+            Member member2 = Member.builder()
+                    .id(2L)
+                    .name("memberTest2")
+                    .role(UserRole.OWNER)
+                    .build();
+            Store store = Store.builder()
+                    .id(1L)
+                    .owner(member1)
+                    .build();
+            Menu menu = Menu.builder()
+                    .id(1L)
+                    .name("test")
+                    .price(1000L)
+                    .store(store)
+                    .build();
+            doReturn(Optional.of(menu)).when(menuRepository).findById(1L);
 
+            // when
+            // then
+            assertThatThrownBy(() -> menuService.deleteMenu(1L, member2))
+                    .isInstanceOf(NotStoreOwnerException.class);
+        }
+
+    }
 
     @Test
     @DisplayName("메뉴 id로 메뉴 가져오기 - 서비스")

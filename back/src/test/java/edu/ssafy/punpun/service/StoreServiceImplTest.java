@@ -5,6 +5,7 @@ import edu.ssafy.punpun.dto.response.MenuChildResponseDTO;
 import edu.ssafy.punpun.dto.response.StoreDistResponseDTO;
 import edu.ssafy.punpun.entity.*;
 import edu.ssafy.punpun.entity.enumurate.UserRole;
+import edu.ssafy.punpun.exception.NotDeleteEntityException;
 import edu.ssafy.punpun.exception.NotStoreOwnerException;
 import edu.ssafy.punpun.repository.*;
 import edu.ssafy.punpun.s3.S3Uploader;
@@ -550,8 +551,50 @@ public class StoreServiceImplTest {
         }
 
         @Test
-        @DisplayName("가게 상세 정보 수정 - 가게entity에 저장된 이미지와 entity가 맞지 않는 경우")
+        @DisplayName("가게 상세 정보 수정 - 가게의 주인이 아닌 경우")
         void updateStoreDetail4() throws IOException {
+            // given
+            Member member1 = Member.builder()
+                    .id(1L)
+                    .name("memberTest1")
+                    .role(UserRole.OWNER)
+                    .build();
+            Member member2 = Member.builder()
+                    .id(2L)
+                    .name("memberTest2")
+                    .role(UserRole.OWNER)
+                    .build();
+            Image image = Image.builder()
+                    .id(1L)
+                    .name("testImage")
+                    .build();
+            Store store = Store.builder()
+                    .id(1L)
+                    .owner(member1)
+                    .image(image)
+                    .build();
+            doReturn(Optional.of(store)).when(storeRepository).findById(1L);
+
+            final String fileName = "testImage1"; //파일명
+            final String contentType = "png"; //파일타입
+            final String filePath = "src/test/resources/testImage/"+fileName+"."+contentType; //파일경로
+            FileInputStream fileInputStream = new FileInputStream(new File(filePath));
+            MockMultipartFile fileImage = new MockMultipartFile(
+                    "storeImage", //name
+                    fileName + "." + contentType, //originalFilename
+                    contentType,
+                    fileInputStream
+            );
+
+            // when
+            // then
+            assertThatThrownBy(() -> storeService.updateStoreDetail(1L, member2, any(StoreDetailRequestDTO.class), fileImage))
+                    .isInstanceOf(NotStoreOwnerException.class);
+        }
+
+        @Test
+        @DisplayName("가게 상세 정보 수정 - 가게entity에 저장된 이미지와 entity가 맞지 않는 경우")
+        void updateStoreDetail5() throws IOException {
             // given
             Member member = Member.builder()
                     .id(1L)
@@ -695,5 +738,41 @@ public class StoreServiceImplTest {
             assertThatCode(() -> storeService.deleteStoreByMember(1L, member1))
                     .isInstanceOf(NotStoreOwnerException.class);
         }
+
+        @Test
+        @DisplayName("가게 등록 해제 - 연관된 내역이 있는 경우")
+        void deleteStoreByMember5() {
+            // given
+            Member member = Member.builder()
+                    .name("memberTest")
+                    .email("memberTest@email.com")
+                    .phoneNumber("01000000000")
+                    .role(UserRole.OWNER)
+                    .build();
+            Support support = Support.builder()
+                    .id(1L)
+                    .build();
+            Store store1 = Store.builder()
+                    .id(1L)
+                    .name("store1")
+                    .openState(true)
+                    .info("가게 1 테스트용")
+                    .openTime("24시 운영")
+                    .address("상북도 구미시 옥계북로 27, 삼구트리니엔 108동 1층 108호 (옥계동)")
+                    .lon(128.41848477014165)
+                    .lat(36.13917919014956)
+                    .alwaysShare(true)
+                    .owner(member)
+                    .supports(List.of(support))
+                    .build();
+
+            doReturn(Optional.of(store1)).when(storeRepository).findById(1L);
+
+            // when
+            // then
+            assertThatCode(() -> storeService.deleteStoreByMember(1L, member))
+                    .isInstanceOf(NotDeleteEntityException.class);
+        }
+        
     }
 }
