@@ -234,8 +234,8 @@ const StoreRegisterForm = () => {
     if (selectedMyStore) {
       API.get(`stores/${selectedMyStore?.storeId}`)
         .then((response: any) => {
-          // console.log(response.data);
-          // console.log(isRegister);
+          console.log(response.data);
+          console.log(isRegister);
           setRegisterStore(response.data);
         })
         .catch((error: any) => {
@@ -262,7 +262,6 @@ const StoreRegisterForm = () => {
       storeId: registerStore?.storeId,
     })
       .then((response: any) => {
-        console.log(response.data);
         setIsRegisterStore(true);
         setSelectedMyStore(null);
         setIsRegister(false);
@@ -270,7 +269,7 @@ const StoreRegisterForm = () => {
       .catch((error: any) => {
         console.error(error);
       });
-    navigate(`/owstore/${registerStore?.storeId}`);
+    navigate('/owstorelist');
   };
 
   return (
