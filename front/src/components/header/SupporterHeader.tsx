@@ -1,8 +1,6 @@
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
-import { isRegisterStoreState } from '../../store/atoms';
 import UserTypeSelector from './UserTypeSelector';
 
 const NavUl = styled.ul`
@@ -44,12 +42,11 @@ interface SupporterHeaderProps {
   userType: string;
   items: string[];
   selectedItem: string | undefined;
-  isOwnerRole: Boolean;
+  role: string;
 }
 
 function SupporterHeader(props: SupporterHeaderProps) {
-  const { onLogout, toMain, onSelect, items, selectedItem, isOwnerRole } =
-    props;
+  const { onLogout, toMain, onSelect, items, selectedItem, role } = props;
   const navigate = useNavigate();
 
   const toSuSearch = () => {
@@ -66,12 +63,12 @@ function SupporterHeader(props: SupporterHeaderProps) {
       <NavLi onClick={toSuSearch}>가게찾기</NavLi>
       <NavLi onClick={toSuMypage}>마이페이지</NavLi>
       <NavLi onClick={onLogout}>로그아웃</NavLi>
-      {isOwnerRole && (
+      {role === 'OWNER' && (
         <UserTypeSelector
           onSelect={onSelect}
           items={items}
           selectedItem={selectedItem}
-          isOwnerRole={isOwnerRole}
+          role={role}
         />
       )}
     </NavUl>
