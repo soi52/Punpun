@@ -8,7 +8,7 @@ const ComponentStyle = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
-  background-color: #fff;
+  background-color: #fdf4f5;
   align-items: center;
 `;
 

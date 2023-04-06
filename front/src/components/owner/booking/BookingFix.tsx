@@ -20,7 +20,7 @@ const BookingListContainer = styled.div`
   margin: 0.5rem 1rem 1rem 0.5rem;
   max-width: 175px;
   width: 100%;
-  height: 200px;
+  height: 100%;
   cursor: pointer;
   perspective: 1000px;
   position: relative;
