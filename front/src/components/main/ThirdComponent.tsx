@@ -24,9 +24,9 @@ function ThirdComponent() {
       {/* <video autoPlay loop controls={false}>
         <source src={video2} type="video/mp4" />
       </video> */}
-      <video autoPlay loop muted>
+      {/* <video autoPlay loop muted>
           <source src={video1} type="video/mp4" />
-      </video>
+      </video> */}
     </ComponentStyle>
   );
 }
