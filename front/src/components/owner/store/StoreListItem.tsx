@@ -1,9 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { useSetRecoilState } from 'recoil';
-import { Store, selectedStoreState } from '../../../store/atoms';
-import API from '../../../store/API';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import {
+  Store,
+  selectedStoreState,
+  isOwnerRoleState,
+} from '../../../store/atoms';
 
 interface StoreItemProps {
   stores: Store[];
@@ -57,10 +60,17 @@ const CheckBox = styled.input`
 function StoreListItem({ stores, onDelete }: StoreItemProps) {
   console.log(stores);
   const navigate = useNavigate();
+  const [isOwnerRole, setIsOwnerRole] = useRecoilState(isOwnerRoleState);
   const setSelectedStore = useSetRecoilState(selectedStoreState); // 새로 추가된 코드
 
   const handleDelete = (id: number) => {
-    onDelete(id);
+    if (stores.length === 1) {
+      onDelete(id);
+      setIsOwnerRole(false);
+      navigate('/sumain');
+    } else {
+      onDelete(id);
+    }
   };
 
   const StoreList = stores.map((store) => (

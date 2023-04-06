@@ -108,6 +108,11 @@ export const isRegisterState = atom<Boolean>({
   default: false,
 });
 
+export const isOwnerRoleState = atom<Boolean>({
+  key: 'isOwnerRoleState',
+  default: false,
+});
+
 // 리뷰 atom
 export interface Reviews {
   id: number;
