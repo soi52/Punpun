@@ -19,8 +19,4 @@ public class BaseEntity {
     private LocalDateTime createdDateTime;
     @LastModifiedDate
     private LocalDateTime lastModifiedDateTime;
-
-    public void setLastModifiedDateTime(LocalDateTime localDateTime){
-        this.lastModifiedDateTime = localDateTime;
-    }
 }
