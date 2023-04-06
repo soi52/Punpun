@@ -10,6 +10,10 @@ const Wrapper = styled.div`
   padding: 20px;
 `;
 
+const Div = styled.div`
+  padding-top: 10px;
+`;
+
 export type Review = {
   reviewId: number;
   reviewContent: string;
@@ -43,8 +47,10 @@ function ReviewList() {
   return (
     <Wrapper>
       <StoreInfo />
-      <h2>감사인사 목록</h2>
-      <ReviewItem reviews={owReviews} />
+      <Div>
+        <h2>감사인사 목록</h2>
+        <ReviewItem reviews={owReviews} />
+      </Div>
     </Wrapper>
   );
 }
