@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import API from '../../store/API';
 import { useRecoilState } from 'recoil';
 import { pointState } from '../../store/atoms';
+import Swal from 'sweetalert2';
 
 const Box = styled.div`
   width: 85%;
@@ -125,6 +126,11 @@ const DonateButton = styled.button`
   cursor: pointer;
   align-items: center;
   width: 20%;
+  &:hover,
+  &:focus {
+    color: #5D5A88;
+    background-color: #e7e6f2;
+  }
 `;
 
 const EmptyCartMessage = styled.div`
@@ -168,7 +174,11 @@ const MenuCart: React.FC<MenuCartProps> = ({
   const handleDonateClick = async () => {
     if (totalPrice > point) {
       console.log(totalPrice, point);
-      alert('포인트가 부족합니다. 포인트를 충전해주세요.');
+      Swal.fire({
+        icon: 'error',
+        title: '포인트가 부족합니다.',
+        text: '포인트를 충전해주세요.',
+      })
     } else {
       try {
         const menuIds = cartItems.map((item) => item.id);
@@ -181,11 +191,19 @@ const MenuCart: React.FC<MenuCartProps> = ({
         await API.post('supports/payment', requestBody);
         const response = await API.get('payments');
         setPoint(response.data.memberPoint);
-        alert(`${totalPrice.toLocaleString()}원이 후원되었습니다. 감사합니다!`);
+        Swal.fire(
+          '감사합니다!',
+          `${totalPrice.toLocaleString()}원이 후원되었습니다.`,
+          'success'
+        )
         deleteCart(-1);
       } catch (error) {
         console.error(error);
-        alert('결제 도중 오류가 발생했습니다.');
+        Swal.fire({
+          icon: 'error',
+          title: '결제 중 오류가 발생했습니다.',
+          text: '다시 시도해주세요.',
+        })
       }
     }
   };

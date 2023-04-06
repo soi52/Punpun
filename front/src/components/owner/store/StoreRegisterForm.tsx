@@ -311,7 +311,7 @@ const StoreRegisterForm = () => {
           type="text"
           id="storePhoneNumber"
           name="storePhoneNumber"
-          value={registerStore?.storePhoneNumber ?? ''}
+          value={registerStore?.storePhoneNumber ?? '변경이 불가능 합니다.'}
           readonly
         />
       </InputBox>
@@ -321,7 +321,7 @@ const StoreRegisterForm = () => {
           type="text"
           id="storeInfo"
           name="storeInfo"
-          value={registerStore?.storeInfo ?? ''}
+          value={registerStore?.storeInfo ?? '변경이 불가능 합니다.'}
           readonly
         />
       </InputBox>

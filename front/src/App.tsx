@@ -6,8 +6,8 @@ import theme from './theme';
 function App() {
   return (
     <>
+      <GlobalStyle />
       <ThemeProvider theme={theme}>
-        <GlobalStyle />
         <Router />
       </ThemeProvider>
     </>
