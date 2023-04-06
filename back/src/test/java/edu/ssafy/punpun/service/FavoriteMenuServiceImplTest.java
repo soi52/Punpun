@@ -7,6 +7,7 @@ import edu.ssafy.punpun.entity.enumurate.UserRole;
 import edu.ssafy.punpun.exception.DuplicateFavoriteMenuException;
 import edu.ssafy.punpun.repository.FavoriteMenuRepository;
 import edu.ssafy.punpun.repository.MenuRepository;
+import org.hibernate.validator.internal.util.privilegedactions.IsClassPresent;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -114,8 +115,13 @@ public class FavoriteMenuServiceImplTest {
                     .name("menu1")
                     .price(1000L)
                     .build();
+            FavoriteMenu favoriteMenu = FavoriteMenu.builder()
+                    .id(1L)
+                    .child(child1)
+                    .menu(menu1)
+                    .build();
             doReturn(Optional.of(menu1)).when(menuRepository).findById(1L);
-            doThrow(DuplicateFavoriteMenuException.class).when(favoriteMenuRepository).findByChildAndMenu(child1, menu1);
+            doReturn(Optional.of(favoriteMenu)).when(favoriteMenuRepository).findByChildAndMenu(child1, menu1);
 
             // when
             // then
