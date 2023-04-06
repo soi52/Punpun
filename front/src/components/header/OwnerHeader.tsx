@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
-import { Store, owStoreState, selectedStoreState } from '../../store/atoms';
+import { owStoreState, selectedStoreState } from '../../store/atoms';
+import { Store } from '../../store/types';
 import UserTypeSelector from './UserTypeSelector';
 
 const NavUl = styled.ul`

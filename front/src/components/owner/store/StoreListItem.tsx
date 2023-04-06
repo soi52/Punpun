@@ -2,8 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState, useSetRecoilState } from 'recoil';
-import { Store, selectedStoreState, userInfoState } from '../../../store/atoms';
+import { selectedStoreState, userInfoState } from '../../../store/atoms';
 import API from '../../../store/API';
+import { Store } from '../../../store/types';
 
 interface StoreItemProps {
   stores: Store[];

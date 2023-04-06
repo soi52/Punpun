@@ -3,13 +3,13 @@ import styled from 'styled-components';
 import StoreSearchModal from './StoreSearchModal';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import {
-  OwStoreUpdate,
   isUpdatedState,
   selectedStoreState,
   updatedStoreState,
 } from '../../../store/atoms';
 import API from '../../../store/API';
 import { useNavigate } from 'react-router-dom';
+import { OwStoreUpdate } from '../../../store/types';
 
 const redColor = '#8088A2';
 const transition = 'all 0.25s cubic-bezier(0.53, 0.01, 0.35, 1.5)';
