@@ -8,11 +8,11 @@ import Map from '../../common/Map';
 import StoreHour from '../child/storedetail/Storehours';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import {
-  Store,
   isOwnerState,
   isUpdatedState,
   selectedStoreState,
 } from '../../store/atoms';
+import { Store } from '../../store/types';
 
 const ComponentStyle = styled.div`
   // padding: 20px;

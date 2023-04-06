@@ -3,8 +3,9 @@ import API from '../../../store/API';
 import { useEffect, useState } from 'react';
 import MenuModal, { Menu } from './MenuModal';
 import defaultMenuImage from '../../../resources/images/profileDefault.png';
-import { MenuDTO, isUpdatedState } from '../../../store/atoms';
+import { isUpdatedState } from '../../../store/atoms';
 import { useRecoilState, useRecoilValue } from 'recoil';
+import { MenuDTO } from '../../../store/types';
 
 interface StoreMenuProps {
   storeMenus: MenuDTO[];

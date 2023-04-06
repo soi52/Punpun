@@ -6,11 +6,12 @@ import FilteredList from '../../../common/FilteredList';
 import SearchStoreList from '../../../common/SearchStoreList';
 import API from '../../../store/API';
 import { useRecoilValue } from 'recoil';
-import { Store, selectedMyStoreState } from '../../../store/atoms';
+import { selectedMyStoreState } from '../../../store/atoms';
+import { Store } from '../../../store/types';
 
 type StoreSearchModalProps = {
   onClose: () => void;
-}
+};
 
 const ModalOverlay = styled.div`
   position: fixed;
@@ -108,7 +109,11 @@ const StoreSearchModal = (
       });
   };
 
-  const handleSearchSubmit = (event: React.FormEvent<HTMLFormElement> | React.KeyboardEvent<HTMLInputElement>) => {
+  const handleSearchSubmit = (
+    event:
+      | React.FormEvent<HTMLFormElement>
+      | React.KeyboardEvent<HTMLInputElement>
+  ) => {
     event.preventDefault();
     searchStores();
   };

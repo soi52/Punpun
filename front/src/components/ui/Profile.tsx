@@ -4,7 +4,6 @@ import {
   isOwnerState,
   selectedStoreState,
   userAreaState,
-  UserInfo,
   userInfoState,
 } from '../../store/atoms';
 // import profileImg from '../../resources/images/temp_profile.png';
@@ -12,6 +11,7 @@ import { useEffect } from 'react';
 import API from '../../store/API';
 import useGeolocation from '../../common/UseGeolocation';
 import DefaultStoreImage from '../../resources/images/profileDefault.png';
+import { UserInfo } from '../../store/types';
 
 const ProfileBox = styled.div`
   display: flex;

@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
-import { Store, isRegisterState, selectedMyStoreState } from '../store/atoms';
+import { isRegisterState, selectedMyStoreState } from '../store/atoms';
 import StoreRegisterItem from '../components/owner/store/StoreRegisterItem';
+import { Store } from '../store/types';
 
 const Wrapper = styled.div`
   display: flex;

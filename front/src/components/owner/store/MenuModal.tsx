@@ -2,11 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import API from '../../../store/API';
 import { useRecoilState } from 'recoil';
-import {
-  MenuDTO,
-  isUpdatedState,
-  selectedStoreState,
-} from '../../../store/atoms';
+import { isUpdatedState, selectedStoreState } from '../../../store/atoms';
 
 const redColor = 'rgba(140, 150, 181, 1)';
 const transition = 'all 0.25s cubic-bezier(0.53, 0.01, 0.35, 1.5)';
