@@ -53,10 +53,9 @@ const StoreName = styled.td`
 `;
 
 interface SupportData {
-  supportId: number;
-  supportState: string;
-  supportCreationDate: string;
+  date: string;
   storeId: number;
+  sponsorCount: number;
   storeName: string;
   menuId: number;
   menuName: string;
@@ -82,31 +81,34 @@ const SupportHistory = () => {
       });
   }, []);
 
-  const filteredData = supportData.filter((support) => support.supportState === "SUPPORT");
+
+  // const filteredData = supportData.filter((support) => support.supportState === "SUPPORT");
 
   return (
     <Wrapper>
-      {filteredData.length > 0 ? (
+      {supportData.length > 0 ? (
         <Table>
           <TableHeader>
             <TableRow>
               <TableHeaderCell>후원번호</TableHeaderCell>
               <TableHeaderCell>가게 이름</TableHeaderCell>
               <TableHeaderCell>메뉴명</TableHeaderCell>
-              <TableHeaderCell>가격</TableHeaderCell>
+              <TableHeaderCell>개수</TableHeaderCell>
+              <TableHeaderCell>총 금액</TableHeaderCell>
               <TableHeaderCell>후원 날짜</TableHeaderCell>
             </TableRow>
           </TableHeader>
           <tbody>
-            {filteredData.map((support) => (
-              <TableRow key={support.supportId}>
-                <TableCell>{`# ${support.supportId}`}</TableCell>
+            {supportData.map((support, index) => (
+              <TableRow key={index}>
+                <TableCell>{`# ${index+1}`}</TableCell>
                 <StoreName onClick={() => toStore(support.storeId)}>
                   {support.storeName}
                 </StoreName>
                 <TableCell>{support.menuName}</TableCell>
-                <TableCell>{support.menuPrice.toLocaleString()}원</TableCell>
-                <TableCell>{support.supportCreationDate}</TableCell>
+                <TableCell>{support.sponsorCount.toLocaleString()}</TableCell>
+                <TableCell>{(support.sponsorCount * support.menuPrice).toLocaleString()}원</TableCell>
+                <TableCell>{support.date}</TableCell>
               </TableRow>
             ))}
           </tbody>

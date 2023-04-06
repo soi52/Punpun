@@ -19,7 +19,7 @@ const StyledLink = styled(Link)`
 
 const List = styled.ul`
   list-style: none;
-  margin: 20px;
+  margin: 5px;
   padding: 0;
   max-height: 300px;
   overflow-y: auto;
