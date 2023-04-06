@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import third from '../../resources/images/3.jpg';
 import video1 from '../../resources/video/video.mp4';
 import video2 from '../../resources/video/video2.mp4';
+import Carousel from './Carousel';
 
 const ComponentStyle = styled.div`
   background: url(${third}) no-repeat center;
@@ -27,6 +28,7 @@ function ThirdComponent() {
       {/* <video autoPlay loop muted>
           <source src={video1} type="video/mp4" />
       </video> */}
+      <Carousel/>
     </ComponentStyle>
   );
 }

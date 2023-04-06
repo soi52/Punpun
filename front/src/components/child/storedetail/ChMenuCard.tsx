@@ -111,7 +111,7 @@ const ChMenuCard: React.FC<ChMenu> = ({
   };
 
   const handleClick = () => {
-    if (menuCount !== 0) {
+    if (!isDisabled) {
       setShowModal(true);
       console.log(id);
     } else {

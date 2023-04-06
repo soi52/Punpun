@@ -26,10 +26,31 @@ const Wrapper = styled.div`
   padding: 20px;
 `;
 
+// 목록 2개 감싸기
 const BookingContainer = styled.div`
   display: flex;
   justify-content: center;
 `;
+
+// 플렉스 비율 50%씩 가져오기
+const RequestList = styled.div`
+  flex-basis: 50%;
+  /* border */
+`;
+
+const ConfirmList = styled.div`
+  flex-basis: 50%;
+  border-left: 1px dotted grey;
+`;
+
+// 제목 감싸기
+const WrapMenu = styled.div`
+  display: flex;
+`;
+const Menu = styled.h2`
+  flex-basis: 50%;
+`;
+
 
 function BookingToday() {
   const selectedStore = useRecoilValue(selectedStoreState);
@@ -49,15 +70,17 @@ function BookingToday() {
   return (
     <Wrapper>
       <StoreInfo />
+        <WrapMenu>
+          <Menu>예약 요청 목록</Menu>
+          <Menu>예약 확정 목록</Menu>
+        </WrapMenu>
       <BookingContainer>
-        <div>
-          <h2>예약 요청 목록</h2>
+        <RequestList>
           <BookingRequest bookings={bookings} />
-        </div>
-        <div>
-          <h2>예약 확정 목록</h2>
+        </RequestList>
+        <ConfirmList>
           <BookingFix bookings={bookings} />
-        </div>
+        </ConfirmList>
       </BookingContainer>
     </Wrapper>
   );

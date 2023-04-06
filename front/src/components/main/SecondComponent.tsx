@@ -40,13 +40,13 @@ const Component3 = styled.div``;
 const TitleStyle1 = styled.h1`
   color: #256f9c;
   position: absolute;
-  top: 10%;
-  left: 30%;
+  top: 13%;
+  left: 58%;
 `;
 
-const ContentStyle1 = styled.h4`
+const ContentStyle1 = styled.h3`
   posiditon: absolute !important;
-  left: 30% !important;
+  left: 58% !important;
 `;
 
 const TitleStyle2 = styled.h1`
@@ -57,11 +57,11 @@ const TitleStyle2 = styled.h1`
   left: 26%;
 `;
 
-const ContentStyle2 = styled.h4`
+const ContentStyle2 = styled.h3`
   posiditon: absolute;
   white-space: pre-line;
   top: 57%;
-  left: 18.5%;
+  left: 22.3%;
 `;
 
 const TitleStyle3 = styled.h1`
@@ -72,7 +72,7 @@ const TitleStyle3 = styled.h1`
   left: 68%;
 `;
 
-const ContentStyle3 = styled.h4`
+const ContentStyle3 = styled.h3`
   posiditon: absolute;
   white-space: pre-line;
   top: 57%;
@@ -85,17 +85,16 @@ function SecondComponent() {
       {/* <Fade duration={2000} direction="right"> */}
       <Component1>
         <TitleStyle1>
-          <Fade duration={1500} direction="left">
+          <Fade duration={1500} direction="right">
             <span>아동</span>
           </Fade>
         </TitleStyle1>
-        <ContentStyle1 style={{ position: 'absolute', top: '18%' }}>
-          <Fade duration={1700} direction="left">
-            <span>눈치보지 않고 언제든지</span>
+        <ContentStyle1 style={{ position: 'absolute', top: '20%' }}>
+          <Fade duration={1700} direction="right">
+            <span>건강한 식사를 눈치 볼 필요 없이</span>
           </Fade>
-          <br />
-          <Fade duration={2000} direction="left">
-            <span>배부르게 끼니를 때울 수 있는 아이들</span>
+          <Fade duration={2000} direction="right">
+            <span>편하게 검색, 예약</span>
           </Fade>
         </ContentStyle1>
       </Component1>
@@ -108,7 +107,7 @@ function SecondComponent() {
         </TitleStyle2>
         <ContentStyle2 style={{ position: 'absolute', top: '65%' }}>
           <Fade duration={2300} direction="left">
-            <span>나눔으로 마음을 나누는 사장님</span>
+            <span>남음 대신 나눔으로</span>
           </Fade>
         </ContentStyle2>
       </Component2>
@@ -120,7 +119,7 @@ function SecondComponent() {
         </TitleStyle3>
         <ContentStyle3 style={{ position: 'absolute', top: '65%' }}>
           <Fade duration={2300} direction="right">
-            <span>후원으로 마음을 나누는 후원자</span>
+            <span>직접적 기부와 착한 소비로</span>
           </Fade>
         </ContentStyle3>
       </Component3>
