@@ -17,7 +17,7 @@ const FullPage = () => {
 
   return (
     <>
-      <Header onSelect={onSelect} />
+      {/* <Header onSelect={onSelect} /> */}
       <ReactPageScroller>
         <FirstComponent />
         <FirstComponent1 />
