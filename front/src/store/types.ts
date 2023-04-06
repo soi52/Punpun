@@ -58,6 +58,7 @@ export interface Store {
   storeImage: string | null;
   storePhoneNumber: string | null;
   storeAlwaysShare: Boolean;
+  storeSupport: boolean;
   menuDTO: MenuDTO[];
 }
 

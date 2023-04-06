@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import first from '../../resources/images/main/main2-1.png';
 import { Fade } from 'react-awesome-reveal';
+import ThirdText from './ThirdText';
 
 const ComponentStyle = styled.div`
   position: relative;
@@ -80,7 +81,7 @@ const ContentStyle3 = styled.h3`
 function SecondComponent() {
   return (
     <ComponentStyle>
-      <>PUNPUN'S 3 POINTS</>
+      <ThirdText/>
       <Component1>
         <TitleStyle1>
           <Fade duration={1500} direction="right">
