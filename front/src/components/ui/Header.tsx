@@ -2,10 +2,12 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import Logo from './Logo';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import {
   isLoggedInState,
+  isOwnerRoleState,
   isOwnerState,
+  isRegisterStoreState,
   isSupporterState,
   owStoreState,
 } from '../../store/atoms';
@@ -75,6 +77,8 @@ function Header(props: HeaderProps) {
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLoggedInState);
   const [isOwner, setIsOwner] = useRecoilState(isOwnerState);
   const [isSupporter, setIsSupporter] = useRecoilState(isSupporterState);
+  const isRegisterStore = useRecoilValue(isRegisterStoreState);
+  const [isOwnerRole, setIsOwnerRole] = useRecoilState(isOwnerRoleState);
   const [selectedItem, setSelectedItem] = useState('후원자');
   const [owStores, setOwStores] = useRecoilState(owStoreState);
   const navigate = useNavigate();
@@ -112,7 +116,7 @@ function Header(props: HeaderProps) {
   };
 
   useEffect(() => {
-    if (role === 'OWNER') {
+    if (isOwnerRole) {
       API.get('stores/list')
         .then((response: any) => {
           console.log(response.data);
@@ -122,7 +126,13 @@ function Header(props: HeaderProps) {
           console.error(error);
         });
     }
-  }, []);
+  }, [isOwnerRole]);
+
+  // useEffect(() => {
+  //   if (owStores.length) {
+  //     setIsOwnerRole(true);
+  //   }
+  // }, [owStores]);
 
   const renderNav = () => {
     if (isLoggedIn) {
@@ -137,7 +147,7 @@ function Header(props: HeaderProps) {
             userType="owner"
             items={isOwner ? ['후원자'] : ['사장님']}
             selectedItem={selectedItem}
-            role={role}
+            isOwnerRole={isOwnerRole}
           />
         );
       } else {
@@ -149,7 +159,7 @@ function Header(props: HeaderProps) {
             userType="supporter"
             items={isOwner ? ['후원자'] : ['사장님']}
             selectedItem={selectedItem}
-            role={role}
+            isOwnerRole={isOwnerRole}
           />
         );
       }
