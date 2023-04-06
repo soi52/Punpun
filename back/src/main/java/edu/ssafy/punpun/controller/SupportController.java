@@ -29,10 +29,7 @@ public class SupportController {
     @GetMapping
     @ResponseStatus(code = HttpStatus.OK)
     public List<SupportResponseDTO> findSupport(@AuthenticationPrincipal PrincipalMemberDetail memberDetail){
-        List<Support> supportList=supportService.findSupport(memberDetail.getMember());
-        return supportList.stream()
-                .map(SupportResponseDTO::new)
-                .collect(Collectors.toList());
+        return supportService.findSupport(memberDetail.getMember());
     }
 
     @PostMapping("/payment")

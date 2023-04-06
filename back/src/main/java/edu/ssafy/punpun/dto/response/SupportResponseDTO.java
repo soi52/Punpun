@@ -1,30 +1,30 @@
 package edu.ssafy.punpun.dto.response;
 
-import edu.ssafy.punpun.entity.Support;
-import edu.ssafy.punpun.entity.enumurate.SupportState;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDate;
 
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 public class SupportResponseDTO {
-    private Long supportId;
-    private SupportState supportState;
-    private String supportCreationDate;
+    private String date;
     private Long storeId;
+    private Long sponsorCount;
     private String storeName;
     private Long menuId;
     private String menuName;
     private Long menuPrice;
 
-    public SupportResponseDTO(Support support){
-        this.supportId=support.getId();
-        this.supportState=support.getSupportState();
-        this.supportCreationDate=support.getSupportDate().toString();
-        this.storeId=support.getStore().getId();
-        this.storeName=support.getStore().getName();
-        this.menuId=support.getMenu().getId();
-        this.menuName=support.getMenu().getName();
-        this.menuPrice=support.getMenu().getPrice();
+    public SupportResponseDTO(LocalDate date, Long storeId, Long sponsorCount, String storeName, Long menuId, String menuName, Long menuPrice) {
+        this.date = date.toString();
+        this.storeId = storeId;
+        this.sponsorCount = sponsorCount;
+        this.storeName = storeName;
+        this.menuId = menuId;
+        this.menuName = menuName;
+        this.menuPrice = menuPrice;
     }
 }
