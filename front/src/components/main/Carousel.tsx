@@ -11,11 +11,7 @@ import process5 from '../../resources/images/main/process5.png';
 
 import styled from 'styled-components';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faChevronLeft,
-  faChevronRight,
-} from '@fortawesome/free-solid-svg-icons';
+import { GrFormPrevious, GrFormNext } from 'react-icons/gr';
 
 const ProcessDiv = styled.div`
   display: flex !important;
@@ -40,47 +36,35 @@ const Image = styled.img`
   margin-bottom: 8px; /* 이미지와 라벨 사이의 간격 추가 */
 `;
 
-const PrevArrow = (props: any) => {
-  const { className, style, onClick } = props;
-  return (
-    <div
-      className={className}
-      style={{
-        ...style,
-        display: 'block',
-        background: '#C4C4C4',
-        borderRadius: '50%',
-        width: '35px',
-        height: '35px',
-        margin: 'auto',
-      }}
-      onClick={onClick}
-    >
-      <FontAwesomeIcon icon={faChevronLeft} color="#c4c4c4" />
-    </div>
-  );
-};
+const Div = styled.div`
+  position: absolute;
+  right: 4.2rem;
+  z-index: 99;
+  text-align: right;
+  line-height: 30px;
+`;
+const DivPre = styled.div`
+  position: absolute;
+  left: 1.2rem;
+  z-index: 99;
+  text-align: left;
+  line-height: 30px;
+`;
 
-const NextArrow = (props: any) => {
-  const { className, style, onClick } = props;
-  return (
-    <div
-      className={className}
-      style={{
-        ...style,
-        display: 'block',
-        background: '#C4C4C4',
-        borderRadius: '50%',
-        width: '35px',
-        height: '35px',
-        margin: 'auto',
-      }}
-      onClick={onClick}
-    >
-      <FontAwesomeIcon icon={faChevronRight} color="#ffffff" />
-    </div>
-  );
-};
+const CustomSlider = styled(Slider)`
+  position: relative;
+  /* margin-right: 30px; */
+  .slick-prev::before,
+  .slick-next::before {
+    opacity: 0;
+    display: none;
+  }
+  .slick-slide div {
+    //슬라이더  컨텐츠
+    cursor: pointer;
+  }
+`;
+
 
 const Carousel = () => {
   const sliderSettings = {
@@ -96,12 +80,20 @@ const Carousel = () => {
     dotsClass : "slick-dots",
     variableWidth: false,
     initialSlide: 0,
-    prevArrow: <PrevArrow />,
-    nextArrow: <NextArrow />,
+    nextArrow: (
+      <Div>
+        <GrFormNext size={72} />
+      </Div>
+    ),
+    prevArrow: (
+      <DivPre>
+        <GrFormPrevious size={72} />
+      </DivPre>
+    ),
   };
   return (
     <>
-      <Slider {...sliderSettings}>
+      <CustomSlider {...sliderSettings}>
         <ProcessDiv id="processdiv" style={{ display: 'flex' }}>
           <Image src={process1} style={{ width: '60%' }} />
           <Label>예약 신청</Label>
@@ -122,7 +114,7 @@ const Carousel = () => {
           <Image src={process5} style={{ width: '50%' }} />
           <Label>감사 메세지</Label>
         </ProcessDiv>
-      </Slider>
+      </CustomSlider>
     </>
   );
 };

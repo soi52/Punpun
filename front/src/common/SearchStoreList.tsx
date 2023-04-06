@@ -82,19 +82,12 @@ const SearchStoreList = ({ stores }: { stores: Store[] }) => {
     event.preventDefault();
     searchStores();
   };
-
-  const filteredList = stores
+  
+  const filteredList = stores ? stores
     .filter((item) => item.storeName.includes(keyword))
     .sort((a, b) => {
       return a.storeName.localeCompare(b.storeName);
-      // if (activeTab === 'asc') {
-      //   return a.storeName.localeCompare(b.storeName);
-      // } else if (activeTab === 'desc') {
-      //   return b.storeName.localeCompare(a.storeName);
-      // } else {
-      //   return 0;
-      // }
-    });
+    }) : [];
 
   return (
     <ComponentDiv>
