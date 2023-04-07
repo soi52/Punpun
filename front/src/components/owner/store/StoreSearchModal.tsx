@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import StoreData from '../../../common/StoreData.json';
 import SearchBar from '../../../common/SearchBar';
 import FilteredList from '../../../common/FilteredList';
-import SearchStoreList from '../../../common/SearchStoreList';
 import API from '../../../store/API';
 import { useRecoilValue } from 'recoil';
 import { selectedMyStoreState } from '../../../store/atoms';
