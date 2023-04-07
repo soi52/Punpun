@@ -73,11 +73,11 @@ const SupportHistory = () => {
   useEffect(() => {
     API.get('supports')
       .then((response: any) => {
-        console.log(response.data);
+        // console.log(response.data);
         setSupportData(response.data.reverse());
       })
       .catch((error: any) => {
-        console.error(error);
+        // console.error(error);
       });
   }, []);
 

@@ -100,7 +100,7 @@ const PrevBookings = () => {
         setBookings(response.data.content);
       })
       .catch((error) => {
-        console.error('Error fetching bookings:', error);
+        // console.error('Error fetching bookings:', error);
       });
   }, []);
 

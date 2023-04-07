@@ -265,7 +265,7 @@ const StoreUpdateForm = () => {
     const formData = new FormData();
     if (selectedImageFile.current) {
       formData.append('storeImage', selectedImageFile.current);
-      console.log(selectedImageFile.current);
+      // console.log(selectedImageFile.current);
     }
     formData.append(
       'storeInfo',
@@ -282,7 +282,7 @@ const StoreUpdateForm = () => {
         navigate(`/owstore/${selectedStore?.storeId}`);
       })
       .catch((error: any) => {
-        console.error(error);
+        // console.error(error);
       });
   };
 

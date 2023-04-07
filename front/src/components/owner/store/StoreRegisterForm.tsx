@@ -237,12 +237,12 @@ const StoreRegisterForm = () => {
     if (selectedMyStore) {
       API.get(`stores/${selectedMyStore?.storeId}`)
         .then((response: any) => {
-          console.log(response.data);
-          console.log(isRegister);
+          // console.log(response.data);
+          // console.log(isRegister);
           setRegisterStore(response.data);
         })
         .catch((error: any) => {
-          console.error(error);
+          // console.error(error);
         });
     }
   }, [selectedMyStore]);
@@ -270,16 +270,16 @@ const StoreRegisterForm = () => {
         setIsRegister(false);
         API.get('users/member')
           .then((response: any) => {
-            console.log(response.data.role);
+            // console.log(response.data.role);
             localStorage.setItem('role', response.data.role);
             setUserInfo(response.data);
           })
           .catch((error: any) => {
-            console.error(error);
+            // console.error(error);
           });
       })
       .catch((error: any) => {
-        console.error(error);
+        // console.error(error);
       });
     navigate('/owstorelist');
   };

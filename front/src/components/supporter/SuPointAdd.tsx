@@ -89,7 +89,7 @@ const SuPointAdd = () => {
       alert('충전 포인트와 결제 수단을 모두 선택해주세요.');
       return;
     }
-    console.log(`충전 포인트: ${selectedPoint}, 결제 수단: ${selectedPayment}`);
+    // console.log(`충전 포인트: ${selectedPoint}, 결제 수단: ${selectedPayment}`);
 
     try {
       // point post

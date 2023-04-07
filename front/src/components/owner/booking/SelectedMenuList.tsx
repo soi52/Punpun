@@ -88,7 +88,7 @@ const SelectedMenuList: React.FC<SelectedMenuListProps> = ({
       '선택한 메뉴가 예약 활성화 됩니다.',
       'success'
     )
-    console.log(response.data);
+    // console.log(response.data);
   };
 
   return (

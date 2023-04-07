@@ -26,7 +26,7 @@ function StoreInfo() {
           setSelectedStore(response.data);
         })
         .catch((error: any) => {
-          console.error(error);
+          // console.error(error);
         });
     }
   }, [setSelectedStore, stores, shareList]);
@@ -44,7 +44,7 @@ function StoreInfo() {
         // console.log(response.data.content);
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
       });
   }, []);
 

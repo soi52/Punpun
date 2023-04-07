@@ -173,7 +173,7 @@ const MenuCart: React.FC<MenuCartProps> = ({
 
   const handleDonateClick = async () => {
     if (totalPrice > point) {
-      console.log(totalPrice, point);
+      // console.log(totalPrice, point);
       Swal.fire({
         icon: 'error',
         title: '포인트가 부족합니다.',
@@ -198,7 +198,7 @@ const MenuCart: React.FC<MenuCartProps> = ({
         )
         deleteCart(-1);
       } catch (error) {
-        console.error(error);
+        // console.error(error);
         Swal.fire({
           icon: 'error',
           title: '결제 중 오류가 발생했습니다.',

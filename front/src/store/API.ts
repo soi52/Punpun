@@ -27,7 +27,7 @@ API.interceptors.response.use(
   },
   async (error) => {
     const responseStatus = error?.response?.status || null;
-    console.log(`Error: ${responseStatus}`);
+    // console.log(`Error: ${responseStatus}`);
     // Handle error cases
     return Promise.reject(error);
   }

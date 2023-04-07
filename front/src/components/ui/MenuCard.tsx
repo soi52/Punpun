@@ -73,8 +73,8 @@ const MenuCard: React.FC<MenuCardProps> = ({ menu, addToCart }) => {
     if (role === 'CHILD') {
       // 어린이 회원일 때 클릭 이벤트
       setShowModal(true);
-      console.log(isChild);
-      console.log(menu.menuId);
+      // console.log(isChild);
+      // console.log(menu.menuId);
     } else {
       // 어른 회원일 때 클릭 이벤트
       addToCart({
@@ -84,7 +84,7 @@ const MenuCard: React.FC<MenuCardProps> = ({ menu, addToCart }) => {
         quantity: 1,
         image: menu.menuImage,
       });
-      console.log('장바구니에 상품이 담겼습니다.');
+      // console.log('장바구니에 상품이 담겼습니다.');
     }
   };
 

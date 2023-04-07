@@ -48,11 +48,11 @@ function StoreList() {
     if (confirmed) {
       API.delete(`stores/${id}`, { params: { storeId: id } })
         .then((response: any) => {
-          console.log(response.data);
+          // console.log(response.data);
           setIsRegisterStore(!isRegisterStore);
         })
         .catch((error: any) => {
-          console.error(error);
+          // console.error(error);
         });
     }
   };
@@ -60,11 +60,11 @@ function StoreList() {
   useEffect(() => {
     API.get('stores/list')
       .then((response: any) => {
-        console.log(response.data);
+        // console.log(response.data);
         setStores(response.data);
       })
       .catch((error: any) => {
-        console.error(error);
+        // console.error(error);
       });
   }, [isRegisterStore]);
 

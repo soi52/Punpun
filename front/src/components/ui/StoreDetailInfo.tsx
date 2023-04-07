@@ -47,10 +47,10 @@ const StoreDetailInfo = () => {
     async function fetchStores() {
       try {
         const response = await API.get(`stores/${selectedStore?.storeId}`);
-        console.log(response.data);
+        // console.log(response.data);
         setStores(response.data);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     }
 

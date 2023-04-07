@@ -67,7 +67,7 @@ const NumberForm = () => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(`전화번호: ${phoneNumber}`);
+    // console.log(`전화번호: ${phoneNumber}`);
   
     // 이름 입력란이 비어있을 경우 defaultValue 사용
     const formattedName = name || userInfo.userName;
@@ -90,7 +90,7 @@ const NumberForm = () => {
         name: formattedName,
         phoneNumber: formattedPhoneNumber,
       });
-      console.log(response.data);
+      // console.log(response.data);
       setUserInfo((prevUserInfo) => ({
         ...prevUserInfo,
         userName: formattedName,
@@ -104,7 +104,7 @@ const NumberForm = () => {
       navigate('/');
       // 서버 응답 데이터 처리
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       // 에러 처리
     }
   };

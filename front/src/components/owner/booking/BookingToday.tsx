@@ -59,11 +59,11 @@ function BookingToday() {
   useEffect(() => {
     API.get(`bookings/store/${selectedStore?.storeId}`)
       .then((response: any) => {
-        console.log(response.data.content);
+        // console.log(response.data.content);
         setBookings(response.data.content);
       })
       .catch((error: any) => {
-        console.error(error);
+        // console.error(error);
       });
   }, []);
 

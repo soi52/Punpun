@@ -36,11 +36,11 @@ function ReviewList() {
   useEffect(() => {
     API.get(`reviews/stores/${selectedStore?.storeId}`)
       .then((response: any) => {
-        console.log(response.data.content); // 받아온 데이터를 owReviews에 업데이트합니다.
+        // console.log(response.data.content); // 받아온 데이터를 owReviews에 업데이트합니다.
         setOwReviews(response.data.content); // 받아온 데이터를 owReviews에 업데이트합니다.
       })
       .catch((error: any) => {
-        console.error(error);
+        // console.error(error);
       });
   }, [selectedStore?.storeId]);
 
