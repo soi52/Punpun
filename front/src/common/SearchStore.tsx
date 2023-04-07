@@ -5,7 +5,6 @@ import useGeolocation from './UseGeolocation';
 import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { isRegisterState, isUpdatedState } from '../store/atoms';
-import StoreData from './StoreData.json';
 import API from '../store/API';
 
 export interface SearchStore {
@@ -52,7 +51,7 @@ const SearchStore = ({ message }: SearchStoreProps) => {
   }, []);
 
   const location = useGeolocation();
-  console.log(location);
+  // console.log(location);
   const { latitude = 0, longitude = 0 } =
     typeof location === 'object' ? location : {};
 
@@ -61,12 +60,12 @@ const SearchStore = ({ message }: SearchStoreProps) => {
       // API.get(`stores/distTest/${longitude}/${latitude}?mode=postgres`)
       API.get(`stores/dist/${longitude}/${latitude}`)
         .then((response: any) => {
-          console.log(response.data);
+          // console.log(response.data);
           setSearchStoreList(response.data);
           setIsUpdated((prev) => !prev);
         })
         .catch((error: any) => {
-          console.error(error);
+          // console.error(error);
         });
     }
   }, [latitude, longitude]);

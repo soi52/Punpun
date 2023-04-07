@@ -55,7 +55,7 @@ const StoreMenu = ({ myStoreId }: Props) => {
             setStoreName(response.data.storeName);
           })
           .catch((error) => {
-            console.log(error);
+            // console.log(error);
           });
       }
     } else {
@@ -64,10 +64,10 @@ const StoreMenu = ({ myStoreId }: Props) => {
           .then((response) => {
             setMenuDTOList(response.data.menuMemberResponseDTOList);
             setStoreName(response.data.storeName);
-            console.log(response.data.menuMemberResponseDTOList);
+            // console.log(response.data.menuMemberResponseDTOList);
           })
           .catch((error) => {
-            console.log(error);
+            // console.log(error);
           });
       }
     }

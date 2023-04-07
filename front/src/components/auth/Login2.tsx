@@ -27,9 +27,9 @@ export function onLogin() {
       .post('/user/refresh')
       .then(onLoginSuccess)
       .catch((error) => {
-        console.log('====================================');
-        console.log('AccessToken 재발급 오류: ' + error);
-        console.log('====================================');
+        // console.log('====================================');
+        // console.log('AccessToken 재발급 오류: ' + error);
+        // console.log('====================================');
       });
   };
   const onLoginSuccess = (response: any) => {

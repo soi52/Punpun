@@ -47,7 +47,6 @@ const StoreName = styled.h3`
   margin-right: 10px;
   color: black;
   text-decoration-line: none;
-  
 `;
 
 const ListContent = styled.div`
@@ -124,7 +123,7 @@ const FilteredList = ({ stores, keyword }: FilteredListProps) => {
   };
 
   useEffect(() => {
-    console.log(isRegister);
+    // console.log(isRegister);
   }, []);
 
   // 페이지네이션 UI를 만듭니다.
@@ -192,8 +191,8 @@ const FilteredList = ({ stores, keyword }: FilteredListProps) => {
                 <StyledLink to={`/store/${store.storeId}`}>
                   <ListContent>
                     <StoreName>{store.storeName}</StoreName>
-                    { store.storeAlwaysShare ? <img src={sharebadge}/> : ''}
-                    { store.storeSupport ? <img src={supportbadge}/> : ''}
+                    {store.storeAlwaysShare ? <img src={sharebadge} /> : ''}
+                    {store.storeSupport ? <img src={supportbadge} /> : ''}
                   </ListContent>
                 </StyledLink>
               </ListItem>

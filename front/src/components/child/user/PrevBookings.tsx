@@ -142,10 +142,10 @@ const PrevBookings = () => {
     API.get(`/bookings/child?localDateTime=${formattedDate}T23:59:59`)
       .then((response) => {
         setBookings(response.data.content);
-        console.log(response.data);
+        // console.log(response.data);
       })
       .catch((error) => {
-        console.error('Error fetching bookings:', error);
+        // console.error('Error fetching bookings:', error);
       });
   };
 
@@ -170,10 +170,10 @@ const PrevBookings = () => {
       API.get('/bookings/child')
         .then((response) => {
           setBookings(response.data.content);
-          console.log(response.data);
+          // console.log(response.data);
         })
         .catch((error) => {
-          console.error('Error fetching bookings:', error);
+          // console.error('Error fetching bookings:', error);
         });
     }
   }, [selectedDate]);
@@ -200,7 +200,7 @@ const PrevBookings = () => {
     Navigate(`/store/${storeId}`);
   };
 
-  console.log(formattedBookings);
+  // console.log(formattedBookings);
 
   if (!formattedBookings) {
     return <div>아직 예약을 하지 않았어요 :(</div>;

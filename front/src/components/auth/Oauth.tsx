@@ -48,7 +48,7 @@ const Oauth = () => {
   useEffect(() => {
     const token = getUrlParameter('token');
     const accessToken = token || '';
-    console.log(accessToken);
+    // console.log(accessToken);
     Cookies.set('accessToken', accessToken, {
       expires: 7, // 쿠키 만료 일자
       path: '/', // 쿠키 경로
@@ -77,8 +77,8 @@ const Oauth = () => {
       navigate('/chmain');
       setIsChild(true);
       setIsLoggedIn(true);
-      console.log(isChild);
-      console.log(isLoggedIn);
+      // console.log(isChild);
+      // console.log(isLoggedIn);
     } else {
       if (decodedToken.phoneNumber === 'NoNumber') {
         setIsLoggedIn(true);
@@ -93,7 +93,7 @@ const Oauth = () => {
   }, []);
 
   useEffect(() => {
-    console.log(userInfo);
+    // console.log(userInfo);
   }, [userInfo]);
   return <></>;
 };
