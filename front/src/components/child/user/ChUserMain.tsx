@@ -48,11 +48,11 @@ const ChUserMain = () => {
         setBookings(response.data.content);
       })
       .catch((error) => {
-        console.error("Error fetching today's bookings:", error);
+        // console.error("Error fetching today's bookings:", error);
       });
   }, []);
 
-  console.log(bookings);
+  // console.log(bookings);
 
   const filteredBookings = bookings.filter((booking) => {
     const reservationTime = new Date(booking.reservationTime);

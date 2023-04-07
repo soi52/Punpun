@@ -41,7 +41,7 @@ const StoreThanksMessage = ({ myStoreId }: Props) => {
         setReviews(response.data.content);
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
       });
   }, []);
 
@@ -51,7 +51,7 @@ const StoreThanksMessage = ({ myStoreId }: Props) => {
         setStoreName(response.data.storeName);
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
       });
   }, []);
 

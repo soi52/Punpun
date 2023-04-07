@@ -131,7 +131,7 @@ const LikedMenu = () => {
         setMenus(response.data);
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
       });
   }, []);
 
@@ -139,10 +139,10 @@ const LikedMenu = () => {
     API.delete('favors', { data: { menuId: menuId } })
       .then(() => {
         handleDelete(menuId); // API 요청이 성공적으로 이루어졌을 때, 목록에서 해당 메뉴를 삭제하기 위해 onDelete 함수 호출
-        console.log('선호 메뉴 삭제 완');
+        // console.log('선호 메뉴 삭제 완');
       })
       .catch((error) => {
-        console.error(error);
+        // console.error(error);
       });
     // setIsLiked((prev) => !prev);
   };
@@ -156,18 +156,18 @@ const LikedMenu = () => {
       {menus.map((menu) => (
         <MenuCard key={menu.menuId}>
           <MenuCardFront>
-              <MenuCardImage
-                src={menu.menuImage || defaultMenuImage}
-                alt={menu.menuName}
-              />
-              <MenuCardTitle>{menu.menuName}</MenuCardTitle>
+            <MenuCardImage
+              src={menu.menuImage || defaultMenuImage}
+              alt={menu.menuName}
+            />
+            <MenuCardTitle>{menu.menuName}</MenuCardTitle>
           </MenuCardFront>
           <MenuCardBack>
-              <LikeButton onClick={() => toggleLike(menu.menuId)}>
-                {/* {isLiked ?  */}
-                좋아요 취소
-                {/* //  : '좋아요'} */}
-              </LikeButton>
+            <LikeButton onClick={() => toggleLike(menu.menuId)}>
+              {/* {isLiked ?  */}
+              좋아요 취소
+              {/* //  : '좋아요'} */}
+            </LikeButton>
             <CardBody>
               <StoreName onClick={() => toStore(menu.storeId)}>
                 {menu.storeName}

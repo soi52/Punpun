@@ -14,7 +14,7 @@ const MainStyle = styled.main`
 
 function Layout() {
   const onSelect = (item: string) => {
-    console.log(item);
+    // console.log(item);
     // item에 따른 동작 처리
   };
 
