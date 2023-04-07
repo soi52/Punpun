@@ -105,11 +105,11 @@ const ThanksMessageList = () => {
   useEffect(() => {
     API.get('/reviews/child')
       .then((response) => {
-        console.log('Message sent:', response.data);
+        // console.log('Message sent:', response.data);
         setMessages(response.data.content);
       })
       .catch((error) => {
-        console.error('Error sending message:', error);
+        // console.error('Error sending message:', error);
       });
   }, []);
 

@@ -82,14 +82,14 @@ const Message: React.FC<MessageProps> = ({ reservationId }) => {
           '감사 메세지가 등록되었습니다!',
           '식사는 맛있게 하셨나요?',
           'success'
-        )
+        );
         setMessages([
           { inputValue: inputValue, selectedButtons: selectedButtons },
           ...messages,
         ]);
       })
       .catch((error) => {
-        console.error('Error sending message:', error);
+        // console.error('Error sending message:', error);
       });
   };
 

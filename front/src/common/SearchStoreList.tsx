@@ -70,24 +70,30 @@ const SearchStoreList = ({ stores }: { stores: Store[] }) => {
       },
     })
       .then((response: any) => {
-        console.log(response.data);
+        // console.log(response.data);
         setSearchedList(response.data);
       })
       .catch((error: any) => {
-        console.error(error);
+        // console.error(error);
       });
   };
 
-  const handleSearchSubmit = (event: React.FormEvent<HTMLFormElement> | React.KeyboardEvent<HTMLInputElement>) => {
+  const handleSearchSubmit = (
+    event:
+      | React.FormEvent<HTMLFormElement>
+      | React.KeyboardEvent<HTMLInputElement>
+  ) => {
     event.preventDefault();
     searchStores();
   };
-  
-  const filteredList = stores ? stores
-    .filter((item) => item.storeName.includes(keyword))
-    .sort((a, b) => {
-      return a.storeName.localeCompare(b.storeName);
-    }) : [];
+
+  const filteredList = stores
+    ? stores
+        .filter((item) => item.storeName.includes(keyword))
+        .sort((a, b) => {
+          return a.storeName.localeCompare(b.storeName);
+        })
+    : [];
 
   return (
     <ComponentDiv>

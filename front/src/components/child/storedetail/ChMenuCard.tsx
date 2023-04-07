@@ -7,7 +7,6 @@ import defaultMenuImage from '../../../resources/images/profileDefault.png';
 
 import styled from 'styled-components';
 import Swal from 'sweetalert2';
-import { log } from 'console';
 
 type ChMenu = {
   id: number;
@@ -87,33 +86,23 @@ const ChMenuCard: React.FC<ChMenu> = ({
       API.delete('favors', { data: { menuId: id } })
         .then((response) => {
           setLiked(false);
-          Swal.fire(
-            '좋아요 취소!',
-            '선호메뉴에서 해제되었습니다.',
-            'success'
-          )
+          Swal.fire('좋아요 취소!', '선호메뉴에서 해제되었습니다.', 'success');
         })
-        .catch((error) => {
-        });
+        .catch((error) => {});
     } else {
       API.post('favors', { menuId: id })
         .then((response) => {
           setLiked(true);
-          Swal.fire(
-            '좋아요!',
-            '선호메뉴로 등록되었습니다.',
-            'success'
-          )
+          Swal.fire('좋아요!', '선호메뉴로 등록되었습니다.', 'success');
         })
-        .catch((error) => {
-        });
+        .catch((error) => {});
     }
   };
 
   const handleClick = () => {
     if (!isDisabled) {
       setShowModal(true);
-      console.log(id);
+      // console.log(id);
     } else {
       Swal.fire({
         icon: 'error',
@@ -133,10 +122,7 @@ const ChMenuCard: React.FC<ChMenu> = ({
           <HeartButtonWrapper>
             <span onClick={toggleLike}>{liked ? '💖' : '🖤'}</span>
           </HeartButtonWrapper>
-          <MenuCardImage
-            src={menuImage || defaultMenuImage}
-            alt={title}
-          />
+          <MenuCardImage src={menuImage || defaultMenuImage} alt={title} />
           <div>
             <MenuCardTitle>{title}</MenuCardTitle>
             <MenuCardPrice>{price.toLocaleString()}원</MenuCardPrice>
@@ -149,6 +135,5 @@ const ChMenuCard: React.FC<ChMenu> = ({
     </>
   );
 };
-
 
 export default ChMenuCard;

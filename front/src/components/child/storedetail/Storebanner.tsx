@@ -77,14 +77,17 @@ const Text = styled.text`
 
 const StoreBanner = ({ storeName }: { storeName: string | undefined }) => {
   const selectedStore = useRecoilValue(selectedStoreState);
-  console.log(selectedStore);
-  
+  // console.log(selectedStore);
 
   return (
     <BannerDiv>
       <BannerOverlay />
       <BannerText>
-        { selectedStore?.storeAlwaysShare ? <img src={sharebadge} style={{ width: '55px' }}/> : ''}
+        {selectedStore?.storeAlwaysShare ? (
+          <img src={sharebadge} style={{ width: '55px' }} />
+        ) : (
+          ''
+        )}
         <Text>{storeName}</Text>
       </BannerText>
       <BannerImageWrapper>
