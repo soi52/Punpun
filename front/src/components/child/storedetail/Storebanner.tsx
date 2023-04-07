@@ -33,6 +33,8 @@ const BannerOverlay = styled.div`
 
 const BannerText = styled.div`
   position: absolute;
+  display: flex;
+  flex-direction: column;
   top: 50%; /* 수직 중앙 정렬 */
   left: 50%; /* 수평 중앙 정렬 */
   color: #ffffff;
@@ -68,6 +70,11 @@ const BannerImage = styled.img`
   object-fit: cover;
 `;
 
+const Text = styled.text`
+  font-size: 40px;
+  font-family: GmarketSansBold, sans-serif, Arial;
+`;
+
 const StoreBanner = ({ storeName }: { storeName: string | undefined }) => {
   const selectedStore = useRecoilValue(selectedStoreState);
   console.log(selectedStore);
@@ -77,8 +84,8 @@ const StoreBanner = ({ storeName }: { storeName: string | undefined }) => {
     <BannerDiv>
       <BannerOverlay />
       <BannerText>
-        { selectedStore?.storeAlwaysShare ? <img src={sharebadge}/> : ''}
-        <h1>{storeName}</h1>
+        { selectedStore?.storeAlwaysShare ? <img src={sharebadge} style={{ width: '55px' }}/> : ''}
+        <Text>{storeName}</Text>
       </BannerText>
       <BannerImageWrapper>
         <BannerImage src={bannerImage} alt="Banner Image" />
