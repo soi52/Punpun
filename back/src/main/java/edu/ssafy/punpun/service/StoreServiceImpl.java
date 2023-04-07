@@ -63,7 +63,7 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
-    public List<Store> getStoreDistanceJava(double lon, double lat) {
+    public List<Store> getStoreDistanceTestJava(double lon, double lat) {
         // 위도(latitude), 경도(longitude)
         long beforeTime = System.currentTimeMillis();
         List<Store> storeList = storeRepository.findAll().parallelStream()
@@ -71,21 +71,21 @@ public class StoreServiceImpl implements StoreService {
                 .collect(Collectors.toList());
         long afterTime = System.currentTimeMillis();
         long secDiffTime = (afterTime - beforeTime) / 1000; // 초 단위
-        log.debug("[StoreService] getStoreDistanceJava 함수 실행 시간 : " + secDiffTime);
+        log.debug("[StoreService] getStoreDistanceTestJava 함수 실행 시간 : " + secDiffTime);
 
         return storeList;
     }
 
-//    @Override
-//    public List<Store> getStoreDistancePostgres(float lon, float lat) {
-//        long beforeTime = System.currentTimeMillis();
-//        List<Store> storeList = storeRepository.findByEarthDistancePostgres(lon, lat, CHILD_DISTANCE_RADIUS);
-//        long afterTime = System.currentTimeMillis();
-//        long secDiffTime = (afterTime - beforeTime) / 1000; // 초 단위
-//        log.debug("[StoreService] getStoreDistanceJava 함수 실행 시간 : " + secDiffTime);
-//
-//        return storeList;
-//    }
+    @Override
+    public List<Store> getStoreDistanceTestPostgres(float lon, float lat) {
+        long beforeTime = System.currentTimeMillis();
+        List<Store> storeList = storeRepository.findByEarthDistancePostgres(lon, lat, CHILD_DISTANCE_RADIUS);
+        long afterTime = System.currentTimeMillis();
+        long secDiffTime = (afterTime - beforeTime) / 1000; // 초 단위
+        log.debug("[StoreService] getStoreDistanceTestPostgres 함수 실행 시간 : " + secDiffTime);
+
+        return storeList;
+    }
 
     @Override
     public List<StoreDistResponseDTO> getStoreDistancePostgres(float lon, float lat) {
@@ -106,7 +106,7 @@ public class StoreServiceImpl implements StoreService {
 
         long afterTime = System.currentTimeMillis();
         long secDiffTime = (afterTime - beforeTime) / 1000; // 초 단위
-        log.debug("[StoreService] getStoreDistanceJava 함수 실행 시간 : " + secDiffTime);
+        log.debug("[StoreService] getStoreDistancePostgres 함수 실행 시간 : " + secDiffTime);
 
         return storeDistResponseDTOList;
     }
