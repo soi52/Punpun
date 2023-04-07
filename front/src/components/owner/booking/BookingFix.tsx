@@ -55,7 +55,6 @@ const BookingFix = () => {
         setBookings(response.data.content);
       })
       .catch((error: any) => {
-        // console.error(error);
       });
   }, []);
 
