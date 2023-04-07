@@ -14,6 +14,7 @@ const Wrapper = styled.div`
 
 const Text3d = styled.h1`
   font-size: 64px;
+  font-family: GmarketSansMedium, sans-serif, Arial;
   color: #ffffff;
   text-shadow: -2px -1px 0 #f8f8f8, -2px -2px 0 #ff0000, -3px -3px 0 #e8e8e8, -4px -4px 0 #ff0000, -5px -5px 0 #d8d8d8, -6px -6px 0 #ff0000, -7px -7px 0 #c8c8c8;
   transform-origin: bottom right;

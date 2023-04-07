@@ -31,6 +31,7 @@ const ContentDivStyle = styled.div`
 
 const TitleStyle = styled.h1`
   width: 100%;
+  font-family: GmarketSansMedium, sans-serif, Arial;
 `;
 
 const ContentStyle = styled.h4`
@@ -44,7 +45,7 @@ function FirstComponent2() {
         <Fade duration={1500} direction={'left'}>
           <TitleStyle>메뉴를 골라 후원하고</TitleStyle>
           <TitleStyle>식사를 마친 아동이 남긴</TitleStyle>
-          <TitleStyle>감사메세지를 읽어보세요.</TitleStyle>
+          <TitleStyle>감사메세지를 읽어보세요</TitleStyle>
         </Fade>
       </ContentDivStyle>
       <MainImageStyle src={first} />
