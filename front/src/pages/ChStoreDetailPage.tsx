@@ -96,20 +96,20 @@ function ChStoreDetailPage() {
       if (role === 'CHILD') {
         try {
           const response = await API.get(`stores/child/${myStoreId}`);
-          console.log(response.data);
+          // console.log(response.data);
           setChStores(response.data);
           setSelectedStore(response.data);
         } catch (error) {
-          console.log(error);
+          // console.log(error);
         }
       } else {
         try {
           const response = await API.get(`stores/${myStoreId}`);
-          console.log(response.data);
+          // console.log(response.data);
           setStores(response.data);
           setSelectedStore(response.data);
         } catch (error) {
-          console.log(error);
+          // console.log(error);
         }
       }
     }

@@ -267,10 +267,10 @@ function MenuModal({ onClose, mode, menu }: MenuModalProps) {
       })
         .then((response: any) => {
           setIsUpdated(!isUpdated);
-          console.log(mode === 'update' ? '메뉴 수정 완료' : '메뉴 등록 완료');
+          // console.log(mode === 'update' ? '메뉴 수정 완료' : '메뉴 등록 완료');
         })
         .catch((error: any) => {
-          console.error(error);
+          // console.error(error);
         });
     } else {
       const formData = new FormData();
@@ -289,12 +289,12 @@ function MenuModal({ onClose, mode, menu }: MenuModalProps) {
       })
         .then((response: any) => {
           setIsUpdated(!isUpdated);
-          console.log(
-            mode === 'register' ? '메뉴 등록 완료' : '메뉴 수정 완료'
-          );
+          // console.log(
+          //   mode === 'register' ? '메뉴 등록 완료' : '메뉴 수정 완료'
+          // );
         })
         .catch((error: any) => {
-          console.error(error);
+          // console.error(error);
         });
     }
 

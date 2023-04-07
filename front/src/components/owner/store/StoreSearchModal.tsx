@@ -101,11 +101,11 @@ const StoreSearchModal = (
       },
     })
       .then((response: any) => {
-        console.log(response.data);
+        // console.log(response.data);
         setSearchedList(response.data);
       })
       .catch((error: any) => {
-        console.error(error);
+        // console.error(error);
       });
   };
 
@@ -123,7 +123,7 @@ const StoreSearchModal = (
   };
 
   const handleSelectedStore = () => {
-    console.log(selectedMyStore);
+    // console.log(selectedMyStore);
     onClose();
   };
 

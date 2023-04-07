@@ -14,10 +14,10 @@ const TestCopy = () => {
   const apiRequest = () => {
     API.get('stores/test')
       .then((response: any) => {
-        console.log(response.data);
+        // console.log(response.data);
       })
       .catch((error: any) => {
-        console.error(error);
+        // console.error(error);
       });
   };
 

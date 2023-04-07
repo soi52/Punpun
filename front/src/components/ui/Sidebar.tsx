@@ -88,7 +88,7 @@ const Sidebar: FC<SidebarProps> = ({
 
   const toStoreRegister = () => {
     setIsRegister(true);
-    console.log(isRegister);
+    // console.log(isRegister);
     navigate('/owregister');
   };
 

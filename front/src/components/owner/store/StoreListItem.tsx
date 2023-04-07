@@ -56,7 +56,7 @@ const CheckBox = styled.input`
 `;
 
 function StoreListItem({ stores, onDelete }: StoreItemProps) {
-  console.log(stores);
+  // console.log(stores);
   const navigate = useNavigate();
   const setSelectedStore = useSetRecoilState(selectedStoreState); // 새로 추가된 코드
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
@@ -65,12 +65,12 @@ function StoreListItem({ stores, onDelete }: StoreItemProps) {
       onDelete(id);
       API.get('users/member')
         .then((response: any) => {
-          console.log(response.data.role);
+          // console.log(response.data.role);
           localStorage.setItem('role', response.data.role);
           setUserInfo(response.data);
         })
         .catch((error: any) => {
-          console.error(error);
+          // console.error(error);
         });
       navigate('/sumain');
     } else {
@@ -84,7 +84,7 @@ function StoreListItem({ stores, onDelete }: StoreItemProps) {
         onClick={() => {
           navigate(`/owstore/${store.storeId}`);
           setSelectedStore(store);
-          console.log(store);
+          // console.log(store);
         }}
       >
         <StoreName>{store.storeName}</StoreName>

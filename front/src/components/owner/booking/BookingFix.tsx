@@ -51,11 +51,10 @@ const BookingFix = () => {
   useEffect(() => {
     API.get(`bookings/store/${selectedStore?.storeId}?state=END`)
       .then((response: any) => {
-        console.log(response.data.content);
+        // console.log(response.data.content);
         setBookings(response.data.content);
       })
       .catch((error: any) => {
-        console.error(error);
       });
   }, []);
 

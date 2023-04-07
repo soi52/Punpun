@@ -34,7 +34,7 @@ function StoreMenuList() {
           setStoreMenus(response.data.menuMemberResponseDTOList);
         })
         .catch((error) => {
-          console.error(error);
+          // console.error(error);
         });
     }
   }, [isUpdated, selectedStore]);

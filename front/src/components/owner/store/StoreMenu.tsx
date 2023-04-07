@@ -115,7 +115,7 @@ function StoreMenu({ storeMenus }: StoreMenuProps) {
   } | null>(null);
 
   useEffect(() => {
-    console.log('storeMenus updated', storeMenus);
+    // console.log('storeMenus updated', storeMenus);
   }, []);
 
   const handleModalClose = () => {
@@ -130,11 +130,11 @@ function StoreMenu({ storeMenus }: StoreMenuProps) {
     if (window.confirm('메뉴를 삭제하시겠습니까?')) {
       API.delete(`stores/menu/${menu.menuId}`)
         .then((response: any) => {
-          console.log('메뉴가 삭제되었습니다.');
+          // console.log('메뉴가 삭제되었습니다.');
           setIsUpdated(!isUpdated);
         })
         .catch((error: any) => {
-          console.error(error);
+          // console.error(error);
         });
     }
   };
