@@ -110,10 +110,10 @@ const Message: React.FC<MessageProps> = ({ reservationId }) => {
           setSelectedButtons={setSelectedButtons}
           selectedButtons={selectedButtons}
         />
-        <MessageList
+        {/* <MessageList
           messages={messages}
           onDeleteMessage={handleDeleteMessage}
-        />
+        /> */}
       </ThanksMessage>
     </ComponentStyle>
   );
