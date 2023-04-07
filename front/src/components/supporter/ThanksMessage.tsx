@@ -29,11 +29,11 @@ function ThanksMessage() {
   useEffect(() => {
     API.get('reviews/supporter')
       .then((response: any) => {
-        console.log(response.data.content);
+        // console.log(response.data.content);
         setSupportMessage(response.data.content);
       })
       .catch((error: any) => {
-        console.error(error);
+        // console.error(error);
       });
   }, []);
 

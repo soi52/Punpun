@@ -119,11 +119,11 @@ function Header(props: HeaderProps) {
     if (role === 'OWNER') {
       API.get('stores/list')
         .then((response: any) => {
-          console.log(response.data);
+          // console.log(response.data);
           setOwStores(response.data);
         })
         .catch((error: any) => {
-          console.error(error);
+          // console.error(error);
         });
     }
   }, [role]);

@@ -60,7 +60,7 @@ const SuSidebarContent: FC<SuSidebarContentProps> = ({
         setPoint(response.data.memberPoint);
       })
       .catch((error: any) => {
-        console.error(error);
+        // console.error(error);
       });
   }, [setPoint]);
 

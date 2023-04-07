@@ -23,7 +23,7 @@ const Div = styled.div`
 
 const FullPage = () => {
   const onSelect = (item: string) => {
-    console.log(item);
+    // console.log(item);
   };
 
   return (
