@@ -13,8 +13,8 @@ import java.util.List;
 public interface StoreService {
     Store findById(Long id);
     List<MenuChildResponseDTO> getStoreDetailChild(Store store, Child child);
-    List<Store> getStoreDistanceJava(double lon, double lat);
-//    List<Store> getStoreDistancePostgres(float lon, float lat);
+    List<Store> getStoreDistanceTestJava(double lon, double lat);
+    List<Store> getStoreDistanceTestPostgres(float lon, float lat);
     List<StoreDistResponseDTO> getStoreDistancePostgres(float lon, float lat);
     List<StoreDistResponseDTO> getStoreDistance(float lon, float lat);
     List<Store> findByNameContaining(String name);
