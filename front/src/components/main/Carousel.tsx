@@ -27,6 +27,7 @@ const Label = styled.span`
   margin-top: 16px; /* 이미지와 라벨 사이의 간격 추가 */
   font-weight: bold;
   font-size: 20px;
+  font-family: GmarketSansMedium, sans-serif, Arial;
 `;
 
 const Image = styled.img`

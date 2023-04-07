@@ -31,6 +31,7 @@ const ContentDivStyle = styled.div`
 
 const TitleStyle = styled.h1`
   width: 100%;
+  font-family: GmarketSansMedium, sans-serif, Arial;
 `;
 
 const ContentStyle = styled.h4`
