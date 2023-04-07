@@ -17,6 +17,8 @@ const H2 = styled.h2`
   -moz-text-fill-color: transparent;
   animation: 1.5s ease-in 0s infinite running ${bgAnim};
   font-size: 2rem;
+  font-weight: bold;
+  font-family: GmarketSansBold, sans-serif, Arial;
   background-image: linear-gradient(to right, #bd07b7 25%, #0872f5 50%, #f70347 100%);
   background-size: 200% auto;
   cursor: pointer;
@@ -51,9 +53,10 @@ const ContentDivStyle = styled.div`
 
 const TitleStyle = styled.text`
   font-size: 40px;
-  font-weight: 600;
+  font-weight: 700;
   width: 100%;
   margin-bottom: 30px;
+  font-family: GmarketSansBold, sans-serif, Arial;
 `;
 
 const ContentStyle = styled.h4`

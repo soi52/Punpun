@@ -10,6 +10,16 @@ import Header from '../components/ui/Header';
 import FirstComponent1 from '../components/main/FirstComponent1';
 import FirstComponent2 from '../components/main/FirstComponent2';
 import FirstCarosel from '../components/main/FirstCarosel';
+import styled from 'styled-components';
+
+const Div = styled.div`
+  @font-face {
+    font-family: 'GmarketSansMedium';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+  }
+`;
 
 const FullPage = () => {
   const onSelect = (item: string) => {
